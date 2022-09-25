@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿
+using Domain.Entities;
+
 using Domain.Interfaces;
 
 using Infrastructure;
@@ -6,12 +8,14 @@ using Infrastructure.Repositories;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace CPMS.Extension
+namespace Service.Configuration
 {
-    public static class ServiceExtension
+    public static class ConfigureRepositories
     {
-        public static void ConfigureRepositories(this IServiceCollection services, IConfiguration config)
+        public static void AddServices(IServiceCollection services, IConfiguration config)
         {
             services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
 
@@ -26,7 +30,7 @@ namespace CPMS.Extension
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             });
 
@@ -35,6 +39,8 @@ namespace CPMS.Extension
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ISupervisorRepository, SupervisorRepository>();
             services.AddTransient<IStudentRepository, StudentRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
         }
     }
 }

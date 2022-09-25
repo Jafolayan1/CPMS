@@ -4,13 +4,26 @@ using Domain.Entities;
 
 using Infrastructure;
 
+
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+using Service.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.ConfigureRepositories(builder.Configuration);
+var mvcBuilder = builder.Services.AddControllersWithViews();
+if (builder.Environment.IsDevelopment())
+    mvcBuilder.AddRazorRuntimeCompilation();
+
+ConfigureRepositories.AddServices(builder.Services, builder.Configuration);
+ConfigureDependencies.AddServices(builder.Services);
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 var app = builder.Build();
 
@@ -20,7 +33,7 @@ using (var scope = app.Services.CreateScope())
     var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
     ctx.Database.EnsureCreated();
-    var email = "admin@spms.com";
+    var email = "admin@cpms.com";
     var phone = "090909008744";
 
     if (!ctx.Users.Any(u => u.Email == email))
@@ -37,9 +50,17 @@ using (var scope = app.Services.CreateScope())
             EmailConfirmed = true,
             SecurityStamp = Guid.NewGuid().ToString(),
         };
-        var result = userMgr.CreateAsync(adminUser, "Pa$$word").GetAwaiter().GetResult();
-        userMgr.AddToRoleAsync(adminUser, "SAdmin").GetAwaiter().GetResult();
+        var result = userMgr.CreateAsync(adminUser, "Password").GetAwaiter().GetResult();
+        userMgr.AddToRoleAsync(adminUser, "Admin").GetAwaiter().GetResult();
     }
+}
+
+using (var svp = app.Services.CreateScope())
+{
+
+    var context = svp.ServiceProvider.GetRequiredService<ApplicationContext>();
+    if (context.Database.GetPendingMigrations().Any())
+        context.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline.
@@ -56,9 +77,14 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
+
+app.MapControllerRoute(
+     name: "areas",
+     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

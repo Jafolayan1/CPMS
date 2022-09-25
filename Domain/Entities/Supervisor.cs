@@ -2,7 +2,7 @@
 {
     public class Supervisor : BaseEntity
     {
-        public string EmployeeId { get; set; }
+        public string EmployeeNo { get; set; }
 
     }
 }
