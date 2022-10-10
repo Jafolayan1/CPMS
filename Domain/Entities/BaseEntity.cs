@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Http;
+
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
     public class BaseEntity
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
@@ -13,6 +15,12 @@ namespace Domain.Entities
         public string? OtherNames { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
+        public string? Department { get; set; }
         public string? ImageUrl { get; set; }
+        [NotMapped]
+        public IFormFile? File { get; set; }
+
+        [NotMapped]
+        public string? FullName { get { return $"{Surname}  {OtherNames}"; } }
     }
 }

@@ -6,7 +6,7 @@ namespace CPMS.Areas.Supervisor.Controllers
 {
 
     [CustomAuthorize(Roles = "Supervisor")]
-    [Area("Supervisor")]
+    [Area("Supervisors")]
     public class DashboardController : Controller
     {
         public DashboardController()

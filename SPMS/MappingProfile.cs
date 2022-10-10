@@ -11,6 +11,7 @@ namespace CPMS
         public MappingProfile()
         {
             CreateMap<StudentVM, Student>();
+
             CreateMap<SupervisorVM, Supervisor>();
 
         }

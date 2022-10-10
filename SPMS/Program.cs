@@ -46,6 +46,7 @@ using (var scope = app.Services.CreateScope())
             Email = email,
             NormalizedEmail = email.ToUpper(),
             UserName = phone,
+            ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
             NormalizedUserName = email,
             EmailConfirmed = true,
             SecurityStamp = Guid.NewGuid().ToString(),

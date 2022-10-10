@@ -1,0 +1,24 @@
+﻿@{
+	ViewData["Title"] = "ForgotPassword";
+	Layout = "_PagesLayout";
+}
+
+
+
+
+<div class="authincation h-100">
+	<div class="container h-100">
+		<div class="row justify-content-center h-100 align-items-center">
+			<div class="col-md-5">
+				<div class="form-input-content text-center error-page">
+					<h1 class="error-text  fw-bold"></h1>
+					<h4><i class="fa fa-times-circle text-info"></i> Password Reset!</h4>
+					<p>A password reset link has been sent to your email.</p>
+					<div>
+						<a class="btn btn-primary" asp-controller="Account" asp-action="Login">Back to Home</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

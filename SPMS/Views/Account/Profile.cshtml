@@ -1,0 +1,223 @@
+﻿@{
+	ViewData["Title"] = "Profile";
+	var student = ViewData["student"] as Student;
+	ForgotPasswordVM fpass = new ForgotPasswordVM();
+}
+
+<Partial name="_ProfileHeader" />
+<Partial name="_Sidebar" />
+
+
+ <div class="content-body">
+			<div class="container-fluid">
+
+
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">App</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Profile</a></li>
+					</ol>
+				</div> 
+				<!-- row -->
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="profile card card-body px-3 pt-3 pb-0">
+							<div class="profile-head">
+								<div class="photo-content">
+									<div class="cover-photo rounded"></div>
+								</div>
+								<div class="profile-info">
+									<div class="profile-photo">
+										 <img src="@student.ImageUrl" class="img-fluid rounded-circle" alt="">
+									</div>
+									<div class="profile-details">
+										<div class="profile-name px-3 pt-2">
+											<h4 class="text-primary mb-0">@student.FullName</h4>
+											<p>@student.Level</p>
+										</div>
+										<div class="profile-email px-2 pt-2">
+											<h4 class="text-muted mb-0">@student.Email</h4>
+											<p>Email</p>
+										</div>
+										<div class="dropdown ms-auto">
+											<a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
+											<ul class="dropdown-menu dropdown-menu-end">
+												<li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
+												<li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
+												<li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
+												<li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-tab">
+									<div class="custom-tab-1">
+										<ul class="nav nav-tabs">
+											<li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link show">About Me</a>
+											</li>
+											<li class="nav-item"><a href="#update-profile" data-bs-toggle="tab" class="nav-link">Update Profile</a>
+											</li>
+											<li class="nav-item"><a href="#forgot-password" data-bs-toggle="tab" class="nav-link">Forgot password</a>
+											</li>
+										</ul>
+										<div class="tab-content">
+											<div id="about-me" class="tab-pane fade">
+												<div class="profile-about-me">
+													<div class="pt-4 border-bottom-1 pb-3">
+														<h4 class="text-primary">About Me</h4>
+														<p class="mb-2">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence was created for the bliss of souls like mine.I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents.</p>
+													</div>
+												</div>
+												
+												<div class="profile-personal-info">
+													<h4 class="text-primary mb-4">Personal Information</h4>
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Name<span class="pull-end">:</span>
+															</h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>@student.FullName</span>
+														</div>
+													</div>
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Matric No <span class="pull-end">:</span></h5>
+														</div>
+														<div class="col-sm-9 col-7">
+															<span>@student.MatricNo</span>
+														</div>
+													</div>
+
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Email <span class="pull-end">:</span>
+															</h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>@student.Email</span>
+														</div>
+													</div>
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Phone Number<span class="pull-end">:</span></h5>
+														</div>
+														<div class="col-sm-9 col-7">
+															<span>@student.PhoneNumber</span>
+														</div>
+													</div>
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Level <span class="pull-end">:</span></h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>@student.Level</span>
+														</div>
+													</div>
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Department <span class="pull-end">:</span>
+															</h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>@student.Department</span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="update-profile" class="tab-pane fade">
+												<div class="pt-3">
+													<div class="settings-form">
+														<h4 class="text-primary">Update Profile</h4>
+														<form asp-area="" asp-controller="Account" asp-action="ProfileUpdate" method="post" enctype="multipart/form-data">
+															 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+															<input asp-for="@student.UserId" name="UserId" type="hidden" />
+															<input asp-for="@student.Id" name="Id" type="hidden" />
+															<input asp-for="@student.ImageUrl" name="ImageUrl" type="hidden" />
+
+
+															<input asp-for="@student.MatricNo" name="MatricNo" value="@student.MatricNo" type="hidden" />
+															<div class="row">
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Surname</label>
+															<input asp-for="@student.Surname" name="Surname" type="text" placeholder="Surnmae" class="form-control">
+																</div>
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Othernames</label>
+															<input asp-for="@student.OtherNames" name="OtherNames" type="text" placeholder="OtherNames" class="form-control">
+																</div>
+															</div>
+															<div class="row">
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Email</label>
+																	<input asp-for="@student.Email" name="Email" type="email" placeholder="Email" class="form-control">
+																</div>
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Phone No</label>
+																	<input asp-for ="@student.PhoneNumber" name="PhoneNumber" type="text" placeholder="Phone No" class="form-control">
+																</div>
+															</div>
+															
+															<div class="row">
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Department</label>
+																	<select asp-for="@student.Department" name="Department" class="form-control default-select wide" id="inputState">
+																		<option selected="">@student.Department</option>
+																		<option>Computer Science</option>
+																		<option>Computer Engineering</option>
+																	</select>
+																</div>
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Level</label>
+																	<select asp-for="@student.Level" name="Level" class="form-control default-select wide" id="inputState">
+																		<option selected="">@student.Level</option>
+																		<option>HND II</option>
+																		<option>ND II</option>
+																	</select>
+																</div>
+																<div class="input-group mb-3">
+																	<span class="input-group-text">Upload Image</span>
+																	<div class="form-file">
+																		<input asp-for="@student.File" name="File" type="file" class="form-file-input form-control">
+																	</div>
+																</div>
+															</div>
+															<button class="btn btn-primary" type="submit">Submit</button>
+														</form>
+													</div>
+												</div>
+											</div>
+
+											<div id="forgot-password" class="tab-pane fade">
+												<div class="pt-3">
+													<div class="settings-form">
+														<h4 class="text-primary">Forgot Password</h4>
+														<form asp-area="" asp-controller="Account" asp-action="ForgotPassword" method="post">
+															<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+															<div class="row">
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Email</label>
+																	<input asp-for="@fpass.Email" name="Email" type="email"  class="form-control">
+																</div>
+																
+															</div>
+															<button class="btn btn-primary" type="submit">Submit</button>
+														</form>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

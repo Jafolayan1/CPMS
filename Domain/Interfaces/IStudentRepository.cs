@@ -4,6 +4,5 @@ namespace Domain.Interfaces
 {
     public interface IStudentRepository : IGenericRepository<Student>
     {
-
     }
 }

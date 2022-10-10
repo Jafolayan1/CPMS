@@ -19,9 +19,11 @@ namespace Service.Configuration
         {
             services.AddDbContext<ApplicationContext>(o => o.UseSqlServer(config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, Role>()
                .AddEntityFrameworkStores<ApplicationContext>()
                .AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(1));
 
             services.Configure<IdentityOptions>(options =>
             {

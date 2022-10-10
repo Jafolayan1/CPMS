@@ -44,7 +44,7 @@ namespace Service
                     }
                 }
             }
-            builder.HtmlBody = mailRequest.Body;
+            builder.HtmlBody = $"<a href='{mailRequest.Body}'>Click this link to reset your paswword,<br>";
             email.Body = builder.ToMessageBody();
             using var smtp = new SmtpClient();
             smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);

@@ -1,5 +1,7 @@
 ﻿using Domain.Interfaces;
 
+using Microsoft.EntityFrameworkCore;
+
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
@@ -24,9 +26,9 @@ namespace Infrastructure.Repositories
 
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> expression, bool trackchanges)
         {
-            return _context.Set<T>().Where(expression);
+            return !trackchanges ? _context.Set<T>().AsNoTracking().Where(expression) : _context.Set<T>().Where(expression);
         }
 
         public IEnumerable<T> GetAll()
@@ -34,7 +36,7 @@ namespace Infrastructure.Repositories
             return _context.Set<T>().ToList();
         }
 
-        public T GetById(int id)
+        public virtual T GetById(object id)
         {
             return _context.Set<T>().Find(id);
         }
@@ -48,6 +50,11 @@ namespace Infrastructure.Repositories
         {
             _context.Set<T>().RemoveRange(entities);
 
+        }
+
+        public void Update(T entity)
+        {
+            _context.Set<T>().Update(entity);
         }
     }
 }

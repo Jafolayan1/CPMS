@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<None Include="Areas\Students\Views\Project\ProjectTopic.cshtml" />
 	<None Include="Views\Account\Login.cshtml" />
   </ItemGroup>
 
@@ -30,6 +31,10 @@
 
   <ItemGroup>
 	<ProjectReference Include="..\Service\Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 	</Project>
