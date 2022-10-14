@@ -1,13 +1,10 @@
 (function($) {
-    "use strict" 
-
+    "use strict"
 
  var dlabChartlist = function(){
-	
 	var screenWidth = $(window).width();
-		
+
 	var setChartWidth = function(){
-		
 		if(screenWidth <= 768)
 		{
 			var chartBlockWidth = 0;
@@ -17,13 +14,12 @@
 			}else{
 				chartBlockWidth = 300;
 			}
-			
+
 			jQuery('.chartlist-chart').css('min-width',chartBlockWidth - 31);
 		}
 	}
-	
+
 	var lineAnimatedChart = function(){
-		    
 		var chart = new Chartist.Line('#smil-animations', {
 			labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
 			series: [
@@ -38,21 +34,21 @@
 			  Chartist.plugins.tooltip()
 			]
 		  });
-		  
+
 		  // Let's put a sequence number aside so we can use it in the event callbacks
 		  var seq = 0,
 			delays = 80,
 			durations = 500;
-		  
+
 		  // Once the chart is fully created we reset the sequence
 		  chart.on('created', function() {
 			seq = 0;
 		  });
-		  
+
 		  // On each drawn element by Chartist we use the Chartist.Svg API to trigger SMIL animations
 		  chart.on('draw', function(data) {
 			seq++;
-		  
+
 			if(data.type === 'line') {
 			  // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
 			  data.element.animate({
@@ -121,7 +117,7 @@
 				to: data[data.axis.units.pos + '1'],
 				easing: 'easeOutQuart'
 			  };
-		  
+
 			  var pos2Animation = {
 				begin: seq * delays,
 				dur: durations,
@@ -129,7 +125,7 @@
 				to: data[data.axis.units.pos + '2'],
 				easing: 'easeOutQuart'
 			  };
-		  
+
 			  var animations = {};
 			  animations[data.axis.units.pos + '1'] = pos1Animation;
 			  animations[data.axis.units.pos + '2'] = pos2Animation;
@@ -140,11 +136,11 @@
 				to: 1,
 				easing: 'easeOutQuart'
 			  };
-		  
+
 			  data.element.animate(animations);
 			}
 		  });
-		  
+
 		  // For the sake of the example we update the chart every time it's created with a delay of 10 seconds
 		  chart.on('created', function() {
 			if(window.__exampleAnimateTimeout) {
@@ -153,30 +149,26 @@
 			}
 			window.__exampleAnimateTimeout = setTimeout(chart.update.bind(chart), 12000);
 		  });
-  
-  
-  
 	}
-	
-	
+
 	var scatterChart = function(){
 			  //Line Scatter Diagram
 			  var times = function(n) {
 				return Array.apply(null, new Array(n));
 			  };
-			  
+
 			  var data = times(52).map(Math.random).reduce(function(data, rnd, index) {
 				data.labels.push(index + 1);
 				data.series.forEach(function(series) {
 				  series.push(Math.random() * 100)
 				});
-			  
+
 				return data;
 			  }, {
 				labels: [],
 				series: times(4).map(function() { return new Array() })
 			  });
-			  
+
 			  var options = {
 				showLine: false,
 				axisX: {
@@ -185,7 +177,7 @@
 				  }
 				}
 			  };
-			  
+
 			  var responsiveOptions = [
 				['screen and (min-width: 640px)', {
 				  axisX: {
@@ -195,10 +187,10 @@
 				  }
 				}]
 			  ];
-			  
+
 			  new Chartist.Line('#scatter-diagram', data, options, responsiveOptions);
 	}
-	
+
 	var simpleLineChart = function(){
 		//Simple line chart
 		new Chartist.Line('#simple-line-chart', {
@@ -217,11 +209,10 @@
 			  Chartist.plugins.tooltip()
 			]
 		});
-		
 	}
 	var lineTooltipsChart = function(){
 		//Line chart with tooltips
-  
+
 		  new Chartist.Line('#line-chart-tooltips', {
 			labels: ['1', '2', '3', '4', '5', '6'],
 			series: [
@@ -241,36 +232,35 @@
 			]
 		  }
 		  );
-		  
+
 		  var $chart = $('#line-chart-tooltips');
-		  
+
 		  var $toolTip = $chart
 			.append('<div class="tooltip"></div>')
 			.find('.tooltip')
 			.hide();
-		  
+
 		  $chart.on('mouseenter', '.ct-point', function() {
 			var $point = $(this),
 			  value = $point.attr('ct:value'),
 			  seriesName = $point.parent().attr('ct:series-name');
 			$toolTip.html(seriesName + '<br>' + value).show();
 		  });
-		  
+
 		  $chart.on('mouseleave', '.ct-point', function() {
 			$toolTip.hide();
 		  });
-		  
+
 		  $chart.on('mousemove', function(event) {
 			$toolTip.css({
 			  left: (event.offsetX || event.originalEvent.layerX) - $toolTip.width() / 2 - 10,
 			  top: (event.offsetY || event.originalEvent.layerY) - $toolTip.height() - 40
 			});
 		  });
-		  
 	}
 	var withAreaChart = function(){
 	 //Line chart with area
-	  
+
 	  new Chartist.Line('#chart-with-area', {
 		labels: [1, 2, 3, 4, 5, 6, 7, 8],
 		series: [
@@ -283,11 +273,10 @@
 		  Chartist.plugins.tooltip()
 		]
 	  });
-		
 	}
 	var biPolarLineChart = function(){
 		//Bi-polar Line chart with area only
-		  
+
 		new Chartist.Line('#bi-polar-line', {
 			labels: [1, 2, 3, 4, 5, 6, 7, 8],
 			series: [
@@ -311,11 +300,10 @@
 			  Chartist.plugins.tooltip()
 			]
 		});
-		
 	}
 	var svgAnimationChart = function(){
 		 //SVG Path animation
-  
+
 		var chart = new Chartist.Line('#svg-animation', {
 			labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 			series: [
@@ -329,7 +317,7 @@
 			showPoint: false,
 			fullWidth: true
 		});
-		  
+
 		chart.on('draw', function(data) {
 			if(data.type === 'line' || data.type === 'area') {
 			  data.element.animate({
@@ -346,7 +334,7 @@
 	}
 	var lineSmoothingChart = function(){
 		 //Line Interpolation / Smoothing
-  
+
 		var chart = new Chartist.Line('#line-smoothing', {
 			labels: [1, 2, 3, 4, 5],
 			series: [
@@ -364,7 +352,7 @@
 			  right: 20
 			},
 			low: 0
-		}); 
+		});
 	}
 	var biPolarBarChart = function(){
 		//Bi-polar bar chart
@@ -374,7 +362,7 @@
 			  [1, 2, 4, 8, 6, -2, -1, -4, -6, -2]
 			]
 		};
-		  
+
 		var options = {
 			high: 10,
 			low: -10,
@@ -387,9 +375,8 @@
 			  Chartist.plugins.tooltip()
 			]
 		};
-		  
+
 		new Chartist.Bar('#bi-polar-bar', data, options);
-		
 	}
 	var overlappingBarsChart = function(){
 		//Overlapping bars on mobile
@@ -442,7 +429,7 @@
 		});
 	}
 	var stackedBarChart = function(){
-		 //Stacked bar chart  
+		 //Stacked bar chart
 		new Chartist.Bar('#stacked-bar-chart', {
 			labels: ['Q1', 'Q2', 'Q3', 'Q4'],
 			series: [
@@ -470,7 +457,7 @@
 	}
 	var horizontalBarChart = function(){
 		//Horizontal bar chart
-  
+
 		new Chartist.Bar('#horizontal-bar-chart', {
 				labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
 				series: [
@@ -491,7 +478,7 @@
 	}
 	var extremeChart = function(){
 			 // Extreme responsive configuration
-	  
+
 		new Chartist.Bar('#extreme-chart', {
 			labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
 			series: [
@@ -544,7 +531,7 @@
 	}
 	var labelPlacementChart = function(){
 		//Label placement
-  
+
 		new Chartist.Bar('#label-placement-chart', {
 			labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
 			series: [
@@ -567,7 +554,7 @@
 	}
 	var animatingDonutChart = function(){
 		//Animating a Donut with Svg.animate
-  
+
 		var chart = new Chartist.Pie('#animating-donut', {
 			series: [10, 20, 50, 20, 5, 50, 15],
 			labels: [1, 2, 3, 4, 5, 6, 7]
@@ -578,17 +565,17 @@
 			  Chartist.plugins.tooltip()
 			]
 		});
-		  
+
 		chart.on('draw', function(data) {
 			if(data.type === 'slice') {
 			  // Get the total path length in order to use for dash array animation
 			  var pathLength = data.element._node.getTotalLength();
-		  
+
 			  // Set a dasharray that matches the path length as prerequisite to animate dashoffset
 			  data.element.attr({
 				'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
 			  });
-		  
+
 			  // Create animation definition while also assigning an ID to the animation for later sync usage
 			  var animationDefinition = {
 				'stroke-dashoffset': {
@@ -601,23 +588,23 @@
 				  fill: 'freeze'
 				}
 			};
-		  
+
 			  // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
 			  if(data.index !== 0) {
 				animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
 			  }
-		  
+
 			  // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
 			  data.element.attr({
 				'stroke-dashoffset': -pathLength + 'px'
 			  });
-		  
+
 			  // We can't use guided mode as the animations need to rely on setting begin manually
 			  // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
 			  data.element.animate(animationDefinition, false);
 			}
 		});
-		  
+
 		// For the sake of the example we update the chart every time it's created with a delay of 8 seconds
 		chart.on('created', function() {
 			if(window.__anim21278907124) {
@@ -626,38 +613,36 @@
 			}
 			window.__anim21278907124 = setTimeout(chart.update.bind(chart), 10000);
 		});
-		
 	}
 	var simplePieChart = function(){
 		//Simple pie chart
-  
+
 	  var data1 = {
 		series: [5, 3, 4]
 	  };
-	  
+
 	  var sum = function(a, b) { return a + b };
-	  
+
 	  new Chartist.Pie('#simple-pie', data1, {
 		labelInterpolationFnc: function(value) {
 		  return Math.round(value / data1.series.reduce(sum) * 100) + '%';
 		}
 	  });
-		
 	}
 	var pieChart = function(){
 		//Pie chart with custom labels
-		  
+
 		var data = {
 			labels: ['35%', '55%', '10%'],
 			series: [20, 15, 40]
 		  };
-		  
+
 		var options = {
 			labelInterpolationFnc: function(value) {
 			  return value[0]
 			}
 		  };
-		  
+
 		var responsiveOptions = [
 			['screen and (min-width: 640px)', {
 			  chartPadding: 30,
@@ -674,13 +659,12 @@
 			  chartPadding: 20
 			}]
 		];
-		  
+
 		new Chartist.Pie('#pie-chart', data, options, responsiveOptions);
-		
 	}
 	var gaugeChart = function(){
 		//Gauge chart
-		
+
 		new Chartist.Pie('#gauge-chart', {
 			series: [20, 10, 30, 40]
 		  }, {
@@ -696,7 +680,7 @@
 	}
 	var differentSeriesChart = function(){
 		// Different configuration for different series
-  
+
 		var chart = new Chartist.Line('#different-series', {
 			labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
 			// Naming the series with the series object array notation
@@ -749,11 +733,10 @@
 			  }
 			}]
 		]);
-		
 	}
 	var svgDotAnimationChart = function(){
 		 //SVG Animations chart
-  
+
 		var chart = new Chartist.Line('#svg-dot-animation', {
 			labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
 			series: [
@@ -775,15 +758,15 @@
 			  Chartist.plugins.tooltip()
 			]
 		});
-		  
+
 		  // Let's put a sequence number aside so we can use it in the event callbacks
 		var seq = 0;
-		  
+
 		  // Once the chart is fully created we reset the sequence
 		chart.on('created', function() {
 			seq = 0;
 		});
-		  
+
 		// On each drawn element by Chartist we use the Chartist.Svg API to trigger SMIL animations
 		chart.on('draw', function(data) {
 			if(data.type === 'point') {
@@ -810,7 +793,7 @@
 			  });
 			}
 		});
-		  
+
 		// For the sake of the example we update the chart every time it's created with a delay of 8 seconds
 		chart.on('created', function() {
 			if(window.__anim0987432598723) {
@@ -820,19 +803,18 @@
 			window.__anim0987432598723 = setTimeout(chart.update.bind(chart), 8000);
 		});
 	}
-	
+
 	/* Function ============ */
 	return {
 		init:function(){
 		},
-		
-		
+
 		load:function(){
-			setChartWidth();	
+			setChartWidth();
 			lineAnimatedChart();
-			scatterChart();	
-			simpleLineChart();	
-			lineTooltipsChart();		
+			scatterChart();
+			simpleLineChart();
+			lineTooltipsChart();
 			withAreaChart();
 			biPolarLineChart();
 			svgAnimationChart();
@@ -849,15 +831,15 @@
 			pieChart();
 			gaugeChart();
 			differentSeriesChart();
-			svgDotAnimationChart(); 
+			svgDotAnimationChart();
 		},
-		
+
 		resize:function(){
-			setChartWidth();	
+			setChartWidth();
 			lineAnimatedChart();
-			scatterChart();	
-			simpleLineChart();	
-			lineTooltipsChart();		
+			scatterChart();
+			simpleLineChart();
+			lineTooltipsChart();
 			withAreaChart();
 			biPolarLineChart();
 			svgAnimationChart();
@@ -877,23 +859,20 @@
 			svgDotAnimationChart();
 		}
 	}
-
 }();
 
 jQuery(document).ready(function(){
 });
-	
+
 jQuery(window).on('load',function(){
 	setTimeout(function(){
-		dlabChartlist.resize();	
+		dlabChartlist.resize();
 	}, 1000);
 });
 
 jQuery(window).on('resize',function(){
 	setTimeout(function(){
-		dlabChartlist.resize();	
+		dlabChartlist.resize();
 	}, 1000);
-	
-});     
-
+});
 })(jQuery);

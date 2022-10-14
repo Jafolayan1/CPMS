@@ -4,7 +4,6 @@ using Domain.Entities;
 
 using Infrastructure;
 
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,12 +17,7 @@ if (builder.Environment.IsDevelopment())
     mvcBuilder.AddRazorRuntimeCompilation();
 
 ConfigureRepositories.AddServices(builder.Services, builder.Configuration);
-ConfigureDependencies.AddServices(builder.Services);
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-
-builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+ConfigureDependencies.AddServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
@@ -45,7 +39,7 @@ using (var scope = app.Services.CreateScope())
             PhoneNumber = phone,
             Email = email,
             NormalizedEmail = email.ToUpper(),
-            UserName = phone,
+            UserName = "Admin",
             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
             NormalizedUserName = email,
             EmailConfirmed = true,
@@ -58,7 +52,6 @@ using (var scope = app.Services.CreateScope())
 
 using (var svp = app.Services.CreateScope())
 {
-
     var context = svp.ServiceProvider.GetRequiredService<ApplicationContext>();
     if (context.Database.GetPendingMigrations().Any())
         context.Database.Migrate();

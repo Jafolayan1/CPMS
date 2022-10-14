@@ -22,6 +22,23 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Domain.Entities.Department", b =>
+                {
+                    b.Property<int>("DepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DepartmentId");
+
+                    b.ToTable("Departments");
+                });
+
             modelBuilder.Entity("Domain.Entities.Project", b =>
                 {
                     b.Property<int>("ProjectId")
@@ -39,6 +56,12 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Matric")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Topic")
@@ -116,8 +139,8 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -125,8 +148,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Level")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Level")
+                        .HasColumnType("int");
 
                     b.Property<string>("MatricNo")
                         .IsRequired()
@@ -138,6 +161,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SupervisorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
@@ -145,6 +171,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("SupervisorId");
 
                     b.HasIndex("UserId");
 
@@ -159,8 +189,8 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -185,6 +215,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("UserId");
 
@@ -384,22 +416,40 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Student", b =>
                 {
+                    b.HasOne("Domain.Entities.Department", "Department")
+                        .WithMany("Students")
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Domain.Entities.Supervisor", "Supervisor")
+                        .WithMany("ProjectStudents")
+                        .HasForeignKey("SupervisorId");
+
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Supervisor");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Supervisor", b =>
                 {
+                    b.HasOne("Domain.Entities.Department", "Department")
+                        .WithMany("Supervisors")
+                        .HasForeignKey("DepartmentId");
+
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Department");
 
                     b.Navigation("User");
                 });
@@ -453,6 +503,18 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Department", b =>
+                {
+                    b.Navigation("Students");
+
+                    b.Navigation("Supervisors");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Supervisor", b =>
+                {
+                    b.Navigation("ProjectStudents");
                 });
 #pragma warning restore 612, 618
         }

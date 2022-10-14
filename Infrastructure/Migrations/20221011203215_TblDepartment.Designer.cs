@@ -12,17 +12,122 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220925110343_Update")]
-    partial class Update
+    [Migration("20221011203215_TblDepartment")]
+    partial class TblDepartment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Domain.Entities.Department", b =>
+                {
+                    b.Property<int>("DepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"), 1L, 1);
+
+                    b.HasKey("DepartmentId");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Project", b =>
+                {
+                    b.Property<int>("ProjectId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectId"), 1L, 1);
+
+                    b.Property<DateTime>("DateSubmitted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Matric")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Supervisor",
+                            NormalizedName = "SUPERVISOR"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
+                });
 
             modelBuilder.Entity("Domain.Entities.Student", b =>
                 {
@@ -32,12 +137,17 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<short?>("Level")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("MatricNo")
                         .IsRequired()
@@ -49,14 +159,20 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SupervisorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("SupervisorId");
 
                     b.HasIndex("UserId");
 
@@ -71,8 +187,10 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployeeNo")
@@ -91,11 +209,12 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("UserId");
 
@@ -104,8 +223,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -120,6 +242,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -173,57 +298,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8544235a-7fe5-4e40-90f6-8d4666d4077b",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Student",
-                            NormalizedName = "STUDENT"
-                        },
-                        new
-                        {
-                            Id = "b3d5bafa-ba47-4efd-8513-3ed6fc15032b",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Supervisor",
-                            NormalizedName = "SUPERVISOR"
-                        },
-                        new
-                        {
-                            Id = "184ab5c2-1617-44fd-80ce-ffaa7e5dd72e",
-                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -237,9 +312,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -248,7 +322,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -262,9 +336,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -273,7 +346,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -284,9 +357,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -295,13 +367,13 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -310,10 +382,10 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -329,38 +401,71 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.Student", b =>
+            modelBuilder.Entity("Domain.Entities.Project", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Student", b =>
+                {
+                    b.HasOne("Domain.Entities.Department", "Department")
+                        .WithMany("Students")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Supervisor", "Supervisor")
+                        .WithMany("ProjectStudents")
+                        .HasForeignKey("SupervisorId");
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Supervisor");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Supervisor", b =>
                 {
+                    b.HasOne("Domain.Entities.Department", "Department")
+                        .WithMany("Supervisors")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Department");
+
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Domain.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("Domain.Entities.User", null)
                         .WithMany()
@@ -369,7 +474,7 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("Domain.Entities.User", null)
                         .WithMany()
@@ -378,9 +483,9 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Domain.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -393,13 +498,25 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Department", b =>
+                {
+                    b.Navigation("Students");
+
+                    b.Navigation("Supervisors");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Supervisor", b =>
+                {
+                    b.Navigation("ProjectStudents");
                 });
 #pragma warning restore 612, 618
         }

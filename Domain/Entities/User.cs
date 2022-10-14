@@ -14,6 +14,5 @@ namespace Domain.Entities
 
         [NotMapped]
         public string[] Role { get; set; }
-
     }
 }

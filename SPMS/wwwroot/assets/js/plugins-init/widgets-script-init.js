@@ -1,10 +1,9 @@
 (function($) {
-    "use strict" 
+    "use strict"
 
  var dlabChartlist = function(){
-	
 	var screenWidth = $(window).width();
-	
+
 	var activityChart = function(){
 		/*======== 16. ANALYTICS - ACTIVITY CHART ========*/
 		var activity = document.getElementById("activity");
@@ -23,7 +22,7 @@
 				}
 			];
 			activity.height = 300;
-			
+
 			var config = {
 				type: "bar",
 				data: {
@@ -48,14 +47,13 @@
 							borderColor: 'rgba(161,93,1)',
 							borderWidth: "0",
 							backgroundColor: 'rgba(161,93,1)'
-							
 						}
 					]
 				},
 				options: {
 					responsive: true,
 					maintainAspectRatio: false,
-					
+
 					legend: {
 						display: false
 					},
@@ -168,7 +166,7 @@
 					}
 				}
 			});
-			
+
 			setInterval(function() {
 				chart.config.data.datasets[0].data.push(
 					Math.floor(10 + Math.random() * 80)
@@ -176,12 +174,10 @@
 				chart.config.data.datasets[0].data.shift();
 				chart.update();
 			}, 2000);
-			
 		}
 	}
 	var chartWidget1 = function(){
 		if(jQuery('#chart_widget_1').length > 0 ){
-			
 			const chart_widget_1 = document.getElementById("chart_widget_1").getContext('2d');
 			//generate gradient
 			// const gradientStroke = chart_widget_1.createLinearGradient(0, 0, 0, 250);
@@ -201,37 +197,37 @@
 							data: [65, 59, 80, 81, 56, 55, 40],
 							borderColor: 'rgba(255, 255, 255, .8)',
 							borderWidth: "0",
-							backgroundColor: 'rgba(255, 255, 255, .8)', 
+							backgroundColor: 'rgba(255, 255, 255, .8)',
 							hoverBackgroundColor: 'rgba(255, 255, 255, .8)'
 						}
 					]
 				},
 				options: {
 					legend: false,
-					responsive: true, 
-					maintainAspectRatio: false,  
+					responsive: true,
+					maintainAspectRatio: false,
 					scales: {
 						yAxes: [{
-							display: false, 
+							display: false,
 							ticks: {
-								beginAtZero: true, 
-								display: false, 
-								max: 100, 
-								min: 0, 
+								beginAtZero: true,
+								display: false,
+								max: 100,
+								min: 0,
 								stepSize: 10
-							}, 
+							},
 							gridLines: {
-								display: false, 
+								display: false,
 								drawBorder: false
 							}
 						}],
 						xAxes: [{
-							display: false, 
-							barPercentage: 0.5, 
+							display: false,
+							barPercentage: 0.5,
 							gridLines: {
-								display: false, 
+								display: false,
 								drawBorder: false
-							}, 
+							},
 							ticks: {
 								display: false
 							}
@@ -244,7 +240,6 @@
 	var chartWidget2 = function(){
 		//#chart_widget_2
 		if(jQuery('#chart_widget_2').length > 0 ){
-			
 			const chart_widget_2 = document.getElementById("chart_widget_2").getContext('2d');
 			//generate gradient
 			const chart_widget_2gradientStroke = chart_widget_2.createLinearGradient(0, 0, 0, 250);
@@ -264,37 +259,37 @@
 							data: [65, 59, 80, 81, 56, 55, 40, 88, 45, 95, 54, 76],
 							borderColor: chart_widget_2gradientStroke,
 							borderWidth: "0",
-							backgroundColor: chart_widget_2gradientStroke, 
+							backgroundColor: chart_widget_2gradientStroke,
 							hoverBackgroundColor: chart_widget_2gradientStroke
 						}
 					]
 				},
 				options: {
 					legend: false,
-					responsive: true, 
-					maintainAspectRatio: false,  
+					responsive: true,
+					maintainAspectRatio: false,
 					scales: {
 						yAxes: [{
-							display: false, 
+							display: false,
 							ticks: {
-								beginAtZero: true, 
-								display: false, 
-								max: 100, 
-								min: 0, 
+								beginAtZero: true,
+								display: false,
+								max: 100,
+								min: 0,
 								stepSize: 10
-							}, 
+							},
 							gridLines: {
-								display: false, 
+								display: false,
 								drawBorder: false
 							}
 						}],
 						xAxes: [{
-							display: false, 
-							barPercentage: 0.1, 
+							display: false,
+							barPercentage: 0.1,
 							gridLines: {
-								display: false, 
+								display: false,
 								drawBorder: false
-							}, 
+							},
 							ticks: {
 								display: false
 							}
@@ -302,15 +297,14 @@
 					}
 				}
 			});
-
 		}
 	}
-	
+
 	var chartWidget3 = function(){
 		//#chart_widget_3
 		if(jQuery('#chart_widget_3').length > 0 ){
 		const chart_widget_3 = document.getElementById("chart_widget_3").getContext('2d');
-		
+
 		// chart_widget_3.height = 100;
 
 		let barChartData = {
@@ -319,7 +313,7 @@
 			datasets: [{
 				label: 'Expense',
 				backgroundColor: '#ff2c53',
-				hoverBackgroundColor: '#ff5777', 
+				hoverBackgroundColor: '#ff5777',
 				data: [
 					'20',
 					'14',
@@ -327,17 +321,17 @@
 					'25',
 					'27',
 					'22',
-					'12', 
-					'24', 
-					'20', 
-					'14', 
-					'18', 
+					'12',
+					'24',
+					'20',
+					'14',
+					'18',
 					'16'
 				]
 			}, {
 				label: 'Earning',
 				backgroundColor: '#F1F3F7',
-				hoverBackgroundColor: '#F1F3F7', 
+				hoverBackgroundColor: '#F1F3F7',
 				data: [
 					'12',
 					'18',
@@ -345,15 +339,14 @@
 					'7',
 					'5',
 					'10',
-					'20', 
-					'8', 
-					'12', 
-					'18', 
-					'14', 
+					'20',
+					'8',
+					'12',
+					'18',
+					'14',
 					'16'
 				]
 			}]
-
 		};
 
 		new Chart(chart_widget_3, {
@@ -362,7 +355,7 @@
 			options: {
 				legend: {
 					display: false
-				}, 
+				},
 				title: {
 					display: false
 				},
@@ -371,27 +364,27 @@
 					intersect: false
 				},
 				responsive: true,
-				maintainAspectRatio: false, 
+				maintainAspectRatio: false,
 				scales: {
 					xAxes: [{
-						display: false, 
+						display: false,
 						stacked: true,
-						barPercentage: .2, 
+						barPercentage: .2,
 						ticks: {
 							display: false
-						}, 
+						},
 						gridLines: {
-							display: false, 
+							display: false,
 							drawBorder: false
 						}
 					}],
 					yAxes: [{
-						display: false, 
-						stacked: true, 
+						display: false,
+						stacked: true,
 						gridLines: {
-							display: false, 
+							display: false,
 							drawBorder: false
-						}, 
+						},
 						ticks: {
 							display: false
 						}
@@ -400,15 +393,13 @@
 			}
 		});
 		}
-
 	}
-	
+
 	var chartWidget4 = function(){
 		//#chart_widget_4
 		if(jQuery('#chart_widget_4').length > 0 ){
-
 		const chart_widget_4 = document.getElementById("chart_widget_4").getContext('2d');
-		
+
 		// chart_widget_4.height = 100;
 
 		let barChartData2 = {
@@ -417,7 +408,7 @@
 			datasets: [{
 				label: 'Expense',
 				backgroundColor: '#430b58',
-				hoverBackgroundColor: '#6c2586', 
+				hoverBackgroundColor: '#6c2586',
 				data: [
 					'20',
 					'14',
@@ -425,25 +416,25 @@
 					'25',
 					'27',
 					'22',
-					'12', 
-					'24', 
-					'20', 
-					'14', 
-					'18', 
-					'16', 
-					'34', 
-					'32', 
-					'43', 
-					'36', 
-					'56', 
-					'12', 
-					'23', 
+					'12',
+					'24',
+					'20',
+					'14',
+					'18',
+					'16',
+					'34',
+					'32',
+					'43',
+					'36',
+					'56',
+					'12',
+					'23',
 					'34'
 				]
 			}, {
 				label: 'Earning',
 				backgroundColor: '#F1F3F7',
-				hoverBackgroundColor: '#F1F3F7', 
+				hoverBackgroundColor: '#F1F3F7',
 				data: [
 					'32',
 					'58',
@@ -451,23 +442,22 @@
 					'37',
 					'15',
 					'41',
-					'24', 
-					'38', 
-					'52', 
-					'38', 
-					'24', 
-					'19', 
-					'54', 
-					'34', 
-					'23', 
-					'34', 
-					'35', 
-					'22', 
-					'43', 
+					'24',
+					'38',
+					'52',
+					'38',
+					'24',
+					'19',
+					'54',
+					'34',
+					'23',
+					'34',
+					'35',
+					'22',
+					'43',
 					'33'
 				]
 			}]
-
 		};
 
 		new Chart(chart_widget_4, {
@@ -476,7 +466,7 @@
 			options: {
 				legend: {
 					display: false
-				}, 
+				},
 				title: {
 					display: false
 				},
@@ -485,48 +475,44 @@
 					intersect: false
 				},
 				responsive: true,
-				maintainAspectRatio: false, 
+				maintainAspectRatio: false,
 				scales: {
 					xAxes: [{
-						display: false, 
+						display: false,
 						stacked: true,
-						barPercentage: 1, 
-						barThickness: 5, 
+						barPercentage: 1,
+						barThickness: 5,
 						ticks: {
 							display: false
-						}, 
+						},
 						gridLines: {
-							display: false, 
+							display: false,
 							drawBorder: false
 						}
 					}],
 					yAxes: [{
-						display: false, 
-						stacked: true, 
+						display: false,
+						stacked: true,
 						gridLines: {
-							display: false, 
+							display: false,
 							drawBorder: false
-						}, 
+						},
 						ticks: {
-							display: false, 
-							max: 100, 
+							display: false,
+							max: 100,
 							min: 0
 						}
 					}]
 				}
 			}
 		});
-
 		}
 	}
 	var chartWidget5 = function(){
-		
-		
-		
 		//#chart_widget_5
 		if(jQuery('#chart_widget_5').length > 0 ){
 				chartReinitialize('#chart_widget_5');
-				
+
 			new Chartist.Line("#chart_widget_5", {
 				labels: ["1", "2", "3", "4", "5", "6", "7", "8"],
 				series: [
@@ -558,11 +544,10 @@
 			});
 		}
 	}
-	
+
 	var chartWidget6 = function(){
 		//#chart_widget_6
 		if(jQuery('#chart_widget_6').length > 0 ){
-			
 			new Chartist.Line("#chart_widget_6", {
 				labels: ["1", "2", "3", "4", "5", "6", "7", "8"],
 				series: [
@@ -596,9 +581,6 @@
 	}
 
 	var chartWidget7 = function(){
-		
-		
-		
 		//#chart_widget_7
 		if(jQuery('#chart_widget_7').length > 0 ){
 			chartReinitialize('#chart_widget_7');
@@ -621,37 +603,37 @@
 							data: [65, 59, 80, 81, 56, 55, 40, 88, 45, 95, 54, 76],
 							borderColor: chart_widget_7gradientStroke,
 							borderWidth: "0",
-							backgroundColor: chart_widget_7gradientStroke, 
+							backgroundColor: chart_widget_7gradientStroke,
 							hoverBackgroundColor: chart_widget_7gradientStroke
 						}
 					]
 				},
 				options: {
 					legend: false,
-					responsive: true, 
-					maintainAspectRatio: false,  
+					responsive: true,
+					maintainAspectRatio: false,
 					scales: {
 						yAxes: [{
-							display: false, 
+							display: false,
 							ticks: {
-								beginAtZero: true, 
-								display: false, 
-								max: 100, 
-								min: 0, 
+								beginAtZero: true,
+								display: false,
+								max: 100,
+								min: 0,
 								stepSize: 10
-							}, 
+							},
 							gridLines: {
-								display: false, 
+								display: false,
 								drawBorder: false
 							}
 						}],
 						xAxes: [{
-							display: false, 
-							barPercentage: 0.6, 
+							display: false,
+							barPercentage: 0.6,
 							gridLines: {
-								display: false, 
+								display: false,
 								drawBorder: false
-							}, 
+							},
 							ticks: {
 								display: false
 							}
@@ -664,7 +646,6 @@
 	var chartWidget8 = function(){
 		//#chart_widget_8
 		if(jQuery('#chart_widget_8').length > 0 ){
-			
 			new Chartist.Line("#chart_widget_8", {
 				labels: ["1", "2", "3", "4", "5", "6", "7", "8"],
 				series: [
@@ -694,7 +675,6 @@
 					offset: 0
 				}
 			});
-
 		}
 	}
 
@@ -776,14 +756,12 @@
 				}
 			}
 		});
-
 		}
 	}
 
 	var chartWidget10 = function(){
 		//#chart_widget_10
 		if(jQuery('#chart_widget_10').length > 0 ){
-
 		const chart_widget_10 = document.getElementById("chart_widget_10").getContext('2d');
 
 		new Chart(chart_widget_10, {
@@ -798,7 +776,7 @@
 					pointBorderColor: '#2780d4',
 					pointHoverBackgroundColor: '#2780d4',
 					pointHoverBorderColor: '#2780d4',
-					borderWidth: 0, 
+					borderWidth: 0,
 					data: [20, 10, 18, 10, 32, 15, 15, 22, 18, 6, 12, 13]
 				}]
 			},
@@ -861,11 +839,9 @@
 				}
 			}
 		});
-
 		}
 	}
 	var chartWidget11 = function(){
-
 		//#chart_widget_11
 		if(jQuery('#chart_widget_11').length > 0 ){
 		const chart_widget_11 = document.getElementById("chart_widget_11").getContext('2d');
@@ -910,9 +886,9 @@
 						scaleLabel: {
 							display: !0,
 							labelString: "Month"
-						}, 
+						},
 						ticks: {
-							max: 30, 
+							max: 30,
 							min: 0
 						}
 					}],
@@ -950,7 +926,6 @@
 		}
 	}
 	var chartWidget14 = function(){
-	
 		//#chart_widget_14
 		if(jQuery('#chart_widget_14').length > 0 ){
 		const chart_widget_14 = document.getElementById("chart_widget_14");
@@ -966,40 +941,40 @@
 						data: [55, 30, 90, 41, 86, 45, 80],
 						borderColor: '#3693FF',
 						borderWidth: "2",
-						backgroundColor: 'transparent',  
-						pointBackgroundColor: '#3693FF', 
+						backgroundColor: 'transparent',
+						pointBackgroundColor: '#3693FF',
 						pointRadius: 0
 					}
 				]
 			},
 			options: {
-				legend: false, 
-				responsive: true, 
-				maintainAspectRatio: false, 
+				legend: false,
+				responsive: true,
+				maintainAspectRatio: false,
 				scales: {
 					yAxes: [{
-						display: false, 
+						display: false,
 						ticks: {
-							beginAtZero: true, 
-							max: 100, 
-							min: 0, 
-							stepSize: 20, 
-							padding: 0, 
-							display: false, 
-						}, 
+							beginAtZero: true,
+							max: 100,
+							min: 0,
+							stepSize: 20,
+							padding: 0,
+							display: false,
+						},
 						gridLines: {
-							drawBorder: false, 
+							drawBorder: false,
 							display: false
 						}
 					}],
 					xAxes: [{
-						display: false, 
+						display: false,
 						ticks: {
-							padding: 0, 
+							padding: 0,
 							display: false
-						}, 
+						},
 						gridLines: {
-							display: false, 
+							display: false,
 							drawBorder: false
 						}
 					}]
@@ -1008,9 +983,8 @@
 		});
 		}
 	}
-	
+
 	var chartWidget15 = function(){
-	
 		//#chart_widget_15
 		if(jQuery('#chart_widget_15').length > 0 ){
 		const chart_widget_15 = document.getElementById("chart_widget_15");
@@ -1026,40 +1000,40 @@
 						data: [25, 60, 30, 71, 26, 85, 50],
 						borderColor: '#2780d4',
 						borderWidth: "2",
-						backgroundColor: 'transparent',  
-						pointBackgroundColor: '#2780d4', 
+						backgroundColor: 'transparent',
+						pointBackgroundColor: '#2780d4',
 						pointRadius: 0
 					}
 				]
 			},
 			options: {
-				legend: false, 
-				responsive: true, 
-				maintainAspectRatio: false, 
+				legend: false,
+				responsive: true,
+				maintainAspectRatio: false,
 				scales: {
 					yAxes: [{
-						display: false, 
+						display: false,
 						ticks: {
-							beginAtZero: true, 
-							max: 100, 
-							min: 0, 
-							stepSize: 20, 
-							padding: 0, 
-							display: false, 
-						}, 
+							beginAtZero: true,
+							max: 100,
+							min: 0,
+							stepSize: 20,
+							padding: 0,
+							display: false,
+						},
 						gridLines: {
-							drawBorder: false, 
+							drawBorder: false,
 							display: false
 						}
 					}],
 					xAxes: [{
-						display: false, 
+						display: false,
 						ticks: {
-							padding: 0, 
+							padding: 0,
 							display: false
-						}, 
+						},
 						gridLines: {
-							display: false, 
+							display: false,
 							drawBorder: false
 						}
 					}]
@@ -1068,13 +1042,12 @@
 		});
 		}
 	}
-	
+
 	var chartWidget16 = function(){
 		//#chart_widget_16
 		if(jQuery('#chart_widget_16').length > 0 ){
-
 			const chart_widget_16 = document.getElementById("chart_widget_16");
-			
+
 			chart_widget_16.height = 345;
 
 			new Chart(chart_widget_16, {
@@ -1088,15 +1061,15 @@
 							data: [25, 60, 30, 71, 26, 85, 50],
 							borderColor: 'rgba(161,93,1)',
 							borderWidth: "2",
-							backgroundColor: 'rgba(161,93,1)',  
-							pointBackgroundColor: 'rgba(161,93,1)', 
+							backgroundColor: 'rgba(161,93,1)',
+							pointBackgroundColor: 'rgba(161,93,1)',
 							pointRadius: 0
 						}
 					]
 				},
 				options: {
-					legend: false, 
-					responsive: true, 
+					legend: false,
+					responsive: true,
 					maintainAspectRatio: false,
 					tooltips: {
 						intersect: !1,
@@ -1104,32 +1077,32 @@
 						xPadding: 10,
 						yPadding: 10,
 						caretPadding: 10
-					}, 
+					},
 					scales: {
 						yAxes: [{
-							display: false, 
+							display: false,
 							ticks: {
-								beginAtZero: true, 
-								max: 100, 
-								min: 0, 
-								stepSize: 20, 
-								padding: 0, 
-								display: false, 
-							}, 
+								beginAtZero: true,
+								max: 100,
+								min: 0,
+								stepSize: 20,
+								padding: 0,
+								display: false,
+							},
 							gridLines: {
-								drawBorder: false, 
+								drawBorder: false,
 								display: false
 							}
 						}],
 						xAxes: [{
-							display: false, 
+							display: false,
 							ticks: {
-								padding: 0, 
-								display: false, 
+								padding: 0,
+								display: false,
 								beginAtZero: true
-							}, 
+							},
 							gridLines: {
-								display: false, 
+								display: false,
 								drawBorder: false
 							}
 						}]
@@ -1138,11 +1111,10 @@
 			});
 		}
 	}
-	
+
 	var chartWidget17 = function(){
 		//#chart_widget_17
 		if(jQuery('#chart_widget_17').length > 0 ){
-
 			let data = [];
 			const totalPoints = 50;
 
@@ -1163,15 +1135,13 @@
 				for (let i = 0; i < data.length; ++i) {
 					res.push([i, data[i]])
 				}
-				return res; 
-				
+				return res;
 			}
 
 			// Set up the control widget
 			const updateInterval = 1000;
 
 				if(jQuery('#chart_widget_17').length > 0 ){
-			
 				 const chart = jQuery.plot('#chart_widget_17', [getRandomData()], {
 					colors: ['#430b58'],
 					series: {
@@ -1203,23 +1173,22 @@
 							color: '#fff'
 						}
 					}
-				}); 
+				});
 
 				function update_chart() {
 					chart.setData([getRandomData()]);
 					chart.draw();
 					setTimeout(update_chart, updateInterval);
 				}
-			
+
 				update_chart();
-				
 			}
 		}
 	}
-	
+
 	var widgetSparkLinedash = function(){
 		/* Widget */
-		if(jQuery('#widget_sparklinedash').length > 0 ){	 
+		if(jQuery('#widget_sparklinedash').length > 0 ){
 			 $("#widget_sparklinedash").sparkline([10, 15, 26, 27, 28, 31, 34, 40, 41, 44, 49, 64, 68, 69, 72], {
 				type: "bar",
 				height: "40",
@@ -1232,7 +1201,7 @@
 		}
 	}
 	var widgetSparkBar = function(){
-		if(jQuery('#widget_spark-bar').length > 0 ){	
+		if(jQuery('#widget_spark-bar').length > 0 ){
 			$("#widget_spark-bar").sparkline([33, 22, 68, 54, 8, 30, 74, 7, 36, 5, 41, 19, 43, 29, 38], {
 				type: "bar",
 				height: "40",
@@ -1240,10 +1209,10 @@
 				barSpacing: 3,
 				barColor: "rgb(7, 135, 234)"
 			});
-		}	
-	}	
+		}
+	}
 	var widgetStackedBarChart = function(){
-		if(jQuery('#widget_StackedBarChart').length > 0 ){	
+		if(jQuery('#widget_StackedBarChart').length > 0 ){
 			$('#widget_StackedBarChart').sparkline([
 				[1, 4, 2],
 				[2, 3, 2],
@@ -1253,20 +1222,19 @@
 					type: "bar",
 					height: "40",
 					barWidth: 3,
-					barSpacing: 3, 
+					barSpacing: 3,
 					stackedBarColor: ['#36b9d8', '#4bffa2', 'rgba(68, 0, 235, .8)']
 				});
 		}
 	}
 	var widgetTristate = function(){
-		if(jQuery('#widget_tristate').length > 0 ){	
-
+		if(jQuery('#widget_tristate').length > 0 ){
 			$("#widget_tristate").sparkline([1, 1, 0, 1, -1, -1, 1, -1, 0, 0, 1, 1], {
 				type: 'tristate',
 				height: "40",
 				barWidth: 3,
-				barSpacing: 3, 
-				colorMap: ['#36b9d8', '#4bffa2', 'rgba(68, 0, 235, .8)'], 
+				barSpacing: 3,
+				colorMap: ['#36b9d8', '#4bffa2', 'rgba(68, 0, 235, .8)'],
 				negBarColor: 'rgba(245, 60, 121, .8)'
 			});
 		}
@@ -1280,10 +1248,10 @@
 				barWidth: "3",
 				resize: !0,
 				// barSpacing: "7",
-				barColor: "rgb(68, 11, 89)", 
+				barColor: "rgb(68, 11, 89)",
 				width: '100%'
 			});
-		}	
+		}
 	}
 
 	var chartReinitialize = function(selector, notInList = []){
@@ -1300,26 +1268,24 @@
 			}
 		  });
 		});
-		
-	}	
-	
+	}
+
 	/* Function ============ */
 		return {
 			init:function(){
 			},
-			
-			
+
 			load:function(){
-				 activityChart();	
+				 activityChart();
 				activeUser();
-				chartWidget1();	
-				chartWidget2();	
-				chartWidget3();		
+				chartWidget1();
+				chartWidget2();
+				chartWidget3();
 				chartWidget4();
 				chartWidget5();
 				chartWidget6();
 				chartWidget7();
-				chartWidget8(); 
+				chartWidget8();
 				chartWidget9();
 				chartWidget10();
 				chartWidget11();
@@ -1327,13 +1293,13 @@
 				chartWidget15();
 				chartWidget16();
 				chartWidget17();
-				widgetSparkLinedash(); 
+				widgetSparkLinedash();
 				widgetSparkBar();
 				widgetStackedBarChart();
 				widgetTristate();
 				widgetCompositeBar();
 			},
-			
+
 			resize:function(){
 				chartWidget5();
 				chartWidget6();
@@ -1341,21 +1307,18 @@
 				chartWidget8();
 			}
 		}
-	
 	}();
 
 	jQuery(document).ready(function(){
 	});
-		
+
 	jQuery(window).on('load',function(){
 		dlabChartlist.load();
 	});
 
 	jQuery(window).on('resize',function(){
 		setTimeout(function(){
-			dlabChartlist.resize();	
+			dlabChartlist.resize();
 		}, 500);
-		
-	});     
-
+	});
 })(jQuery);

@@ -8,5 +8,7 @@ namespace Infrastructure.Repositories
         public SupervisorRepository(ApplicationContext context) : base(context)
         {
         }
+
+
     }
 }

@@ -1,9 +1,8 @@
-
 "use strict"
 
 var dlabSettingsOptions = {};
 
-function getUrlParams(dParam) 
+function getUrlParams(dParam)
 	{
 		var dPageURL = window.location.search.substring(1),
 			dURLVariables = dPageURL.split('&'),
@@ -20,18 +19,17 @@ function getUrlParams(dParam)
 	}
 
 (function($) {
-	
 	"use strict"
-	
+
 	/* var direction =  getUrlParams('dir');
-	
+
 	if(direction == 'rtl')
 	{
-        direction = 'rtl'; 
+        direction = 'rtl';
     }else{
-        direction = 'ltr'; 
+        direction = 'ltr';
     } */
-	
+
 	dlabSettingsOptions = {
 		typography: "poppins",
 		version: "light",
@@ -44,21 +42,16 @@ function getUrlParams(dParam)
 		sidebarPosition: "fixed",
 		headerPosition: "fixed",
 		containerLayout: "full",
-
 	};
 
-	
-	
-	
-	new dlabSettings(dlabSettingsOptions); 
+	new dlabSettings(dlabSettingsOptions);
 
 	jQuery(window).on('resize',function(){
         /*Check container layout on resize */
 		///alert(dlabSettingsOptions.primary);
         dlabSettingsOptions.containerLayout = $('#container_layout').val();
         /*Check container layout on resize END */
-        
-		new dlabSettings(dlabSettingsOptions); 
+
+		new dlabSettings(dlabSettingsOptions);
 	});
-	
 })(jQuery);

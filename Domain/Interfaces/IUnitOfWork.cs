@@ -5,7 +5,8 @@
         ISupervisorRepository Supervisors { get; }
         IStudentRepository Students { get; }
         IProjectRepository Projects { get; }
-        Task SaveAsync();
+        IDepartmentRepository Departments { get; }
 
+        Task SaveAsync();
     }
 }

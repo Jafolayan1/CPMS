@@ -2,8 +2,7 @@
 
 namespace Domain.Interfaces
 {
-	public interface IProjectRepository : IGenericRepository<Project>
-	{
-
-	}
+    public interface IProjectRepository : IGenericRepository<Project>
+    {
+    }
 }

@@ -3,10 +3,14 @@
 	var student = ViewData["student"] as Student;
 	ForgotPasswordVM fpass = new ForgotPasswordVM();
 }
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.js"></script>
+</head>
 
 <Partial name="_ProfileHeader" />
 <Partial name="_Sidebar" />
-
 
  <div class="content-body">
 			<div class="container-fluid">
@@ -124,7 +128,15 @@
 															<h5 class="f-w-500">Department <span class="pull-end">:</span>
 															</h5>
 														</div>
-														<div class="col-sm-9 col-7"><span>@student.Department</span>
+														<div class="col-sm-9 col-7"><span>@student.Department.Name</span>
+														</div>
+													</div>
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Supervisor <span class="pull-end">:</span>
+															</h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>@student.Supervisor.FullName</span>
 														</div>
 													</div>
 												</div>
@@ -133,60 +145,76 @@
 												<div class="pt-3">
 													<div class="settings-form">
 														<h4 class="text-primary">Update Profile</h4>
-														<form asp-area="" asp-controller="Account" asp-action="ProfileUpdate" method="post" enctype="multipart/form-data">
+														<form asp-controller="Dashboard" asp-action="ProfileUpdate" method="post" enctype="multipart/form-data">
 															 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 															<input asp-for="@student.UserId" name="UserId" type="hidden" />
 															<input asp-for="@student.Id" name="Id" type="hidden" />
-															<input asp-for="@student.ImageUrl" name="ImageUrl" type="hidden" />
-
-
 															<input asp-for="@student.MatricNo" name="MatricNo" value="@student.MatricNo" type="hidden" />
+
 															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Surname</label>
-															<input asp-for="@student.Surname" name="Surname" type="text" placeholder="Surnmae" class="form-control">
+															<input asp-for="@student.Surname" name="Surname" type="text"  class="form-control">
 																</div>
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Othernames</label>
-															<input asp-for="@student.OtherNames" name="OtherNames" type="text" placeholder="OtherNames" class="form-control">
+															<input asp-for="@student.OtherNames" name="OtherNames" id="Othername" type="text" class="form-control">
 																</div>
 															</div>
 															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Email</label>
-																	<input asp-for="@student.Email" name="Email" type="email" placeholder="Email" class="form-control">
+																	<input asp-for="@student.Email" name="Email" type="email" class="form-control">
 																</div>
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Phone No</label>
-																	<input asp-for ="@student.PhoneNumber" name="PhoneNumber" type="text" placeholder="Phone No" class="form-control">
+																	<input asp-for ="@student.PhoneNumber" name="PhoneNumber" type="text" class="form-control">
 																</div>
 															</div>
 															
 															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Department</label>
-																	<select asp-for="@student.Department" name="Department" class="form-control default-select wide" id="inputState">
-																		<option selected="">@student.Department</option>
-																		<option>Computer Science</option>
-																		<option>Computer Engineering</option>
-																	</select>
+																	@if(ViewBag.Departments != null)
+																	{
+																		<select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))">
+																			<option value="@student.DepartmentId"> @student.Department.Name </option>
+
+																		</select>
+																	}
+																	else{
+																		<select class="form-control  default-select wide" id="departmentId">
+																			<option> Pleases Select  </option>
+																		</select>
+																	}
 																</div>
 																<div class="mb-3 col-md-6">
+																	<label class="form-label">Supervisor</label>
+																		<select asp-for="@student.SupervisorId"  name="SupervisorId" class="form-control wide" id="supervisorId">
+																<option value="@student.SupervisorId"> @student.Supervisor.FullName </option>
+																		</select>
+																</div>
+															</div>
+															<div class="row">
+																<div class="mb-3 col-md-6">
 																	<label class="form-label">Level</label>
-																	<select asp-for="@student.Level" name="Level" class="form-control default-select wide" id="inputState">
-																		<option selected="">@student.Level</option>
-																		<option>HND II</option>
-																		<option>ND II</option>
+																	<select asp-for="@student.Level" name="Level" asp-items="Html.GetEnumSelectList<Level>()" class="form-control default-select wide">
+																		<option selected="selected" value="@student.Level"> @student.Level  </option>
 																	</select>
 																</div>
-																<div class="input-group mb-3">
-																	<span class="input-group-text">Upload Image</span>
-																	<div class="form-file">
-																		<input asp-for="@student.File" name="File" type="file" class="form-file-input form-control">
+
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Image</label>
+																	<div class="input-group mb-3">
+																		<span class="input-group-text">Upload Image</span>
+																		<div class="form-file">
+																			<input asp-for="@student.File" name="File" type="file" class="form-file-input form-control">
+																		</div>
 																	</div>
 																</div>
 															</div>
+															
 															<button class="btn btn-primary" type="submit">Submit</button>
 														</form>
 													</div>
@@ -206,7 +234,7 @@
 																</div>
 																
 															</div>
-															<button class="btn btn-primary" type="submit">Submit</button>
+													<button class="btn btn-primary" type="submit">Submit</button>
 														</form>
 													</div>
 												</div>
@@ -220,4 +248,22 @@
 					</div>
 				</div>
 			</div>
-		</div>
+</div>
+
+<script type="text/javascript">
+		$(function(){
+			$('#departmentId').change(function () {
+				var url = '@Url.Content("~/")' + "CascadeHelp/getSupervisors";
+				var ddlSource = "#departmentId";
+				$.getJSON(url, { Id: $(ddlSource).val() }, function (dat) {
+					var items = "";
+					$("#supervisorId").empty();
+					$.each(dat, function (i, row) {
+						items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+					});
+					$("#supervisorId").html(items);
+				});
+			});
+		});
+</script>
+

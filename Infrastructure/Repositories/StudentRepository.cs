@@ -13,7 +13,7 @@ namespace Infrastructure.Repositories
 
         public override Student GetById(object id)
         {
-            return _context.Students.Include(u => u.User).AsNoTracking().FirstOrDefault();
+            return _context.Students.Include(u => u.User).Include(d => d.Department).Include(s => s.Supervisor).AsNoTracking().FirstOrDefault();
         }
     }
 }

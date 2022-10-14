@@ -23,12 +23,11 @@ namespace Infrastructure.Repositories
         public void AddRange(IEnumerable<T> entities)
         {
             _context.Set<T>().AddRange(entities);
-
         }
 
         public virtual IEnumerable<T> Find(Expression<Func<T, bool>> expression, bool trackchanges)
         {
-            return !trackchanges ? _context.Set<T>().AsNoTracking().Where(expression) : _context.Set<T>().Where(expression);
+            return !trackchanges ? _context.Set<T>().AsNoTracking().Where(expression).ToList() : _context.Set<T>().Where(expression).ToList();
         }
 
         public IEnumerable<T> GetAll()
@@ -49,7 +48,6 @@ namespace Infrastructure.Repositories
         public void RemoveRange(IEnumerable<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);
-
         }
 
         public void Update(T entity)

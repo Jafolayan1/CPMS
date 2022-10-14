@@ -20,5 +20,4 @@
         e.stopPropagation();
         input.clockpicker('show').clockpicker('toggleView', 'minutes');
     });
-
 })(jQuery)

@@ -13,8 +13,7 @@
     });
     //basic slider ^
 
-
-    //keyboard slider 
+    //keyboard slider
     let keyboardslider = document.getElementById('keyboardslider');
     noUiSlider.create(keyboardslider, {
         start: 10,
@@ -27,7 +26,6 @@
 
     var handle = keyboardslider.querySelector('.noUi-handle');
     handle.addEventListener('keydown', function (e) {
-
         var value = Number(keyboardslider.noUiSlider.get());
 
         if (e.which === 37) {
@@ -42,7 +40,6 @@
         }
     });
     //keyboard slider ^
-
 
     //working with date
     // Create a new date from a string, return as a timestamp.
@@ -90,8 +87,6 @@
         "November", "December"
     ];
 
-    
-    
     dateSlider.noUiSlider.on('update', function (values, handle) {
         dateValues[handle].innerHTML = formatDate(new Date(+values[handle]));
     });
@@ -121,12 +116,10 @@
     }
     //working with date ^
 
-
     //html5 input element
     var select = document.getElementById('input-select');
     // Append the option elements
     for (var i = -20; i <= 40; i++) {
-
         var option = document.createElement("option");
         option.text = i;
         option.value = i;
@@ -146,7 +139,6 @@
 
     var inputNumber = document.getElementById('input-number');
     html5Slider.noUiSlider.on('update', function (values, handle) {
-
         var value = values[handle];
 
         if (handle) {
@@ -164,7 +156,6 @@
         html5Slider.noUiSlider.set([null, this.value]);
     });
     //html5 input element ^
-
 
     //non-linear slider
     var nonLinearSlider = document.getElementById('nonlinear');
@@ -186,14 +177,13 @@
         document.getElementById('lower-value'), // 0
         document.getElementById('upper-value')  // 1
     ];
-    
+
     // Display the slider value and how far the handle moved
     // from the left edge of the slider.
     nonLinearSlider.noUiSlider.on('update', function (values, handle, unencoded, isTap, positions) {
         nodes[handle].innerHTML = values[handle] + ', ' + positions[handle].toFixed(2) + '%';
     });
     //non-linear slider ^
-
 
     //locking sliders together
     var lockedState = false;
@@ -214,28 +204,27 @@
     });
 
     function crossUpdate(value, slider) {
-
         // If the sliders aren't interlocked, don't
         // cross-update.
         if (!lockedState) return;
-    
+
         // Select whether to increase or decrease
         // the other slider value.
         var a = slider1 === slider ? 0 : 1;
-    
+
         // Invert a
         var b = a ? 0 : 1;
-    
+
         // Offset the slider value.
         value -= lockedValues[b] - lockedValues[a];
-    
+
         // Set the value
         slider.noUiSlider.set(value);
     }
 
     noUiSlider.create(slider1, {
         start: 60,
-    
+
         // Disable animation on value-setting,
         // so the sliders respond immediately.
         animate: false,
@@ -244,7 +233,7 @@
             max: 100
         }
     });
-    
+
     noUiSlider.create(slider2, {
         start: 80,
         animate: false,
@@ -253,11 +242,11 @@
             max: 100
         }
     });
-    
+
     slider1.noUiSlider.on('update', function (values, handle) {
         slider1Value.innerHTML = values[handle];
     });
-    
+
     slider2.noUiSlider.on('update', function (values, handle) {
         slider2Value.innerHTML = values[handle];
     });
@@ -268,19 +257,18 @@
             Number(slider2.noUiSlider.get())
         ];
     }
-    
+
     slider1.noUiSlider.on('change', setLockedValues);
     slider2.noUiSlider.on('change', setLockedValues);
-    
+
     slider1.noUiSlider.on('slide', function (values, handle) {
         crossUpdate(values[handle], slider2);
     });
-    
+
     slider2.noUiSlider.on('slide', function (values, handle) {
         crossUpdate(values[handle], slider1);
     });
     //locking sliders together ^
-
 
     //Moving the slider by clicking pips
     var pipsSlider = document.getElementById('slider-pips');
@@ -300,13 +288,11 @@
     }
 
     for (var i = 0; i < pips.length; i++) {
-
         // For this example. Do this in CSS!
         pips[i].style.cursor = 'pointer';
         pips[i].addEventListener('click', clickOnPip);
     }
     //Moving the slider by clicking pips ^
-
 
     //Colored Connect Elements
     var slider = document.getElementById('slider-color');
@@ -326,7 +312,6 @@
         connect[i].classList.add(classes[i]);
     }
     //Colored Connect Elements ^
-
 
     //keypress slider
     var keypressSlider = document.getElementById('keypress');
@@ -353,13 +338,11 @@
 
     // Listen to keydown events on the input field.
     inputs.forEach(function (input, handle) {
-
         input.addEventListener('change', function () {
             keypressSlider.noUiSlider.setHandle(handle, this.value);
         });
 
         input.addEventListener('keydown', function (e) {
-
             var values = keypressSlider.noUiSlider.get();
             var value = Number(values[handle]);
 
@@ -375,7 +358,6 @@
             // 38 is key up,
             // 40 is key down.
             switch (e.which) {
-
                 case 13:
                     keypressSlider.noUiSlider.setHandle(handle, this.value);
                     break;
@@ -415,7 +397,6 @@
     });
     //keypress slider ^
 
-
     //skipstep slider
     var skipSlider = document.getElementById('skipstep');
     noUiSlider.create(skipSlider, {
@@ -440,12 +421,11 @@
         document.getElementById('skip-value-lower'),
         document.getElementById('skip-value-upper')
     ];
-    
+
     skipSlider.noUiSlider.on('update', function (values, handle) {
         skipValues[handle].innerHTML = values[handle];
     });
     //skipstep slider ^
-
 
     //Using the slider with huge numbers
     var bigValueSlider = document.getElementById('slider-huge');
@@ -478,7 +458,6 @@
     });
     //Using the slider with huge numbers ^
 
-
     //creating a toggle
     var toggleSlider = document.getElementById('slider-toggle');
     noUiSlider.create(toggleSlider, {
@@ -501,7 +480,6 @@
         }
     });
     //creating a toggle ^
-
 
     //soft limits
     var softSlider = document.getElementById('soft');
@@ -527,14 +505,12 @@
     });
     //soft limits ^
 
-
     //color picker
     var resultElement = document.getElementById('result');
     var sliders = document.getElementsByClassName('sliders');
     var colors = [0, 0, 0];
 
     [].slice.call(sliders).forEach(function (slider, index) {
-
         noUiSlider.create(slider, {
             start: 127,
             connect: [true, false],
@@ -550,7 +526,6 @@
 
         // Bind the color changing function to the update event.
         slider.noUiSlider.on('update', function () {
-
             colors[index] = slider.noUiSlider.get();
 
             var color = 'rgb(' + colors.join(',') + ')';
@@ -560,7 +535,6 @@
         });
     });
     //color picker ^
-
 
     //stepping and snapping the values
     var stepSlider = document.getElementById('slider-step');
@@ -579,7 +553,6 @@
     });
     //stepping and snapping the values ^
 
-
     //Stepping in non-linear sliders
     var nonLinearStepSlider = document.getElementById('slider-non-linear-step');
     noUiSlider.create(nonLinearStepSlider, {
@@ -597,7 +570,6 @@
         nonLinearStepSliderValueElement.innerHTML = values[handle];
     });
     //Stepping in non-linear sliders ^
-
 
     //Snapping between steps
     var snapSlider = document.getElementById('slider-snap');
@@ -620,12 +592,11 @@
         document.getElementById('slider-snap-value-lower'),
         document.getElementById('slider-snap-value-upper')
     ];
-    
+
     snapSlider.noUiSlider.on('update', function (values, handle) {
         snapValues[handle].innerHTML = values[handle];
     });
     //Snapping between steps ^
-
 
     //get and set slider values
     var slider = document.getElementById('slider');
@@ -647,7 +618,6 @@
         alert(slider.noUiSlider.get());
     });
     //get and set slider values ^
-
 
     //Number formatting
     var sliderFormat = document.getElementById('slider-format');
@@ -678,7 +648,6 @@
     });
     //Number formatting ^
 
-
     //slider margin
     var marginSlider = document.getElementById('slider-margin');
     noUiSlider.create(marginSlider, {
@@ -701,7 +670,6 @@
     });
     //slider margin ^
 
-
     //slider limit
     var limitSlider = document.getElementById('slider-limit');
     noUiSlider.create(limitSlider, {
@@ -722,7 +690,6 @@
         (handle ? limitFieldMax : limitFieldMin).innerHTML = values[handle];
     });
     //slider limit ^
-
 
     //slider padding
     var paddingSlider = document.getElementById('slider-padding');
@@ -746,7 +713,6 @@
     });
     //slider padding ^
 
-
     //slider orientation
     var verticalSlider = document.getElementById('slider-vertical');
     noUiSlider.create(verticalSlider, {
@@ -758,7 +724,6 @@
         }
     });
     //slider orientation ^
-
 
     //slider direction
     var directionSlider = document.getElementById('slider-direction');
@@ -777,7 +742,6 @@
     });
     //slider direction ^
 
-
     //slider tooltips
     var tooltipSlider = document.getElementById('slider-tooltips');
     noUiSlider.create(tooltipSlider, {
@@ -789,7 +753,6 @@
         }
     });
     //slider tooltips ^
-
 
     //slider behaviour drag
     var behaviourSlider = document.getElementById('behaviour');
@@ -805,7 +768,6 @@
     });
     //slider behaviour drag ^
 
-
     //slider behaviour tap
     var tapSlider = document.getElementById('tap');
     noUiSlider.create(tapSlider, {
@@ -818,7 +780,6 @@
         }
     });
     //slider behaviour tap ^
-
 
     //slider behaviour fixed dragging
     var dragFixedSlider = document.getElementById('drag-fixed');
@@ -834,7 +795,6 @@
     });
     //slider behaviour fixed dragging ^
 
-
     //slider behaviour snap
     var snapSlider2 = document.getElementById('snap');
     noUiSlider.create(snapSlider2, {
@@ -847,7 +807,6 @@
         }
     });
     //slider behaviour snap ^
-
 
     //slider behaviour hover
     var hoverSlider = document.getElementById('hover');
@@ -868,7 +827,6 @@
     });
     //slider behaviour hover ^
 
-
     //slider behaviour unconstrained
     var unconstrainedSlider = document.getElementById('unconstrained');
     var unconstrainedValues = document.getElementById('unconstrained-values');
@@ -888,8 +846,7 @@
     });
     //slider behaviour unconstrained ^
 
-
-    //slider behaviour combined 
+    //slider behaviour combined
     var dragTapSlider = document.getElementById('combined');
     noUiSlider.create(dragTapSlider, {
         start: [40, 60],
@@ -901,7 +858,6 @@
         }
     });
     //slider behaviour combined ^
-
 
     //slider range left to right
     var range_all_sliders = {
@@ -921,7 +877,6 @@
     });
     //slider range left to right ^
 
-
     //slider range right to left
     var pipsRangeRtl = document.getElementById('pips-range-rtl');
     noUiSlider.create(pipsRangeRtl, {
@@ -935,7 +890,6 @@
     });
     //slider range right to left ^
 
-
     //slider range vertical top to bottom
     var pipsRangeVertical = document.getElementById('pips-range-vertical');
     noUiSlider.create(pipsRangeVertical, {
@@ -948,7 +902,6 @@
         }
     });
     //slider range vertical top to bottom ^
-
 
     //slider range vertical bottom to top
     var pipsRangeVerticalRtl = document.getElementById('pips-range-vertical-rtl');
@@ -964,10 +917,6 @@
     });
     //slider range vertical bottom to top ^
 
-
-    
-
-
     //pip position
     var pipsPositions = document.getElementById('pips-positions');
     noUiSlider.create(pipsPositions, {
@@ -980,7 +929,6 @@
         }
     });
     //pip position ^
-
 
     //pip position stepped
     var positionsStepped = document.getElementById('pips-positions-stepped');
@@ -996,7 +944,6 @@
     });
     //pip position stepped ^
 
-
     //pips count
     var pipsCount = document.getElementById('pips-count');
     noUiSlider.create(pipsCount, {
@@ -1009,7 +956,6 @@
         }
     });
     //pips count ^
-
 
     //pips count stepped
     var pipsCountStepped = document.getElementById('pips-count-stepped');
@@ -1025,7 +971,6 @@
     });
     //pips count stepped ^
 
-
     //pips values
     var pipsValues = document.getElementById('pips-values');
     noUiSlider.create(pipsValues, {
@@ -1038,7 +983,6 @@
         }
     });
     //pips values ^
-
 
     //pips values stepped
     var pipsValuesStepped = document.getElementById('pips-values-stepped');
@@ -1054,12 +998,10 @@
     });
     //pips values stepped ^
 
-
     //disable slider
     var disSlider1 = document.getElementById('disable1');
     var checkbox1 = document.getElementById('checkbox1');
     function toggle(element) {
-
         // If the checkbox is checked, disabled the slider.
         // Otherwise, re-enable it.
         if (this.checked) {
@@ -1083,7 +1025,6 @@
     });
     //disable slider ^
 
-
     //disable slider 2
     var disSlider2 = document.getElementById('disable2');
     var origins = disSlider2.getElementsByClassName('noUi-origin');
@@ -1101,12 +1042,11 @@
     checkbox2.addEventListener('click', function () {
         toggle.call(this, origins[0]);
     });
-    
+
     checkbox3.addEventListener('click', function () {
         toggle.call(this, origins[1]);
     });
     //disable slider 2 ^
-
 
     //updating a slider
     var updateSlider = document.getElementById('slider-update');
@@ -1146,9 +1086,4 @@
         updateSliderRange(10, 40);
     });
     //updating a slider ^
-
-
-
-
-
 })(jQuery);

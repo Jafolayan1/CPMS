@@ -1,32 +1,28 @@
-
 (function($) {
     "use strict"
-
 
 /****************
 Piety chart
 *****************/
 var dlabPiety = function(){
-	
 	var getGraphBlockSize = function (selector) {
 		var screenWidth = $(window).width();
 		var graphBlockSize = '100%';
-		
+
 		if(screenWidth <= 768)
 			{
 				screenWidth = (screenWidth < 300 )?screenWidth:300;
-				
+
 				var blockWidth  = jQuery(selector).parent().innerWidth() - jQuery(selector).parent().width();
-		
+
 				blockWidth = Math.abs(blockWidth);
-				
-				var graphBlockSize = screenWidth - blockWidth - 10;	
-			}		
-		
+
+				var graphBlockSize = screenWidth - blockWidth - 10;
+			}
+
 		return graphBlockSize;
-		
 	}
-	
+
 	var handlePietyBarLine = function(){
 		if(jQuery('.bar-line').length > 0 ){
 			$(".bar-line").peity("bar", {
@@ -39,13 +35,13 @@ var dlabPiety = function(){
     var handlePietyPie = function(){
 		if(jQuery('span.pie').length > 0 ){
 			$("span.pie").peity("pie", {
-				fill: ['#00a15d', 'rgba(0,161,91, .3)'], 
+				fill: ['#00a15d', 'rgba(0,161,91, .3)'],
 				width: "100",
 				height: "100"
 			});
 		}
 	}
-    
+
     var handlePietyDonut = function(){
 		if(jQuery('span.donut').length > 0 ){
 			$("span.donut").peity("donut", {
@@ -54,23 +50,23 @@ var dlabPiety = function(){
 			});
 		}
 	}
-    
+
 	var handlePietyLine = function(){
 		if(jQuery('.peity-line').length > 0 ){
 			$(".peity-line").peity("line", {
-				fill: ["rgba(255,167,215,1)"], 
-				stroke: '#00a15d', 
+				fill: ["rgba(255,167,215,1)"],
+				stroke: '#00a15d',
 				width: "100%",
 				height: "100"
 			});
 		}
 	}
-    
+
 	var handlePietyLine2 = function(){
 		if(jQuery('.peity-line-2').length > 0 ){
 			$(".peity-line-2").peity("line", {
-				fill: "#fa707e", 
-				stroke: "#f77f8b", 
+				fill: "#fa707e",
+				stroke: "#f77f8b",
 				//width: "100%",
 				width: getGraphBlockSize('.peity-line-2'),
 				strokeWidth: "3",
@@ -78,50 +74,50 @@ var dlabPiety = function(){
 			});
 		}
 	}
-	
+
 	var handlePietyLine3 = function(){
 		if(jQuery('.peity-line-3').length > 0 ){
 			$(".peity-line-3").peity("line", {
-				fill: "#673bb7", 
-				stroke: "#ab84f3", 
+				fill: "#673bb7",
+				stroke: "#ab84f3",
 				width: "100%",
 				strokeWidth: "3",
 				height: "150"
 			});
 		}
 	}
-	
+
 	var handlePietyBar = function(){
 		if(jQuery('.bar').length > 0 ){
 			$(".bar").peity("bar", {
-				fill: ["#00a15d", "#FF5E4B", "#3693FF"],  
+				fill: ["#00a15d", "#FF5E4B", "#3693FF"],
 				width: "100%",
 				height: "100",
 			});
 		}
 	}
-	
+
 	var handlePietyBar1 = function(){
 		if(jQuery('.bar1').length > 0 ){
 			$(".bar1").peity("bar", {
-				fill: ["#00a15d", "#FF5E4B", "#3693FF"],    
+				fill: ["#00a15d", "#FF5E4B", "#3693FF"],
 				//width: "100%",
 				width: getGraphBlockSize('.bar1'),
 				height: "140"
 			});
 		}
 	}
-	
+
 	var handlePietyBarColours1 = function(){
 		if(jQuery('.bar-colours-1').length > 0 ){
 			$(".bar-colours-1").peity("bar", {
-				fill: ["#00a15d", "#FF5E4B", "#3693FF"],  
+				fill: ["#00a15d", "#FF5E4B", "#3693FF"],
 				width: "100",
 				height: "100"
 			});
 		}
 	}
-	
+
 	var handlePietyBarColours2 = function(){
 		if(jQuery('.bar-colours-2').length > 0 ){
 			$(".bar-colours-2").peity("bar", {
@@ -133,7 +129,7 @@ var dlabPiety = function(){
 			});
 		}
 	}
-	
+
 	var handlePietyBarColours3 = function(){
 		if(jQuery('.bar-colours-3').length > 0 ){
 			$(".bar-colours-3").peity("bar", {
@@ -145,7 +141,7 @@ var dlabPiety = function(){
 			});
 		}
 	}
-    
+
 	var handlePietyColours1 = function(){
 		if(jQuery('.pie-colours-1').length > 0 ){
 			$(".pie-colours-1").peity("pie", {
@@ -155,7 +151,7 @@ var dlabPiety = function(){
 			});
 		}
 	}
-	
+
     var handlePietyColours2 = function(){
 		if(jQuery('.pie-colours-2').length > 0 ){
 			$(".pie-colours-2").peity("pie", {
@@ -165,34 +161,33 @@ var dlabPiety = function(){
 			});
 		}
 	}
-    
+
     var handlePietyDataAttr = function(){
 		if(jQuery('.data-attr').length > 0 ){
 			$(".data-attr").peity("donut");
 		}
 	}
-    
+
     var handlePietyUpdatingChart = function(){
 		var t = $(".updating-chart").peity("line", {
 			fill: ['rgba(255,167,215,1)'],
-			stroke: 'rgb(0,161,91)', 
+			stroke: 'rgb(0,161,91)',
 			width: "100%",
 			height: 100
 		});
-		
+
 		 setInterval(function() {
 			var e = Math.round(10 * Math.random()),
 			i = t.text().split(",");
 			i.shift(), i.push(e), t.text(i.join(",")).change()
 		}, 1e3);
 	}
-    
+
 	/* Function ============ */
 	return {
 		init:function(){
 		},
-		
-		
+
 		load:function(){
 			handlePietyBarLine();
 			handlePietyPie();
@@ -210,7 +205,7 @@ var dlabPiety = function(){
 			handlePietyDataAttr();
 			handlePietyUpdatingChart();
 		},
-		
+
 		resize:function(){
 			handlePietyBarLine();
 			handlePietyPie();
@@ -229,27 +224,20 @@ var dlabPiety = function(){
 			//handlePietyUpdatingChart();
 		}
 	}
-	
 }();
- 
+
 	jQuery(document).ready(function(){
-		
-		
-		
 	});
-		
+
 	jQuery(window).on('load',function(){
 		setTimeout(function(){
 			dlabPiety.load();
-		}, 1000); 
-		
+		}, 1000);
 	});
 
 	jQuery(window).on('resize',function(){
 		setTimeout(function(){
 			dlabPiety.resize();
-		}, 1000); 
-		
-	});      
-
+		}, 1000);
+	});
 })(jQuery);

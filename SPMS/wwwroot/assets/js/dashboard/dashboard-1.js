@@ -1,42 +1,32 @@
-
-
 (function($) {
     /* "use strict" */
-	
+
  var dlabChartlist = function(){
-	
 	var screenWidth = $(window).width();
 	let draw = Chart.controllers.line.__super__.draw; //draw shadow
-	
-	
-	
-	
+
 	var activityChart = function(){
 		var activity = document.getElementById("activity");
 			if (activity !== null) {
 				var activityData = [{
 						first: [ 30, 35, 30, 50, 30, 50, 40, 45],
 						second: [ 20, 25, 20, 15, 25, 22, 24, 20]
-						
 					},
 					{
 						first: [ 35, 35, 40, 30, 38, 40, 50, 38],
 						second: [ 30, 20, 35, 20, 25, 30, 25, 20]
-						
 					},
 					{
 						first: [ 35, 40, 40, 30, 38, 32, 42, 32],
 						second: [ 20, 25, 35, 25, 22, 21, 21, 38]
-						
 					},
 					{
 						first: [ 35, 40, 30, 38, 32, 42, 30, 35],
 						second: [ 25, 30, 35, 25, 20, 22, 25, 38]
-					
 					}
 				];
 				activity.height = 300;
-				
+
 				var config = {
 					type: "line",
 					data: {
@@ -60,7 +50,6 @@
 								borderColor: "#4955FA",
 								data: activityData[0].second,
 								borderWidth: 6,
-								
 							},
 							{
 								label: "Inactive",
@@ -68,8 +57,7 @@
 								borderColor: "#F04949",
 								data: activityData[0].third,
 								borderWidth: 6,
-								
-							} 
+							}
 						]
 					},
 					options: {
@@ -81,7 +69,7 @@
 								}
 						},
 						legend:false,
-						
+
 						scales: {
 							yAxes: [{
 								gridLines: {
@@ -141,8 +129,6 @@
 					});
 				});
 			}
-	
-		
 	}
 	var redial = function(){
 		  var options = {
@@ -164,7 +150,7 @@
               strokeWidth: '100%',
               margin: 5,
             },
-			
+
 			/* hollow: {
               margin: 30,
               size: '45%',
@@ -174,7 +160,7 @@
               imageOffsetY: 0,
               position: 'front',
             }, */
-			
+
             dataLabels: {
               name: {
                 show: false
@@ -196,7 +182,7 @@
 			},
           }
         }
-		
+
 		],
         grid: {
           padding: {
@@ -224,32 +210,28 @@
 
         var chart = new ApexCharts(document.querySelector("#redial"), options);
         chart.render();
-	
-	
 	}
 	var chartBar = function(){
-		
 		var options = {
 			  series: [
 				{
 					name: 'Running',
 					data: [50, 18, 90, 40, 90],
-					//radius: 12,	
-				}, 
+					//radius: 12,
+				},
 				{
 				  name: 'Cycling',
 				  data: [80, 40, 55, 20, 45]
-				}, 
-				
+				},
+
 			],
 				chart: {
 				type: 'bar',
 				height: 350,
-				
+
 				toolbar: {
 					show: false,
 				},
-				
 			},
 			plotOptions: {
 			  bar: {
@@ -258,7 +240,6 @@
 				endingShape: "rounded",
 				borderRadius: 12,
 			  },
-			  
 			},
 			states: {
 			  hover: {
@@ -272,14 +253,12 @@
 			markers: {
 		shape: "circle",
 		},
-		
-		
+
 			legend: {
 				show: false,
 				fontSize: '12px',
 				labels: {
 					colors: '#000000',
-					
 					},
 				markers: {
 				width: 18,
@@ -287,7 +266,7 @@
 				strokeWidth: 10,
 				strokeColor: '#fff',
 				fillColors: undefined,
-				radius: 12,	
+				radius: 12,
 				}
 			},
 			stroke: {
@@ -341,7 +320,7 @@
 					stops: [0, 50, 50],
 					colorStops: []
 				}
-			}, 
+			},
 			tooltip: {
 			  y: {
 				formatter: function (val) {
@@ -399,7 +378,6 @@
 				fontSize: '13px',
 				fontFamily: 'Poppins',
 				fontWeight: 400
-				
 			}
 		  },
 		},
@@ -411,7 +389,6 @@
 				fontSize: '13px',
 				fontFamily: 'Poppins',
 				fontWeight: 400
-				
 			},
 		  }
         },
@@ -442,7 +419,7 @@
 				name: 'Net Profit',
 				data: [100,300, 100, 400, 200, 400],
 				/* radius: 30,	 */
-			}, 				
+			},
 		],
 			chart: {
 			type: 'line',
@@ -457,9 +434,8 @@
 			sparkline: {
 				enabled: true
 			}
-			
 		},
-		
+
 		colors:['var(--primary)'],
 		dataLabels: {
 		  enabled: false,
@@ -474,7 +450,7 @@
 		  curve:'smooth',
 		  colors:['var(--primary)'],
 		},
-		
+
 		grid: {
 			show:false,
 			borderColor: '#eee',
@@ -483,7 +459,6 @@
 				right: 0,
 				bottom: 0,
 				left: 0
-
 			}
 		},
 		states: {
@@ -560,7 +535,6 @@
 
 		var chartBar1 = new ApexCharts(document.querySelector("#NewCustomers"), options);
 		chartBar1.render();
-	 
 	}
 	var NewCustomers1 = function(){
 		var options = {
@@ -569,7 +543,7 @@
 				name: 'Net Profit',
 				data: [100,300, 200, 400, 100, 400],
 				/* radius: 30,	 */
-			}, 				
+			},
 		],
 			chart: {
 			type: 'line',
@@ -584,9 +558,8 @@
 			sparkline: {
 				enabled: true
 			}
-			
 		},
-		
+
 		colors:['#0E8A74'],
 		dataLabels: {
 		  enabled: false,
@@ -601,7 +574,7 @@
 		  curve:'smooth',
 		  colors:['var(--primary)'],
 		},
-		
+
 		grid: {
 			show:false,
 			borderColor: '#eee',
@@ -610,7 +583,6 @@
 				right: 0,
 				bottom: 0,
 				left: 0
-
 			}
 		},
 		states: {
@@ -687,7 +659,6 @@
 
 		var chartBar1 = new ApexCharts(document.querySelector("#NewCustomers1"), options);
 		chartBar1.render();
-	 
 	}
 	var emailchart = function(){
 		 var options = {
@@ -728,15 +699,13 @@
 
         var chart = new ApexCharts(document.querySelector("#emailchart"), options);
         chart.render();
-    
 	}
- 
+
 	/* Function ============ */
 		return {
 			init:function(){
 			},
-			
-			
+
 			load:function(){
 			activityChart();
 			redial();
@@ -746,24 +715,16 @@
 			NewCustomers();
 			NewCustomers1();
 			emailchart();
-				
 			},
-			
+
 			resize:function(){
 			}
 		}
-	
 	}();
 
-	
-		
 	jQuery(window).on('load',function(){
 		setTimeout(function(){
 			dlabChartlist.load();
-		}, 1000); 
-		
+		}, 1000);
 	});
-
-     
-
 })(jQuery);

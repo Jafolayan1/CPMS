@@ -2,9 +2,8 @@
     "use strict"
 
 	var dlabMorris = function(){
-		
 		var screenWidth = $(window).width();
-		
+
 		var setChartWidth = function(){
 			if(screenWidth <= 768)
 			{
@@ -13,14 +12,13 @@
 				jQuery('.morris_chart_height').css('min-width',chartBlockWidth - 31);
 			}
 		}
-		
+
 		var donutChart = function(){
 			Morris.Donut({
 				element: 'morris_donught',
 				data: [{
 					label: "\xa0 \xa0 Download Sales \xa0 \xa0",
 					value: 12,
-
 				}, {
 					label: "\xa0 \xa0 In-Store Sales \xa0 \xa0",
 					value: 30
@@ -32,10 +30,9 @@
 				redraw: true,
 				colors: ['#00a15d', 'rgb(255, 92, 0)', '#FF5E4B'],
 				//responsive:true,
-				
 			});
 		}
-		
+
 		var lineChart = function(){
 			//line chart
 			let line = new Morris.Line({
@@ -91,9 +88,9 @@
 				hideHover: 'auto',
 				pointSize: 0,
 				axes: false
-			});	
+			});
 		}
-		
+
 		var lineChart2 = function(){
 			//Area chart
 			Morris.Area({
@@ -135,7 +132,6 @@
 						mac: 10
 					}
 
-
 				],
 				xkey: 'period',
 				ykeys: ['smartphone', 'windows', 'mac'],
@@ -149,10 +145,9 @@
 				hideHover: 'auto',
 				lineColors: ['rgb(238, 60, 60)', 'rgb(0, 171, 197)', '#00a15d'],
 				resize: true
-
 			});
 		}
-		
+
 		var barChart = function(){
 			if(jQuery('#morris_bar').length > 0)
 			{
@@ -203,73 +198,73 @@
 					gridLineColor: 'transparent',
 					resize: true,
 					barSizeRatio: 0.25,
-				});	
+				});
 			}
 		}
-		
+
 		var barStalkChart = function(){
 			//bar chart
 			Morris.Bar({
 				element: 'morris_bar_stalked',
 				data: [{
 					y: 'S',
-					a: 66, 
+					a: 66,
 					b: 34
 				}, {
 					y: 'M',
-					a: 75, 
+					a: 75,
 					b: 25
 				}, {
 					y: 'T',
-					a: 50, 
+					a: 50,
 					b: 50
 				}, {
 					y: 'W',
-					a: 75, 
+					a: 75,
 					b: 25
 				}, {
 					y: 'T',
-					a: 50, 
+					a: 50,
 					b: 50
 				}, {
 					y: 'F',
-					a: 16, 
+					a: 16,
 					b: 84
 				}, {
 					y: 'S',
-					a: 70, 
+					a: 70,
 					b: 30
 				}, {
 					y: 'S',
-					a: 30, 
+					a: 30,
 					b: 70
 				}, {
 					y: 'M',
-					a: 40, 
+					a: 40,
 					b: 60
 				}, {
 					y: 'T',
-					a: 29, 
+					a: 29,
 					b: 71
 				}, {
 					y: 'W',
-					a: 44, 
+					a: 44,
 					b: 56
 				}, {
 					y: 'T',
-					a: 30, 
+					a: 30,
 					b: 70
 				}, {
 					y: 'F',
-					a: 60, 
+					a: 60,
 					b: 40
 				}, {
 					y: 'G',
-					a: 40, 
+					a: 40,
 					b: 60
 				}, {
 					y: 'S',
-					a: 46, 
+					a: 46,
 					b: 54
 				}],
 				xkey: 'y',
@@ -280,15 +275,14 @@
 				gridLineColor: 'transparent',
 				resize: true,
 				barSizeRatio: 0.25,
-				stacked: true, 
+				stacked: true,
 				behaveLikeLine: true,
 				//redraw: true
-				
+
 				// barRadius: [6, 6, 0, 0]
 			});
-		
 		}
-		
+
 		var areaChart = function(){
 			//area chart
 			Morris.Area({
@@ -330,7 +324,6 @@
 						mac: 10
 					}
 
-
 				],
 				lineColors: ['#00a15d', 'rgb(16, 202, 147)', 'rgb(255, 92, 0)'],
 				xkey: 'period',
@@ -343,10 +336,9 @@
 				behaveLikeLine: true,
 				gridLineColor: 'transparent',
 				hideHover: 'auto'
-
 			});
 		}
-		
+
 		var areaChart2 = function(){
 			if(jQuery('#morris_area_2').length > 0)
 			{
@@ -357,38 +349,31 @@
 							period: '2010',
 							SiteA: 0,
 							SiteB: 0,
-
 						}, {
 							period: '2011',
 							SiteA: 130,
 							SiteB: 100,
-
 						}, {
 							period: '2012',
 							SiteA: 80,
 							SiteB: 60,
-
 						}, {
 							period: '2013',
 							SiteA: 70,
 							SiteB: 200,
-
 						}, {
 							period: '2014',
 							SiteA: 180,
 							SiteB: 150,
-
 						}, {
 							period: '2015',
 							SiteA: 105,
 							SiteB: 90,
-
 						},
 						{
 							period: '2016',
 							SiteA: 250,
 							SiteB: 150,
-
 						}
 					],
 					xkey: 'period',
@@ -404,12 +389,10 @@
 					hideHover: 'auto',
 					lineColors: ['rgb(0, 171, 197)', 'rgb(0, 0, 128)'],
 					resize: true
-
-				});	
+				});
 			}
 		}
-		
-		
+
 		/* Function ============ */
 		return {
 			init:function(){
@@ -422,8 +405,7 @@
 				areaChart();
 				areaChart2();
 			},
-			
-			
+
 			resize:function(){
 				screenWidth = $(window).width();
 				setChartWidth();
@@ -436,22 +418,19 @@
 				areaChart2();
 			}
 		}
-		
 	}();
 
 	jQuery(document).ready(function(){
 		dlabMorris.init();
 		//dlabMorris.resize();
-	
 	});
-		
+
 	jQuery(window).on('load',function(){
 		//dlabMorris.init();
 	});
-		
+
 	jQuery( window ).resize(function() {
 		//dlabMorris.resize();
 		//dlabMorris.init();
 	});
-   
 })(jQuery);

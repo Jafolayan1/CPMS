@@ -1,6 +1,5 @@
 "use strict"
  document.addEventListener('DOMContentLoaded', function() {
-
 		/* initialize the external events
 		-----------------------------------------------------------------*/
 
@@ -12,7 +11,6 @@
 			  title: eventEl.innerText.trim()
 			}
 		  }
-		 
 		});
 
 		//// the individual way to do it
@@ -38,7 +36,7 @@
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,timeGridDay'
 		  },
-		  
+
 		  selectable: true,
 		  selectMirror: true,
 		  select: function(arg) {
@@ -53,7 +51,7 @@
 			}
 			calendar.unselect()
 		  },
-		  
+
 		  editable: true,
 		  droppable: true, // this allows things to be dropped onto the calendar
 		  drop: function(arg) {
@@ -132,12 +130,10 @@
 			  ]
 		});
 		calendar.render();
-
 	  });
 "use strict"
 
 function fullCalender(){
-	
 	/* initialize the external events
 		-----------------------------------------------------------------*/
 
@@ -149,7 +145,6 @@ function fullCalender(){
 			  title: eventEl.innerText.trim()
 			}
 		  }
-		 
 		});
 		/* initialize the calendar
 		-----------------------------------------------------------------*/
@@ -161,7 +156,7 @@ function fullCalender(){
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,timeGridDay'
 		  },
-		  
+
 		  selectable: true,
 		  selectMirror: true,
 		  select: function(arg) {
@@ -176,7 +171,7 @@ function fullCalender(){
 			}
 			calendar.unselect()
 		  },
-		  
+
 		  editable: true,
 		  droppable: true, // this allows things to be dropped onto the calendar
 		  drop: function(arg) {
@@ -249,19 +244,10 @@ function fullCalender(){
 			  ]
 		});
 		calendar.render();
-	
-}	
-	
-	
-	
+}
+
 jQuery(window).on('load',function(){
 	setTimeout(function(){
-		fullCalender();	
+		fullCalender();
 	}, 1000);
-	
-	
-});	
-	
-
-		
-
+});

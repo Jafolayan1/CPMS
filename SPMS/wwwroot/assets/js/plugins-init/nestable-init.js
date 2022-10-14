@@ -1,7 +1,6 @@
 (function ($) {
     "use strict"
 
-
 /*******************
 Nestable
 *******************/
@@ -20,7 +19,4 @@ Nestable
             var t = $(e.target).data("action");
             "expand-all" === t && $(".dd").nestable("expandAll"), "collapse-all" === t && $(".dd").nestable("collapseAll")
         }), $("#nestable3").nestable();
-
-
-
 })(jQuery);

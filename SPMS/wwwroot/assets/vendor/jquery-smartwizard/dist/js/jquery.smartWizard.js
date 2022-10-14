@@ -71,7 +71,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       speed: '400',
       // Transion animation speed
       easing: '' // Transition animation easing. Not supported without a jQuery easing plugin
-
     },
     toolbarSettings: {
       toolbarPosition: 'bottom',
@@ -83,7 +82,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       showPreviousButton: true,
       // show/hide a Previous button
       toolbarExtraButtons: [] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
-
     },
     anchorSettings: {
       anchorClickable: true,
@@ -97,7 +95,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       removeDoneStepOnNavigateBack: false,
       // While navigate back done step after active step will be cleared
       enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
-
     },
     keyboardSettings: {
       keyNavigation: true,
@@ -105,7 +102,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       keyLeft: [37],
       // Left key code
       keyRight: [39] // Right key code
-
     },
     lang: {
       // Language variables for button
@@ -117,7 +113,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     errorSteps: [],
     // Highlight step with errors
     hiddenSteps: [] // Hidden steps
-
   };
 
   var SmartWizard = /*#__PURE__*/function () {
@@ -139,10 +134,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
       this._initOptions(); // Initial load
 
-
       this._initLoad();
     } // Initial Load Method
-
 
     _createClass(SmartWizard, [{
       key: "_initLoad",
@@ -155,22 +148,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
         var idx = this._getStepIndex(); // Mark any previous steps done
 
-
         this._setPreviousStepsDone(idx); // Show the initial step
-
 
         this._showStep(idx);
       } // Initialize options
-
     }, {
       key: "_initOptions",
       value: function _initOptions() {
         // Set the elements
         this._setElements(); // Add toolbar
 
-
         this._setToolbar(); // Assign plugin events
-
 
         this._setEvents();
       }
@@ -184,7 +172,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           return elm;
         } // Check for second level element
 
-
         this.main.children().each(function (i, n) {
           var tmp = $(n).children(selector);
 
@@ -197,7 +184,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         if (elm.length > 0) {
           return elm;
         } // Element not found
-
 
         this._showError("Element not found " + selector);
 
@@ -215,17 +201,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
         this._setDarkMode(this.options.darkMode); // Set the anchor default style
 
-
         if (this.options.anchorSettings.enableAllAnchors !== true || this.options.anchorSettings.anchorClickable !== true) {
           this.steps.addClass('inactive');
         } // Disabled steps
 
-
         this._setCSSClass(this.options.disabledSteps, "disabled"); // Error steps
 
-
         this._setCSSClass(this.options.errorSteps, "danger"); // Hidden steps
-
 
         this._setCSSClass(this.options.hiddenSteps, "hidden");
       }
@@ -239,7 +221,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           return true;
         } // Flag item to prevent attaching handler again
 
-
         this.main.data('click-init', true); // Anchor click event
 
         $(this.steps).on("click", function (e) {
@@ -248,7 +229,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           if (_this.options.anchorSettings.anchorClickable === false) {
             return true;
           } // Get the step index
-
 
           var idx = _this.steps.index(e.currentTarget);
 
@@ -283,7 +263,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           });
         } // Back/forward browser button event
 
-
         if (this.options.backButtonSupport) {
           $(window).on('hashchange', function (e) {
             var idx = _this._getURLHashIndex();
@@ -303,7 +282,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         if (this.options.toolbarSettings.toolbarPosition === 'none') {
           return true;
         } // Append toolbar based on the position
-
 
         switch (this.options.toolbarSettings.toolbarPosition) {
           case 'top':
@@ -377,16 +355,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           return false;
         } // If step not found, skip
 
-
         if (!this.steps.eq(idx)) {
           return false;
         } // If it is a disabled step, skip
 
-
         if (!this._isShowable(idx)) {
           return false;
         } // Load step content
-
 
         this._loadStep(idx);
       }
@@ -549,9 +524,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         // Get current step element
         var curStep = this._getStepAnchor(this.current_index); // Get step direction
 
-
         var stepDirection = this._getStepDirection(idx); // Get the direction of step navigation
-
 
         if (this.current_index !== null) {
           // Trigger "leaveStep" event
@@ -560,9 +533,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           }
         } // Get next step element
 
-
         var selStep = this._getStepAnchor(idx); // Get the content if used
-
 
         var getStepContent = this._triggerEvent("stepContent", [selStep, idx, stepDirection]);
 
@@ -598,27 +569,20 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         // Get step to show element
         var selStep = this._getStepAnchor(idx); // Change the url hash to new step
 
-
         this._setURLHash(selStep.attr("href")); // Update controls
-
 
         this._setAnchor(idx); // Get the direction of step navigation
 
-
         var stepDirection = this._getStepDirection(idx); // Get the position of step
 
-
         var stepPosition = this._getStepPosition(idx); // Animate the step
-
 
         this._doStepAnimation(idx, function () {
           // Fix height with content
           _this5._fixHeight(idx); // Trigger "showStep" event
 
-
           _this5._triggerEvent("showStep", [selStep, _this5.current_index, stepDirection, stepPosition]);
         }); // Update the current index
-
 
         this.current_index = idx; // Set the buttons based on the step
 
@@ -632,9 +596,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         // Get current step element
         var curPage = this._getStepPage(this.current_index); // Get next step element
 
-
         var selPage = this._getStepPage(idx); // Get the animation
-
 
         var animation = this.options.transition.animation.toLowerCase(); // Complete any ongoing animations
 
@@ -652,7 +614,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
               curLastLeft = containerWidth * -1;
               nextFirstLeft = containerWidth;
             } // First load set the container width
-
 
             if (this.current_index == null) {
               this.container.height(selPage.outerHeight());
@@ -779,7 +740,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           }
         } // Next step anchor > Remove other classes and add active class
 
-
         this._resetCSSClass(idx, "done");
 
         this._setCSSClass(idx, "active");
@@ -847,7 +807,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           this.main.removeClass('sw-dark');
         }
       } // HELPER FUNCTIONS
-
     }, {
       key: "_keyNav",
       value: function _keyNav(e) {
@@ -937,7 +896,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       value: function _showError(msg) {
         console.error(msg);
       } // PUBLIC FUNCTIONS
-
     }, {
       key: "goToStep",
       value: function goToStep(stepIndex) {
@@ -1027,7 +985,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
     return SmartWizard;
   }(); // Wrapper for the plugin
-
 
   $.fn.smartWizard = function (options) {
     if (options === undefined || _typeof(options) === 'object') {

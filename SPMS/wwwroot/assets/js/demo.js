@@ -14,11 +14,9 @@ var themeOptionArr = {
 			containerLayout: '',
 			//direction: '',
 		};
-		
-		
 
 /* Cookies Function */
-function setCookie(cname, cvalue, exhours) 
+function setCookie(cname, cvalue, exhours)
 	{
 		var d = new Date();
 		d.setTime(d.getTime() + (30*60*1000)); /* 30 Minutes */
@@ -26,7 +24,7 @@ function setCookie(cname, cvalue, exhours)
 		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 	}
 
-function getCookie(cname) 
+function getCookie(cname)
 	{
 		var name = cname + "=";
 		var decodedCookie = decodeURIComponent(document.cookie);
@@ -43,7 +41,7 @@ function getCookie(cname)
 		return "";
 	}
 
-function deleteCookie(cname) 
+function deleteCookie(cname)
 	{
 		var d = new Date();
 		d.setTime(d.getTime() + (1)); // 1/1000 second
@@ -61,19 +59,17 @@ function deleteAllCookie(reload = true)
 			location.reload();
 		}
 	}
- 	
-/* Cookies Function END */	
- 	
+
+/* Cookies Function END */
 
 (function($) {
-	
 	"use strict"
-	
+
 	//var direction =  getUrlParams('dir');
 	var theme =  getUrlParams('theme');
-	
+
 	/* Dz Theme Demo Settings  */
-	
+
 	var dlabThemeSet0 = { /* Default Theme */
 		typography: "poppins",
 		version: "light",
@@ -87,7 +83,7 @@ function deleteAllCookie(reload = true)
 		headerPosition: "fixed",
 		containerLayout: "full",
 	};
-	
+
 	var dlabThemeSet1 = {
 		typography: "poppins",
 		version: "light",
@@ -101,7 +97,7 @@ function deleteAllCookie(reload = true)
 		headerPosition: "fixed",
 		containerLayout: "full",
 	};
-	
+
 	var dlabThemeSet2 = {
 		typography: "poppins",
 		version: "light",
@@ -115,8 +111,7 @@ function deleteAllCookie(reload = true)
 		headerPosition: "fixed",
 		containerLayout: "full",
 	};
-	
-	
+
 	var dlabThemeSet3 = {
 		typography: "poppins",
 		version: "light",
@@ -130,7 +125,7 @@ function deleteAllCookie(reload = true)
 		headerPosition: "fixed",
 		containerLayout: "full",
 	};
-	
+
 	var dlabThemeSet4 = {
 		typography: "poppins",
 		version: "dark",
@@ -144,7 +139,7 @@ function deleteAllCookie(reload = true)
 		headerPosition: "fixed",
 		containerLayout: "full",
 	};
-	
+
 	var dlabThemeSet5 = {
 		typography: "poppins",
 		version: "light",
@@ -171,17 +166,16 @@ function deleteAllCookie(reload = true)
 		headerPosition: "fixed",
 		containerLayout: "full",
 	};
-	
-		
+
 	function themeChange(theme){
 		var themeSettings = {};
 		themeSettings = eval('dlabThemeSet'+theme);
 		dlabSettingsOptions = themeSettings; /* For Screen Resize */
 		new dlabSettings(themeSettings);
-		
+
 		setThemeInCookie(themeSettings);
 	}
-	
+
 	function setThemeInCookie(themeSettings)
 	{
 		//console.log(themeSettings);
@@ -189,21 +183,21 @@ function deleteAllCookie(reload = true)
 			setCookie(optionKey,optionValue);
 		});
 	}
-	
+
 	function setThemeLogo() {
 		var logo = getCookie('logo_src');
-		
+
 		var logo2 = getCookie('logo_src2');
-		
+
 		if(logo != ''){
 			jQuery('.nav-header .logo-abbr').attr("src", logo);
 		}
-		
+
 		if(logo2 != ''){
 			jQuery('.nav-header .logo-compact, .nav-header .brand-title').attr("src", logo2);
 		}
 	}
-	
+
 	function setThemeOptionOnPage()
 	{
 		if(getCookie('version') != '')
@@ -215,35 +209,30 @@ function deleteAllCookie(reload = true)
 			console.log(themeOptionArr);
 			dlabSettingsOptions = themeOptionArr;
 			new dlabSettings(dlabSettingsOptions);
-			
+
 			setThemeLogo();
 		}
 	}
-	
+
 	jQuery(document).on('click', '.dlab_theme_demo', function(){
 		var demoTheme = jQuery(this).data('theme');
 		themeChange(demoTheme, 'ltr');
 	});
 
-
 	jQuery(document).on('click', '.dlab_theme_demo_rtl', function(){
 		var demoTheme = jQuery(this).data('theme');
 		themeChange(demoTheme, 'rtl');
 	});
-	
-	
+
 	jQuery(window).on('load', function(){
 		//direction = (direction != undefined)?direction:'ltr';
 		if(theme != undefined){
 			themeChange(theme);
-		}else if(getCookie('version') == ''){	
+		}else if(getCookie('version') == ''){
 				themeChange(0);
-			
 		}
-		
+
 		/* Set Theme On Page From Cookie */
 		setThemeOptionOnPage();
 	});
-	
-
 })(jQuery);

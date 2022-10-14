@@ -108,7 +108,6 @@ function () {
     } // Remove event listener for given event. If fn is not provided, all event
     // listeners for that event will be removed. If neither is provided, all
     // event listeners will be removed.
-
   }, {
     key: "off",
     value: function off(event, fn) {
@@ -117,19 +116,16 @@ function () {
         return this;
       } // specific event
 
-
       var callbacks = this._callbacks[event];
 
       if (!callbacks) {
         return this;
       } // remove all handlers
 
-
       if (arguments.length === 1) {
         delete this._callbacks[event];
         return this;
       } // remove specific handler
-
 
       for (var i = 0; i < callbacks.length; i++) {
         var callback = callbacks[i];
@@ -653,7 +649,6 @@ function (_Emitter) {
             height = width / srcRatio;
           } // Make sure images aren't upscaled
 
-
           width = Math.min(width, info.srcWidth);
           height = Math.min(height, info.srcHeight);
           var trgRatio = width / height;
@@ -1027,7 +1022,6 @@ function (_Emitter) {
       this.prototype._thumbnailQueue = [];
       this.prototype._processingThumbnail = false;
     } // global utility
-
   }, {
     key: "extend",
     value: function extend(target) {
@@ -1067,7 +1061,6 @@ function (_Emitter) {
       _this.element = document.querySelector(_this.element);
     } // Not checking if instance of HTMLElement or Element since IE9 is extremely weird.
 
-
     if (!_this.element || _this.element.nodeType == null) {
       throw new Error("Invalid dropzone element.");
     }
@@ -1075,7 +1068,6 @@ function (_Emitter) {
     if (_this.element.dropzone) {
       throw new Error("Dropzone already attached.");
     } // Now add this dropzone to the instances.
-
 
     Dropzone.instances.push(_assertThisInitialized(_this)); // Put the dropzone inside the element itself.
 
@@ -1086,7 +1078,6 @@ function (_Emitter) {
     if (_this.options.forceFallback || !Dropzone.isBrowserSupported()) {
       return _possibleConstructorReturn(_this, _this.options.fallback.call(_assertThisInitialized(_this)));
     } // @options.url = @element.getAttribute "action" unless @options.url?
-
 
     if (_this.options.url == null) {
       _this.options.url = _this.element.getAttribute("action");
@@ -1104,12 +1095,10 @@ function (_Emitter) {
       throw new Error('You cannot set both: uploadMultiple and chunking.');
     } // Backwards compatibility
 
-
     if (_this.options.acceptedMimeTypes) {
       _this.options.acceptedFiles = _this.options.acceptedMimeTypes;
       delete _this.options.acceptedMimeTypes;
     } // Backwards compatibility
-
 
     if (_this.options.renameFilename != null) {
       _this.options.renameFile = function (file) {
@@ -1123,7 +1112,6 @@ function (_Emitter) {
       // Remove the fallback
       fallback.parentNode.removeChild(fallback);
     } // Display previews in the previewsContainer element or the Dropzone element unless explicitly set to false
-
 
     if (_this.options.previewsContainer !== false) {
       if (_this.options.previewsContainer) {
@@ -1146,7 +1134,6 @@ function (_Emitter) {
     return _this;
   } // Returns all files that have been accepted
 
-
   _createClass(Dropzone, [{
     key: "getAcceptedFiles",
     value: function getAcceptedFiles() {
@@ -1157,7 +1144,6 @@ function (_Emitter) {
       });
     } // Returns all files that have been rejected
     // Not sure when that's going to be useful, but added for completeness.
-
   }, {
     key: "getRejectedFiles",
     value: function getRejectedFiles() {
@@ -1176,7 +1162,6 @@ function (_Emitter) {
         return file;
       });
     } // Returns all files that are in the queue
-
   }, {
     key: "getQueuedFiles",
     value: function getQueuedFiles() {
@@ -1192,7 +1177,6 @@ function (_Emitter) {
     value: function getAddedFiles() {
       return this.getFilesWithStatus(Dropzone.ADDED);
     } // Files that are either queued or uploading
-
   }, {
     key: "getActiveFiles",
     value: function getActiveFiles() {
@@ -1203,7 +1187,6 @@ function (_Emitter) {
       });
     } // The function that gets called when Dropzone is initialized. You
     // can (and should) setup event listeners inside this function.
-
   }, {
     key: "init",
     value: function init() {
@@ -1242,7 +1225,6 @@ function (_Emitter) {
             _this3.hiddenFileInput.setAttribute("capture", _this3.options.capture);
           } // Not setting `display="none"` because some browsers don't accept clicks
           // on elements that aren't displayed.
-
 
           _this3.hiddenFileInput.style.visibility = "hidden";
           _this3.hiddenFileInput.style.position = "absolute";
@@ -1357,7 +1339,6 @@ function (_Emitter) {
         }
       }; // Create the listeners
 
-
       this.listeners = [{
         element: this.element,
         events: {
@@ -1396,7 +1377,6 @@ function (_Emitter) {
         // "paste": (e) =>
         //   noPropagation e
         //   @paste e
-
       }];
       this.clickableElements.forEach(function (clickableElement) {
         return _this3.listeners.push({
@@ -1406,7 +1386,6 @@ function (_Emitter) {
               // Only the actual dropzone or the message element should trigger file selection
               if (clickableElement !== _this3.element || evt.target === _this3.element || Dropzone.elementInside(evt.target, _this3.element.querySelector(".dz-message"))) {
                 _this3.hiddenFileInput.click(); // Forward the click
-
               }
 
               return true;
@@ -1417,7 +1396,6 @@ function (_Emitter) {
       this.enable();
       return this.options.init.call(this);
     } // Not fully tested yet
-
   }, {
     key: "destroy",
     value: function destroy() {
@@ -1474,7 +1452,6 @@ function (_Emitter) {
       return this.emit("totaluploadprogress", totalUploadProgress, totalBytes, totalBytesSent);
     } // @options.paramName can be a function taking one parameter rather than a string.
     // A parameter name for a file is obtained simply by calling this with an index number.
-
   }, {
     key: "_getParamName",
     value: function _getParamName(n) {
@@ -1485,7 +1462,6 @@ function (_Emitter) {
       }
     } // If @options.renameFile is a function,
     // the function will be used to rename the file.name before appending it to the formData
-
   }, {
     key: "_renameFile",
     value: function _renameFile(file) {
@@ -1498,7 +1474,6 @@ function (_Emitter) {
     //
     // If the dropzone is already a form, only the input field and button are returned. Otherwise a complete form element is provided.
     // This code has to pass in IE7 :(
-
   }, {
     key: "getFallbackForm",
     value: function getFallbackForm() {
@@ -1530,7 +1505,6 @@ function (_Emitter) {
     } // Returns the fallback elements if they exist already
     //
     // This code has to pass in IE7 :(
-
   }, {
     key: "getExistingFallback",
     value: function getExistingFallback() {
@@ -1572,7 +1546,6 @@ function (_Emitter) {
         }
       }
     } // Activates all listeners stored in @listeners
-
   }, {
     key: "setupEventListeners",
     value: function setupEventListeners() {
@@ -1589,7 +1562,6 @@ function (_Emitter) {
         }();
       });
     } // Deactivates all listeners stored in @listeners
-
   }, {
     key: "removeEventListeners",
     value: function removeEventListeners() {
@@ -1606,7 +1578,6 @@ function (_Emitter) {
         }();
       });
     } // Removes all event listeners and cancels all files in the queue or being processed.
-
   }, {
     key: "disable",
     value: function disable() {
@@ -1630,7 +1601,6 @@ function (_Emitter) {
       });
       return this.setupEventListeners();
     } // Returns a nicely formatted filesize
-
   }, {
     key: "filesize",
     value: function filesize(size) {
@@ -1656,7 +1626,6 @@ function (_Emitter) {
 
       return "<strong>".concat(selectedSize, "</strong> ").concat(this.options.dictFileSizeUnits[selectedUnit]);
     } // Adds or removes the `dz-max-files-reached` class from the form.
-
   }, {
     key: "_updateMaxFilesReachedClass",
     value: function _updateMaxFilesReachedClass() {
@@ -1685,7 +1654,6 @@ function (_Emitter) {
       for (var i = 0; i < e.dataTransfer.files.length; i++) {
         files[i] = e.dataTransfer.files[i];
       } // Even if it's a folder, files.length will contain the folders.
-
 
       if (files.length) {
         var items = e.dataTransfer.items;
@@ -1744,7 +1712,6 @@ function (_Emitter) {
       }
     } // When a folder is dropped (or files are pasted), items must be handled
     // instead of files.
-
   }, {
     key: "_addFilesFromItems",
     value: function _addFilesFromItems(items) {
@@ -1798,7 +1765,6 @@ function (_Emitter) {
         return result;
       }();
     } // Goes through the directory, and adds each file it finds recursively
-
   }, {
     key: "_addFilesFromDirectory",
     value: function _addFilesFromDirectory(directory, path) {
@@ -1838,7 +1804,6 @@ function (_Emitter) {
               } // Recursively call readEntries() again, since browser only handle
               // the first 100 entries.
               // See: https://developer.mozilla.org/en-US/docs/Web/API/DirectoryReader#readEntries
-
             } catch (err) {
               _didIteratorError15 = true;
               _iteratorError15 = err;
@@ -1868,7 +1833,6 @@ function (_Emitter) {
     //
     // This function checks the filesize, and if the file.type passes the
     // `acceptedFiles` check.
-
   }, {
     key: "accept",
     value: function accept(file, done) {
@@ -1898,7 +1862,6 @@ function (_Emitter) {
         filename: this._renameFile(file) // Not setting chunking information here, because the acutal data — and
         // thus the chunks — might change if `options.transformFile` is set
         // and does something to the data.
-
       };
       this.files.push(file);
       file.status = Dropzone.ADDED;
@@ -1911,20 +1874,17 @@ function (_Emitter) {
           file.accepted = false;
 
           _this7._errorProcessing([file], error); // Will set the file.status
-
         } else {
           file.accepted = true;
 
           if (_this7.options.autoQueue) {
             _this7.enqueueFile(file);
           } // Will set .accepted = true
-
         }
 
         _this7._updateMaxFilesReachedClass();
       });
     } // Wrapper for enqueueFile
-
   }, {
     key: "enqueueFiles",
     value: function enqueueFiles(files) {
@@ -2004,7 +1964,6 @@ function (_Emitter) {
         return _this10._processThumbnailQueue();
       });
     } // Can be called by the user to remove a file
-
   }, {
     key: "removeFile",
     value: function removeFile(file) {
@@ -2019,7 +1978,6 @@ function (_Emitter) {
         return this.emit("reset");
       }
     } // Removes all files that aren't currently processed from the list
-
   }, {
     key: "removeAllFiles",
     value: function removeAllFiles(cancelIfNecessary) {
@@ -2059,7 +2017,6 @@ function (_Emitter) {
     } // Resizes an image before it gets sent to the server. This function is the default behavior of
     // `options.transformFile` if `resizeWidth` or `resizeHeight` are set. The callback is invoked with
     // the resized blob.
-
   }, {
     key: "resizeImage",
     value: function resizeImage(file, width, height, resizeMethod, callback) {
@@ -2110,12 +2067,11 @@ function (_Emitter) {
 
       fileReader.readAsDataURL(file);
     } // `mockFile` needs to have these attributes:
-    // 
+    //
     //     { name: 'name', size: 12345, imageUrl: '' }
     //
     // `callback` will be invoked when the image has been downloaded and displayed.
     // `crossOrigin` will be added to the `img` tag when accessing the file.
-
   }, {
     key: "displayExistingFile",
     value: function displayExistingFile(mockFile, imageUrl, callback, crossOrigin) {
@@ -2226,7 +2182,6 @@ function (_Emitter) {
               break;
           } // This is a bugfix for iOS' scaling bug.
 
-
           drawImageIOSFix(ctx, img, resizeInfo.srcX != null ? resizeInfo.srcX : 0, resizeInfo.srcY != null ? resizeInfo.srcY : 0, resizeInfo.srcWidth, resizeInfo.srcHeight, resizeInfo.trgX != null ? resizeInfo.trgX : 0, resizeInfo.trgY != null ? resizeInfo.trgY : 0, resizeInfo.trgWidth, resizeInfo.trgHeight);
           var thumbnail = canvas.toDataURL("image/png");
 
@@ -2242,7 +2197,6 @@ function (_Emitter) {
 
       return img.src = file.dataURL;
     } // Goes through the queue and processes files if there aren't too many already.
-
   }, {
     key: "processQueue",
     value: function processQueue() {
@@ -2269,19 +2223,16 @@ function (_Emitter) {
             return;
           } // Nothing left to process
 
-
           this.processFile(queuedFiles.shift());
           i++;
         }
       }
     } // Wrapper for `processFiles`
-
   }, {
     key: "processFile",
     value: function processFile(file) {
       return this.processFiles([file]);
     } // Loads the file, then calls finishedLoading()
-
   }, {
     key: "processFiles",
     value: function processFiles(files) {
@@ -2331,7 +2282,6 @@ function (_Emitter) {
     // **if** the file is actually being uploaded.
     // If it's still in the queue, the file is being removed from it and the status
     // set to CANCELED.
-
   }, {
     key: "cancelUpload",
     value: function cancelUpload(file) {
@@ -2454,7 +2404,6 @@ function (_Emitter) {
               chunkIndex++;
             } // This means, that all chunks have already been started.
 
-
             if (chunkIndex >= file.upload.totalChunkCount) return;
             startedChunkCount++;
             var start = chunkIndex * _this15.options.chunkSize;
@@ -2473,7 +2422,6 @@ function (_Emitter) {
               status: Dropzone.UPLOADING,
               progress: 0,
               retries: 0 // The number of times this block has been retried.
-
             };
 
             _this15._uploadData(files, [dataBlock]);
@@ -2526,7 +2474,6 @@ function (_Emitter) {
         }
       });
     } /// Returns the right chunk for given file and xhr
-
   }, {
     key: "_getChunk",
     value: function _getChunk(file, xhr) {
@@ -2538,7 +2485,6 @@ function (_Emitter) {
     } // This function actually uploads the file(s) to the server.
     // If dataBlocks contains the actual data to upload (meaning, that this could either be transformed
     // files, or individual chunks for chunked upload).
-
   }, {
     key: "_uploadData",
     value: function _uploadData(files, dataBlocks) {
@@ -2595,7 +2541,6 @@ function (_Emitter) {
         _this16._handleUploadError(files, xhr);
       }; // Some browsers do not have the .upload property
 
-
       var progressObj = xhr.upload != null ? xhr.upload : xhr;
 
       progressObj.onprogress = function (e) {
@@ -2635,7 +2580,6 @@ function (_Emitter) {
         }
       } // Let the user add additional data if necessary
 
-
       var _iteratorNormalCompletion22 = true;
       var _didIteratorError22 = false;
       var _iteratorError22 = undefined;
@@ -2667,7 +2611,6 @@ function (_Emitter) {
       this._addFormElementData(formData); // Finally add the files
       // Has to be last because some servers (eg: S3) expect the file to be the last parameter
 
-
       for (var i = 0; i < dataBlocks.length; i++) {
         var dataBlock = dataBlocks[i];
         formData.append(dataBlock.name, dataBlock.data, dataBlock.filename);
@@ -2675,7 +2618,6 @@ function (_Emitter) {
 
       this.submitRequest(xhr, formData, files);
     } // Transforms all files with this.options.transformFile and invokes done with the transformed files when done.
-
   }, {
     key: "_transformFiles",
     value: function _transformFiles(files, done) {
@@ -2699,7 +2641,6 @@ function (_Emitter) {
         _loop(i);
       }
     } // Takes care of adding other input elements of the form to the AJAX request
-
   }, {
     key: "_addFormElementData",
     value: function _addFormElementData(formData) {
@@ -2767,7 +2708,6 @@ function (_Emitter) {
       }
     } // Invoked when there is new progress information about given files.
     // If e is not provided, it is assumed that the upload is finished.
-
   }, {
     key: "_updateFilesUploadProgress",
     value: function _updateFilesUploadProgress(files, xhr, e) {
@@ -2870,7 +2810,6 @@ function (_Emitter) {
             _file4.upload.progress = progress;
             _file4.upload.bytesSent = _file4.upload.total;
           } // Nothing to do, all files already at 100%
-
         } catch (err) {
           _didIteratorError27 = true;
           _iteratorError27 = err;
@@ -2980,7 +2919,6 @@ function (_Emitter) {
       xhr.send(formData);
     } // Called internally when processing is finished.
     // Individual callbacks have to be called in the appropriate sections.
-
   }, {
     key: "_finished",
     value: function _finished(files, responseText, e) {
@@ -3020,7 +2958,6 @@ function (_Emitter) {
       }
     } // Called internally when processing is finished.
     // Individual callbacks have to be called in the appropriate sections.
-
   }, {
     key: "_errorProcessing",
     value: function _errorProcessing(files, message, xhr) {
@@ -3100,7 +3037,6 @@ Dropzone.optionsForElement = function (element) {
   }
 }; // Holds a list of all dropzone instances
 
-
 Dropzone.instances = []; // Returns the dropzone for given element if any
 
 Dropzone.forElement = function (element) {
@@ -3114,7 +3050,6 @@ Dropzone.forElement = function (element) {
 
   return element.dropzone;
 }; // Set to false if you don't want Dropzone to automatically find and attach to .dropzone elements.
-
 
 Dropzone.autoDiscover = true; // Looks for all .dropzone elements and creates a dropzone for them
 
@@ -3212,7 +3147,6 @@ Dropzone.discover = function () {
 // incorrectly **
 //
 
-
 Dropzone.blacklistedBrowsers = [// The mac os and windows phone version of opera 12 seems to have a problem with the File drag'n'drop API.
 /opera.*(Macintosh|Windows Phone).*version\/12/i]; // Checks if the browser is supported
 
@@ -3273,12 +3207,10 @@ Dropzone.dataURItoBlob = function (dataURI) {
     ia[i] = byteString.charCodeAt(i);
   } // write the ArrayBuffer to a blob
 
-
   return new Blob([ab], {
     type: mimeString
   });
 }; // Returns an array without the rejected item
-
 
 var without = function without(list, rejectedItem) {
   return list.filter(function (item) {
@@ -3288,13 +3220,11 @@ var without = function without(list, rejectedItem) {
   });
 }; // abc-def_ghi -> abcDefGhi
 
-
 var camelize = function camelize(str) {
   return str.replace(/[\-_](\w)/g, function (match) {
     return match.charAt(1).toUpperCase();
   });
 }; // Creates an element from string
-
 
 Dropzone.createElement = function (string) {
   var div = document.createElement("div");
@@ -3302,12 +3232,10 @@ Dropzone.createElement = function (string) {
   return div.childNodes[0];
 }; // Tests if given element is inside (or simply is) the container
 
-
 Dropzone.elementInside = function (element, container) {
   if (element === container) {
     return true;
   } // Coffeescript doesn't support do/while loops
-
 
   while (element = element.parentNode) {
     if (element === container) {
@@ -3406,7 +3334,6 @@ Dropzone.getElements = function (els, name) {
 // The default implementation just uses `window.confirm` and then calls the
 // appropriate callback.
 
-
 Dropzone.confirm = function (question, accepted, rejected) {
   if (window.confirm(question)) {
     return accepted();
@@ -3417,12 +3344,10 @@ Dropzone.confirm = function (question, accepted, rejected) {
 //
 // https://developer.mozilla.org/en-US/docs/HTML/Element/input#attr-accept
 
-
 Dropzone.isValidFile = function (file, acceptedFiles) {
   if (!acceptedFiles) {
     return true;
   } // If there are no accepted mime types, it's OK
-
 
   acceptedFiles = acceptedFiles.split(",");
   var mimeType = file.type;
@@ -3469,7 +3394,6 @@ Dropzone.isValidFile = function (file, acceptedFiles) {
   return false;
 }; // Augment jQuery
 
-
 if (typeof jQuery !== 'undefined' && jQuery !== null) {
   jQuery.fn.dropzone = function (options) {
     return this.each(function () {
@@ -3483,7 +3407,6 @@ if (typeof module !== 'undefined' && module !== null) {
 } else {
   window.Dropzone = Dropzone;
 } // Dropzone file status codes
-
 
 Dropzone.ADDED = "added";
 Dropzone.QUEUED = "queued"; // For backwards compatibility. Now, if a file is accepted, it's either queued
@@ -3519,7 +3442,6 @@ var detectVerticalSquash = function detectVerticalSquash(img) {
   var _ctx$getImageData = ctx.getImageData(1, 0, 1, ih),
       data = _ctx$getImageData.data; // search image edge pixel position in case it is squashed vertically.
 
-
   var sy = 0;
   var ey = ih;
   var py = ih;
@@ -3546,14 +3468,12 @@ var detectVerticalSquash = function detectVerticalSquash(img) {
 }; // A replacement for context.drawImage
 // (args are for source and destination).
 
-
 var drawImageIOSFix = function drawImageIOSFix(ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
   var vertSquashRatio = detectVerticalSquash(img);
   return ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
 }; // Based on MinifyJpeg
 // Source: http://www.perry.cz/files/ExifRestorer.js
 // http://elicon.blog57.fc2.com/blog-entry-206.html
-
 
 var ExifRestore =
 /*#__PURE__*/
@@ -3807,7 +3727,6 @@ var contentLoaded = function contentLoaded(win, fn) {
     return win[add](pre + "load", init, false);
   }
 }; // As a single function to be able to write tests.
-
 
 Dropzone._autoDiscoverFunction = function () {
   if (Dropzone.autoDiscover) {

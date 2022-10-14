@@ -19,5 +19,4 @@
         format: 'DD/MM/YYYY HH:mm',
         minDate: new Date()
     });
-
 })(jQuery);

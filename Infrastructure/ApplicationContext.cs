@@ -11,7 +11,6 @@ namespace Infrastructure
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -20,10 +19,9 @@ namespace Infrastructure
             base.OnModelCreating(builder);
         }
 
-
         public DbSet<Supervisor> Supervisors { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Project> Projects { get; set; }
-
+        public DbSet<Department> Departments { get; set; }
     }
 }

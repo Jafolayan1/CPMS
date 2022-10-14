@@ -10,6 +10,7 @@ namespace CPMS.Helpers
     {
         [RazorInject]
         public IUserAccessor _userAccessor { get; set; }
+
         public User CurrentUser
         {
             get

@@ -1,5 +1,4 @@
-﻿
-using Domain.Entities;
+﻿using Domain.Entities;
 
 using Domain.Interfaces;
 
@@ -36,13 +35,12 @@ namespace Service.Configuration
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             });
 
-
-
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ISupervisorRepository, SupervisorRepository>();
             services.AddTransient<IStudentRepository, StudentRepository>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
 
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }
 }
