@@ -28,10 +28,10 @@ namespace CPMS.Areas.Students.Controllers
         }
 
         [HttpGet]
-        public IActionResult ProjectTopic()
+        public IActionResult Index()
         {
             var topics = _context.Projects.Find(x => x.Matric.Equals(CurrentUser.UserName), false);
-            ViewData["ProjectTopics"] = topics;
+            ViewData["Topics"] = topics;
             return View();
         }
 
@@ -42,45 +42,46 @@ namespace CPMS.Areas.Students.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTopic(Project model)
+        public async Task<IActionResult> Topic(Project model)
         {
             try
             {
-                model.FileUrl = _file.UploadFile(model.File);
-                model.Status = "Not_Submited";
-                model.UserId = CurrentUser.Id;
+                if (model.File != null)
+                {
+                    _file.DeleteFile(model.FileUrl);
+                    model.FileUrl = _file.UploadFile(model.File);
+                }
+
+                if (model.ProjectId > 0)
+                {
+                    var p = _context.Projects.GetById(model.ProjectId);
+                    var pEntity = _mapper.Map<Project>(p);
+                    _context.Projects.Update(pEntity);
+                    await _context.SaveAsync();
+                }
+
 
                 var projectEntity = _mapper.Map<Project>(model);
                 _context.Projects.Add(projectEntity);
                 await _context.SaveAsync();
 
-                return RedirectToAction(nameof(ProjectTopic));
+                return RedirectToAction(nameof(Topic));
             }
             catch (Exception)
             {
                 _notyf.Error("One or more errors occured, Failed to addd");
-                return RedirectToAction(nameof(ProjectTopic));
+                return RedirectToAction(nameof(Topic));
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateProjectTopic(Project model)
-        {
-            var pTopic = _context.Projects.GetById(model.ProjectId);
-            var projectEntity = _mapper.Map(model, pTopic);
-            _context.Projects.Update(projectEntity);
-            await _context.SaveAsync();
 
-            return View();
-        }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteProjectTopic(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var pTopic = _context.Projects.GetById(id);
             _context.Projects.Remove(pTopic);
             await _context.SaveAsync();
-            return View();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

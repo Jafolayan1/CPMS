@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<None Include="Areas\Students\Views\Project\ProjectTopic.cshtml" />
+	<None Include="Areas\Students\Views\Project\Index.cshtml" />
 	<None Include="Views\Account\Login.cshtml" />
   </ItemGroup>
 

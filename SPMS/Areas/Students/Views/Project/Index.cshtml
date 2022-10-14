@@ -1,7 +1,7 @@
 ﻿@{
 	ViewData["Title"] = "Milestone";
 	Project project = new Project();
-	var topics = ViewData["ProjectTopics"] as IEnumerable<Project>;
+	var topics = ViewData["Topics"] as IEnumerable<Project>;
 
 }
 
@@ -14,7 +14,7 @@
 				<div class="row page-titles">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active"><a href="javascript:void(0)">Project</a></li>
-						<li class="breadcrumb-item"><a href="javascript:void(0)">Topic Approval</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Topics</a></li>
 					</ol>
 				</div>
 				<!-- row -->
@@ -23,7 +23,7 @@
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-header">
-								<h4 class="card-title">Topic Approval</h4>
+								<h4 class="card-title">Project Topic</h4>
 								<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Topic</button>
 							</div>
 							<div class="card-body">
@@ -31,60 +31,53 @@
 									<table class="table table-responsive-md">
 										<thead>
 											<tr>
-												<th><strong>MATRIC NO</strong></th>
-												<th><strong>PROJECT TOPIC</strong></th>
-												<th><strong>UPLOADED PROPOSAL</strong></th>
-												<th><strong>STATUS</strong></th>
-												<th><strong>REMARK</strong></th>
-												<th></th>
+												<th><strong>Matric</strong></th>
+												<th><strong>Topic</strong></th>
+												<th><strong>Proposal</strong></th>
+												<th><strong>Status</strong></th>
+												<th><strong>Remark</strong></th>
+												<th><strong></strong></th>
 											</tr>
 										</thead>
 										<tbody>
-											@if(topics!=null)
-											{
+											<tr>
 												@foreach (var item in @topics)
 												{
-													<tr>
-														<td>@item.Matric</td>
-														<td>@item.Topic</td>
-														<td>@item.FileUrl</td>
-														@if (@item.Status.Equals("Approved"))
-														{
-															<td><span class="badge light badge-success">@item.Status</span></td>
-														}
-														else if (@item.Status.Equals("Rejected"))
-														{
-															<td><span class="badge light badge-danger">@item.Status</span></td>
-														}
-														else if (@item.Status.Equals("Submitted"))
-														{
-															<td><span class="badge light badge-primary">@item.Status</span></td>
-														}
-																<td>@item.Remark</td>
-														<td>
-															<div class="dropdown">
-																<button type="button" class="btn btn-success light sharp" data-bs-toggle="dropdown">
-																	<svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24" /><circle fill="#000000" cx="5" cy="12" r="2" /><circle fill="#000000" cx="12" cy="12" r="2" /><circle fill="#000000" cx="19" cy="12" r="2" /></g></svg>
-																</button>
-																<div class="dropdown-menu">
-																	<a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#basicModal">Edit</a>
-																	<a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#basicModal">Delete</a>
-																</div>
-															</div>
-														</td>
-													</tr>
+													<td>@item.Matric</td>
+													<td>@item.Topic</td>
+													<td><a href="@item.FileUrl" download>Dowload File</a></td>
+													@if (@item.Status.Equals("Approved"))
+													{
+														<td><div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> @item.Status</div></td>
+													}
+													else if (@item.Status.Equals("Rejected"))
+													{
+														<td><div class="d-flex align-items-center"><i class="fa fa-circle text-danger me-1"></i> @item.Status</div></td>
+													}
+													else 
+													{
+														<td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i>  @item.Status</div></td>
+													}
+													<td>@item.Remark</td>
+													<td>
+														<div class="d-flex">
+															<a data-bs-toggle="modal" data-bs-target="#basicModal" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+															<a asp-action="Delete" asp-route-id="@item.ProjectId" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+														</div>
+													</td>
 												}
-											}
-										
+												
+											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+					</div>
+
 			</div>
-		</div>
+</div>
 
 
 <!-- Modal -->
@@ -96,19 +89,21 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
 				<div class="modal-body">
-				<form asp-action="AddTopic" method="post" enctype="multipart/form-data">
-						<input asp-for="@project.UserId" name="UserId" type="hidden" class="form-control">
+				<form asp-action="Topic" method="post" enctype="multipart/form-data">
+						<input asp-for="@project.UserId" name="UserId" value="@CurrentUser.Id" type="hidden" class="form-control">
 						<input asp-for="@project.ProjectId" name="ProjectId" type="hidden" class="form-control">
-						<input asp-for="@project.Matric" name="Matric" value="@CurrentUser.UserName" class="form-control">
+						<input asp-for="@project.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
+						<input asp-for="@project.Status" name="Status" value="Pending" type="hidden" class="form-control">
+
 
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-lg-12">
 								<div class="mb-3">
 									<label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
-									<input asp-for="@project.Topic" name="Topic" type="text" class="form-control" placeholder="Topic">
+									<textarea asp-for="@project.Topic" name="Topic" type="text" class="form-control" rows="4" id="comment"></textarea>
 								</div>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-lg-12">
 								<div class="mb-3">
 									<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
 									<input asp-for="@project.File" name="File" type="file" placeholder="Topic" class="form-file-input form-control">
