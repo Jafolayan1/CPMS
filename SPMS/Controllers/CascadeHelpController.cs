@@ -18,10 +18,16 @@ namespace CPMS.Controllers
 
 		public JsonResult getSupervisors(int Id)
 		{
-			List<Supervisor> list = new List<Supervisor>();
+			List<Supervisor> list = new();
 			list = _context.Supervisors.Where(x => x.DepartmentId.Equals(Id)).ToList();
-			list.Insert(0, new Supervisor { Id = 0, Surname = " Please Select " });
-			return Json(new SelectList(list, "Id", "FullName"));
+			list.Insert(0, new Supervisor { SupervisorId = 0, Surname = " Please Select " });
+			return Json(new SelectList(list, "SupervisorId", "FullName"));
+		}
+
+		public JsonResult readFile(string file)
+		{
+			var read = System.IO.File.ReadAllText(file);
+			return Json(read);
 		}
 	}
 

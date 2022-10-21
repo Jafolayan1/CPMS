@@ -1,20 +1,24 @@
-﻿using CPMS.Helpers;
+﻿using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
 namespace CPMS.Areas.Supervisors.Controllers
 {
-    [CustomAuthorize(Roles = "Supervisor")]
-    [Area("Supervisors")]
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
-        public DashboardController()
+        private readonly IUnitOfWork _context;
+
+        public DashboardController(IUserAccessor userAccessor, IUnitOfWork context) : base(userAccessor)
         {
+            _context = context;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
+
+
     }
 }

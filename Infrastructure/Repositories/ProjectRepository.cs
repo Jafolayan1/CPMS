@@ -15,7 +15,7 @@ namespace Infrastructure.Repositories
 
         public override IEnumerable<Project> Find(Expression<Func<Project, bool>> expression, bool trackchanges)
         {
-            return _context.Projects.Include(x => x.User).Where(expression);
+            return _context.Projects.Include(x => x.Student).Where(expression);
         }
     }
 }

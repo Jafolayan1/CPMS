@@ -30,13 +30,13 @@ namespace CPMS.Areas.Students.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var topics = _context.Projects.Find(x => x.Matric.Equals(CurrentUser.UserName), false);
-            ViewData["Topics"] = topics;
+            var lstProposal = _context.Projects.Find(x => x.Matric.Equals(CurrentUser.UserName), false);
+            ViewData["projectProposal"] = lstProposal;
             return View();
         }
 
         [HttpGet]
-        public IActionResult Chapter1()
+        public IActionResult Milestone()
         {
             return View();
         }
@@ -46,6 +46,10 @@ namespace CPMS.Areas.Students.Controllers
         {
             try
             {
+                var stu = _context.Students.GetById(CurrentUser.UserName);
+                model.StudentId = stu.StudentId;
+                model.SupervisorId = stu.SupervisorId;
+
                 if (model.File != null)
                 {
                     _file.DeleteFile(model.FileUrl);
@@ -65,12 +69,12 @@ namespace CPMS.Areas.Students.Controllers
                 _context.Projects.Add(projectEntity);
                 await _context.SaveAsync();
 
-                return RedirectToAction(nameof(Topic));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
                 _notyf.Error("One or more errors occured, Failed to addd");
-                return RedirectToAction(nameof(Topic));
+                return RedirectToAction(nameof(Index));
             }
         }
 

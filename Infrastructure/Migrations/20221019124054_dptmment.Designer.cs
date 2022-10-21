@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221019124054_dptmment")]
+    partial class dptmment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,13 +64,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SupervisorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Topic")
@@ -78,8 +76,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("ProjectId");
 
                     b.HasIndex("StudentId");
-
-                    b.HasIndex("SupervisorId");
 
                     b.ToTable("Projects");
                 });
@@ -417,13 +413,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Supervisor", "Supervisor")
-                        .WithMany()
-                        .HasForeignKey("SupervisorId");
-
                     b.Navigation("Student");
-
-                    b.Navigation("Supervisor");
                 });
 
             modelBuilder.Entity("Domain.Entities.Student", b =>

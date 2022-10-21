@@ -12,6 +12,7 @@
 
   <ItemGroup>
 	<None Include="Areas\Students\Views\Project\Index.cshtml" />
+	<None Include="Areas\Supervisors\Views\Project\PStudent.cshtml" />
 	<None Include="Views\Account\Login.cshtml" />
   </ItemGroup>
 
@@ -35,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\uploads\" />
+	<Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 	</Project>

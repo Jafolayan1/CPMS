@@ -12,6 +12,8 @@ namespace CPMS
         {
             CreateMap<StudentVM, Student>();
             CreateMap<SupervisorVM, Supervisor>();
+            CreateMap<ProjectVM, Project>();
+
         }
     }
 }

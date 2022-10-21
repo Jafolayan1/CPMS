@@ -1,0 +1,110 @@
+﻿@{
+	ViewData["Title"] = "Project Proposal";
+	var proposal = ViewData["projectproposal"] as IEnumerable<Project>;
+}
+
+
+<Partial name="_PProposalHeader" />
+<Partial name="_Sidebar" />
+
+
+
+ <div class="content-body">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">Project</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Project Students Proposal</a></li>
+					</ol>
+				</div>
+				
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-sm mb-0">
+										<thead>
+											<tr>
+												<th class="align-middle">Student</th>
+												<th class="align-middle pe-7">Date</th>
+												<th class="align-middle" style="min-width: 12.5rem;">Project Topic</th>
+												<th class="align-middle text-end">Proposal</th>
+												<th class="align-middle text-end">Status</th>
+												<th class="no-sort"></th>
+											</tr>
+										</thead>
+										<tbody id="orders">
+											@foreach (var item in proposal)
+											{
+												<tr class="btn-reveal-trigger">
+													<td class="py-2">
+														<strong>@item.Student.MatricNo</strong><br /><a href="">@item.Student.FullName</a></td>
+													<td class="py-2">@item.DateSubmitted.ToShortDateString()</td>
+													<td class="py-2">@item.Topic</td>
+													<td>
+														<a  data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">View Proposal</a>
+													</td>
+													<td class="py-2 text-end">
+															<span class="badge badge-warning">@item.Status<span class="ms-1 fas fa-stream"></span></span>
+													</td>
+													
+													<td>
+														<div class="d-flex">
+															<a class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-check"></i></a>
+															<a asp-action="Delete" asp-route-id="@item.ProjectId" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-times"></i></a>
+														</div>
+													</td>
+												</tr>
+
+												<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+													<div class="modal-dialog modal-lg">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title">Project Proposal</h5>
+																<button type="button" class="btn-close" data-bs-dismiss="modal">
+																</button>
+															</div>
+															<div class="modal-body">
+																<p id="text">
+																	 @System.IO.File.ReadAllText($"{item.FileUrl}");
+																</p>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+																<button type="button" class="btn btn-primary">Approve</button>
+																<button type="button" class="btn btn-primary">Reject</button>
+
+															</div>
+														</div>
+													</div>
+												</div>
+
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+	$(function () {
+		$('#readFile').click(function () {
+			var url = '@Url.Content("~/")' + "CascadeHelp/readFile";
+			var ddlSource = $("#mylink").attr("href");
+			$.getJSON(url, { file: $(ddlSource).val() }, function (dat) {
+				$("#text").empty();
+				
+				$("#text").html(items);
+			});
+		});
+	});
+</script>

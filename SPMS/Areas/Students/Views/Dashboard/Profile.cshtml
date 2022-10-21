@@ -123,22 +123,29 @@
 														<div class="col-sm-9 col-7"><span>@student.Level</span>
 														</div>
 													</div>
-													<div class="row mb-2">
-														<div class="col-sm-3 col-5">
-															<h5 class="f-w-500">Department <span class="pull-end">:</span>
-															</h5>
+													@if (student.Department != null)
+													{
+														<div class="row mb-2">
+															<div class="col-sm-3 col-5">
+																<h5 class="f-w-500">Department <span class="pull-end">:</span>
+																</h5>
+															</div>
+																<div class="col-sm-9 col-7"><span>@student.Department.Name</span>
+															</div>
 														</div>
-														<div class="col-sm-9 col-7"><span>@student.Department.Name</span>
-														</div>
-													</div>
-													<div class="row mb-2">
-														<div class="col-sm-3 col-5">
-															<h5 class="f-w-500">Supervisor <span class="pull-end">:</span>
-															</h5>
-														</div>
-														<div class="col-sm-9 col-7"><span>@student.Supervisor.FullName</span>
-														</div>
-													</div>
+													}
+													@if (student.Supervisor != null)
+													{
+													
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Supervisor <span class="pull-end">:</span>
+																		</h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>@student.Supervisor.FullName</span>
+																	</div>
+																</div>
+													}
 												</div>
 											</div>
 											<div id="update-profile" class="tab-pane fade">
@@ -149,7 +156,7 @@
 															 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 															<input asp-for="@student.UserId" name="UserId" type="hidden" />
-															<input asp-for="@student.Id" name="Id" type="hidden" />
+															<input asp-for="@student.StudentId" name="StudentId" type="hidden" />
 															<input asp-for="@student.MatricNo" name="MatricNo" value="@student.MatricNo" type="hidden" />
 
 															<div class="row">
@@ -179,20 +186,22 @@
 																	@if(ViewBag.Departments != null)
 																	{
 																		<select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))">
+																		@if (student.Department !=null)
+																		{
 																			<option value="@student.DepartmentId"> @student.Department.Name </option>
+																		}
+																			<option value=""> Please Select </option>
 
-																		</select>
-																	}
-																	else{
-																		<select class="form-control  default-select wide" id="departmentId">
-																			<option> Pleases Select  </option>
 																		</select>
 																	}
 																</div>
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Supervisor</label>
-																		<select asp-for="@student.SupervisorId"  name="SupervisorId" class="form-control wide" id="supervisorId">
-																<option value="@student.SupervisorId"> @student.Supervisor.FullName </option>
+																		<select asp-for="@student.SupervisorId"  name="SupervisorId" class="form-control wide" id="supervisorId" required>
+																			@if (student.Supervisor !=null)
+																			{
+																				<option value="@student.DepartmentId"> @student.Supervisor.FullName </option>
+																			}
 																		</select>
 																</div>
 															</div>

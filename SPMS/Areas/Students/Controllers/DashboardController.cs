@@ -67,7 +67,7 @@ namespace CPMS.Areas.Students.Controllers
                 user.PhoneNumber = model.PhoneNumber;
                 user.ImageUrl = model.ImageUrl;
 
-                var student = _context.Students.GetById(model.Id);
+                var student = _context.Students.GetById(model.StudentId);
                 var studentEntity = _mapper.Map(model, student);
                 await _userManager.UpdateAsync(user);
                 _context.Students.Update(studentEntity);

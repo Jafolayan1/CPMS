@@ -2,7 +2,8 @@
 {
     public class Supervisor : BaseEntity
     {
+        public int SupervisorId { get; set; }
         public string EmployeeNo { get; set; }
-        public IEnumerable<Student>? ProjectStudents { get; set; }
+        public ICollection<Student>? ProjectStudents { get; set; }
     }
 }

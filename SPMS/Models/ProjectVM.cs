@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+namespace CPMS.Models
 {
-    public class Project
+    public class ProjectVM
     {
         public int ProjectId { get; set; }
         public string Topic { get; set; }
@@ -17,10 +15,6 @@ namespace Domain.Entities
         public IFormFile File { get; set; }
 
         public int StudentId { get; set; }
-        public virtual Student Student { get; set; }
-
-        public int? SupervisorId { get; set; }
-        public virtual Supervisor Supervisor { get; set; }
         public DateTime DateSubmitted { get; set; } = DateTime.UtcNow;
     }
 }

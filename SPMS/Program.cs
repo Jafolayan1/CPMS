@@ -5,7 +5,6 @@ using Domain.Entities;
 using Infrastructure;
 
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 using Service.Configuration;
 
@@ -50,12 +49,12 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-using (var svp = app.Services.CreateScope())
-{
-    var context = svp.ServiceProvider.GetRequiredService<ApplicationContext>();
-    if (context.Database.GetPendingMigrations().Any())
-        context.Database.Migrate();
-}
+//using (var svp = app.Services.CreateScope())
+//{
+//    var context = svp.ServiceProvider.GetRequiredService<ApplicationContext>();
+//    if (context.Database.GetPendingMigrations().Any())
+//        context.Database.Migrate();
+//}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,7 +1,8 @@
-﻿@{
+﻿
+@{
 	ViewData["Title"] = "Milestone";
-	Project project = new Project();
-	var topics = ViewData["Topics"] as IEnumerable<Project>;
+	var proposal = ViewData["projectproposal"] as IEnumerable<Project>;
+	Project pjt = new Project();
 
 }
 
@@ -14,7 +15,7 @@
 				<div class="row page-titles">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item active"><a href="javascript:void(0)">Project</a></li>
-						<li class="breadcrumb-item"><a href="javascript:void(0)">Topics</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">proposal</a></li>
 					</ol>
 				</div>
 				<!-- row -->
@@ -40,9 +41,10 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												@foreach (var item in @topics)
-												{
+											@foreach (var item in @proposal)
+											{
+												<tr>
+												
 													<td>@item.Matric</td>
 													<td>@item.Topic</td>
 													<td><a href="@item.FileUrl" download>Dowload File</a></td>
@@ -65,9 +67,9 @@
 															<a asp-action="Delete" asp-route-id="@item.ProjectId" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
 														</div>
 													</td>
-												}
 												
-											</tr>
+												</tr>
+											}
 										</tbody>
 									</table>
 								</div>
@@ -88,35 +90,32 @@
 					<h5 class="modal-title">Add Project Topic</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
-				<div class="modal-body">
-				<form asp-action="Topic" method="post" enctype="multipart/form-data">
-						<input asp-for="@project.UserId" name="UserId" value="@CurrentUser.Id" type="hidden" class="form-control">
-						<input asp-for="@project.ProjectId" name="ProjectId" type="hidden" class="form-control">
-						<input asp-for="@project.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
-						<input asp-for="@project.Status" name="Status" value="Pending" type="hidden" class="form-control">
+					<div class="modal-body">
+						<form asp-action="Topic" method="post" enctype="multipart/form-data">
+								<input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
+								<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
 
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="mb-3">
+											<label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
+											<textarea asp-for="@pjt.Topic" name="Topic" type="text" class="form-control" rows="4" id="comment" required></textarea>
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="mb-3">
+											<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
+											<input asp-for="@pjt.File" name="File" type="file" accept=".doc,.docs,.pdf" placeholder="Topic" required class="form-file-input form-control">
 
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="mb-3">
-									<label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
-									<textarea asp-for="@project.Topic" name="Topic" type="text" class="form-control" rows="4" id="comment"></textarea>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary">Add</button>
+									</div>
 								</div>
-							</div>
-							<div class="col-lg-12">
-								<div class="mb-3">
-									<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
-									<input asp-for="@project.File" name="File" type="file" placeholder="Topic" class="form-file-input form-control">
-
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-								<button type="submit" class="btn btn-primary">Add</button>
-							</div>
-						</div>
-					</form>
-				</div>
+						</form>
+					</div>
 			</div>
 	</div>
 </div>
@@ -130,7 +129,7 @@
 			type:"POST",
 			url:"@Url.Action("AddTopic")",
 			dataType:"json",
-			data: { Topic = @project.Topic, File = @project.File, Matric = @project.Matric, ProjectId= @project.ProjectId, UserId = @project.UserId},
+			data: { Topic = Topic, File = File, Matric = Matric, ProjectId= ProjectId, UserId = UserId},
 			success: function(result){
 				console.log(result)
 			},
