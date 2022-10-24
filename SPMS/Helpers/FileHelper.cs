@@ -43,5 +43,10 @@ namespace CPMS.Helpers
 
             return "/uploads/" + fileName;
         }
+
+        public string ReadFile(string file)
+        {
+            return File.ReadAllText(_env.WebRootPath + file);
+        }
     }
 }

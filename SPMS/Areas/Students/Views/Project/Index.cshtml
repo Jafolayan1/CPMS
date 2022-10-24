@@ -60,15 +60,77 @@
 													{
 														<td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i>  @item.Status</div></td>
 													}
-													<td>@item.Remark</td>
+													<td>
+														<a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ProjectId"> View Remark </a>
+														<div class="modal fade" id="remarkModal_@item.ProjectId">
+															<div class="modal-dialog modal-dialog-centered" role="document">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title">Remark</h5>
+																		<button type="button" class="btn-close" data-bs-dismiss="modal">
+																		</button>
+																	</div>
+																	<div class="modal-body">
+																		<p>@item.Remark</p>
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+																		<button type="button" class="btn btn-primary">Save changes</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</td>
 													<td>
 														<div class="d-flex">
-															<a data-bs-toggle="modal" data-bs-target="#basicModal" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+													<a data-bs-toggle="modal" data-bs-target="#basicModal_@item.ProjectId" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+													<div class="modal fade" id="basicModal_@item.ProjectId">
+														<div class="modal-dialog" role="document">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h5 class="modal-title">Add Project Topic</h5>
+																	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+																</div>
+																<div class="modal-body">
+																	<form asp-action="Topic" method="post" enctype="multipart/form-data">
+																		<input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
+																		<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
+																		<input asp-for="@pjt.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
+
+
+																		<div class="row">
+																			<div class="col-lg-12">
+																				<div class="mb-3">
+																					<label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
+																					<textarea asp-for="@pjt.Topic" name="Topic" type="text" class="form-control" rows="4" id="comment" required></textarea>
+																				</div>
+																			</div>
+																			<div class="col-lg-12">
+																				<div class="mb-3">
+																					<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
+																					<input asp-for="@pjt.File" name="File" type="file" accept=".txt, .doc,.docs,.pdf" placeholder="Topic" required class="form-file-input form-control">
+
+																				</div>
+																			</div>
+																			<div class="modal-footer">
+																				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+																				<button type="submit" class="btn btn-primary">Add</button>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+
 															<a asp-action="Delete" asp-route-id="@item.ProjectId" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
 														</div>
 													</td>
 												
 												</tr>
+
+												<!-- Modal -->
+
 											}
 										</tbody>
 									</table>
@@ -82,41 +144,42 @@
 </div>
 
 
+
 <!-- Modal -->
 <div class="modal fade" id="basicModal">
 	<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Add Project Topic</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-					<div class="modal-body">
-						<form asp-action="Topic" method="post" enctype="multipart/form-data">
-								<input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
-								<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
-
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="mb-3">
-											<label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
-											<textarea asp-for="@pjt.Topic" name="Topic" type="text" class="form-control" rows="4" id="comment" required></textarea>
-										</div>
-									</div>
-									<div class="col-lg-12">
-										<div class="mb-3">
-											<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
-											<input asp-for="@pjt.File" name="File" type="file" accept=".doc,.docs,.pdf" placeholder="Topic" required class="form-file-input form-control">
-
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-										<button type="submit" class="btn btn-primary">Add</button>
-									</div>
-								</div>
-						</form>
-					</div>
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Add Project Topic</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
+			<div class="modal-body">
+				<form asp-action="Topic" method="post" enctype="multipart/form-data">
+					<input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
+					<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
+
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="mb-3">
+								<label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
+								<textarea asp-for="@pjt.Topic" name="Topic" type="text" class="form-control" rows="4" id="comment" required></textarea>
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="mb-3">
+								<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
+								<input asp-for="@pjt.File" name="File" type="file" accept=".txt, .doc,.docs,.pdf" placeholder="Topic" required class="form-file-input form-control">
+
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Add</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>
 

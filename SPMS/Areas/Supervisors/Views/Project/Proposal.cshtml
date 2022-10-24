@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Domain.Interfaces
+@inject IFileHelper _file;
+
+@{
 	ViewData["Title"] = "Project Proposal";
 	var proposal = ViewData["projectproposal"] as IEnumerable<Project>;
 }
@@ -67,7 +70,7 @@
 															</div>
 															<div class="modal-body">
 																<p id="text">
-																	 @System.IO.File.ReadAllText($"{item.FileUrl}");
+																	 @_file.ReadFile(item.FileUrl);
 																</p>
 															</div>
 															<div class="modal-footer">

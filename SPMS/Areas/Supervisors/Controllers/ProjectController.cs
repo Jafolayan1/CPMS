@@ -28,6 +28,10 @@ namespace CPMS.Areas.Supervisors.Controllers
 			var supervisor = _context.Supervisors.GetById(CurrentUser.UserName);
 			var lstProposal = _context.Projects.Find(x => x.SupervisorId.Equals(supervisor.SupervisorId), false).Where(s => s.Status.Equals("Pending"));
 			ViewData["projectProposal"] = lstProposal;
+
+			foreach (var item in lstProposal)
+			{
+			}
 			return View();
 		}
 

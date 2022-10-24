@@ -59,16 +59,16 @@ namespace CPMS.Areas.Students.Controllers
                 if (model.ProjectId > 0)
                 {
                     var p = _context.Projects.GetById(model.ProjectId);
-                    var pEntity = _mapper.Map<Project>(p);
+                    var pEntity = _mapper.Map(model, p);
                     _context.Projects.Update(pEntity);
-                    await _context.SaveAsync();
+                }
+                else
+                {
+                    var projectEntity = _mapper.Map<Project>(model);
+                    _context.Projects.Add(projectEntity);
                 }
 
-
-                var projectEntity = _mapper.Map<Project>(model);
-                _context.Projects.Add(projectEntity);
                 await _context.SaveAsync();
-
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception)
