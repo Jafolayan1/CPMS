@@ -11,6 +11,8 @@ namespace Domain.Entities
         public string Matric { get; set; }
         public string Status { get; set; }
         public string? Remark { get; set; }
+        public Chapter? Chapter { get; set; }
+
         public string FileUrl { get; set; }
 
         [NotMapped]
@@ -22,5 +24,14 @@ namespace Domain.Entities
         public int? SupervisorId { get; set; }
         public virtual Supervisor Supervisor { get; set; }
         public DateTime DateSubmitted { get; set; } = DateTime.UtcNow;
+    }
+
+    public enum Chapter : short
+    {
+        CHAPTER_1,
+        CHAPTER_2,
+        CHAPTER_3,
+        CHAPTER_4,
+        CHAPTER_5,
     }
 }

@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "SPMS": {
+    "CPMS": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

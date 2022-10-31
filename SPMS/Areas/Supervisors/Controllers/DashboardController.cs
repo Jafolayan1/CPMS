@@ -16,11 +16,12 @@ namespace CPMS.Areas.Supervisors.Controllers
         private readonly UserManager<User> _userManager;
 
 
-        public DashboardController(IUserAccessor userAccessor, IUnitOfWork context, IFileHelper file, IMapper mapper) : base(userAccessor)
+        public DashboardController(IUserAccessor userAccessor, IUnitOfWork context, IFileHelper file, IMapper mapper, UserManager<User> userManager) : base(userAccessor)
         {
             _context = context;
             _file = file;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public IActionResult Index()

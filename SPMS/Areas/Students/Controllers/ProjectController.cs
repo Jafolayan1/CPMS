@@ -38,11 +38,13 @@ namespace CPMS.Areas.Students.Controllers
         [HttpGet]
         public IActionResult Milestone()
         {
+            var lstProposal = _context.Projects.Find(x => x.Matric.Equals(CurrentUser.UserName), false).Where(c => c.Chapter != null && c.Status.Equals("Approved"));
+            ViewData["projectProposal"] = lstProposal;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Topic(Project model)
+        public async Task<IActionResult> AddProject(Project model)
         {
             try
             {
