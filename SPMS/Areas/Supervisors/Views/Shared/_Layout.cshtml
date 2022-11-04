@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -63,6 +66,11 @@
 	<script src="~/assets/js/custom.min.js"></script>
 	<script src="~/assets/js/dlabnav-init.js"></script>
 	<script src="~/assets/js/demo.js"></script>
+	@if (SignInManager.IsSignedIn(User))
+	{
+		<script src="~/lib/microsoft/signalr/dist/browser/signalr.js" defer=""></script>
+		<script src="~/js/ConnectSignalR.js" defer=""></script>
+	}
 	<script>
 		function cardsCenter() {
 

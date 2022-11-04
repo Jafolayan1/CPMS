@@ -1,4 +1,5 @@
 using CPMS.Extension;
+using CPMS.Hubs;
 
 using Domain.Entities;
 
@@ -17,6 +18,7 @@ if (builder.Environment.IsDevelopment())
 
 ConfigureRepositories.AddServices(builder.Services, builder.Configuration);
 ConfigureDependencies.AddServices(builder.Services, builder.Configuration);
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -69,9 +71,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
+app.MapHub<MessageHub>("/messageHub");
 app.MapControllerRoute(
      name: "areas",
      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

@@ -2,9 +2,12 @@
 
 using AutoMapper;
 
+using CPMS.Hubs;
+
 using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace CPMS.Areas.Supervisors.Controllers
 {
@@ -13,12 +16,14 @@ namespace CPMS.Areas.Supervisors.Controllers
 		private readonly IUnitOfWork _context;
 		private readonly IMapper _mapper;
 		private readonly INotyfService _notyf;
+		private readonly IHubContext<MessageHub> _hubContext;
 
-		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, INotyfService notyf) : base(userAccessor)
+		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, INotyfService notyf, IHubContext<MessageHub> hubContext) : base(userAccessor)
 		{
 			_context = context;
 			_mapper = mapper;
 			_notyf = notyf;
+			_hubContext = hubContext;
 		}
 
 		[HttpGet]

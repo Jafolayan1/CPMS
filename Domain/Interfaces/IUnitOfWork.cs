@@ -6,7 +6,10 @@
         IStudentRepository Students { get; }
         IProjectRepository Projects { get; }
         IDepartmentRepository Departments { get; }
+        INotificationRepository Notifications { get; }
 
         Task SaveAsync();
+        void Clear();
+
     }
 }

@@ -49,6 +49,8 @@ else if (User.IsInRole("Supervisor"))
 					</a>
 					<ul aria-expanded="false">
 						<li><a asp-controller="Dashboard" asp-action="Profile">Profile</a></li>
+						<li><a asp-controller="Notification" asp-action="Notify">Send Notification</a></li>
+
 					</ul>
 
 				</li>
@@ -61,6 +63,19 @@ else if (User.IsInRole("Supervisor"))
 					<ul aria-expanded="false">
 						<li><a asp-controller="Project" asp-action="PStudent">Project Students</a></li>
 						<li><a asp-controller="Project" asp-action="Proposal">Proposals</a></li>
+						<li>
+							<ul aria-expanded="false">
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="fas fa-info-circle"></i>
+						<span class="nav-text">Others</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a asp-controller="Notification" asp-action="Notify">Send Notification</a></li>
 						<li>
 							<ul aria-expanded="false">
 							</ul>

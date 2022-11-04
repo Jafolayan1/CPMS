@@ -24,9 +24,12 @@ namespace CPMS.Areas.Students.Controllers
 
         private readonly IUserAccessor _userAccessor;
 
+
         public BaseController(IUserAccessor userAccessor)
         {
             _userAccessor = userAccessor;
         }
+
+
     }
 }

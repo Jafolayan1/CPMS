@@ -2,11 +2,14 @@
 
 using AutoMapper;
 
+using CPMS.Hubs;
+
 using Domain.Entities;
 using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace CPMS.Areas.Students.Controllers
 {
@@ -17,14 +20,16 @@ namespace CPMS.Areas.Students.Controllers
         private readonly IMapper _mapper;
         private readonly IFileHelper _file;
         private readonly INotyfService _notyf;
+        private readonly IHubContext<MessageHub> _messgaeHub;
 
-        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, INotyfService notyf) : base(userAccessor)
+        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, INotyfService notyf, IHubContext<MessageHub> messgaeHub) : base(userAccessor)
         {
             _context = context;
             _mapper = mapper;
             _userManager = userManager;
             _file = file;
             _notyf = notyf;
+            _messgaeHub = messgaeHub;
         }
 
         [HttpGet]

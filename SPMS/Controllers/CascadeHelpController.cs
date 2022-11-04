@@ -29,6 +29,14 @@ namespace CPMS.Controllers
 			var read = System.IO.File.ReadAllText(file);
 			return Json(read);
 		}
+
+		public JsonResult Notify()
+		{
+			var stud = _context.Students.Find(CurrentUser.UserName);
+			var data = _context.Notifications.Where(x => x.SupervisorId.Equals(stud.SupervisorId)).ToList();
+			TempData["noti"] = data;
+			return Json(data);
+		}
 	}
 
 }

@@ -8,6 +8,8 @@
         public int? SupervisorId { get; set; }
         public virtual Supervisor Supervisor { get; set; }
         public ICollection<Project> Projects { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
+
     }
 
     public enum Level

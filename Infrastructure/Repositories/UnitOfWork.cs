@@ -13,12 +13,14 @@ namespace Infrastructure.Repositories
             Students = new StudentRepository(_context);
             Projects = new ProjectRepository(_context);
             Departments = new DepartmentRepository(_context);
+            Notifications = new NotificationRepository(_context);
         }
 
         public ISupervisorRepository Supervisors { get; private set; }
         public IStudentRepository Students { get; private set; }
         public IProjectRepository Projects { get; private set; }
         public IDepartmentRepository Departments { get; private set; }
+        public INotificationRepository Notifications { get; private set; }
 
         public void Dispose()
         {
@@ -28,6 +30,11 @@ namespace Infrastructure.Repositories
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public void Clear()
+        {
+            _context.ChangeTracker.Clear();
         }
     }
 }

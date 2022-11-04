@@ -16,6 +16,8 @@ namespace Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new SeedRoles());
+            builder.ApplyConfiguration(new SeedDepartments());
+
             base.OnModelCreating(builder);
         }
 
@@ -23,5 +25,7 @@ namespace Infrastructure
         public DbSet<Student> Students { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+
     }
 }

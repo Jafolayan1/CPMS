@@ -92,3 +92,13 @@
 		</nav>
 	</div>
 </div>
+
+
+
+<script type="text/jscript">
+	var url = "/CascadeHelp/Notify";
+	$.get(url, null, function (data) {
+		$("#rData").html(data);
+		console.log(data)
+	});
+</script>  

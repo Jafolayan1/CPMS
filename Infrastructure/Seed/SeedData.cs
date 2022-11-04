@@ -34,4 +34,28 @@ namespace Infrastructure.Seed
                   });
         }
     }
+
+
+    public class SeedDepartments : IEntityTypeConfiguration<Department>
+    {
+        public void Configure(EntityTypeBuilder<Department> builder)
+        {
+            builder.HasData(
+                new Department
+                {
+                    DepartmentId = 1,
+                    Name = "Computer Science",
+                },
+                 new Department
+                 {
+                     DepartmentId = 2,
+                     Name = "Computer Engineering",
+                 },
+                  new Department
+                  {
+                      DepartmentId = 3,
+                      Name = "Statistics",
+                  });
+        }
+    }
 }

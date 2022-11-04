@@ -39,6 +39,9 @@ namespace Service.Configuration
             services.AddTransient<ISupervisorRepository, SupervisorRepository>();
             services.AddTransient<IStudentRepository, StudentRepository>();
             services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+            services.AddTransient<IProjectRepository, ProjectRepository>();
+            services.AddTransient<INotificationRepository, NotificationRepository>();
+
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
