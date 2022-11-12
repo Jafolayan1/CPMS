@@ -15,16 +15,14 @@ namespace CPMS.Areas.Students.Controllers
 {
     public class ProjectController : BaseController
     {
-        private readonly IUnitOfWork _context;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IFileHelper _file;
         private readonly INotyfService _notyf;
         private readonly IHubContext<MessageHub> _messgaeHub;
 
-        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, INotyfService notyf, IHubContext<MessageHub> messgaeHub) : base(userAccessor)
+        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, INotyfService notyf, IHubContext<MessageHub> messgaeHub) : base(userAccessor, context)
         {
-            _context = context;
             _mapper = mapper;
             _userManager = userManager;
             _file = file;
@@ -37,6 +35,7 @@ namespace CPMS.Areas.Students.Controllers
         {
             var lstProposal = _context.Projects.Find(x => x.Matric.Equals(CurrentUser.UserName), false);
             ViewData["projectProposal"] = lstProposal;
+            ViewData["Noti"] = GetNoti();
             return View();
         }
 
@@ -45,6 +44,7 @@ namespace CPMS.Areas.Students.Controllers
         {
             var lstProposal = _context.Projects.Find(x => x.Matric.Equals(CurrentUser.UserName), false).Where(c => c.Chapter != null && c.Status.Equals("Approved"));
             ViewData["projectProposal"] = lstProposal;
+            ViewData["Noti"] = GetNoti();
             return View();
         }
 

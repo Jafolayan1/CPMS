@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class notifyupdtedTbl : Migration
+    public partial class SeedChnaged : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -204,6 +204,28 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    NotificationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    When = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    SupervisorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.NotificationId);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Supervisors_SupervisorId",
+                        column: x => x.SupervisorId,
+                        principalTable: "Supervisors",
+                        principalColumn: "SupervisorId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
@@ -242,34 +264,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notifications",
-                columns: table => new
-                {
-                    NotificationId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    When = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsRead = table.Column<bool>(type: "bit", nullable: false),
-                    SupervisorId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Notifications", x => x.NotificationId);
-                    table.ForeignKey(
-                        name: "FK_Notifications_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "StudentId");
-                    table.ForeignKey(
-                        name: "FK_Notifications_Supervisors_SupervisorId",
-                        column: x => x.SupervisorId,
-                        principalTable: "Supervisors",
-                        principalColumn: "SupervisorId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
@@ -304,17 +298,46 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 1, "00000000-0000-0000-0000-000000000000", "Student", "STUDENT" });
+                values: new object[,]
+                {
+                    { 1, "00000000-0000-0000-0000-000000000000", "Admin", "ADMIN" },
+                    { 2, "00000000-0000-0000-0000-000000000000", "Supervisor", "SUPERVISOR" },
+                    { 3, "00000000-0000-0000-0000-000000000000", "Student", "STUDENT" }
+                });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 2, "00000000-0000-0000-0000-000000000000", "Supervisor", "SUPERVISOR" });
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "ImageUrl", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OtherNames", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { 1, 0, "ed3d4815-9e69-4754-bffa-5628a45b7d7d", "admin@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADMIN@GMAIL.COM", "ADMIN", "Admin", "AQAAAAEAACcQAAAAENJFE884si+Ujhkxg0e+xZ1aYXToq3S5GKXOkmtsapx3WEUxDCEbJse/NT0JB0sLIg==", "1234567890", false, "1bd2a07c-02bb-41a4-b6e8-4c0394d125de", "Super ", false, "Admin" },
+                    { 2, 0, "b8c27520-cad2-4c35-8e7b-b0a605145469", "addeewale@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADEWALE@GMAIL.COM", "EM20200104321", "Adekunle Adewale", "AQAAAAEAACcQAAAAEIlufJSwMfrGNMBHS7FtpesxStxbgWwf6W9FwuhoVGHoJmRIKe3VQyFofapK5Bhtig==", "1234567890", false, "31103039-5f01-4fdf-8d2f-7877a3cdfd21", "Uthman", false, "EM20200104321" }
+                });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 3, "00000000-0000-0000-0000-000000000000", "Admin", "ADMIN" });
+                table: "Departments",
+                columns: new[] { "DepartmentId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Computer Science" },
+                    { 2, "Computer Engineering" },
+                    { 3, "Statistics" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { 2, 2 });
+
+            migrationBuilder.InsertData(
+                table: "Supervisors",
+                columns: new[] { "SupervisorId", "DepartmentId", "Email", "EmployeeNo", "ImageUrl", "OtherNames", "PhoneNumber", "Surname", "UserId" },
+                values: new object[] { 1, 1, "addeewale@gmail.com", "EM20200104321", "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", "Adekunle Adewale", "1234567890", "Uthman", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -354,11 +377,6 @@ namespace Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Notifications_StudentId",
-                table: "Notifications",
-                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_SupervisorId",

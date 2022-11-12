@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -17,7 +20,7 @@
 	<title>Capstone Project Management</title>
 
 	<!-- FAVICONS ICON -->
-	<link rel="shortcut icon" type="image/png" href="~/assets/images/favicon.png" />
+	<link rel="shortcut icon" type="image/png" href="~/assets/images/favico.png" />
 	<link href="~/assets/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
 	<link href="~/assets/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
 
@@ -36,41 +39,6 @@
 
 	<div id="main-wrapper">
 		<Partial name="_Header" />
-		<div class="dlabnav">
-			<div class="dlabnav-scroll">
-				<ul class="metismenu" id="menu">
-					<li>
-						<a class="has-arrow " href="javascript:void()" aria-expanded="false">
-							<i class="fas fa-home"></i>
-							<span class="nav-text">Dashboard</span>
-						</a>
-						<ul aria-expanded="false">
-						</ul>
-
-					</li>
-
-					<li>
-						<a class="has-arrow " href="javascript:void()" aria-expanded="false">
-							<i class="fas fa-info-circle"></i>
-							<span class="nav-text">Apps</span>
-						</a>
-						<ul aria-expanded="false">
-							<li><a href="./app-profile.html">Profile</a></li>
-							<li>
-								<ul aria-expanded="false">
-								</ul>
-							</li>
-						</ul>
-					</li>
-				</ul>
-
-				<div class="copyright">
-					<p><strong>Capstone Project Management</strong> © @DateTime.Now.Year All Rights Reserved</p>
-					<p class="fs-12">Made with <span class="heart"></span> </p>
-				</div>
-			</div>
-		</div>
-
 		@RenderBody()
 
 		<Partial name="_Footer" />
@@ -98,54 +66,13 @@
 	<script src="~/assets/js/custom.min.js"></script>
 	<script src="~/assets/js/dlabnav-init.js"></script>
 	<script src="~/assets/js/demo.js"></script>
-	<script src="~/assets/js/styleSwitcher.js"></script>
-	<script>
-		function cardsCenter() {
-
-			/*  testimonial one function by = owl.carousel.js */
-
-
-
-			jQuery('.card-slider').owlCarousel({
-				loop: true,
-				margin: 10,
-				nav: false,
-				//center:true,
-				slideSpeed: 3000,
-				paginationSpeed: 3000,
-				dots: false,
-				navText: ['', ''],
-				responsive: {
-					0: {
-						items: 1
-					},
-					576: {
-						items: 2
-					},
-					800: {
-						items: 2
-					},
-					991: {
-						items: 2
-					},
-					1200: {
-						items: 3
-					},
-					1600: {
-						items: 4
-					}
-				}
-			})
-		}
-
-		jQuery(window).on('load', function () {
-			setTimeout(function () {
-				cardsCenter();
-			}, 1000);
-		});
-
-	</script>
-
+	@if (SignInManager.IsSignedIn(User))
+	{
+		<script src="~/lib/microsoft/signalr/dist/browser/signalr.js" defer=""></script>
+		<script src="~/js/ConnectSignalR.js" defer=""></script>
+	}
+	
+	@await Component.InvokeAsync("Notyf")
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

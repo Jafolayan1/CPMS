@@ -37,6 +37,23 @@ namespace Infrastructure.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentId = 1,
+                            Name = "Computer Science"
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            Name = "Computer Engineering"
+                        },
+                        new
+                        {
+                            DepartmentId = 3,
+                            Name = "Statistics"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
@@ -54,9 +71,6 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SupervisorId")
                         .HasColumnType("int");
 
@@ -64,8 +78,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("NotificationId");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("SupervisorId");
 
@@ -154,8 +166,8 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Student",
-                            NormalizedName = "STUDENT"
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
@@ -168,8 +180,8 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
                         });
                 });
 
@@ -263,6 +275,20 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Supervisors");
+
+                    b.HasData(
+                        new
+                        {
+                            SupervisorId = 1,
+                            DepartmentId = 1,
+                            Email = "addeewale@gmail.com",
+                            EmployeeNo = "EM20200104321",
+                            ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+                            OtherNames = "Adekunle Adewale",
+                            PhoneNumber = "1234567890",
+                            Surname = "Uthman",
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -340,6 +366,48 @@ namespace Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ed3d4815-9e69-4754-bffa-5628a45b7d7d",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            OtherNames = "Admin",
+                            PasswordHash = "AQAAAAEAACcQAAAAENJFE884si+Ujhkxg0e+xZ1aYXToq3S5GKXOkmtsapx3WEUxDCEbJse/NT0JB0sLIg==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1bd2a07c-02bb-41a4-b6e8-4c0394d125de",
+                            Surname = "Super ",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b8c27520-cad2-4c35-8e7b-b0a605145469",
+                            Email = "addeewale@gmail.com",
+                            EmailConfirmed = true,
+                            ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADEWALE@GMAIL.COM",
+                            NormalizedUserName = "EM20200104321",
+                            OtherNames = "Adekunle Adewale",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIlufJSwMfrGNMBHS7FtpesxStxbgWwf6W9FwuhoVGHoJmRIKe3VQyFofapK5Bhtig==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "31103039-5f01-4fdf-8d2f-7877a3cdfd21",
+                            Surname = "Uthman",
+                            TwoFactorEnabled = false,
+                            UserName = "EM20200104321"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -424,6 +492,18 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 2
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -447,10 +527,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
                 {
-                    b.HasOne("Domain.Entities.Student", null)
-                        .WithMany("Notifications")
-                        .HasForeignKey("StudentId");
-
                     b.HasOne("Domain.Entities.Supervisor", "Supervisor")
                         .WithMany()
                         .HasForeignKey("SupervisorId")
@@ -577,8 +653,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Student", b =>
                 {
-                    b.Navigation("Notifications");
-
                     b.Navigation("Projects");
                 });
 

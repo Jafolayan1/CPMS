@@ -15,17 +15,15 @@ namespace CPMS.Areas.Students.Controllers
         private readonly IAuthenticationService _auth;
         private readonly UserManager<User> _userManager;
         private readonly IMailService _mailService;
-        private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
         private readonly IFileHelper _file;
         private readonly ApplicationContext _repo;
 
-        public DashboardController(IAuthenticationService auth, UserManager<User> userManager, IMailService mailService, IUnitOfWork context, IMapper mapper, IUserAccessor o, IFileHelper file, ApplicationContext repo) : base(o)
+        public DashboardController(IAuthenticationService auth, UserManager<User> userManager, IMailService mailService, IUnitOfWork context, IMapper mapper, IUserAccessor o, IFileHelper file, ApplicationContext repo) : base(o, context)
         {
             _auth = auth;
             _userManager = userManager;
             _mailService = mailService;
-            _context = context;
             _mapper = mapper;
             _file = file;
             _repo = repo;
@@ -34,6 +32,7 @@ namespace CPMS.Areas.Students.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewData["Noti"] = GetNoti();
             return View();
         }
 
@@ -43,7 +42,7 @@ namespace CPMS.Areas.Students.Controllers
             var student = _context.Students.GetById(CurrentUser.UserName);
             ViewBag.Departments = _context.Departments.GetAll();
             ViewData["student"] = student;
-
+            ViewData["Noti"] = GetNoti();
             return View();
         }
 
@@ -79,6 +78,10 @@ namespace CPMS.Areas.Students.Controllers
                 TempData["error"] = "One or more errors occured.";
                 return View(nameof(Profile));
             }
+
+
         }
+
+
     }
 }

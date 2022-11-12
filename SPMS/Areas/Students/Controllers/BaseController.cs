@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CPMS.Areas.Students.Controllers
 {
-    [CustomAuthorize(Roles = "Student")]
+    [CustomAuthorize(Role = "Student")]
     [Area("Students")]
     public class BaseController : Controller
     {
@@ -23,11 +23,19 @@ namespace CPMS.Areas.Students.Controllers
         }
 
         private readonly IUserAccessor _userAccessor;
+        protected IUnitOfWork _context;
 
 
-        public BaseController(IUserAccessor userAccessor)
+
+        public BaseController(IUserAccessor userAccessor, IUnitOfWork context)
         {
             _userAccessor = userAccessor;
+            _context = context;
+        }
+        public IEnumerable<Notification> GetNoti()
+        {
+            var stud = _context.Students.GetById(CurrentUser.UserName);
+            return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
         }
 
 

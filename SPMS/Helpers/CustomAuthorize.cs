@@ -6,15 +6,13 @@ namespace CPMS.Helpers
     [AttributeUsage(AttributeTargets.All)]
     public class CustomAuthorize : Attribute, IAuthorizationFilter
     {
-        public string Roles { get; set; }
+        public string Role { get; set; }
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             if (context.HttpContext.User.Identity.IsAuthenticated)
             {
-                //Fetch user permission from db
-
-                if (!context.HttpContext.User.IsInRole(Roles))
+                if (!context.HttpContext.User.IsInRole(Role))
                 {
                     context.Result = new RedirectToActionResult("Unauthorize", "Account", new { area = "" });
                 }

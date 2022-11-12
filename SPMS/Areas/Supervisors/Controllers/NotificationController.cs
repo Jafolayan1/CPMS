@@ -1,27 +1,14 @@
-﻿using AutoMapper;
-
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
 
-using Infrastructure;
-
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
-using Notification = Domain.Entities.Notification;
 
 namespace CPMS.Areas.Supervisors.Controllers
 {
     public class NotificationController : BaseController
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _context;
-
-
-        public NotificationController(IUserAccessor userAccessor, IMapper mapper, IUnitOfWork context, UserManager<User> userManager, ApplicationContext repo) : base(userAccessor)
+        public NotificationController(IUserAccessor userAccessor, IUnitOfWork context) : base(userAccessor, context)
         {
-            _mapper = mapper;
-            _context = context;
         }
 
         [HttpGet]
@@ -44,6 +31,20 @@ namespace CPMS.Areas.Supervisors.Controllers
             _context.Notifications.Add(newNotify);
             await _context.SaveAsync();
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Notifications()
+        {
+            var noti = _context.Notifications.GetAll();
+            return View(noti);
+        }
+
+        [HttpGet]
+        public IActionResult Notifications(int id)
+        {
+            var noti = _context.Notifications.GetById(id);
+            return View(noti);
         }
     }
 }

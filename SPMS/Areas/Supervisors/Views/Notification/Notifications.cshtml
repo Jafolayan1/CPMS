@@ -1,0 +1,46 @@
+﻿@using Domain.Entities
+@{
+	ViewData["Title"] = "Notification";
+	var noti = ViewData["Noti"] as IEnumerable<Notification>;
+}
+
+
+<Partial name="_NotificationHeader" />
+<Partial name="_Sidebar" />
+
+
+<div class="content-body">
+	<!-- row -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="card overflow-hidden">
+					<div class="card-body">
+						<div class="side-border">
+							<h4 class="fs-20 font-w700"><span>Today</span></h4>
+						</div>
+
+						@foreach (var item in @noti)
+						{
+							<div class="latest d-flex align-items-center justify-content-between flex-wrap">
+								<div class="d-flex align-items-center flex-wrap mb-3">
+									<span class="me-3">2m ago</span>
+									<div class="enaergy">
+										<span class="bg-primary"><i class="fas fa-bolt"></i></span>
+									</div>
+									<div class="ms-0 ms-sm-3">
+										<h4 class="fs-18 font-w500">@item.Content.Substring(0,30)...</h4>
+										<p class="mb-0 fs-16">@item.When.ToLongDateString() - @item.When.ToShortTimeString()</p>
+									</div>
+								</div>
+								<a href="javascript:void(0);" class="btn-outline-primary ">Read</a>
+								<a href="javascript:void(0);" class="btn-outline-primary ">Mark as Read</a>
+							</div>
+						}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

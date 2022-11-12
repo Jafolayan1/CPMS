@@ -17,17 +17,13 @@
 	<title>FPE Student Project Management</title>
 	
 	<!-- FAVICONS ICON -->
-	<link rel="shortcut icon" type="image/png" href="~/favico.png" />
+	<link rel="shortcut icon" type="image/png" href="~/assets/images/favico.png" />
 	<link href="~/assets/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
 	<link href="~/assets/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
 	
 	<!-- Style css -->
 	<link href="~/assets/css/style.css" rel="stylesheet">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.js"></script>
-	
 </head>
 <body>
 
@@ -68,53 +64,6 @@
 	<script src="~/assets/js/custom.min.js"></script>
 	<script src="~/assets/js/dlabnav-init.js"></script>
 	<script src="~/assets/js/demo.js"></script>
-@*	<script>
-		function cardsCenter()
-		{
-			
-			/*  testimonial one function by = owl.carousel.js */
-			
-	
-			
-			jQuery('.card-slider').owlCarousel({
-				loop:true,
-				margin:10,
-				nav:false,
-				//center:true,
-				slideSpeed: 3000,
-				paginationSpeed: 3000,
-				dots: false,
-				navText: ['', ''],
-				responsive:{
-					0:{
-						items:1
-					},
-					576:{
-						items:2
-					},	
-					800:{
-						items:2
-					},			
-					991:{
-						items:2
-					},
-					1200:{
-						items:3
-					},
-					1600:{
-						items:4
-					}
-				}
-			})
-		}
-		
-		jQuery(window).on('load',function(){
-			setTimeout(function(){
-				cardsCenter();
-			}, 1000); 
-		});
-		
-	</script>*@
 
 	@await RenderSectionAsync("Scripts", required: false)
 </body>

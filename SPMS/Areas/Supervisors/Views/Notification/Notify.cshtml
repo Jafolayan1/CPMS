@@ -1,4 +1,5 @@
-﻿
+﻿@using Domain.Entities
+
 @{
 	ViewData["Title"] = "Notify";
 	Notification noti = new Notification();
@@ -9,34 +10,34 @@
 <Partial name="_Sidebar" />
 
 
-	<div class="content-body">
-			<div class="container-fluid">
-				<div class="row page-titles">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">Form</a></li>
-						<li class="breadcrumb-item"><a href="javascript:void(0)">Element</a></li>
-					</ol>
-				</div>
-				<!-- row -->
-				<div class="row">
-					<div class="col-xl-6 col-lg-6">
-						<div class="card">
-							<div class="card-header">
-								<h4 class="card-title">Brodct Noti</h4>
-							</div>
-							<div class="card-body">
-								<div class="basic-form">
-									<form asp-action="Notify" method="post">
-										<div class="mb-3">
-											<input type="text" asp-for="@noti.Content" name="Content" class="form-control input-rounded" placeholder="input-rounded">
-										</div>
-										<button type="submit" class="btn btn-primary">Send Noti</button>
-									</form>
+<div class="content-body">
+	<div class="container-fluid">
+		<div class="row page-titles">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active"><a href="javascript:void(0)">Notification</a></li>
+				<li class="breadcrumb-item"><a href="javascript:void(0)">Notify</a></li>
+			</ol>
+		</div>
+		<!-- row -->
+		<div class="row">
+			<div class="col-xl-6 col-lg-6">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Brodcast Notification To Project Students</h4>
+					</div>
+					<div class="card-body">
+						<div class="basic-form">
+							<form asp-action="Notify" method="post">
+								<div class="mb-3">
+									<textarea rows="4" asp-for="@noti.Content" name="Content" class="form-control" required></textarea>
 								</div>
-							</div>
+								<button type="submit" class="btn btn-primary">Send Message</button>
+							</form>
 						</div>
 					</div>
 				</div>
-
 			</div>
+		</div>
+
 	</div>
+</div>

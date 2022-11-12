@@ -1,11 +1,9 @@
 using CPMS.Extension;
 using CPMS.Hubs;
 
-using Domain.Entities;
-
 using Infrastructure;
 
-using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 using Service.Configuration;
 
@@ -19,44 +17,18 @@ if (builder.Environment.IsDevelopment())
 ConfigureRepositories.AddServices(builder.Services, builder.Configuration);
 ConfigureDependencies.AddServices(builder.Services, builder.Configuration);
 builder.Services.AddSignalR();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+using (IServiceScope svp = app.Services.CreateScope())
 {
-    var ctx = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-    var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-
-    ctx.Database.EnsureCreated();
-    var email = "admin@cpms.com";
-    var phone = "090909008744";
-
-    if (!ctx.Users.Any(u => u.Email == email))
-    {
-        var adminUser = new User
-        {
-            Surname = "Super ",
-            OtherNames = "Admin",
-            PhoneNumber = phone,
-            Email = email,
-            NormalizedEmail = email.ToUpper(),
-            UserName = "Admin",
-            ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
-            NormalizedUserName = email,
-            EmailConfirmed = true,
-            SecurityStamp = Guid.NewGuid().ToString(),
-        };
-        var result = userMgr.CreateAsync(adminUser, "Password").GetAwaiter().GetResult();
-        userMgr.AddToRoleAsync(adminUser, "Admin").GetAwaiter().GetResult();
-    }
+    var context = svp.ServiceProvider.GetRequiredService<ApplicationContext>();
+    if (context.Database.GetPendingMigrations().Any())
+        context.Database.Migrate();
 }
-
-//using (var svp = app.Services.CreateScope())
-//{
-//    var context = svp.ServiceProvider.GetRequiredService<ApplicationContext>();
-//    if (context.Database.GetPendingMigrations().Any())
-//        context.Database.Migrate();
-//}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -73,6 +45,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapHub<MessageHub>("/messageHub");
 app.MapControllerRoute(

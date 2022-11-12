@@ -4,6 +4,7 @@
 	<TargetFramework>net6.0</TargetFramework>
 	<Nullable>annotations</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
+	<ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +13,6 @@
 
   <ItemGroup>
 	<None Include="Areas\Students\Views\Project\Index.cshtml" />
-	<None Include="Areas\Supervisors\Views\Notification\Notify.cshtml" />
 	<None Include="Areas\Supervisors\Views\Project\PStudent.cshtml" />
 	<None Include="Views\Account\Login.cshtml" />
   </ItemGroup>

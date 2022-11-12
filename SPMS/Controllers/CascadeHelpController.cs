@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using CPMS.Helpers;
+
+using Domain.Entities;
 using Domain.Interfaces;
 
 using Infrastructure;
@@ -30,13 +32,15 @@ namespace CPMS.Controllers
 			return Json(read);
 		}
 
-		public JsonResult Notify()
+		public JsonResult notify()
 		{
 			var stud = _context.Students.Find(CurrentUser.UserName);
 			var data = _context.Notifications.Where(x => x.SupervisorId.Equals(stud.SupervisorId)).ToList();
-			TempData["noti"] = data;
+			TempData.Set("Noti", data);
 			return Json(data);
 		}
+
+
 	}
 
 }
