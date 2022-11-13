@@ -9,9 +9,9 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.appsettings.development.json
-*.appsettings.json
 *.libman.json
+**/appsettings.Development.json
+appsettings.json
 
 
 
