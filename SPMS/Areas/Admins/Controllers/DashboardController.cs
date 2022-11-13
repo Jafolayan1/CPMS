@@ -19,9 +19,21 @@ namespace CPMS.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddDepartment(Department model)
+        public IActionResult AddDepartment()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddDepartment(Department model)
+        {
+            var dpt = new Department()
+            {
+                Name = model.Name,
+            };
+            _context.Departments.Add(dpt);
+            await _context.SaveAsync();
+            return RedirectToAction(nameof(AddDepartment));
         }
     }
 }
