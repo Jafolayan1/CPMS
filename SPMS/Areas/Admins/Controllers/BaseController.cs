@@ -5,7 +5,7 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Admin.Controllers
+namespace CPMS.Areas.Admins.Controllers
 {
     [CustomAuthorize(Role = "Admin")]
 
