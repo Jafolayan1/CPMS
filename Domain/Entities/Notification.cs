@@ -9,6 +9,5 @@
 
         public int SupervisorId { get; set; }
         public virtual Supervisor Supervisor { get; set; }
-
     }
 }

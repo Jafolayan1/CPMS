@@ -6,6 +6,11 @@
 	var proposal = ViewData["projectproposal"] as IEnumerable<Project>;
 }
 
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.js"></script>
+</head>
 
 <Partial name="_PProposalHeader" />
 <Partial name="_Sidebar" />
@@ -46,7 +51,7 @@
 													<td class="py-2">@item.DateSubmitted.ToShortDateString()</td>
 													<td class="py-2">@item.Topic</td>
 													<td>
-														<a  data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">View Proposal</a>
+														<a data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">View Proposal</a>
 														<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 															<div class="modal-dialog modal-lg">
 																<div class="modal-content">
@@ -76,8 +81,8 @@
 													
 													<td>
 														<div class="d-flex">
-															<a asp-action="Status" asp-route-ProjectId="@item.ProjectId" asp-route-item="Approved" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-check"></i></a>
-													<a asp-action="Status" asp-route-ProjectId="@item.ProjectId" asp-route-item="Rejected" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-times"></i></a>
+															<a  asp-action="Status" asp-route-ProjectId="@item.ProjectId" asp-route-item="Approved" id="Approve" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-check"></i></a>
+													<a asp-action="Status" asp-route-ProjectId="@item.ProjectId" asp-route-item="Rejected" id="Rejact" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-times"></i></a>
 														</div>
 													</td>
 												</tr>
@@ -95,10 +100,10 @@
 
 
 
-@*
+
 <script type="text/javascript">
 	$(function () {
-		$('#readFile').click(function () {
+		$('#readF').click(function () {
 			var url = '@Url.Content("~/")' + "CascadeHelp/readFile";
 			var ddlSource = $("#mylink").attr("href");
 			$.getJSON(url, { file: $(ddlSource).val() }, function (dat) {
@@ -108,4 +113,7 @@
 			});
 		});
 	});
-</script>*@
+</script>
+
+
+

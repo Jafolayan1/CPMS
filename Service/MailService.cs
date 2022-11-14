@@ -21,7 +21,7 @@ namespace Service
             _mailSettings = mailSettings.Value;
         }
 
-        public async Task SendEmailAsync(MailRequest mailRequest)
+        public async Task SendEmailAsync(MailRequest mailRequest, string body)
         {
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
@@ -44,7 +44,7 @@ namespace Service
                     }
                 }
             }
-            builder.HtmlBody = $"<a href='{mailRequest.Body}'>Click this link to reset your paswword,<br>";
+            builder.HtmlBody = body;
             email.Body = builder.ToMessageBody();
             using var smtp = new SmtpClient();
             smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);

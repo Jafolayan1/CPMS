@@ -25,8 +25,16 @@
 						<div class="card">
 							<div class="card-header">
 								<h4 class="card-title">Project Topic</h4>
-								<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Topic</button>
+								@if(CurrentUser.Surname != null)
+								{
+									<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Topic</button>
+								}
+								else
+								{
+									<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" disabled data-bs-target="#basicModal">Add Topic</button>
+								}
 							</div>
+								<span class="text-danger">@TempData["Error"]</span>
 							<div class="card-body">
 								<div class="table-responsive">
 									<table class="table table-responsive-md">

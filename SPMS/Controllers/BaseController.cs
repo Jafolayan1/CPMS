@@ -24,6 +24,5 @@ namespace CPMS.Controllers
         {
             _userAccessor = userAccessor;
         }
-
     }
 }

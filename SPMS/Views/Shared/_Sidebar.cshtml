@@ -99,7 +99,7 @@ else if (User.IsInRole("Student"))
 					</a>
 					<ul aria-expanded="false">
 						<li><a asp-controller="Dashboard" asp-action="Profile">Profile</a></li>
-						<li><a href="message.html">Messages</a></li>
+						<li><a asp-controller="Dashboard" asp-action="Notify">Notifications</a></li>
 					</ul>
 
 				</li>
@@ -112,7 +112,7 @@ else if (User.IsInRole("Student"))
 					<ul aria-expanded="false">
 						<li><a asp-controller="Project" asp-action="Index">Proposal</a></li>
 						<li><a asp-controller="Project" asp-action="Milestone">Chapters</a></li>
-						<li><a asp-controller="Project" asp-action="Detials">Project Details</a></li>
+						<li><a asp-controller="Project" asp-action="Details">Project Details</a></li>
 
 						<li>
 							<ul aria-expanded="false">
@@ -125,9 +125,5 @@ else if (User.IsInRole("Student"))
 			
 		</div>
 	</div>
-
-}
-else
-{
 
 }

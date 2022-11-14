@@ -42,7 +42,6 @@ namespace Service.Configuration
             services.AddTransient<IProjectRepository, ProjectRepository>();
             services.AddTransient<INotificationRepository, NotificationRepository>();
 
-
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }

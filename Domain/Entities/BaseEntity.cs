@@ -20,6 +20,7 @@ namespace Domain.Entities
 
         [DisplayFormat(NullDisplayText = " ")]
         public Department? Department { get; set; }
+
         public string? ImageUrl { get; set; }
 
         [NotMapped]

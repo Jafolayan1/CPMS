@@ -14,16 +14,14 @@ namespace CPMS.Areas.Students.Controllers
     {
         private readonly IAuthenticationService _auth;
         private readonly UserManager<User> _userManager;
-        private readonly IMailService _mailService;
         private readonly IMapper _mapper;
         private readonly IFileHelper _file;
         private readonly ApplicationContext _repo;
 
-        public DashboardController(IAuthenticationService auth, UserManager<User> userManager, IMailService mailService, IUnitOfWork context, IMapper mapper, IUserAccessor o, IFileHelper file, ApplicationContext repo) : base(o, context)
+        public DashboardController(IAuthenticationService auth, UserManager<User> userManager, IMailService mail, IUnitOfWork context, IMapper mapper, IUserAccessor o, IFileHelper file, ApplicationContext repo) : base(o, context, mail)
         {
             _auth = auth;
             _userManager = userManager;
-            _mailService = mailService;
             _mapper = mapper;
             _file = file;
             _repo = repo;
@@ -37,6 +35,23 @@ namespace CPMS.Areas.Students.Controllers
         }
 
         [HttpGet]
+        public IActionResult Notify()
+        {
+            var noti = _context.Notifications.GetAll();
+            ViewData["notifs"] = noti;
+            ViewData["Noti"] = GetNoti();
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Notifs(int id)
+        {
+            var notif = _context.Notifications.GetById(id);
+            notif.IsRead = true;
+            return RedirectToAction(nameof(Notifs));
+        }
+
+        [HttpGet]
         public IActionResult Profile()
         {
             var student = _context.Students.GetById(CurrentUser.UserName);
@@ -46,8 +61,6 @@ namespace CPMS.Areas.Students.Controllers
             return View();
         }
 
-
-
         [HttpPost]
         public async Task<IActionResult> ProfileUpdate(Student model)
         {
@@ -55,7 +68,7 @@ namespace CPMS.Areas.Students.Controllers
             {
                 if (model.File != null)
                 {
-                    _file.DeleteFile(model.ImageUrl);
+                    _file.DeleteFile(model.File.ToString());
                     model.ImageUrl = _file.UploadFile(model.File);
                 }
 
@@ -78,10 +91,6 @@ namespace CPMS.Areas.Students.Controllers
                 TempData["error"] = "One or more errors occured.";
                 return View(nameof(Profile));
             }
-
-
         }
-
-
     }
 }

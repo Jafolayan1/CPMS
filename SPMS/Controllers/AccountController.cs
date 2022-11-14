@@ -169,8 +169,7 @@ namespace CPMS.Controllers
 
                 request.ToEmail = model.Email;
                 request.Subject = "Reset Password Token";
-                request.Body = callback;
-                await _mailService.SendEmailAsync(request);
+                await _mailService.SendEmailAsync(request, $"<a href='{callback}'>Click this link to reset your paswword,<br>");
 
                 return RedirectToAction(nameof(ForgotPassConfirm));
             }

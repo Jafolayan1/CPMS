@@ -14,8 +14,7 @@ namespace CPMS.Areas.Supervisors.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
 
-
-        public DashboardController(IUserAccessor userAccessor, IUnitOfWork context, IFileHelper file, IMapper mapper, UserManager<User> userManager) : base(userAccessor, context)
+        public DashboardController(IUserAccessor userAccessor, IUnitOfWork context, IFileHelper file, IMailService mail, IMapper mapper, UserManager<User> userManager) : base(userAccessor, context, mail)
         {
             _file = file;
             _mapper = mapper;
@@ -36,8 +35,6 @@ namespace CPMS.Areas.Supervisors.Controllers
 
             return View();
         }
-
-
 
         [HttpPost]
         public async Task<IActionResult> ProfileUpdate(Supervisor model)
@@ -70,7 +67,5 @@ namespace CPMS.Areas.Supervisors.Controllers
                 return View(nameof(Profile));
             }
         }
-
-
     }
 }

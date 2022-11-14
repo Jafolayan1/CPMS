@@ -17,5 +17,10 @@ namespace Infrastructure.Repositories
         {
             return _context.Projects.Include(x => x.Student).Where(expression);
         }
+
+        public override Project GetById(object id)
+        {
+            return _context.Projects.Include(u => u.Student).Include(d => d.Supervisor).FirstOrDefault(x => x.ProjectId.Equals(id));
+        }
     }
 }

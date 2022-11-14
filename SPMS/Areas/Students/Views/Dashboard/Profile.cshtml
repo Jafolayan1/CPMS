@@ -67,7 +67,7 @@
 								<div class="profile-tab">
 									<div class="custom-tab-1">
 										<ul class="nav nav-tabs">
-											<li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link show">About Me</a>
+											<li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link active show">About Me</a>
 											</li>
 											<li class="nav-item"><a href="#update-profile" data-bs-toggle="tab" class="nav-link">Update Profile</a>
 											</li>
@@ -75,11 +75,11 @@
 											</li>
 										</ul>
 										<div class="tab-content">
-											<div id="about-me" class="tab-pane fade">
+									<div id="about-me" class="tab-pane fade active show">
 												<div class="profile-about-me">
 													<div class="pt-4 border-bottom-1 pb-3">
-														<h4 class="text-primary">About Me</h4>
-														<p class="mb-2">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence was created for the bliss of souls like mine.I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents.</p>
+														<h4 class="text-primary">Bio</h4>
+														<p class="mb-2">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with.</p>
 													</div>
 												</div>
 												
@@ -160,25 +160,27 @@
 															<input asp-for="@student.UserId" name="UserId" type="hidden" />
 															<input asp-for="@student.StudentId" name="StudentId" type="hidden" />
 															<input asp-for="@student.MatricNo" name="MatricNo" value="@student.MatricNo" type="hidden" />
+															<input asp-for="@student.ImageUrl" name="ImageUrl" value="@student.ImageUrl" type="hidden" />
+
 
 															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Surname</label>
-															<input asp-for="@student.Surname" name="Surname" type="text"  class="form-control">
+															<input asp-for="@student.Surname" name="Surname" type="text"  class="form-control" required>
 																</div>
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Othernames</label>
-															<input asp-for="@student.OtherNames" name="OtherNames" id="Othername" type="text" class="form-control">
+															<input asp-for="@student.OtherNames" name="OtherNames" id="Othername" type="text" class="form-control" required>
 																</div>
 															</div>
 															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Email</label>
-																	<input asp-for="@student.Email" name="Email" type="email" class="form-control">
+																	<input asp-for="@student.Email" name="Email" type="email" class="form-control" required>
 																</div>
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Phone No</label>
-																	<input asp-for ="@student.PhoneNumber" name="PhoneNumber" type="text" class="form-control">
+																	<input asp-for ="@student.PhoneNumber" name="PhoneNumber" type="text" class="form-control" required>
 																</div>
 															</div>
 															
@@ -187,7 +189,7 @@
 																	<label class="form-label">Department</label>
 																	@if(ViewBag.Departments != null)
 																	{
-																		<select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))">
+																<select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))" required>
 																		@if (student.Department !=null)
 																		{
 																			<option value="@student.DepartmentId"> @student.Department.Name </option>
@@ -210,7 +212,7 @@
 															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Level</label>
-																	<select asp-for="@student.Level" name="Level" asp-items="Html.GetEnumSelectList<Level>()" class="form-control default-select wide">
+																	<select asp-for="@student.Level" name="Level" asp-items="Html.GetEnumSelectList<Level>()" class="form-control default-select wide" required>
 																		<option selected="selected" value="@student.Level"> @student.Level  </option>
 																	</select>
 																</div>

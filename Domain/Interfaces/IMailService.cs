@@ -4,6 +4,6 @@ namespace Domain.Interfaces
 {
     public interface IMailService
     {
-        Task SendEmailAsync(MailRequest mailRequest);
+        Task SendEmailAsync(MailRequest mailRequest, string body);
     }
 }

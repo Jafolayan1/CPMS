@@ -7,7 +7,7 @@ namespace CPMS.Areas.Supervisors.Controllers
 {
     public class NotificationController : BaseController
     {
-        public NotificationController(IUserAccessor userAccessor, IUnitOfWork context) : base(userAccessor, context)
+        public NotificationController(IUserAccessor userAccessor, IUnitOfWork context, IMailService mail) : base(userAccessor, context, mail)
         {
         }
 

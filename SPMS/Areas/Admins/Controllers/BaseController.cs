@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace CPMS.Areas.Admins.Controllers
 {
     [CustomAuthorize(Role = "Admin")]
-
     [Area("Admins")]
     public class BaseController : Controller
     {
@@ -25,7 +24,6 @@ namespace CPMS.Areas.Admins.Controllers
 
         private readonly IUserAccessor _userAccessor;
         protected IUnitOfWork _context;
-
 
         public BaseController(IUserAccessor userAccessor, IUnitOfWork context)
         {

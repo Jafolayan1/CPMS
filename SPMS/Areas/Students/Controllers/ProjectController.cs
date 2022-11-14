@@ -1,6 +1,4 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
-
-using AutoMapper;
+﻿using AutoMapper;
 
 using CPMS.Hubs;
 
@@ -18,15 +16,13 @@ namespace CPMS.Areas.Students.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IFileHelper _file;
-        private readonly INotyfService _notyf;
         private readonly IHubContext<MessageHub> _messgaeHub;
 
-        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, INotyfService notyf, IHubContext<MessageHub> messgaeHub) : base(userAccessor, context)
+        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, IHubContext<MessageHub> messgaeHub, IMailService mail) : base(userAccessor, context, mail)
         {
             _mapper = mapper;
             _userManager = userManager;
             _file = file;
-            _notyf = notyf;
             _messgaeHub = messgaeHub;
         }
 
@@ -35,6 +31,15 @@ namespace CPMS.Areas.Students.Controllers
         {
             var lstProposal = _context.Projects.Find(x => x.Matric.Equals(CurrentUser.UserName), false);
             ViewData["projectProposal"] = lstProposal;
+            ViewData["Noti"] = GetNoti();
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Details()
+        {
+            var prjt = _context.Projects.GetById(CurrentUser.UserName);
+            ViewData["project"] = prjt;
             ViewData["Noti"] = GetNoti();
             return View();
         }
@@ -73,6 +78,7 @@ namespace CPMS.Areas.Students.Controllers
                 {
                     var projectEntity = _mapper.Map<Project>(model);
                     _context.Projects.Add(projectEntity);
+                    sendMail();
                 }
 
                 await _context.SaveAsync();
@@ -80,12 +86,10 @@ namespace CPMS.Areas.Students.Controllers
             }
             catch (Exception)
             {
-                _notyf.Error("One or more errors occured, Failed to addd");
+                TempData["Error"] = "One or more errors occured, Failed to addd";
                 return RedirectToAction(nameof(Index));
             }
         }
-
-
 
         public async Task<IActionResult> Delete(int id)
         {
@@ -94,5 +98,7 @@ namespace CPMS.Areas.Students.Controllers
             await _context.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
     }
 }

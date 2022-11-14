@@ -9,7 +9,7 @@
         INotificationRepository Notifications { get; }
 
         Task SaveAsync();
-        void Clear();
 
+        void Clear();
     }
 }

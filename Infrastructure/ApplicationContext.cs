@@ -27,10 +27,6 @@ namespace Infrastructure
         public DbSet<Department> Departments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
 
-
-
-
-
         private static void SeedUsers(ModelBuilder builder)
         {
             User admin = new()
@@ -82,12 +78,9 @@ namespace Infrastructure
             admin.PasswordHash = passwordHasher.HashPassword(admin, "Admin*123");
             supervisor.PasswordHash = passwordHasher.HashPassword(supervisor, "Sup*123");
 
-
             builder.Entity<User>().HasData(admin);
             builder.Entity<User>().HasData(supervisor);
             builder.Entity<Supervisor>().HasData(sup);
-
-
         }
 
         private static void SeedRoles(ModelBuilder builder)

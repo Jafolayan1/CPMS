@@ -8,7 +8,5 @@ namespace Infrastructure.Repositories
         public NotificationRepository(ApplicationContext context) : base(context)
         {
         }
-
-
     }
 }

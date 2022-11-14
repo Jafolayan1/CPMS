@@ -24,12 +24,14 @@ namespace CPMS.Areas.Supervisors.Controllers
 
         private readonly IUserAccessor _userAccessor;
         protected IUnitOfWork _context;
+        protected IMailService _mail;
 
 
-        public BaseController(IUserAccessor userAccessor, IUnitOfWork context)
+        public BaseController(IUserAccessor userAccessor, IUnitOfWork context, IMailService mail)
         {
             _userAccessor = userAccessor;
             _context = context;
+            _mail = mail;
         }
 
         public IEnumerable<Notification> GetNoti()
@@ -37,6 +39,16 @@ namespace CPMS.Areas.Supervisors.Controllers
             var stud = _context.Supervisors.GetById(CurrentUser.UserName);
             return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
         }
-
+        public async void SendMail()
+        {
+            var stud = _context.Students.GetById(CurrentUser.UserName);
+            var email = new MailRequest()
+            {
+                ToEmail = stud.Email,
+                Subject = "Projct Submission",
+                Body = $" Hello , {stud.Surname}. <br> You have a new notification on the file you submitted"
+            };
+            await _mail.SendEmailAsync(email, email.Body);
+        }
     }
 }

@@ -11,7 +11,6 @@ namespace CPMS.Areas.Admins.Controllers
     {
         private readonly INotyfService _notyf;
 
-
         public DashboardController(IUserAccessor userAccessor, IUnitOfWork context, INotyfService notyf) : base(userAccessor, context)
         {
             _notyf = notyf;
@@ -22,6 +21,7 @@ namespace CPMS.Areas.Admins.Controllers
         {
             return View();
         }
+
         public IActionResult Profile()
         {
             return View();
@@ -50,7 +50,6 @@ namespace CPMS.Areas.Admins.Controllers
             _context.Departments.Add(dpt);
             await _context.SaveAsync();
             return RedirectToAction(nameof(Department));
-
         }
 
         [HttpPost]
@@ -71,6 +70,5 @@ namespace CPMS.Areas.Admins.Controllers
             await _context.SaveAsync();
             return RedirectToAction(nameof(Department));
         }
-
     }
 }
