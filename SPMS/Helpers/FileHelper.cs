@@ -1,5 +1,7 @@
 ﻿using Domain.Interfaces;
 
+using Microsoft.AspNetCore.Mvc;
+
 namespace CPMS.Helpers
 {
     public class FileHelper : IFileHelper
@@ -44,9 +46,38 @@ namespace CPMS.Helpers
             return "/uploads/" + fileName;
         }
 
-        public string ReadFile(string file)
+        public FileResult ReadPdfFile(string file)
         {
-            return File.ReadAllText(_env.WebRootPath + file);
+            byte[] abc = File.ReadAllBytes(_env.WebRootPath + file);
+            File.WriteAllBytes(file, abc);
+            var ms = new MemoryStream(abc);
+            return new FileStreamResult(ms, "application/pdf");
+            //else if (file.Contains(".doc"))
+            //{
+            //    //StringBuilder text = new StringBuilder();
+            //    //Microsoft.Office.Interop.Word.Application word = new Microsoft.Office.Interop.Word.Application();
+            //    //object miss = System.Reflection.Missing.Value;
+            //    //object path = @"D:\Articles2.docx";
+            //    //object readOnly = true;
+            //    //Microsoft.Office.Interop.Word.Document docs = word.Documents.Open(ref path, ref miss, ref readOnly, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss);
+
+            //    //for (int i = 0; i < docs.Paragraphs.Count; i++)
+            //    //{
+            //    //    text.Append(" \r\n " + docs.Paragraphs[i + 1].Range.Text.ToString());
+            //    //}
+
+            //    //return text.ToString();
+            //}
+            //else if (file.Contains(".docs"))
+            //{
+
+            //}
+            ////return File.ReadAllText(_env.WebRootPath + file);
+        }
+
+        string IFileHelper.ReadFile(string file)
+        {
+            throw new NotImplementedException();
         }
     }
 }

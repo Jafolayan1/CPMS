@@ -12,7 +12,7 @@
 						<span class="nav-text">Dashboard</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a asp-controller="Dashboard" asp-action="Profile">Profile</a></li>
+						<li><a asp-controller="dashboard" asp-action="profile">Profile</a></li>
 					</ul>
 
 				</li>
@@ -23,8 +23,8 @@
 						<span class="nav-text">Manage</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a asp-controller="Dashboard" asp-action="Department">Department</a></li>
-						<li><a asp-controller="Dashboard" asp-action="AddDepartment">Supervisors</a></li>
+						<li><a asp-controller="dashboard" asp-action="department">Department</a></li>
+						<li><a asp-controller="dashboard" asp-action="adddepartment">Supervisors</a></li>
 						<li>
 							<ul aria-expanded="false">
 							</ul>
@@ -47,8 +47,8 @@ else if (User.IsInRole("Supervisor"))
 						<span class="nav-text">Dashboard</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a asp-controller="Dashboard" asp-action="Profile">Profile</a></li>
-						<li><a asp-controller="Notification" asp-action="Notify">Send Notification</a></li>
+						<li><a asp-controller="dashboard" asp-action="profile">Profile</a></li>
+						<li><a asp-controller="notification" asp-action="notify">Send Notification</a></li>
 
 					</ul>
 
@@ -60,8 +60,8 @@ else if (User.IsInRole("Supervisor"))
 						<span class="nav-text">Project</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a asp-controller="Project" asp-action="PStudent">Project Students</a></li>
-						<li><a asp-controller="Project" asp-action="Proposal">Proposals</a></li>
+						<li><a asp-controller="project" asp-action="pstudent">Project Students</a></li>
+						<li><a asp-controller="project" asp-action="proposal">Proposals</a></li>
 						<li>
 							<ul aria-expanded="false">
 							</ul>
@@ -74,7 +74,7 @@ else if (User.IsInRole("Supervisor"))
 						<span class="nav-text">Others</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a asp-controller="Notification" asp-action="Notify">Send Notification</a></li>
+						<li><a asp-controller="notification" asp-action="notify">Send Notification</a></li>
 						<li>
 							<ul aria-expanded="false">
 							</ul>
@@ -98,8 +98,8 @@ else if (User.IsInRole("Student"))
 						<span class="nav-text">Dashboard</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a asp-controller="Dashboard" asp-action="Profile">Profile</a></li>
-						<li><a asp-controller="Dashboard" asp-action="Notify">Notifications</a></li>
+						<li><a asp-controller="dashboard" asp-action="profile">Profile</a></li>
+						<li><a asp-controller="dashboard" asp-action="notify">Notifications</a></li>
 					</ul>
 
 				</li>
@@ -110,9 +110,9 @@ else if (User.IsInRole("Student"))
 						<span class="nav-text">Project</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a asp-controller="Project" asp-action="Index">Proposal</a></li>
-						<li><a asp-controller="Project" asp-action="Milestone">Chapters</a></li>
-						<li><a asp-controller="Project" asp-action="Details">Project Details</a></li>
+						<li><a asp-controller="project" asp-action="index">Proposal</a></li>
+						<li><a asp-controller="project" asp-action="milestone">Chapters</a></li>
+						<li><a asp-controller="project" asp-action="details">Project Details</a></li>
 
 						<li>
 							<ul aria-expanded="false">

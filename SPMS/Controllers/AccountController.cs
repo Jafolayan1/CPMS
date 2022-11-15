@@ -134,15 +134,15 @@ namespace CPMS.Controllers
 
                     if (userLogin.Role.Contains("Student"))
                     {
-                        return RedirectToAction("Index", "Dashboard", new { area = "Students" });
+                        return RedirectToAction("Index", "dashboard", new { area = "students" });
                     }
                     else if (userLogin.Role.Contains("Supervisor"))
                     {
-                        return RedirectToAction("Index", "Dashboard", new { area = "Supervisors" });
+                        return RedirectToAction("Index", "dashboard", new { area = "supervisors" });
                     }
                     else if (userLogin.Role.Contains("Admin"))
                     {
-                        return RedirectToAction("Index", "Dashboard", new { area = "Admins" });
+                        return RedirectToAction("Index", "dashboard", new { area = "admins" });
                     }
                 }
                 ModelState.AddModelError("", "Invalid Username/Password");

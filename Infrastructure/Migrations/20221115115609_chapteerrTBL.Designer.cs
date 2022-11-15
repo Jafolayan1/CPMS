@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221115115609_chapteerrTBL")]
+    partial class chapteerrTBL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,10 +39,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FileUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Matric")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -408,7 +406,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "319b8124-4cb1-420d-a9d6-17f1cd61b48a",
+                            ConcurrencyStamp = "1d1b65e2-be32-4726-b7d0-5c0a56eb0639",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
@@ -416,10 +414,10 @@ namespace Infrastructure.Migrations
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
                             OtherNames = "Admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMPlpwVodb5doPrP+J6wivHJvib6lWMZmgzp+lwjwHVbVm4T5Kx2yEqMHnmIdOa4JQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIzLRBKz7vblzPQCrMKU1aOMZFfgUxJqU44QMIwzEB9UMqQGGcJqu9Gph/kD8CvE6A==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "86da0151-3bc3-483c-bfb2-c46021a1b9b8",
+                            SecurityStamp = "bd0cde02-26bf-4233-8dde-9a048e4f8537",
                             Surname = "Super ",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -428,7 +426,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d8dbbfcf-f4db-4a87-bab7-cee7c39f808c",
+                            ConcurrencyStamp = "0bca9f82-6dd2-4894-b7c2-1ae17e15682f",
                             Email = "afolayan.oluwatosin20@gmail.com",
                             EmailConfirmed = true,
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
@@ -436,10 +434,10 @@ namespace Infrastructure.Migrations
                             NormalizedEmail = "AFOLAYAN.OLUWATOSIN20@GMAIL.COM",
                             NormalizedUserName = "EM20200104321",
                             OtherNames = "Adekunle Adewale",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP8wejG2qvzhBsdGWe5OrynqBcBgsaPC3wO8C2Pm+GHQzazyM7Mnn2NfogJAZimcqg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFLr3/FhLVUnV52hzO9ihsZWM43thPbAPPTMZCHK1amghQ0YHOg9LLIE/EDv//T53Q==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f476395f-bcc8-4bef-a111-ed1ec6e4e68a",
+                            SecurityStamp = "6f1447e1-2bee-4a0c-9b83-8c849314f66b",
                             Surname = "Uthman",
                             TwoFactorEnabled = false,
                             UserName = "EM20200104321"

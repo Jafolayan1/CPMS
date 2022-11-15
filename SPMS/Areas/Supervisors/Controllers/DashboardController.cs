@@ -6,7 +6,7 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Supervisors.Controllers
+namespace CPMS.Areas.supervisors.Controllers
 {
     public class DashboardController : BaseController
     {

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Admins\Views\Dashboard\Profile.cshtml" />
+    <Content Remove="Areas\admins\Views\Dashboard\Profile.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-	<None Include="Areas\Admins\Views\Dashboard\Profile.cshtml" />
-	<None Include="Areas\Students\Views\Project\Index.cshtml" />
-	<None Include="Areas\Supervisors\Views\Project\PStudent.cshtml" />
+	<None Include="Areas\admins\Views\Dashboard\Profile.cshtml" />
+	<None Include="Areas\students\Views\Project\Index.cshtml" />
+	<None Include="Areas\supervisors\Views\Project\PStudent.cshtml" />
 	<None Include="Views\Account\Login.cshtml" />
   </ItemGroup>
 
@@ -47,11 +47,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Areas\Admins\Views\Dashboard\Profile.cshtml" />
+    <UpToDateCheckInput Remove="Areas\admins\Views\Dashboard\Profile.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Areas\Admins\Views\Dashboard\Profile.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\admins\Views\Dashboard\Profile.cshtml" />
   </ItemGroup>
 
 	</Project>

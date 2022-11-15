@@ -5,7 +5,7 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Admins.Controllers
+namespace CPMS.Areas.admins.Controllers
 {
     public class DashboardController : BaseController
     {

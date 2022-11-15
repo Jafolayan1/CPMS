@@ -8,7 +8,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Students.Controllers
+namespace CPMS.Areas.students.Controllers
 {
     public class DashboardController : BaseController
     {
@@ -68,7 +68,7 @@ namespace CPMS.Areas.Students.Controllers
             {
                 if (model.File != null)
                 {
-                    _file.DeleteFile(model.File.ToString());
+                    _file.DeleteFile(model.ImageUrl);
                     model.ImageUrl = _file.UploadFile(model.File);
                 }
 

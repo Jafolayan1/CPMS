@@ -14,6 +14,8 @@ namespace Infrastructure.Repositories
             Projects = new ProjectRepository(_context);
             Departments = new DepartmentRepository(_context);
             Notifications = new NotificationRepository(_context);
+            Chapters = new ChapterRepository(_context);
+
         }
 
         public ISupervisorRepository Supervisors { get; private set; }
@@ -21,6 +23,8 @@ namespace Infrastructure.Repositories
         public IProjectRepository Projects { get; private set; }
         public IDepartmentRepository Departments { get; private set; }
         public INotificationRepository Notifications { get; private set; }
+        public IChapterRepository Chapters { get; private set; }
+
 
         public void Dispose()
         {

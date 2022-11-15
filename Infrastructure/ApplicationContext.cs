@@ -24,6 +24,7 @@ namespace Infrastructure
         public DbSet<Supervisor> Supervisors { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
 
@@ -52,8 +53,8 @@ namespace Infrastructure
                 OtherNames = "Adekunle Adewale",
                 UserName = "EM20200104321",
                 NormalizedUserName = "EM20200104321",
-                Email = "addeewale@gmail.com",
-                NormalizedEmail = "ADEWALE@GMAIL.COM",
+                Email = "afolayan.oluwatosin20@gmail.com",
+                NormalizedEmail = "AFOLAYAN.OLUWATOSIN20@GMAIL.COM",
                 PhoneNumber = "1234567890",
                 LockoutEnabled = false,
                 ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
@@ -68,7 +69,7 @@ namespace Infrastructure
                 OtherNames = "Adekunle Adewale",
                 UserId = supervisor.Id,
                 EmployeeNo = "EM20200104321",
-                Email = "addeewale@gmail.com",
+                Email = "afolayan.oluwatosin20@gmail.com",
                 DepartmentId = 1,
                 PhoneNumber = "1234567890",
                 ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",

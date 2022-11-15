@@ -11,8 +11,7 @@ namespace Domain.Entities
         public string Matric { get; set; }
         public string Status { get; set; }
         public string? Remark { get; set; }
-        public Chapter? Chapter { get; set; }
-
+        public IEnumerable<Chapter>? Chapters { get; set; }
         public string FileUrl { get; set; }
 
         [NotMapped]
@@ -26,7 +25,24 @@ namespace Domain.Entities
         public DateTime DateSubmitted { get; set; } = DateTime.UtcNow;
     }
 
-    public enum Chapter : short
+    public class Chapter
+    {
+        public int ChapterId { get; set; }
+        public ChapterName ChapterName { get; set; }
+        public string Matric { get; set; }
+
+        public string Status { get; set; }
+        public string FileUrl { get; set; }
+
+        [NotMapped]
+        public IFormFile File { get; set; }
+        public string? Remark { get; set; }
+        public DateTime DateSubmitted { get; set; } = DateTime.UtcNow;
+        public int ProjectId { get; set; }
+        public virtual Project Project { get; set; }
+    }
+
+    public enum ChapterName : short
     {
         CHAPTER_1,
         CHAPTER_2,

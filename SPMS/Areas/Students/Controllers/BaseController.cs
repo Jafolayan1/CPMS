@@ -5,10 +5,10 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Students.Controllers
+namespace CPMS.Areas.students.Controllers
 {
     [CustomAuthorize(Role = "Student")]
-    [Area("Students")]
+    [Area("students")]
     public class BaseController : Controller
     {
         public User CurrentUser

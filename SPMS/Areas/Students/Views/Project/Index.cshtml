@@ -83,7 +83,7 @@
 																	</div>
 																	<div class="modal-footer">
 																		<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-																		<button type="button" class="btn btn-primary">Save changes</button>
+																		@*<button type="button" class="btn btn-primary">Save changes</button>*@
 																	</div>
 																</div>
 															</div>
@@ -96,11 +96,11 @@
 														<div class="modal-dialog" role="document">
 															<div class="modal-content">
 																<div class="modal-header">
-																	<h5 class="modal-title">Add Project Topic</h5>
+																	<h5 class="modal-title">Edit Project Topic</h5>
 																	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 																</div>
 																<div class="modal-body">
-																	<form asp-action="AddProject" method="post" enctype="multipart/form-data">
+																	<form asp-action="AddEditProject" method="post" enctype="multipart/form-data">
 																		<input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
 																		<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
 																		<input asp-for="@pjt.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
@@ -110,19 +110,19 @@
 																			<div class="col-lg-12">
 																				<div class="mb-3">
 																					<label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
-																					<textarea asp-for="@pjt.Topic" name="Topic" type="text" class="form-control" rows="4" id="comment" required></textarea>
+																					<textarea asp-for="@pjt.Topic" name="Topic" placeholder="@item.Topic" class="form-control" rows="4" id="comment" required></textarea>
 																				</div>
 																			</div>
 																			<div class="col-lg-12">
 																				<div class="mb-3">
 																					<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
-																					<input asp-for="@pjt.File" name="File" type="file" accept=".txt, .doc,.docs,.pdf" placeholder="Topic" required class="form-file-input form-control">
+																					<input asp-for="@pjt.File" name="File" type="file" accept=".txt, .doc,.docs,.pdf" placeholder="@item.FileUrl" required class="form-file-input form-control">
 
 																				</div>
 																			</div>
 																			<div class="modal-footer">
 																				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-																				<button type="submit" class="btn btn-primary">Add</button>
+																				<button type="submit" class="btn btn-primary">Save Changes</button>
 																			</div>
 																		</div>
 																	</form>
@@ -138,9 +138,6 @@
 													</td>
 												
 												</tr>
-
-												<!-- Modal -->
-
 											}
 										</tbody>
 									</table>
@@ -164,7 +161,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 			<div class="modal-body">
-				<form asp-action="AddProject" method="post" enctype="multipart/form-data">
+				<form asp-action="AddEditProject" method="post" enctype="multipart/form-data">
 					<input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
 					<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
 

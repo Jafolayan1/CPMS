@@ -7,6 +7,8 @@
         IProjectRepository Projects { get; }
         IDepartmentRepository Departments { get; }
         INotificationRepository Notifications { get; }
+        IChapterRepository Chapters { get; }
+
 
         Task SaveAsync();
 

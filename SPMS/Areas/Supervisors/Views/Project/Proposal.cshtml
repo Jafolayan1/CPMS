@@ -51,8 +51,10 @@
 													<td class="py-2">@item.DateSubmitted.ToShortDateString()</td>
 													<td class="py-2">@item.Topic</td>
 													<td>
-														<a data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">View Proposal</a>
-														<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+														@*<a data-bs-toggle="modal" data-bs-target="#bd-example-modal-lg_@item.ProjectId">View Proposal</a>*@
+														<a asp-action="Details" asp-route-ProjectId="@item.ProjectId">View Proposal</a>
+
+														<div class="modal fade" id="bd-example-modal-lg_@item.ProjectId" tabindex="-1" role="dialog" aria-hidden="true">
 															<div class="modal-dialog modal-lg">
 																<div class="modal-content">
 																	<div class="modal-header">
@@ -62,7 +64,7 @@
 																	</div>
 																	<div class="modal-body">
 																		<p id="text">
-																			@_file.ReadFile(item.FileUrl)
+																			@*@_file.ReadPdfFile(@item.FileUrl)*@
 																		</p>
 																	</div>
 																	<div class="modal-footer">

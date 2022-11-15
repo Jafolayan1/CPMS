@@ -9,7 +9,7 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace CPMS.Areas.Supervisors.Controllers
+namespace CPMS.Areas.supervisors.Controllers
 {
     public class ProjectController : BaseController
     {
@@ -43,16 +43,38 @@ namespace CPMS.Areas.Supervisors.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Status(int ProjectId, string item)
+        public IActionResult Details(int ProjectId)
+        {
+            var prjt = _context.Projects.GetById(ProjectId);
+            ViewData["project"] = prjt;
+            ViewData["Noti"] = GetNoti();
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Status(int ProjectId, string item, string remark)
         {
             try
             {
-                var project = _context.Projects.GetById(ProjectId);
-                project.Status = item;
-                _context.Projects.Update(project);
-                await _context.SaveAsync();
-                SendMail();
-                return RedirectToAction(nameof(Proposal));
+                if ((ProjectId > 0) && (item != null) && (remark != null))
+                {
+                    var prjt = _context.Projects.GetById(ProjectId);
+                    prjt.Status = item;
+                    prjt.Remark = remark;
+                    _context.Projects.Update(prjt);
+                    await _context.SaveAsync();
+                    SendMail();
+                    return RedirectToAction(nameof(Proposal));
+                }
+                else
+                {
+                    var project = _context.Projects.GetById(ProjectId);
+                    project.Status = item;
+                    _context.Projects.Update(project);
+                    await _context.SaveAsync();
+                    SendMail();
+                    return RedirectToAction(nameof(Proposal));
+                }
             }
             catch (Exception ex)
             {
