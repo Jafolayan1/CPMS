@@ -23,6 +23,12 @@ namespace CPMS.Extension
             services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
 
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+            });
         }
     }
 }

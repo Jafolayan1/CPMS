@@ -84,12 +84,12 @@
 									<p class="fs-18 font-w500">
 										@*<embed id="" src="@prjt.FileUrl" type="application/pdf" width="100%" height="100%" aria-labelledby="PDF document"l/>*@
 										@*@_file.ReadFile(@prjt.FileUrl)*@
-										<object data='https://@_file.ReadPdfFile(@prjt.FileUrl)#toolbar=0'
+										<object data='https://@prjt.FileUrl#toolbar=0'
 												type="application/pdf"
 												width="100%"
 												height="678">
 
-											<iframe src="@_file.ReadPdfFile(@prjt.FileUrl)"
+											<iframe src="@prjt.FileUrl)"
 													width="100%"
 													height="678">
 												<p>This browser does not support PDF!</p>
@@ -98,15 +98,22 @@
 									</p>
 
 								</div>
-								<div class="message1">
-									<textarea class="form-control" id="rTextarea"  name="Remark" rows="4" placeholder="Type comment here..."></textarea>
-									<div class="msg-button">
-										<i class="fas fa-smile me-3 "></i>
-										<i class="fas fa-paperclip me-3"></i>
-										<a asp-action="Status" asp-route-ProjectId="@prjt.ProjectId" oninput="myFunction()" asp-route-item="Approved" asp-route-remark="@prjt.Remark" class="btn-primary"><i class="fas fa-paper-plane me-2 text-white fs-18 btn-rounded"></i>Approve</a> &nbsp;&nbsp;
-										<a asp-action="Status" asp-route-ProjectId="@prjt.ProjectId" asp-route-item="Rejected" asp-route-remark="document.getElementById("#rTextarea").value" class="btn-primary"><i class="fas fa-paper-plane me-2 text-white fs-18 btn-rounded"></i>Reject</a>
+								<form asp-action="status" method="post">
+									<div class="message1">
+										<textarea class="form-control" id="rTextarea" oninput="myFunction()" name="Remark" rows="4" placeholder="Type comment here..."></textarea>
+										<div class="msg-button">
+											<i class="fas fa-smile me-3 "></i>
+											<i class="fas fa-paperclip me-3"></i>
+
+											<button type="submit" asp-route-ProjectId="@prjt.ProjectId" class="btn btn-primary"><i class="fas fa-paper-plane me-2 text-white fs-18 btn-rounded">Approve</i></button>
+											<button type="submit" asp-route-ProjectId="@prjt.ProjectId" class="btn btn-primary"><i class="fas fa-paper-plane me-2 text-white fs-18 btn-rounded">Reject</i></button>
+
+											@*<a  asp-route-remark="@prjt.Remark" Approve</a> &nbsp;&nbsp;
+											<a asp-action="Status" asp-route-ProjectId="@prjt.ProjectId" asp-route-item="Rejected" asp-route-remark="document.getElementById("#rTextarea").value" class="btn-primary"><i class="fas fa-paper-plane me-2 text-white fs-18 btn-rounded"></i>Reject</a>*@
+										</div>
 									</div>
-								</div>
+								</form>
+
 							</div>
 						</div>
 					</div>
@@ -116,4 +123,5 @@
 		</div>
 	</div>
 </div>
+
 

@@ -154,7 +154,7 @@
 												<div class="pt-3">
 													<div class="settings-form">
 														<h4 class="text-primary">Update Profile</h4>
-														<form asp-controller="Dashboard" asp-action="ProfileUpdate" method="post" enctype="multipart/form-data">
+														<form asp-controller="dashboard" asp-action="profileUpdate" method="post" enctype="multipart/form-data">
 															 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 															<input asp-for="@student.UserId" name="UserId" type="hidden" />
@@ -212,9 +212,11 @@
 															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Level</label>
-																	<select asp-for="@student.Level" name="Level" asp-items="Html.GetEnumSelectList<Level>()" class="form-control default-select wide" required>
+																	<input asp-for ="@student.Level" name="Level" type="text" class="form-control" required>
+
+																	@*<select asp-for="@student.Level" name="Level" asp-items="Html.GetEnumSelectList<Level>()" class="form-control default-select wide" required>
 																		<option selected="selected" value="@student.Level"> @student.Level  </option>
-																	</select>
+																	</select>*@
 																</div>
 
 																<div class="mb-3 col-md-6">
@@ -238,7 +240,7 @@
 												<div class="pt-3">
 													<div class="settings-form">
 														<h4 class="text-primary">Forgot Password</h4>
-														<form asp-area="" asp-controller="Account" asp-action="ForgotPassword" method="post">
+														<form asp-area="" asp-controller="account" asp-action="forgotpassword" method="post">
 															<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 															<div class="row">
 																<div class="mb-3 col-md-6">

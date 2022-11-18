@@ -37,7 +37,7 @@ namespace CPMS.Helpers
             if (!exist)
                 Directory.CreateDirectory(uploads);
 
-            var fileName = GenerateFileName(file.FileName);
+            var fileName = file.FileName;
             using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
             {
                 file.CopyToAsync(fileStream);
@@ -52,32 +52,12 @@ namespace CPMS.Helpers
             File.WriteAllBytes(file, abc);
             var ms = new MemoryStream(abc);
             return new FileStreamResult(ms, "application/pdf");
-            //else if (file.Contains(".doc"))
-            //{
-            //    //StringBuilder text = new StringBuilder();
-            //    //Microsoft.Office.Interop.Word.Application word = new Microsoft.Office.Interop.Word.Application();
-            //    //object miss = System.Reflection.Missing.Value;
-            //    //object path = @"D:\Articles2.docx";
-            //    //object readOnly = true;
-            //    //Microsoft.Office.Interop.Word.Document docs = word.Documents.Open(ref path, ref miss, ref readOnly, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss);
 
-            //    //for (int i = 0; i < docs.Paragraphs.Count; i++)
-            //    //{
-            //    //    text.Append(" \r\n " + docs.Paragraphs[i + 1].Range.Text.ToString());
-            //    //}
-
-            //    //return text.ToString();
-            //}
-            //else if (file.Contains(".docs"))
-            //{
-
-            //}
-            ////return File.ReadAllText(_env.WebRootPath + file);
         }
 
-        string IFileHelper.ReadFile(string file)
+        public string ReadFile(string file)
         {
-            throw new NotImplementedException();
+            return File.ReadAllBytes(file).ToString();
         }
     }
 }

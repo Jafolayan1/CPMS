@@ -51,7 +51,7 @@ namespace CPMS.Areas.supervisors.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Status(int ProjectId, string item, string remark)
         {
             try
@@ -82,5 +82,11 @@ namespace CPMS.Areas.supervisors.Controllers
                 return RedirectToAction(nameof(Proposal));
             }
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Remark(int ProjectId, string item, string remark)
+        //{
+        //    ar prjt = _context.Projects.GetById(ProjectId);
+        //}
     }
 }

@@ -1,0 +1,29 @@
+﻿@model ForgotPasswordVM
+@{
+	ViewData["Title"] = "ForgotPassword";
+	Layout = "_PagesLayout";
+}
+
+
+
+
+<div class="authincation h-100">
+	<div class="container h-100">
+		<div class="row justify-content-center h-100 align-items-center">
+			<div class="col-md-5">
+				<div class="form-input-content text-center error-page">
+					<h1 class="error-text  fw-bold"></h1>
+					<form asp-controller="account" asp-action="forgotpassword" method="post">
+						<h4><i class="fa fa-info-circle text-info"></i> Password Reset!</h4>
+						<div class="mb-3">
+							<input type="email" asp-for="Email" name="Email" class="form-control" required placeholder="Enter Email" />
+						</div>
+						<div class="mt-3">
+							<button type="submit" class="btn btn-primary" >Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

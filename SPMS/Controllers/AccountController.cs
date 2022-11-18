@@ -5,10 +5,13 @@ using CPMS.Models;
 using Domain.Entities;
 using Domain.Interfaces;
 
+using HtmlAgilityPack;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Net;
+using System.Web;
 
 namespace CPMS.Controllers
 {
@@ -33,6 +36,12 @@ namespace CPMS.Controllers
 
         [HttpGet]
         public IActionResult Login()
+        {
+            return View();
+        }
+
+
+        public IActionResult ForgotPass()
         {
             return View();
         }
@@ -70,7 +79,7 @@ namespace CPMS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginVM model, StudentVM student, SupervisorVM supervisor, string returnUrl)
+        public async Task<IActionResult> Login(LoginVM model, string returnUrl)
         {
             try
             {
@@ -81,48 +90,12 @@ namespace CPMS.Controllers
                 if (user is null)
                 {
                     var verifyUserType = VerifyUser(model.UserName, model.Password);
-                    if (!string.IsNullOrEmpty(verifyUserType))
+                    var create = await CreateUser(verifyUserType, model.Password);
+
+                    if (create == false)
                     {
-                        User newUser = new()
-                        {
-                            UserName = model.UserName.ToUpper(),
-                            ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
-                        };
-                        var request = _userManager.CreateAsync(newUser, model.Password).Result;
-                        if (request.Succeeded)
-                        {
-                            string role = verifyUserType == "Student" ? "Student" : "Supervisor";
-                            var addRole = _userManager.AddToRoleAsync(newUser, role).Result;
-                            if (addRole.Succeeded)
-                            {
-                                try
-                                {
-                                    if (role.Equals("Student"))
-                                    {
-                                        student.UserId = newUser.Id;
-                                        student.MatricNo = model.UserName.ToUpper();
-                                        student.ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png";
-                                        var studentEntity = _mapper.Map<Student>(student);
-                                        _context.Students.Add(studentEntity);
-                                        await _context.SaveAsync();
-                                    }
-                                    else if (role.Equals("Supervisor"))
-                                    {
-                                        supervisor.UserId = newUser.Id;
-                                        supervisor.EmployeeNo = model.UserName.ToUpper();
-                                        supervisor.ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png";
-                                        var supervisorEntity = _mapper.Map<Supervisor>(supervisor);
-                                        _context.Supervisors.Add(supervisorEntity);
-                                        await _context.SaveAsync();
-                                    }
-                                }
-                                catch (Exception)
-                                {
-                                    await _userManager.DeleteAsync(newUser);
-                                    ModelState.AddModelError("", "One or more errors occurred in the server");
-                                }
-                            }
-                        }
+                        ModelState.AddModelError("", "One or more errors occurred in the server.");
+                        return View();
                     }
                 }
 
@@ -161,6 +134,7 @@ namespace CPMS.Controllers
             try
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
+
                 if (user is null)
                     return RedirectToAction(nameof(ForgotPassConfirm));
 
@@ -204,7 +178,7 @@ namespace CPMS.Controllers
             return RedirectToAction(nameof(ResetPassConfirm));
         }
 
-        public string VerifyUser(string username, string password)
+        internal string VerifyUser(string username, string password)
         {
             var user = string.Empty;
             bool isStudent = false;
@@ -227,9 +201,24 @@ namespace CPMS.Controllers
                 {
                     var student = client.PostAsync("/admin_student/login_process2.php", content).Result;
                     student.EnsureSuccessStatusCode();
+
                     if (student.RequestMessage.RequestUri.LocalPath.Equals("/admin_student/admin.php"))
                     {
                         isStudent = true;
+                        HtmlDocument htmlDoc = new();
+                        htmlDoc.LoadHtml(student.Content.ReadAsStringAsync().Result);
+
+                        var details = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"side-menu\"]/li[8]/a");
+                        foreach (var item in details)
+                        {
+                            _imageUrl = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/div/img[1]/@src[1]").OuterHtml.Substring(13, 29);
+                            _fullName = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[1]").InnerText);
+                            _username = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[2]").InnerText);
+                            _dpt = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[3]").InnerText);
+                            _level = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]").InnerText).Substring(0, 16);
+                            _cgpa = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]/div").InnerText);
+                        }
+
                     }
                     var staff = client.PostAsync("/admin_main/login_process.php", content).Result;
                     staff.EnsureSuccessStatusCode();
@@ -250,5 +239,89 @@ namespace CPMS.Controllers
             }
             return user;
         }
+
+        internal async Task<bool> CreateUser(string userType, string password)
+        {
+            if (!string.IsNullOrEmpty(userType))
+            {
+                User newUser = new()
+                {
+                    Surname = _fullName.Split(' ')[0],
+                    OtherNames = $"{_fullName.Split(' ')[1]} {_fullName.Split(' ')[2]}",
+                    UserName = _username,
+                    ImageUrl = $"https://www.federalpolyede.edu.ng/{_imageUrl}"
+                };
+
+                Department newdpt = new()
+                {
+                    Name = _dpt,
+                };
+                var dptname = _context.Departments.GetById(newdpt.Name);
+                if (dptname == null)
+                {
+                    _context.Departments.Add(dptname);
+                    await _context.SaveAsync();
+                }
+
+                var request = _userManager.CreateAsync(newUser, password).Result;
+                if (request.Succeeded)
+                {
+                    string role = userType == "Student" ? "Student" : "Supervisor";
+                    var addRole = _userManager.AddToRoleAsync(newUser, role).Result;
+                    if (addRole.Succeeded)
+                    {
+                        try
+                        {
+                            if (role.Equals("Student"))
+                            {
+                                StudentVM student = new()
+                                {
+                                    UserId = newUser.Id,
+                                    MatricNo = _username,
+                                    ImageUrl = $"https://www.federalpolyede.edu.ng/{_imageUrl}",
+                                    DepartmentId = dptname.DepartmentId,
+                                    Surname = _fullName.Split(' ')[0],
+                                    OtherNames = $"{_fullName.Split(' ')[1]}{_fullName.Split(' ')[2]}",
+                                    Level = _level
+                                };
+                                var studentEntity = _mapper.Map<Student>(student);
+                                _context.Students.Add(studentEntity);
+                                await _context.SaveAsync();
+                                return true;
+
+                            }
+                            else if (role.Equals("Supervisor"))
+                            {
+                                SupervisorVM supervisor = new()
+                                {
+                                    UserId = newUser.Id,
+                                    EmployeeNo = _username,
+                                    ImageUrl = $"https://www.federalpolyede.edu.ng/{_imageUrl}",
+                                    DepartmentId = dptname.DepartmentId,
+                                    Surname = _fullName.Split(' ')[0],
+                                    OtherNames = $"{_fullName.Split(' ')[1]}{_fullName.Split(' ')[2]}"
+                                };
+                                var supervisorEntity = _mapper.Map<Supervisor>(supervisor);
+                                _context.Supervisors.Add(supervisorEntity);
+                                await _context.SaveAsync();
+                                return true;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            await _userManager.DeleteAsync(newUser);
+                            ModelState.AddModelError("", "One or more errors occurred in the server");
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        private static string _fullName;
+        private static string _username;
+        private static string _imageUrl;
+        private static string _dpt;
+        private static string _level;
+        private static string _cgpa;
     }
 }

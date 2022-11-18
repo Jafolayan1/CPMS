@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\admins\Views\Dashboard\Profile.cshtml" />
+	<Content Remove="Areas\admins\Views\Dashboard\Profile.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +36,7 @@
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
 	<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.9" />
+	<PackageReference Include="Spire.Office" Version="7.11.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,11 +48,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Areas\admins\Views\Dashboard\Profile.cshtml" />
+	<UpToDateCheckInput Remove="Areas\admins\Views\Dashboard\Profile.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Areas\admins\Views\Dashboard\Profile.cshtml" />
+	<_ContentIncludedByDefault Remove="Areas\admins\Views\Dashboard\Profile.cshtml" />
   </ItemGroup>
 
 	</Project>

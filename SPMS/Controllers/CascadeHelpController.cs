@@ -24,7 +24,7 @@ namespace CPMS.Controllers
         {
             List<Supervisor> list = new();
             list = _context.Supervisors.Where(x => x.DepartmentId.Equals(Id)).ToList();
-            list.Insert(0, new Supervisor { SupervisorId = 0, Surname = " Please Select " });
+            list.Insert(0, new Supervisor { SupervisorId = 0, Surname = " Please Select Supervisor" });
             return Json(new SelectList(list, "SupervisorId", "FullName"));
         }
 

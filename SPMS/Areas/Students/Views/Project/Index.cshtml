@@ -25,7 +25,7 @@
 						<div class="card">
 							<div class="card-header">
 								<h4 class="card-title">Project Topic</h4>
-								@if(CurrentUser.Surname != null)
+								@if(CurrentUser.Email != null)
 								{
 									<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Topic</button>
 								}
@@ -100,7 +100,7 @@
 																	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 																</div>
 																<div class="modal-body">
-																	<form asp-action="AddEditProject" method="post" enctype="multipart/form-data">
+																	<form asp-action="addeditproject" method="post" enctype="multipart/form-data">
 																		<input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
 																		<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
 																		<input asp-for="@pjt.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
@@ -132,7 +132,7 @@
 													</div>
 													@if (@item.Status != "Approved")
 													{
-															<a asp-action="Delete" asp-route-id="@item.ProjectId" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+															<a asp-action="delete" asp-route-id="@item.ProjectId" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
 													}
 														</div>
 													</td>
@@ -161,7 +161,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 			<div class="modal-body">
-				<form asp-action="AddEditProject" method="post" enctype="multipart/form-data">
+				<form asp-action="addeditproject" method="post" enctype="multipart/form-data">
 					<input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
 					<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
 
@@ -190,4 +190,4 @@
 	</div>
 </div>
 
-
+<Partial name="_NoticePartial" />
