@@ -31,6 +31,7 @@ namespace CPMS.Areas.students.Controllers
         public IActionResult Index()
         {
             ViewData["Noti"] = GetNoti();
+
             return View();
         }
 

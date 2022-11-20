@@ -56,7 +56,7 @@ else if (User.IsInRole("Supervisor"))
 
 				<li>
 					<a class="has-arrow " href="javascript:void()" aria-expanded="false">
-						<i class="fas fa-info-circle"></i>
+						<i class="fas fa-tasks"></i>
 						<span class="nav-text">Project</span>
 					</a>
 					<ul aria-expanded="false">
@@ -106,13 +106,27 @@ else if (User.IsInRole("Student"))
 
 				<li>
 					<a class="has-arrow " href="javascript:void()" aria-expanded="false">
-						<i class="fas fa-info-circle"></i>
+						<i class="fas fa-tasks"></i>
 						<span class="nav-text">Project</span>
 					</a>
 					<ul aria-expanded="false">
 						<li><a asp-controller="project" asp-action="index">Proposal</a></li>
 						<li><a asp-controller="project" asp-action="milestone">Chapters</a></li>
 						<li><a asp-controller="project" asp-action="details">Project Details</a></li>
+
+						<li>
+							<ul aria-expanded="false">
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="fas fa-user-check"></i>
+						<span class="nav-text">Profile</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a asp-controller="dashboard" asp-action="profile">Settings</a></li>
 
 						<li>
 							<ul aria-expanded="false">

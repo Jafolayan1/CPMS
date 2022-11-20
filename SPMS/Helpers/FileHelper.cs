@@ -1,7 +1,5 @@
 ﻿using Domain.Interfaces;
 
-using Microsoft.AspNetCore.Mvc;
-
 namespace CPMS.Helpers
 {
     public class FileHelper : IFileHelper
@@ -41,23 +39,29 @@ namespace CPMS.Helpers
             using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
             {
                 file.CopyToAsync(fileStream);
+                fileStream.Flush();
             }
 
             return "/uploads/" + fileName;
         }
 
-        public FileResult ReadPdfFile(string file)
+        public void ReadPdfFile(string file)
         {
-            byte[] abc = File.ReadAllBytes(_env.WebRootPath + file);
-            File.WriteAllBytes(file, abc);
-            var ms = new MemoryStream(abc);
-            return new FileStreamResult(ms, "application/pdf");
 
+            //var filePath = _env.WebRootPath + file;
+            //using var PDF = ChromePdfRenderer.StaticRenderUrlAsPdf(new Uri("https://en.wikipedia.org"));
+            //var doc = File(PDF.BinaryData, "application/pdf", "Wiki.Pdf");
         }
 
         public string ReadFile(string file)
         {
-            return File.ReadAllBytes(file).ToString();
+            throw new NotImplementedException();
+        }
+
+        string IFileHelper.ReadPdfFile(string file)
+        {
+            throw new NotImplementedException();
         }
     }
+
 }

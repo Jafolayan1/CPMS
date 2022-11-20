@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Domain.Interfaces
 {
@@ -10,6 +9,6 @@ namespace Domain.Interfaces
         string UploadFile(IFormFile file);
 
         string ReadFile(string file);
-        FileResult ReadPdfFile(string file);
+        string ReadPdfFile(string file);
     }
 }

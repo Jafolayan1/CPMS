@@ -80,7 +80,7 @@ namespace CPMS.Areas.students.Controllers
                 {
                     var projectEntity = _mapper.Map<Project>(model);
                     _context.Projects.Add(projectEntity);
-                    sendMail();
+                    sendMail($"<p>You have a new file sbmited by {stu.FullName} with Matric No :{stu.MatricNo}</p>", stu.Supervisor.Email);
                 }
 
                 await _context.SaveAsync();
@@ -117,21 +117,19 @@ namespace CPMS.Areas.students.Controllers
                     model.ProjectId = prjtId.ProjectId;
                     var chaEntity = _mapper.Map<Chapter>(model);
                     _context.Chapters.Add(chaEntity);
-                    sendMail();
-                }
+                    sendMail($"<p>You have a new file sbmited by {prjtId.Student.FullName} with Matric No :{prjtId.Student.MatricNo}</p>", prjtId.Supervisor.Email);
 
+                }
                 await _context.SaveAsync();
                 return RedirectToAction(nameof(Milestone));
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
         public async Task<IActionResult> Delete(int id)
         {
-
             var prjt = _context.Projects.GetById(id);
             var chap = _context.Chapters.GetById(id);
 
@@ -146,7 +144,5 @@ namespace CPMS.Areas.students.Controllers
             await _context.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

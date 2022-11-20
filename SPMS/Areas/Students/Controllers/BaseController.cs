@@ -39,16 +39,21 @@ namespace CPMS.Areas.students.Controllers
             return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
         }
 
-        public async void sendMail()
+        internal async void sendMail(string body, string toMail)
         {
             var stud = _context.Students.GetById(CurrentUser.UserName);
             var email = new MailRequest()
             {
                 ToEmail = stud.Supervisor.Email,
                 Subject = "Projct Submission",
-                Body = $"<p>You have a new file sbmited by {stud.FullName} with Matric No :{stud.MatricNo}</p>"
+                Body = body
             };
             await _mail.SendEmailAsync(email, email.Body);
+        }
+        internal static int GenerateToken(int n)
+        {
+            Random rnd = new();
+            return rnd.Next(n);
         }
     }
 }

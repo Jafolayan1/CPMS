@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using CPMS.Models;
+
+using Domain.Entities;
 using Domain.Interfaces;
 
 using Infrastructure;
@@ -7,17 +9,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 
+using System.Diagnostics;
+
 namespace CPMS.Controllers
 {
     public class CascadeHelpController : BaseController
     {
         private readonly ApplicationContext _context;
         private readonly IMailService _mail;
+        private readonly IWebHostEnvironment _env;
 
-        public CascadeHelpController(IUserAccessor userAccessor, ApplicationContext context, IMailService mail) : base(userAccessor)
+
+        public CascadeHelpController(IUserAccessor userAccessor, ApplicationContext context, IMailService mail, IWebHostEnvironment env) : base(userAccessor)
         {
             _context = context;
             _mail = mail;
+            _env = env;
         }
 
         public JsonResult getSupervisors(int Id)
@@ -28,47 +35,47 @@ namespace CPMS.Controllers
             return Json(new SelectList(list, "SupervisorId", "FullName"));
         }
 
-        public JsonResult readFile(string file)
+        //[HttpPost]
+        //public IActionResult OnPost(string FileName)
+        //{
+        //    int pageCount = 0;
+        //    string imageFilesFolder = Path.Combine(outputPath, Path.GetFileName(FileName).Replace(".", "_"));
+        //    if (!Directory.Exists(imageFilesFolder))
+        //    {
+        //        Directory.CreateDirectory(imageFilesFolder);
+        //    }
+        //    string imageFilesPath = Path.Combine(imageFilesFolder, "page-{0}.png");
+        //    using (Viewer viewer = new Viewer(Path.Combine(storagePath, FileName)))
+        //    {
+        //        ViewInfo info = viewer.GetViewInfo(ViewInfoOptions.ForPngView(false));
+        //        pageCount = info.Pages.Count;
+
+        //        PngViewOptions options = new PngViewOptions(imageFilesPath);
+        //        viewer.View(options);
+        //    }
+        //    return new JsonResult(pageCount);
+        //}
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
         {
-            var read = System.IO.File.ReadAllText(file);
-            return Json(read);
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
-        public JsonResult notify(int Id)
-        {
-            var data = _context.Notifications.FirstOrDefault(x => x.NotificationId.Equals(Id));
-            data.IsRead = true;
-            return Json(data);
-        }
-
-        public void changeStatus(int Id, string Item)
-        {
-            try
-            {
-                var project = _context.Projects.FirstOrDefault(x => x.ProjectId.Equals(Id));
-                project.Status = Item;
-                _context.Projects.Update(project);
-                _context.SaveChanges();
-                SendMail();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex}");
-            }
-        }
-
-        private async void SendMail()
-        {
-            var stud = _context.Students.FirstOrDefault(x => x.MatricNo.Equals(CurrentUser.UserName));
-            var email = new MailRequest()
-            {
-                ToEmail = stud.Email,
-                Subject = "Projct Submission",
-                Body = $" Hello , {stud.Surname}. <br> You have a new notification on the file you submitted"
-            };
-            await _mail.SendEmailAsync(email, email.Body);
-
-        }
+        //public void changeStatus(int Id, string Item)
+        //{
+        //    try
+        //    {
+        //        var project = _context.Projects.FirstOrDefault(x => x.ProjectId.Equals(Id));
+        //        project.Status = Item;
+        //        _context.Projects.Update(project);
+        //        _context.SaveChanges();
+        //        SendMail();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error: {ex}");
+        //    }
+        //}
     }
 }

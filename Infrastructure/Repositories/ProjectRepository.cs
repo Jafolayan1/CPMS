@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
 
         public override Project GetById(object id)
         {
-            return _context.Projects.Include(u => u.Student).Include(d => d.Supervisor).FirstOrDefault(x => x.ProjectId.Equals(id));
+            return _context.Projects.Include(u => u.Student).Include(d => d.Supervisor).AsNoTracking().FirstOrDefault(x => x.ProjectId.Equals(id));
         }
 
         public Project GetByMatric(object id)

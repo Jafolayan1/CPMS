@@ -51,7 +51,6 @@
 													<td class="py-2">@item.DateSubmitted.ToShortDateString()</td>
 													<td class="py-2">@item.Topic</td>
 													<td>
-														@*<a data-bs-toggle="modal" data-bs-target="#bd-example-modal-lg_@item.ProjectId">View Proposal</a>*@
 														<a asp-action="Details" asp-route-ProjectId="@item.ProjectId">View Proposal</a>
 
 														<div class="modal fade" id="bd-example-modal-lg_@item.ProjectId" tabindex="-1" role="dialog" aria-hidden="true">
