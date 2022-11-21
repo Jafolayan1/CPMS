@@ -229,6 +229,9 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"), 1L, 1);
 
+                    b.Property<string>("Bio")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
@@ -281,6 +284,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupervisorId"), 1L, 1);
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
@@ -413,7 +419,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "aae1d504-3fa2-45c0-857f-285f0fb5e15f",
+                            ConcurrencyStamp = "8240a964-f539-4cae-8c13-3e2c2a3cb2ec",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
@@ -421,10 +427,10 @@ namespace Infrastructure.Migrations
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
                             OtherNames = "Admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJQHTmmAeN3dTzWKaJN1xPRPFrV6oIDET5ElhGODx/vf57jxQyqePj9dSpfSSrsmWg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH+pf6qMUQSWzNJVGmkDala9KFqGtMMixyb/7MO8jDo2b97TRwiO9R+ejjiDk2ZBXA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b17676fc-fec7-4655-8390-a43b3dca3872",
+                            SecurityStamp = "ccbfe7f2-1fde-4cc7-acde-401af04468ec",
                             Surname = "Super ",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -433,7 +439,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "34e631ee-daf0-4942-8418-708edb8af8e5",
+                            ConcurrencyStamp = "37bfaad7-a3a7-4e40-a048-17194aead730",
                             Email = "afolayan.oluwatosin20@gmail.com",
                             EmailConfirmed = true,
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
@@ -441,10 +447,10 @@ namespace Infrastructure.Migrations
                             NormalizedEmail = "AFOLAYAN.OLUWATOSIN20@GMAIL.COM",
                             NormalizedUserName = "EM20200104321",
                             OtherNames = "Adekunle Adewale",
-                            PasswordHash = "AQAAAAEAACcQAAAAEITILX9ulNAOWagoF1Lq1SJV6yb1UTj7qLZqwYo0XGfArts06lCgkIENeNXnQotgSQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGy7uCbk0LtGdDNHlPte6ThyidqOwIONO5UvqA1X6yhMJJvWCzg5BztIjSRBTqdBeQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3781b198-7f1c-44cb-9d57-babb2b4d1fad",
+                            SecurityStamp = "600e8d74-9dfd-49e0-97d0-435b6fdda852",
                             Surname = "Uthman",
                             TwoFactorEnabled = false,
                             UserName = "EM20200104321"

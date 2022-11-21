@@ -7,8 +7,5 @@ namespace Domain.Interfaces
         void DeleteFile(string imageUrl);
 
         string UploadFile(IFormFile file);
-
-        string ReadFile(string file);
-        string ReadPdfFile(string file);
     }
 }

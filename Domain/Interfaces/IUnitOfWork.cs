@@ -9,7 +9,6 @@
         INotificationRepository Notifications { get; }
         IChapterRepository Chapters { get; }
 
-
         Task SaveAsync();
 
         void Clear();

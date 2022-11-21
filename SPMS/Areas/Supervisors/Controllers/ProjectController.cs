@@ -8,6 +8,7 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.CodeAnalysis;
 
 namespace CPMS.Areas.supervisors.Controllers
 {
@@ -43,38 +44,29 @@ namespace CPMS.Areas.supervisors.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int ProjectId)
+        public IActionResult Details(int projectId)
         {
-            var prjt = _context.Projects.GetById(ProjectId);
+            var prjt = _context.Projects.GetById(projectId);
             ViewData["project"] = prjt;
             ViewData["Noti"] = GetNoti();
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Status(int ProjectId, string item, string remark)
+        public async Task<IActionResult> Remark(IFormCollection data, int projectId, string? item)
         {
             try
             {
-                if ((ProjectId > 0) && (item != null) && (remark != null))
-                {
-                    var prjt = _context.Projects.GetById(ProjectId);
-                    prjt.Status = item;
-                    prjt.Remark = remark;
-                    _context.Projects.Update(prjt);
-                    await _context.SaveAsync();
-                    SendMail();
-                    return RedirectToAction(nameof(Proposal));
-                }
-                else
-                {
-                    var project = _context.Projects.GetById(ProjectId);
-                    project.Status = item;
-                    _context.Projects.Update(project);
-                    await _context.SaveAsync();
-                    SendMail();
-                    return RedirectToAction(nameof(Proposal));
-                }
+                string? remark = data["Remark"].ToString();
+                string? status = data["Stat"].ToString();
+
+                var prjt = _context.Projects.GetById(projectId);
+                prjt.Status = status;
+                prjt.Remark = remark;
+                _context.Projects.Update(prjt);
+                await _context.SaveAsync();
+                SendMail();
+                return RedirectToAction(nameof(Proposal));
             }
             catch (Exception ex)
             {
@@ -83,10 +75,22 @@ namespace CPMS.Areas.supervisors.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Remark(int ProjectId, string item, string remark)
-        //{
-        //    ar prjt = _context.Projects.GetById(ProjectId);
-        //}
+        public async Task<IActionResult> Status(string status, int projectId)
+        {
+            try
+            {
+                var project = _context.Projects.GetById(projectId);
+                project.Status = status;
+                _context.Projects.Update(project);
+                await _context.SaveAsync();
+                SendMail();
+                return RedirectToAction(nameof(Proposal));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex}");
+                return RedirectToAction(nameof(Proposal));
+            }
+        }
     }
 }

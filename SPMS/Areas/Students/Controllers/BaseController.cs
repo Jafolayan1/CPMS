@@ -50,6 +50,7 @@ namespace CPMS.Areas.students.Controllers
             };
             await _mail.SendEmailAsync(email, email.Body);
         }
+
         internal static int GenerateToken(int n)
         {
             Random rnd = new();

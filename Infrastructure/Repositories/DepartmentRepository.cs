@@ -8,6 +8,7 @@ namespace Infrastructure.Repositories
         public DepartmentRepository(ApplicationContext context) : base(context)
         {
         }
+
         public override Department GetById(object id)
         {
             return _context.Departments.FirstOrDefault(x => x.Name.Equals(id));

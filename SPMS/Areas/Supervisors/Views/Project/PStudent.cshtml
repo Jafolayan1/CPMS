@@ -1,7 +1,6 @@
 ﻿@{
 	ViewData["Title"] = "Project Students";
 	var pjtstu = ViewData["supervisor"] as Supervisor;
-
 }
 
 
@@ -42,8 +41,8 @@
 								</div>
 								<div class="user-meta-info">
 									<ul>
-											<li><a href="javascript:void(0);"><i class="fas fa-info-circle"></i></a>View Project Details</li>
-										<li><a href="javascript:void(0);"><i class="far fa-comment-alt"></i></a>lincolndonin@mail.com</li>
+											<li><a asp-action="details" asp-route-projectId="@item.Projects"><i class="fas fa-info-circle"></i></a>View Project Details</li>
+										<li><a href="javascript:void(0);"><i class="far fa-comment-alt"></i></a>@item.Email</li>
 									</ul>
 								</div>
 							</div>
@@ -51,7 +50,7 @@
 					</div>
 					}
 				</div>
-				<div class="progect-pagination d-flex justify-content-between align-items-center flex-wrap mt-3">
+				@*<div class="progect-pagination d-flex justify-content-between align-items-center flex-wrap mt-3">
 					<h4 class="mb-3">Showing 10 from 160 data</h4>
 					<ul class="pagination mb-3">
 						<li class="page-item page-indicator">
@@ -71,7 +70,7 @@
 							</a>
 						</li>
 					</ul>
-				</div>
+				</div>*@
 			</div>
 		</div>
 	</div>

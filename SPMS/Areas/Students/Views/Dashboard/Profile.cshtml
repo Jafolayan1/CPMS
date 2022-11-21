@@ -79,7 +79,7 @@
 												<div class="profile-about-me">
 													<div class="pt-4 border-bottom-1 pb-3">
 														<h4 class="text-primary">Bio</h4>
-														<p class="mb-2">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with.</p>
+														<p class="mb-2">@student.Bio</p>
 													</div>
 												</div>
 												
@@ -213,10 +213,6 @@
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Level</label>
 																	<input asp-for ="@student.Level" name="Level" type="text" class="form-control" required>
-
-																	@*<select asp-for="@student.Level" name="Level" asp-items="Html.GetEnumSelectList<Level>()" class="form-control default-select wide" required>
-																		<option selected="selected" value="@student.Level"> @student.Level  </option>
-																	</select>*@
 																</div>
 
 																<div class="mb-3 col-md-6">
@@ -227,6 +223,12 @@
 																			<input asp-for="@student.File" name="File" type="file" class="form-file-input form-control">
 																		</div>
 																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Bio</label>
+																	<textarea asp-for="@student.Bio" row="3" name="Bio" class="form-control" required></textarea>
 																</div>
 															</div>
 															

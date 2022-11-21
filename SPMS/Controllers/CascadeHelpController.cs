@@ -19,7 +19,6 @@ namespace CPMS.Controllers
         private readonly IMailService _mail;
         private readonly IWebHostEnvironment _env;
 
-
         public CascadeHelpController(IUserAccessor userAccessor, ApplicationContext context, IMailService mail, IWebHostEnvironment env) : base(userAccessor)
         {
             _context = context;

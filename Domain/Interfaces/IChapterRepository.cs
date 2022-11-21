@@ -4,8 +4,5 @@ namespace Domain.Interfaces
 {
     public interface IChapterRepository : IGenericRepository<Chapter>
     {
-
     }
-
-
 }

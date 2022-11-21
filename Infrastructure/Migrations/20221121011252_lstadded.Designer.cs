@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221112160545_SeedChnaged")]
-    partial class SeedChnaged
+    [Migration("20221121011252_lstadded")]
+    partial class lstadded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,45 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Domain.Entities.Chapter", b =>
+                {
+                    b.Property<int>("ChapterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChapterId"), 1L, 1);
+
+                    b.Property<short>("ChapterName")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTime>("DateSubmitted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Matric")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ChapterId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Chapters");
+                });
 
             modelBuilder.Entity("Domain.Entities.Department", b =>
                 {
@@ -93,9 +132,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectId"), 1L, 1);
-
-                    b.Property<short?>("Chapter")
-                        .HasColumnType("smallint");
 
                     b.Property<DateTime>("DateSubmitted")
                         .HasColumnType("datetime2");
@@ -204,14 +240,16 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Level")
-                        .HasColumnType("int");
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MatricNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OtherNames")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -221,6 +259,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
@@ -259,12 +298,14 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OtherNames")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
@@ -283,7 +324,7 @@ namespace Infrastructure.Migrations
                         {
                             SupervisorId = 1,
                             DepartmentId = 1,
-                            Email = "addeewale@gmail.com",
+                            Email = "afolayan.oluwatosin20@gmail.com",
                             EmployeeNo = "EM20200104321",
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
                             OtherNames = "Adekunle Adewale",
@@ -374,7 +415,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ed3d4815-9e69-4754-bffa-5628a45b7d7d",
+                            ConcurrencyStamp = "bcd86492-bf94-46c8-a7e6-c66824f39e0d",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
@@ -382,10 +423,10 @@ namespace Infrastructure.Migrations
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
                             OtherNames = "Admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAENJFE884si+Ujhkxg0e+xZ1aYXToq3S5GKXOkmtsapx3WEUxDCEbJse/NT0JB0sLIg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJEfK8TRlRQhavsngBNn2k0e5l+iyH3t2Tb7hXk+NRQaMYlraJHXZv5RUL6o5TOSqQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1bd2a07c-02bb-41a4-b6e8-4c0394d125de",
+                            SecurityStamp = "45a6680f-2a52-4b85-ba7b-90c3dc9f465c",
                             Surname = "Super ",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -394,18 +435,18 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b8c27520-cad2-4c35-8e7b-b0a605145469",
-                            Email = "addeewale@gmail.com",
+                            ConcurrencyStamp = "a3e693ff-fb82-4c26-947a-6353f05a53cc",
+                            Email = "afolayan.oluwatosin20@gmail.com",
                             EmailConfirmed = true,
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADEWALE@GMAIL.COM",
+                            NormalizedEmail = "AFOLAYAN.OLUWATOSIN20@GMAIL.COM",
                             NormalizedUserName = "EM20200104321",
                             OtherNames = "Adekunle Adewale",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIlufJSwMfrGNMBHS7FtpesxStxbgWwf6W9FwuhoVGHoJmRIKe3VQyFofapK5Bhtig==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEgjBEVOD2uyGtJ44W5ESmmkFx56CdOksAi08/9q17IsPhAlkQTDnWjUsyLLcDfNiQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "31103039-5f01-4fdf-8d2f-7877a3cdfd21",
+                            SecurityStamp = "37369ab4-f211-428e-b498-4109e3a06f6b",
                             Surname = "Uthman",
                             TwoFactorEnabled = false,
                             UserName = "EM20200104321"
@@ -525,6 +566,17 @@ namespace Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Chapter", b =>
+                {
+                    b.HasOne("Domain.Entities.Project", "Project")
+                        .WithMany("Chapters")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
@@ -651,6 +703,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Students");
 
                     b.Navigation("Supervisors");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Project", b =>
+                {
+                    b.Navigation("Chapters");
                 });
 
             modelBuilder.Entity("Domain.Entities.Student", b =>

@@ -36,6 +36,7 @@ namespace Domain.Entities
 
         [NotMapped]
         public IFormFile File { get; set; }
+
         public string? Remark { get; set; }
         public DateTime DateSubmitted { get; set; } = DateTime.UtcNow;
         public int ProjectId { get; set; }

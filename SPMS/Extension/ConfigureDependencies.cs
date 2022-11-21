@@ -21,6 +21,7 @@ namespace CPMS.Extension
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
+            services.Configure<ILovePdfSettings>(configuration.GetSection("iLovePdf"));
 
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 

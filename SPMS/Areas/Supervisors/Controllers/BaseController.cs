@@ -26,7 +26,6 @@ namespace CPMS.Areas.supervisors.Controllers
         protected IUnitOfWork _context;
         protected IMailService _mail;
 
-
         public BaseController(IUserAccessor userAccessor, IUnitOfWork context, IMailService mail)
         {
             _userAccessor = userAccessor;
@@ -39,6 +38,7 @@ namespace CPMS.Areas.supervisors.Controllers
             var stud = _context.Supervisors.GetById(CurrentUser.UserName);
             return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
         }
+
         public async void SendMail()
         {
             var stud = _context.Students.GetById(CurrentUser.UserName);

@@ -118,7 +118,6 @@ namespace CPMS.Areas.students.Controllers
                     var chaEntity = _mapper.Map<Chapter>(model);
                     _context.Chapters.Add(chaEntity);
                     sendMail($"<p>You have a new file sbmited by {prjtId.Student.FullName} with Matric No :{prjtId.Student.MatricNo}</p>", prjtId.Supervisor.Email);
-
                 }
                 await _context.SaveAsync();
                 return RedirectToAction(nameof(Milestone));
@@ -128,6 +127,7 @@ namespace CPMS.Areas.students.Controllers
                 throw;
             }
         }
+
         public async Task<IActionResult> Delete(int id)
         {
             var prjt = _context.Projects.GetById(id);

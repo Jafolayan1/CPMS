@@ -82,11 +82,13 @@
 								<div class="project-description">
 									<span class="fs-18 font-w500 mb-3 d-block">PROJECT ABSTRACT</span>
 									<p class="fs-18 font-w500">
-										<iframe seamless class="w-100" height="650" src="@prjt.FileUrl">
-											<sspan>Your browser does not support iframes.</sspan>
-										</iframe>
+										@if (@prjt.FileUrl!=null)
+										{
+											<iframe seamless class="w-100" height="750" src="@prjt.FileUrl">
+												<sspan>Your browser does not support iframes.</sspan>
+											</iframe>
+										}
 									</p>
-
 								</div>
 							</div>
 						</div>

@@ -1,21 +1,30 @@
 ﻿using Domain.Interfaces;
 
+using LovePdf.Core;
+using LovePdf.Model.Task;
+
+using Microsoft.Extensions.Options;
+
+using Service.Configuration;
+
 namespace CPMS.Helpers
 {
     public class FileHelper : IFileHelper
     {
         private readonly IWebHostEnvironment _env;
+        private readonly ILovePdfSettings _pdf;
 
-        public FileHelper(IWebHostEnvironment env)
+        public FileHelper(IWebHostEnvironment env, IOptions<ILovePdfSettings> pdf)
         {
             _env = env;
+            _pdf = pdf.Value;
         }
 
         private static string GenerateFileName(string fileName)
         {
-            string[] strName = fileName.Split('.');
-
-            string strFileName = $"{DateTime.Now.ToUniversalTime():yyyyMMdd\\THHmmssfff}.{strName[^1]}";
+            //string[] strName = fileName.Split('.');
+            //string strFileName = $"{DateTime.Now.ToUniversalTime():yyyyMMdd\\THHmmssfff}.{strName[^1]}";
+            string strFileName = $"{DateTime.Now.ToUniversalTime():yyyyMMdd\\THH}{fileName}";
 
             return strFileName;
         }
@@ -30,38 +39,31 @@ namespace CPMS.Helpers
 
         public string UploadFile(IFormFile file)
         {
+            var strFileName = "";
             var uploads = Path.Combine(_env.WebRootPath, "uploads");
             bool exist = Directory.Exists(uploads);
             if (!exist)
                 Directory.CreateDirectory(uploads);
 
-            var fileName = file.FileName;
+            var fileName = GenerateFileName(file.FileName);
             using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
             {
                 file.CopyToAsync(fileStream);
                 fileStream.Flush();
             }
 
+            if (fileName.EndsWith(".docx") || fileName.EndsWith(".doc") || fileName.EndsWith(".pdf"))
+            {
+                var api = new LovePdfApi(_pdf.Key, _pdf.Secret);
+                var task = api.CreateTask<OfficeToPdfTask>();
+                task.AddFile($"{_env.WebRootPath}/uploads/{fileName}");
+                task.Process();
+                task.DownloadFile($"{_env.WebRootPath}/uploads");
+                string[] strName = fileName.Split('.');
+                strFileName = $"{strName[0]}.pdf";
+                return "/uploads/" + strFileName;
+            }
             return "/uploads/" + fileName;
         }
-
-        public void ReadPdfFile(string file)
-        {
-
-            //var filePath = _env.WebRootPath + file;
-            //using var PDF = ChromePdfRenderer.StaticRenderUrlAsPdf(new Uri("https://en.wikipedia.org"));
-            //var doc = File(PDF.BinaryData, "application/pdf", "Wiki.Pdf");
-        }
-
-        public string ReadFile(string file)
-        {
-            throw new NotImplementedException();
-        }
-
-        string IFileHelper.ReadPdfFile(string file)
-        {
-            throw new NotImplementedException();
-        }
     }
-
 }

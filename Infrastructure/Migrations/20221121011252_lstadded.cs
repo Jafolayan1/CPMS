@@ -4,7 +4,7 @@
 
 namespace Infrastructure.Migrations
 {
-    public partial class SeedChnaged : Migration
+    public partial class lstadded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -179,8 +179,8 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EmployeeNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OtherNames = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OtherNames = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: true),
@@ -231,11 +231,11 @@ namespace Infrastructure.Migrations
                     StudentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MatricNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: true),
+                    Level = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SupervisorId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OtherNames = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OtherNames = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: true),
@@ -272,7 +272,6 @@ namespace Infrastructure.Migrations
                     Matric = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Remark = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Chapter = table.Column<short>(type: "smallint", nullable: true),
                     FileUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     SupervisorId = table.Column<int>(type: "int", nullable: true),
@@ -294,6 +293,31 @@ namespace Infrastructure.Migrations
                         principalColumn: "SupervisorId");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Chapters",
+                columns: table => new
+                {
+                    ChapterId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ChapterName = table.Column<short>(type: "smallint", nullable: false),
+                    Matric = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Remark = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateSubmitted = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chapters", x => x.ChapterId);
+                    table.ForeignKey(
+                        name: "FK_Chapters_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "ProjectId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -309,8 +333,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "ImageUrl", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OtherNames", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "ed3d4815-9e69-4754-bffa-5628a45b7d7d", "admin@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADMIN@GMAIL.COM", "ADMIN", "Admin", "AQAAAAEAACcQAAAAENJFE884si+Ujhkxg0e+xZ1aYXToq3S5GKXOkmtsapx3WEUxDCEbJse/NT0JB0sLIg==", "1234567890", false, "1bd2a07c-02bb-41a4-b6e8-4c0394d125de", "Super ", false, "Admin" },
-                    { 2, 0, "b8c27520-cad2-4c35-8e7b-b0a605145469", "addeewale@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADEWALE@GMAIL.COM", "EM20200104321", "Adekunle Adewale", "AQAAAAEAACcQAAAAEIlufJSwMfrGNMBHS7FtpesxStxbgWwf6W9FwuhoVGHoJmRIKe3VQyFofapK5Bhtig==", "1234567890", false, "31103039-5f01-4fdf-8d2f-7877a3cdfd21", "Uthman", false, "EM20200104321" }
+                    { 1, 0, "bcd86492-bf94-46c8-a7e6-c66824f39e0d", "admin@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADMIN@GMAIL.COM", "ADMIN", "Admin", "AQAAAAEAACcQAAAAEJEfK8TRlRQhavsngBNn2k0e5l+iyH3t2Tb7hXk+NRQaMYlraJHXZv5RUL6o5TOSqQ==", "1234567890", false, "45a6680f-2a52-4b85-ba7b-90c3dc9f465c", "Super ", false, "Admin" },
+                    { 2, 0, "a3e693ff-fb82-4c26-947a-6353f05a53cc", "afolayan.oluwatosin20@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "AFOLAYAN.OLUWATOSIN20@GMAIL.COM", "EM20200104321", "Adekunle Adewale", "AQAAAAEAACcQAAAAEEgjBEVOD2uyGtJ44W5ESmmkFx56CdOksAi08/9q17IsPhAlkQTDnWjUsyLLcDfNiQ==", "1234567890", false, "37369ab4-f211-428e-b498-4109e3a06f6b", "Uthman", false, "EM20200104321" }
                 });
 
             migrationBuilder.InsertData(
@@ -336,7 +360,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Supervisors",
                 columns: new[] { "SupervisorId", "DepartmentId", "Email", "EmployeeNo", "ImageUrl", "OtherNames", "PhoneNumber", "Surname", "UserId" },
-                values: new object[] { 1, 1, "addeewale@gmail.com", "EM20200104321", "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", "Adekunle Adewale", "1234567890", "Uthman", 2 });
+                values: new object[] { 1, 1, "afolayan.oluwatosin20@gmail.com", "EM20200104321", "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", "Adekunle Adewale", "1234567890", "Uthman", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -376,6 +400,11 @@ namespace Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chapters_ProjectId",
+                table: "Chapters",
+                column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_SupervisorId",
@@ -436,13 +465,16 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Chapters");
+
+            migrationBuilder.DropTable(
                 name: "Notifications");
 
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "Students");

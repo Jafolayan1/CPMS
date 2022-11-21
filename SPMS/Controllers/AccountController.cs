@@ -40,7 +40,6 @@ namespace CPMS.Controllers
             return View();
         }
 
-
         public IActionResult ForgotPass()
         {
             return View();
@@ -218,7 +217,6 @@ namespace CPMS.Controllers
                             _level = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]").InnerText).Substring(0, 16);
                             _cgpa = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]/div").InnerText);
                         }
-
                     }
                     var staff = client.PostAsync("/admin_main/login_process.php", content).Result;
                     staff.EnsureSuccessStatusCode();
@@ -288,7 +286,6 @@ namespace CPMS.Controllers
                                 _context.Students.Add(studentEntity);
                                 await _context.SaveAsync();
                                 return true;
-
                             }
                             else if (role.Equals("Supervisor"))
                             {
@@ -317,6 +314,7 @@ namespace CPMS.Controllers
             }
             return false;
         }
+
         private static string _fullName;
         private static string _username;
         private static string _imageUrl;
