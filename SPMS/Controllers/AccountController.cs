@@ -177,7 +177,7 @@ namespace CPMS.Controllers
             return RedirectToAction(nameof(ResetPassConfirm));
         }
 
-        internal string VerifyUser(string username, string password)
+        internal static string VerifyUser(string username, string password)
         {
             var user = string.Empty;
             bool isStudent = false;
@@ -245,7 +245,7 @@ namespace CPMS.Controllers
                 User newUser = new()
                 {
                     Surname = _fullName.Split(' ')[0],
-                    OtherNames = $"{_fullName.Split(' ')[1]} {_fullName.Split(' ')[2]}",
+                    OtherNames = $"{_fullName.Split(' ')[1]}-{_fullName.Split(' ')[2]}",
                     UserName = _username,
                     ImageUrl = $"https://www.federalpolyede.edu.ng/{_imageUrl}"
                 };
@@ -279,7 +279,7 @@ namespace CPMS.Controllers
                                     ImageUrl = $"https://www.federalpolyede.edu.ng/{_imageUrl}",
                                     DepartmentId = dptname.DepartmentId,
                                     Surname = _fullName.Split(' ')[0],
-                                    OtherNames = $"{_fullName.Split(' ')[1]}{_fullName.Split(' ')[2]}",
+                                    OtherNames = $"{_fullName.Split(' ')[1]}-{_fullName.Split(' ')[2]}",
                                     Level = _level
                                 };
                                 var studentEntity = _mapper.Map<Student>(student);
@@ -296,7 +296,7 @@ namespace CPMS.Controllers
                                     ImageUrl = $"https://www.federalpolyede.edu.ng/{_imageUrl}",
                                     DepartmentId = dptname.DepartmentId,
                                     Surname = _fullName.Split(' ')[0],
-                                    OtherNames = $"{_fullName.Split(' ')[1]}{_fullName.Split(' ')[2]}"
+                                    OtherNames = $"{_fullName.Split(' ')[1]}-{_fullName.Split(' ')[2]}"
                                 };
                                 var supervisorEntity = _mapper.Map<Supervisor>(supervisor);
                                 _context.Supervisors.Add(supervisorEntity);

@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Infrastructure.Migrations
 {
-    public partial class lstadded : Migration
+    public partial class Tbls : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -182,6 +183,7 @@ namespace Infrastructure.Migrations
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OtherNames = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -237,6 +239,7 @@ namespace Infrastructure.Migrations
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OtherNames = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -333,8 +336,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "ImageUrl", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OtherNames", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "bcd86492-bf94-46c8-a7e6-c66824f39e0d", "admin@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADMIN@GMAIL.COM", "ADMIN", "Admin", "AQAAAAEAACcQAAAAEJEfK8TRlRQhavsngBNn2k0e5l+iyH3t2Tb7hXk+NRQaMYlraJHXZv5RUL6o5TOSqQ==", "1234567890", false, "45a6680f-2a52-4b85-ba7b-90c3dc9f465c", "Super ", false, "Admin" },
-                    { 2, 0, "a3e693ff-fb82-4c26-947a-6353f05a53cc", "afolayan.oluwatosin20@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "AFOLAYAN.OLUWATOSIN20@GMAIL.COM", "EM20200104321", "Adekunle Adewale", "AQAAAAEAACcQAAAAEEgjBEVOD2uyGtJ44W5ESmmkFx56CdOksAi08/9q17IsPhAlkQTDnWjUsyLLcDfNiQ==", "1234567890", false, "37369ab4-f211-428e-b498-4109e3a06f6b", "Uthman", false, "EM20200104321" }
+                    { 1, 0, "fece5060-703d-4a39-9fb1-ff5929461c99", "admin@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADMIN@GMAIL.COM", "ADMIN", "Admin", "AQAAAAEAACcQAAAAEApihHczwagUe0h+enDajyhFrnWmvB3X3mMRkuWxaTeFA07dFUWhgKc/+Q1P+ejDbA==", "1234567890", false, "22fce5ac-2068-4514-8013-2fea69221cd8", "Super ", false, "Admin" },
+                    { 2, 0, "b92876da-6e7f-4f28-91e1-633f33c45e25", "afolayan.oluwatosin20@gmail.com", true, "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "AFOLAYAN.OLUWATOSIN20@GMAIL.COM", "EM20200104321", "Adekunle Adewale", "AQAAAAEAACcQAAAAENalXisI9uxAD+QNhUQ19yfGhTzox7PlPkZXYJ8AHV/a62ZwxMYABhiFjyaeM/iwhA==", "1234567890", false, "f7e10412-2051-4d70-b53f-4207baf6d937", "Uthman", false, "EM20200104321" }
                 });
 
             migrationBuilder.InsertData(
@@ -359,8 +362,8 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Supervisors",
-                columns: new[] { "SupervisorId", "DepartmentId", "Email", "EmployeeNo", "ImageUrl", "OtherNames", "PhoneNumber", "Surname", "UserId" },
-                values: new object[] { 1, 1, "afolayan.oluwatosin20@gmail.com", "EM20200104321", "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", "Adekunle Adewale", "1234567890", "Uthman", 2 });
+                columns: new[] { "SupervisorId", "Bio", "DepartmentId", "Email", "EmployeeNo", "ImageUrl", "OtherNames", "PhoneNumber", "Surname", "UserId" },
+                values: new object[] { 1, null, 1, "afolayan.oluwatosin20@gmail.com", "EM20200104321", "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", "Adekunle Adewale", "1234567890", "Uthman", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

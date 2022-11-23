@@ -11,9 +11,9 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public override Student GetById(object id)
+        public Student GetByMatric(string id)
         {
-            return _context.Students.Include(u => u.User).Include(d => d.Department).Include(s => s.Supervisor).AsNoTracking().FirstOrDefault();
+            return _context.Students.Include(u => u.User).Include(d => d.Department).Include(s => s.Supervisor).AsNoTracking().FirstOrDefault(x => x.MatricNo == id);
         }
     }
 }

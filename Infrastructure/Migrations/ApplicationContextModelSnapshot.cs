@@ -419,7 +419,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8240a964-f539-4cae-8c13-3e2c2a3cb2ec",
+                            ConcurrencyStamp = "fece5060-703d-4a39-9fb1-ff5929461c99",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
@@ -427,10 +427,10 @@ namespace Infrastructure.Migrations
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
                             OtherNames = "Admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH+pf6qMUQSWzNJVGmkDala9KFqGtMMixyb/7MO8jDo2b97TRwiO9R+ejjiDk2ZBXA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEApihHczwagUe0h+enDajyhFrnWmvB3X3mMRkuWxaTeFA07dFUWhgKc/+Q1P+ejDbA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ccbfe7f2-1fde-4cc7-acde-401af04468ec",
+                            SecurityStamp = "22fce5ac-2068-4514-8013-2fea69221cd8",
                             Surname = "Super ",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -439,7 +439,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "37bfaad7-a3a7-4e40-a048-17194aead730",
+                            ConcurrencyStamp = "b92876da-6e7f-4f28-91e1-633f33c45e25",
                             Email = "afolayan.oluwatosin20@gmail.com",
                             EmailConfirmed = true,
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
@@ -447,10 +447,10 @@ namespace Infrastructure.Migrations
                             NormalizedEmail = "AFOLAYAN.OLUWATOSIN20@GMAIL.COM",
                             NormalizedUserName = "EM20200104321",
                             OtherNames = "Adekunle Adewale",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGy7uCbk0LtGdDNHlPte6ThyidqOwIONO5UvqA1X6yhMJJvWCzg5BztIjSRBTqdBeQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENalXisI9uxAD+QNhUQ19yfGhTzox7PlPkZXYJ8AHV/a62ZwxMYABhiFjyaeM/iwhA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "600e8d74-9dfd-49e0-97d0-435b6fdda852",
+                            SecurityStamp = "f7e10412-2051-4d70-b53f-4207baf6d937",
                             Surname = "Uthman",
                             TwoFactorEnabled = false,
                             UserName = "EM20200104321"

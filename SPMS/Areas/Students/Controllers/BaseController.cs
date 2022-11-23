@@ -35,7 +35,7 @@ namespace CPMS.Areas.students.Controllers
 
         public IEnumerable<Notification> GetNoti()
         {
-            var stud = _context.Students.GetById(CurrentUser.UserName);
+            var stud = _context.Students.GetByMatric(CurrentUser.UserName);
             return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
         }
 

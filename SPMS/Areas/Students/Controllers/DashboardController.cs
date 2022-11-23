@@ -55,7 +55,7 @@ namespace CPMS.Areas.students.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
-            var student = _context.Students.GetById(CurrentUser.UserName);
+            var student = _context.Students.GetByMatric(CurrentUser.UserName);
             ViewBag.Departments = _context.Departments.GetAll();
             ViewData["student"] = student;
             ViewData["Noti"] = GetNoti();
