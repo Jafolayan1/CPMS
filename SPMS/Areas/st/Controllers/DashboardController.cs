@@ -8,7 +8,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.students.Controllers
+namespace CPMS.Areas.st.Controllers
 {
     public class DashboardController : BaseController
     {
@@ -26,7 +26,6 @@ namespace CPMS.Areas.students.Controllers
             _file = file;
             _repo = repo;
         }
-
         [HttpGet]
         public IActionResult Index()
         {
@@ -35,6 +34,7 @@ namespace CPMS.Areas.students.Controllers
             return View();
         }
 
+        [Route("notify")]
         [HttpGet]
         public IActionResult Notify()
         {
@@ -52,6 +52,7 @@ namespace CPMS.Areas.students.Controllers
             return RedirectToAction(nameof(Notifs));
         }
 
+        [Route("profile")]
         [HttpGet]
         public IActionResult Profile()
         {

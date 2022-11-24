@@ -5,10 +5,10 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.students.Controllers
+namespace CPMS.Areas.su.Controllers
 {
-    [CustomAuthorize(Role = "Student")]
-    [Area("students")]
+    [CustomAuthorize(Role = "Supervisor")]
+    [Area("su")]
     public class BaseController : Controller
     {
         public User CurrentUser
@@ -35,26 +35,20 @@ namespace CPMS.Areas.students.Controllers
 
         public IEnumerable<Notification> GetNoti()
         {
-            var stud = _context.Students.GetByMatric(CurrentUser.UserName);
+            var stud = _context.Supervisors.GetById(CurrentUser.UserName);
             return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
         }
 
-        internal async void sendMail(string body, string toMail)
+        public async void SendMail()
         {
             var stud = _context.Students.GetById(CurrentUser.UserName);
             var email = new MailRequest()
             {
-                ToEmail = stud.Supervisor.Email,
+                ToEmail = stud.Email,
                 Subject = "Projct Submission",
-                Body = body
+                Body = $" Hello , {stud.Surname}. <br> You have a new notification on the file you submitted"
             };
             await _mail.SendEmailAsync(email, email.Body);
-        }
-
-        internal static int GenerateToken(int n)
-        {
-            Random rnd = new();
-            return rnd.Next(n);
         }
     }
 }

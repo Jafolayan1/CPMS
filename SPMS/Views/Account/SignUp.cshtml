@@ -1,4 +1,4 @@
-﻿@*@model SignUp
+﻿@model SignUpVM
 @{
 	ViewData["Title"] = "SignUp Page";
 	Layout = "_PagesLayout";
@@ -23,7 +23,7 @@
 									<div class="row">
 										<div class="mb-3 col-md-6">
 											<label class="form-label">Full Name</label>
-											<input asp-for="Name" name="Name" type="text" class="form-control" required>
+											<input asp-for="FullName" name="FullName" type="text" class="form-control" required>
 										</div>
 										<div class="mb-3 col-md-6">
 											<label class="form-label">Staff No</label>
@@ -63,4 +63,4 @@
 			</div>
 		</div>
 	</div>
-</div>*@
+</div>

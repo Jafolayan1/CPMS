@@ -25,6 +25,22 @@
 					<ul aria-expanded="false">
 						<li><a asp-controller="dashboard" asp-action="department">Department</a></li>
 						<li><a asp-controller="dashboard" asp-action="adddepartment">Supervisors</a></li>
+						<li><a asp-controller="dashboard" asp-action="adddepartment">Students</a></li>
+
+						<li>
+							<ul aria-expanded="false">
+							</ul>
+						</li>
+					</ul>
+				</li>
+
+				<li>
+					<a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="fas fa-info-circle"></i>
+						<span class="nav-text">Notification</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a asp-controller="project" asp-action="pstudent">Push Notification</a></li>
 						<li>
 							<ul aria-expanded="false">
 							</ul>
@@ -54,6 +70,20 @@ else if (User.IsInRole("Supervisor"))
 
 				</li>
 
+				
+				<li>
+					<a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="fas fa-user-check"></i>
+						<span class="nav-text">Profile</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a asp-controller="dashboard" asp-action="profile">Profile</a></li>
+						<li>
+							<ul aria-expanded="false">
+							</ul>
+						</li>
+					</ul>
+				</li>
 				<li>
 					<a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="fas fa-tasks"></i>
@@ -62,6 +92,8 @@ else if (User.IsInRole("Supervisor"))
 					<ul aria-expanded="false">
 						<li><a asp-controller="project" asp-action="pstudent">Project Students</a></li>
 						<li><a asp-controller="project" asp-action="proposal">Proposals</a></li>
+						<li><a asp-controller="project" asp-action="chapter">Chapters</a></li>
+						<li><a asp-controller="project" asp-action="allprojects">All Projects</a></li>
 						<li>
 							<ul aria-expanded="false">
 							</ul>
@@ -113,6 +145,7 @@ else if (User.IsInRole("Student"))
 						<li><a asp-controller="project" asp-action="index">Proposal</a></li>
 						<li><a asp-controller="project" asp-action="milestone">Chapters</a></li>
 						<li><a asp-controller="project" asp-action="details">Project Details</a></li>
+						<li><a asp-controller="project" asp-action="details">Submit Completed Project</a></li>
 
 						<li>
 							<ul aria-expanded="false">

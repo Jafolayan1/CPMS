@@ -3,13 +3,14 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.supervisors.Controllers
+namespace CPMS.Areas.su.Controllers
 {
     public class NotificationController : BaseController
     {
         public NotificationController(IUserAccessor userAccessor, IUnitOfWork context, IMailService mail) : base(userAccessor, context, mail)
         {
         }
+
 
         [HttpGet]
         public IActionResult Notify()
@@ -33,6 +34,7 @@ namespace CPMS.Areas.supervisors.Controllers
             return View();
         }
 
+        [Route("notifications")]
         [HttpGet]
         public IActionResult Notifications()
         {
@@ -40,6 +42,7 @@ namespace CPMS.Areas.supervisors.Controllers
             return View(noti);
         }
 
+        [Route("notifications/{id}")]
         [HttpGet]
         public IActionResult Notifications(int id)
         {

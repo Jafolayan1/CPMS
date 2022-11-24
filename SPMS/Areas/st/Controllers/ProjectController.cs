@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace CPMS.Areas.students.Controllers
+namespace CPMS.Areas.st.Controllers
 {
     public class ProjectController : BaseController
     {
@@ -35,6 +35,7 @@ namespace CPMS.Areas.students.Controllers
             return View();
         }
 
+        [Route("details")]
         [HttpGet]
         public IActionResult Details()
         {
@@ -44,6 +45,7 @@ namespace CPMS.Areas.students.Controllers
             return View();
         }
 
+        [Route("milestone")]
         [HttpGet]
         public IActionResult Milestone()
         {

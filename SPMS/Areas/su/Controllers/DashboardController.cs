@@ -6,7 +6,7 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.supervisors.Controllers
+namespace CPMS.Areas.su.Controllers
 {
     public class DashboardController : BaseController
     {
@@ -21,11 +21,14 @@ namespace CPMS.Areas.supervisors.Controllers
             _userManager = userManager;
         }
 
+        [Route("dashboard/index")]
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
+        [Route("profile")]
         [HttpGet]
         public IActionResult Profile()
         {

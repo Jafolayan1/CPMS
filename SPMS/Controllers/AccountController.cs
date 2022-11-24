@@ -40,6 +40,8 @@ namespace CPMS.Controllers
             return View();
         }
 
+        [Route("forgotpass")]
+        [HttpGet]
         public IActionResult ForgotPass()
         {
             return View();
@@ -51,6 +53,7 @@ namespace CPMS.Controllers
             return View();
         }
 
+        [Route("resetpassword")]
         [HttpGet]
         public IActionResult ResetPassword(string token, string email)
         {
@@ -70,6 +73,8 @@ namespace CPMS.Controllers
             return View();
         }
 
+
+        [Route("logout")]
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
@@ -78,6 +83,7 @@ namespace CPMS.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginVM model, string returnUrl)
         {
             try
@@ -89,6 +95,9 @@ namespace CPMS.Controllers
                 if (user is null)
                 {
                     var verifyUserType = VerifyUser(model.UserName, model.Password);
+                    if (verifyUserType.Equals("Staff"))
+                    {
+                    }
                     var create = await CreateUser(verifyUserType, model.Password);
 
                     if (create == false)
@@ -106,15 +115,15 @@ namespace CPMS.Controllers
 
                     if (userLogin.Role.Contains("Student"))
                     {
-                        return RedirectToAction("Index", "dashboard", new { area = "students" });
+                        return RedirectToAction("Index", "dashboard", new { area = "st" });
                     }
                     else if (userLogin.Role.Contains("Supervisor"))
                     {
-                        return RedirectToAction("Index", "dashboard", new { area = "supervisors" });
+                        return RedirectToAction("Index", "dashboard", new { area = "su" });
                     }
                     else if (userLogin.Role.Contains("Admin"))
                     {
-                        return RedirectToAction("Index", "dashboard", new { area = "admins" });
+                        return RedirectToAction("Index", "dashboard", new { area = "ad" });
                     }
                 }
                 ModelState.AddModelError("", "Invalid Username/Password");
@@ -128,6 +137,7 @@ namespace CPMS.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordVM model, MailRequest request)
         {
             try

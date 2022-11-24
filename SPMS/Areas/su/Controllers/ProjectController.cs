@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.CodeAnalysis;
 
-namespace CPMS.Areas.supervisors.Controllers
+namespace CPMS.Areas.su.Controllers
 {
     public class ProjectController : BaseController
     {
@@ -25,6 +25,7 @@ namespace CPMS.Areas.supervisors.Controllers
             _hubContext = hubContext;
         }
 
+        [Route("pstudent")]
         [HttpGet]
         public IActionResult PStudent()
         {
@@ -33,6 +34,7 @@ namespace CPMS.Areas.supervisors.Controllers
             return View();
         }
 
+        [Route("proposal")]
         [HttpGet]
         public IActionResult Proposal()
         {
