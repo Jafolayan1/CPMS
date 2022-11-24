@@ -24,19 +24,10 @@ namespace Infrastructure.Repositories
         public INotificationRepository Notifications { get; private set; }
         public IChapterRepository Chapters { get; private set; }
 
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+        public void Dispose() => _context.Dispose();
 
-        public async Task SaveAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
+        public async Task SaveAsync() => await _context.SaveChangesAsync();
 
-        public void Clear()
-        {
-            _context.ChangeTracker.Clear();
-        }
+        public void Clear() => _context.ChangeTracker.Clear();
     }
 }

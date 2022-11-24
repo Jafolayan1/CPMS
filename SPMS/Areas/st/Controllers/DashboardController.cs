@@ -52,7 +52,7 @@ namespace CPMS.Areas.st.Controllers
             return RedirectToAction(nameof(Notifs));
         }
 
-        [Route("profile")]
+        [Route("st/profile")]
         [HttpGet]
         public IActionResult Profile()
         {

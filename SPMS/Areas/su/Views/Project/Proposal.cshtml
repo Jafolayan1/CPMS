@@ -43,7 +43,7 @@
 											</tr>
 										</thead>
 										<tbody id="orders">
-											@foreach (var item in proposal)
+											@foreach (var item in proposal.OrderBy(x=>x.Matric))
 											{
 												<tr class="btn-reveal-trigger">
 													<td class="py-2">

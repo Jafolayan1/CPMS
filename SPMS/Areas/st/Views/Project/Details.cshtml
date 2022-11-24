@@ -21,15 +21,14 @@
 							<div class="company-profile">
 								<img src="~/assets/images/back1.jpg" style="opacity: 0.25;" sty alt="">
 							</div>
+							@if (prjt != null)
+							{
 							<div class="card-body">
 								<div class="row border-bottom pb-5">
 									<div class="col-xl-8 col-lg-9">
 										<div>
-											@if (prjt != null)
-											{
 												<h4 class="fs-32 font-w700">@prjt.Topic</h4>
 												<span class="mb-2 d-block">Created by @prjt.Student.FullName </span>
-											}
 											<div class="workload-button">
 												
 											</div>
@@ -59,10 +58,7 @@
 											<span><i class="far fa-clock scale5 text-primary mt-2 me-3"></i></span>
 											<div>
 												<h4 class="fs-18 font-w500 text-black">Project Started on</h4>
-												@if (prjt != null)
-												{
 													<span> @prjt.DateSubmitted.ToLongDateString()</span>
-												}
 											</div>
 										</div>
 									</div>
@@ -71,26 +67,22 @@
 											<span><i class="far fa-clock scale5 text-primary mt-2 me-3"></i></span>
 											<div>
 												<h4 class="fs-18 font-w500 text-black">Due date</h4>
-												@if (prjt != null)
-												{
 													<span> @prjt.DateSubmitted.AddMonths(5).ToLongDateString()</span>
-												}
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="project-description">
 									<span class="fs-18 font-w500 mb-3 d-block">PROJECT ABSTRACT</span>
-									<p class="fs-18 font-w500">
-										@if (@prjt.FileUrl!=null)
-										{
+										<p class="fs-18 font-w500">
+
 											<iframe seamless class="w-100" height="750" src="@prjt.FileUrl">
 												<sspan>Your browser does not support iframes.</sspan>
 											</iframe>
-										}
-									</p>
+										</p>
 								</div>
 							</div>
+							}
 						</div>
 					</div>
 				</div>

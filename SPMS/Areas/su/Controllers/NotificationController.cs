@@ -11,7 +11,7 @@ namespace CPMS.Areas.su.Controllers
         {
         }
 
-
+        [Route("su/notify")]
         [HttpGet]
         public IActionResult Notify()
         {
