@@ -34,7 +34,7 @@ namespace CPMS.Areas.st.Controllers
             return View();
         }
 
-        [Route("notify")]
+        [Route("st/notify")]
         [HttpGet]
         public IActionResult Notify()
         {
@@ -44,6 +44,7 @@ namespace CPMS.Areas.st.Controllers
             return View();
         }
 
+        [Route("st/notifs")]
         [HttpGet]
         public IActionResult Notifs(int id)
         {
@@ -63,6 +64,7 @@ namespace CPMS.Areas.st.Controllers
             return View();
         }
 
+        [Route("st/profileupdate")]
         [HttpPost]
         public async Task<IActionResult> ProfileUpdate(Student model)
         {
@@ -80,10 +82,10 @@ namespace CPMS.Areas.st.Controllers
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
                 user.ImageUrl = model.ImageUrl;
-
-                var student = _context.Students.GetById(model.StudentId);
-                var studentEntity = _mapper.Map(model, student);
                 await _userManager.UpdateAsync(user);
+
+                var student = _context.Students.GetByMatric(model.MatricNo);
+                var studentEntity = _mapper.Map(model, student);
                 _context.Students.Update(studentEntity);
                 await _context.SaveAsync();
                 return RedirectToAction(nameof(Index));

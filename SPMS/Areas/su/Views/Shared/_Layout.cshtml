@@ -71,52 +71,7 @@
 		<script src="~/lib/microsoft/signalr/dist/browser/signalr.js" defer=""></script>
 		<script src="~/js/ConnectSignalR.js" defer=""></script>
 	}
-	<script>
-		function cardsCenter() {
-
-			/*  testimonial one function by = owl.carousel.js */
-
-
-
-			jQuery('.card-slider').owlCarousel({
-				loop: true,
-				margin: 10,
-				nav: false,
-				//center:true,
-				slideSpeed: 3000,
-				paginationSpeed: 3000,
-				dots: false,
-				navText: ['', ''],
-				responsive: {
-					0: {
-						items: 1
-					},
-					576: {
-						items: 2
-					},
-					800: {
-						items: 2
-					},
-					991: {
-						items: 2
-					},
-					1200: {
-						items: 3
-					},
-					1600: {
-						items: 4
-					}
-				}
-			})
-		}
-
-		jQuery(window).on('load', function () {
-			setTimeout(function () {
-				cardsCenter();
-			}, 1000);
-		});
-
-	</script>
+	
 	@await Component.InvokeAsync("Notyf")
 	@await RenderSectionAsync("Scripts", required: false)
 </body>

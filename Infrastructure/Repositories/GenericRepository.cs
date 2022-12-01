@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
             return !trackchanges ? _context.Set<T>().AsNoTracking().Where(expression).ToList() : _context.Set<T>().Where(expression).ToList();
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return _context.Set<T>().ToList();
         }

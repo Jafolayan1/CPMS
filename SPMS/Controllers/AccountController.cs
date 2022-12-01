@@ -200,15 +200,16 @@ namespace CPMS.Controllers
                 var homePageResult = client.GetAsync("/");
                 homePageResult.Result.EnsureSuccessStatusCode();
 
-                var content = new FormUrlEncodedContent(new[]
+                var stuContent = new FormUrlEncodedContent(new[]
                 {
                     new KeyValuePair<string, string>("userN", username),
                     new KeyValuePair<string, string>("password", password),
                 });
 
-                if (content != null)
+
+                if (stuContent != null)
                 {
-                    var student = client.PostAsync("/admin_student/login_process2.php", content).Result;
+                    var student = client.PostAsync("/admin_student/login_process2.php", stuContent).Result;
                     student.EnsureSuccessStatusCode();
 
                     if (student.RequestMessage.RequestUri.LocalPath.Equals("/admin_student/admin.php"))
@@ -228,12 +229,13 @@ namespace CPMS.Controllers
                             _cgpa = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]/div").InnerText);
                         }
                     }
-                    var staff = client.PostAsync("/admin_main/login_process.php", content).Result;
-                    staff.EnsureSuccessStatusCode();
-                    if (staff.RequestMessage.RequestUri.LocalPath.Equals("/admin_main/admin.php"))
-                    {
-                        isStaff = true;
-                    }
+                    //var staff = client.PostAsync("/admin_main/payslip_process.php").Result;
+                    //staff.EnsureSuccessStatusCode();
+                    //var cont = staff.Content.ReadAsStreamAsync();
+                    //if (staff.RequestMessage.RequestUri.LocalPath.Equals("/admin_main/payslip_process.php"))
+                    //{
+                    //    isStaff = true;
+                    //}
                 }
 
                 if (isStudent == true && isStaff == false)

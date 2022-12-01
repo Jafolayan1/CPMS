@@ -15,5 +15,10 @@ namespace Infrastructure.Repositories
         {
             return _context.Students.Include(u => u.User).Include(d => d.Department).Include(s => s.Supervisor).AsNoTracking().FirstOrDefault(x => x.MatricNo == id);
         }
+
+        public override IEnumerable<Student> GetAll()
+        {
+            return _context.Students.Include(u => u.User).Include(d => d.Department).Include(s => s.Supervisor).AsNoTracking().ToList();
+        }
     }
 }

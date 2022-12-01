@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Optimize>False</Optimize>
+	<Optimize>False</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Optimize>True</Optimize>
+	<Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +25,7 @@
 
   <ItemGroup>
 	<None Include="Areas\ad\Views\Dashboard\Profile.cshtml" />
+	<None Include="Areas\ad\Views\Manage\Supervisor.cshtml" />
 	<None Include="Areas\st\Views\Project\Index.cshtml" />
 	<None Include="Areas\su\Views\Project\PStudent.cshtml" />
 	<None Include="Views\Account\Login.cshtml" />
@@ -32,10 +33,8 @@
 
   <ItemGroup>
 	<PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
-	<PackageReference Include="Aspose.pdf" Version="22.10.0" />
-	<PackageReference Include="Aspose.Words" Version="22.11.0" />
 	<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-	<PackageReference Include="GroupDocs.Viewer" Version="22.9.0" />
+	<PackageReference Include="CsvHelper" Version="30.0.1" />
 	<PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
 	<PackageReference Include="ILove_PDF" Version="1.3.3" />
 	<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />

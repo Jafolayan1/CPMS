@@ -15,5 +15,9 @@ namespace Infrastructure.Repositories
         {
             return _context.Supervisors.Include(u => u.User).Include(d => d.Department).Include(s => s.ProjectStudents).ThenInclude(s => s.Projects).AsNoTracking().FirstOrDefault();
         }
+        public override IEnumerable<Supervisor> GetAll()
+        {
+            return _context.Supervisors.Include(u => u.User).Include(d => d.Department).Include(s => s.ProjectStudents).ThenInclude(s => s.Projects).AsNoTracking().ToList();
+        }
     }
 }
