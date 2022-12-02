@@ -95,8 +95,10 @@ namespace CPMS.Controllers
                 if (user is null)
                 {
                     var verifyUserType = VerifyUser(model.UserName, model.Password);
-                    if (verifyUserType.Equals("Staff"))
+                    if (verifyUserType is null)
                     {
+                        ModelState.AddModelError("", "Invalid Username/Password");
+                        return View();
                     }
                     var create = await CreateUser(verifyUserType, model.Password);
 

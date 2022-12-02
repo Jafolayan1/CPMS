@@ -17,18 +17,17 @@
 				<li class="breadcrumb-item"><a href="javascript:void(0)">Datatable</a></li>
 			</ol>
 		</div>
-				<div class="col-lg-6">
-
-					  <label>Upload Csv file</label>
-				  <form asp-controller="manage" asp-action="uploadfile" method="post" enctype="multipart/form-data">
-								<div class="input-group mb-3">
-									<div class="form-file">
-										<input type="file" class="form-file-input form-control">
-									</div>
-									<button type="submit" class="btn btn-primary btn-sm" type="button">Upload</button>
-								</div>
-					</form>
+		<form asp-controller="manage" asp-action="index" method="post" enctype="multipart/form-data">
+			<div class="col-lg-6">
+				<label>Upload Csv file</label>
+				<div class="input-group mb-3">
+					<div class="form-file">
+						<input type="file" name="File" accept=".csv" class="form-file-input form-control">
+					</div>
+					<button type="submit" class="btn btn-primary btn-sm">Upload</button>
 				</div>
+			</div>
+		</form>
 		<!-- row -->
 		@if (Model.Count() > 0)
 		{
@@ -42,11 +41,12 @@
 						<table id="example3" class="display" style="min-width: 845px">
 							<thead>
 								<tr>
-									<th></th>
+									<th>S/N</th>
 									<th>FullName</th>
+									<th>FileNo</th>
 									<th>Department</th>
 									<th>PhoneNo</th>
-									<th>FileNo</th>
+									<th>Email</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -55,8 +55,10 @@
 									<tr>
 										<td>@item.SerialNo</td>
 										<td>@item.FullName</td>
+										<td>@item.FileNo</td>
+										<td>@item.Department</td>
 										<td>@item.PhoneNo</td>
-										<td><a href="javascript:void(0);"><strong>@item.FileNo</strong></a></td>
+										<td>@item.Email</td>
 									</tr>
 								}
 

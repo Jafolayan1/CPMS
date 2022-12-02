@@ -41,9 +41,8 @@ namespace CPMS.Areas.ad.Controllers
             return View();
         }
 
-        [Route("manage/upload")]
         [HttpGet]
-        public IActionResult UploadFile(List<Account>? accounts = null)
+        public IActionResult Index(List<Account> accounts = null)
         {
             accounts ??= new List<Account>();
 
@@ -52,12 +51,12 @@ namespace CPMS.Areas.ad.Controllers
 
 
         [HttpPost]
-        public IActionResult UploadFile(IFormFile file)
+        public IActionResult Index(IFormFile file)
         {
             if (file is null)
             {
                 ViewBag.Error = "Please selcet a file to upload";
-                return RedirectToAction(nameof(UploadFile));
+                return RedirectToAction("Index");
             }
 
             try
@@ -65,12 +64,13 @@ namespace CPMS.Areas.ad.Controllers
                 _file.UploadFile(file);
 
                 var accounts = GetAccountList(file.FileName);
-                return UploadFile(accounts);
+                return Index(accounts);
+
             }
             catch (Exception)
             {
                 ViewBag.Error = "File is not valid, please check file type and try again";
-                return RedirectToAction(nameof(UploadFile));
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -129,6 +129,7 @@ namespace CPMS.Areas.ad.Controllers
                 var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
                     MissingFieldFound = null
+                    //BadDataFound = null
                 };
 
                 //I changed "\" to "/" because i was getting file not found exception on linux container.
@@ -145,8 +146,10 @@ namespace CPMS.Areas.ad.Controllers
                         var account = csv.GetRecord<Account>();
                         accounts.Add(account);
 
-
-                        var SerialNumber = account.SerialNo;
+                        //var SerialNumber = account.SerialNo;
+                        //var fullName = account.FullName;
+                        //var phoneNo = account.PhoneNo;
+                        //var fileNo = account.FileNo;
                     }
                 }
 

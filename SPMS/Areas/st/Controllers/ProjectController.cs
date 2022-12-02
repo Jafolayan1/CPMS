@@ -62,7 +62,7 @@ namespace CPMS.Areas.st.Controllers
         {
             try
             {
-                var stu = _context.Students.GetById(CurrentUser.UserName);
+                var stu = _context.Students.GetByMatric(CurrentUser.UserName);
                 model.StudentId = stu.StudentId;
                 model.SupervisorId = stu.SupervisorId;
 

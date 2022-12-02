@@ -18,7 +18,7 @@
 			</ol>
 		</div>
 		<!-- row -->
-		<div class="row">
+		@*<div class="row">
 			<div class="col-xl-6 col-lg-6">
 				<div class="card">
 					<div class="card-header">
@@ -38,13 +38,14 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>*@
 
 
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title">Departments</h4>
+					<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#dptModal">Add</button>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -109,3 +110,32 @@
 	</div>
 </div>
 
+
+<div class="modal fade" id="dptModal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Add Department</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<form asp-action="adddepartment" method="post">
+
+					<div class="row">
+
+						<div class="col-lg-12">
+							<div class="mb-3">
+								<label class="text-black font-w600 form-label">Add Department <span class="required">*</span></label>
+								<input type="text" asp-for="@dpt.Name" name="Name" class="form-control input-default" required />
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

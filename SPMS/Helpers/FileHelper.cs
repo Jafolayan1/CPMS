@@ -22,9 +22,18 @@ namespace CPMS.Helpers
 
         private static string GenerateFileName(string fileName)
         {
-            string strFileName = $"{DateTime.Now.ToUniversalTime():yyyyMMdd\\THH}{fileName}";
+            string strFileName = $"{DateTime.Now.ToUniversalTime():yyyyMMdd}{fileName}";
 
             return strFileName;
+        }
+
+        public bool FileExist(string fileUrl)
+        {
+            if ((File.Exists(_env.WebRootPath + fileUrl)))
+            {
+                return true;
+            }
+            return false;
         }
 
         public void DeleteFile(string fileUrl)
@@ -43,7 +52,7 @@ namespace CPMS.Helpers
             if (!exist)
                 Directory.CreateDirectory(uploads);
 
-            var fileName = GenerateFileName(file.FileName);
+            var fileName = file.FileName;
             using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
             {
                 file.CopyToAsync(fileStream);

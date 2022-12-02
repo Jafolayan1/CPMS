@@ -41,7 +41,7 @@ namespace CPMS.Areas.st.Controllers
 
         internal async void sendMail(string body, string toMail)
         {
-            var stud = _context.Students.GetById(CurrentUser.UserName);
+            var stud = _context.Students.GetByMatric(CurrentUser.UserName);
             var email = new MailRequest()
             {
                 ToEmail = stud.Supervisor.Email,

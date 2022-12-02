@@ -6,6 +6,7 @@ namespace Domain.Interfaces
     {
         void DeleteFile(string imageUrl);
 
+        bool FileExist(string imageUrl);
         string UploadFile(IFormFile file);
     }
 }
