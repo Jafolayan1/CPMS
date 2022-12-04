@@ -77,8 +77,7 @@ namespace CPMS.Areas.st.Controllers
                 }
 
                 User user = await _userManager.FindByIdAsync(CurrentUser.Id.ToString());
-                user.Surname = model.Surname;
-                user.OtherNames = model.OtherNames;
+                user.FullName = model.FullName;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
                 user.ImageUrl = model.ImageUrl;

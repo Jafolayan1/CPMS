@@ -97,7 +97,7 @@
 															<h5 class="f-w-500">Matric No <span class="pull-end">:</span></h5>
 														</div>
 														<div class="col-sm-9 col-7">
-															<span>@supervisor.EmployeeNo</span>
+															<span>@supervisor.FileNo</span>
 														</div>
 													</div>
 
@@ -140,17 +140,14 @@
 
 															<input asp-for="@supervisor.UserId" name="UserId" type="hidden" />
 															<input asp-for="@supervisor.SupervisorId" name="SupervisorId" type="hidden" />
-															<input asp-for="@supervisor.EmployeeNo" name="EmployeeNo" value="@supervisor.EmployeeNo" type="hidden" />
+															<input asp-for="@supervisor.FileNo" name="FileNo" value="@supervisor.FileNo" type="hidden" />
 
 															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Surname</label>
-																<input asp-for="@supervisor.Surname" name="Surname" type="text"  class="form-control">
+																<input asp-for="@supervisor.FullName" name="Surname" type="text"  class="form-control">
 																</div>
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Othernames</label>
-																<input asp-for="@supervisor.OtherNames" name="OtherNames" id="Othername" type="text" class="form-control">
-																</div>
+																
 															</div>
 															<div class="row">
 																<div class="mb-3 col-md-6">

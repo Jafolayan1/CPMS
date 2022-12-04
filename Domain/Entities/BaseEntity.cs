@@ -7,13 +7,7 @@ namespace Domain.Entities
 {
     public class BaseEntity
     {
-        public int UserId { get; set; }
-
-        [ForeignKey("UserId")]
-        public virtual User User { get; set; }
-
-        public string Surname { get; set; }
-        public string OtherNames { get; set; }
+        public string FullName { get; set; }
         public string? Email { get; set; }
         public string? Bio { get; set; }
 
@@ -29,8 +23,5 @@ namespace Domain.Entities
         [NotMapped]
         public IFormFile? File { get; set; }
 
-        [NotMapped]
-        public string? FullName
-        { get { return $"{Surname}  {OtherNames}"; } }
     }
 }

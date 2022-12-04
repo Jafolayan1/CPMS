@@ -21,7 +21,7 @@ namespace CPMS.Areas.su.Controllers
         [HttpPost]
         public async Task<IActionResult> Notify(Notification model)
         {
-            var sup = _context.Supervisors.Find(x => x.EmployeeNo.Equals(CurrentUser.UserName), false).FirstOrDefault();
+            var sup = _context.Supervisors.Find(x => x.FileNo.Equals(CurrentUser.UserName), false).FirstOrDefault();
 
             var newNotify = new Notification()
             {

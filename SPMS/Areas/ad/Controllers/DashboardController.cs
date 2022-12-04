@@ -22,7 +22,8 @@ namespace CPMS.Areas.ad.Controllers
         }
 
 
-        [Route("dashboard/profile")]
+        [Route("profile")]
+        [HttpGet]
         public IActionResult Profile()
         {
             return View();

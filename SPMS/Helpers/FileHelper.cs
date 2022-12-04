@@ -59,7 +59,7 @@ namespace CPMS.Helpers
                 fileStream.Flush();
             }
 
-            if (fileName.EndsWith(".docx") || fileName.EndsWith(".doc") || fileName.EndsWith(".pdf"))
+            if (fileName.EndsWith(".docx") || fileName.EndsWith(".doc"))
             {
                 var api = new LovePdfApi(_pdf.Key, _pdf.Secret);
                 var task = api.CreateTask<OfficeToPdfTask>();

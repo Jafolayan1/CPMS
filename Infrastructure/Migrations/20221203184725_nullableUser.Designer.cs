@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221203184725_nullableUser")]
+    partial class nullableUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,6 +72,7 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DepartmentId");
@@ -81,6 +84,16 @@ namespace Infrastructure.Migrations
                         {
                             DepartmentId = 1,
                             Name = "Computer Science"
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            Name = "Computer Engineering"
+                        },
+                        new
+                        {
+                            DepartmentId = 3,
+                            Name = "Statistics"
                         });
                 });
 
@@ -227,10 +240,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -242,13 +251,21 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OtherNames")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SupervisorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("StudentId");
@@ -283,14 +300,18 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OtherNames")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
@@ -303,6 +324,20 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Supervisors");
+
+                    b.HasData(
+                        new
+                        {
+                            SupervisorId = 1,
+                            DepartmentId = 1,
+                            Email = "afolayan.oluwatosin20@gmail.com",
+                            FileNo = "EM20200104321",
+                            ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+                            OtherNames = "Adekunle Adewale",
+                            PhoneNumber = "1234567890",
+                            Surname = "Uthman",
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -327,9 +362,6 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -347,6 +379,9 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("OtherNames")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -357,6 +392,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -383,20 +421,41 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ec7124bf-0e2f-41b3-be3b-d72f472da64f",
+                            ConcurrencyStamp = "5b2ed8f1-1365-4c2a-89d7-4c9ba0759462",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
-                            FullName = " Super Admin",
                             ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAY5IFvK9Tz4xgN1kO2+iEmJ7DHhjJ7KOmjSx47LGRit8eVt6KoiNerDpPwuMrt7Bw==",
+                            OtherNames = "Admin",
+                            PasswordHash = "AQAAAAEAACcQAAAAEB0qjjZ62m9OeRqMR4+etR96WyO/HiBpx1zRQMpJ+/JQ3MncgV1METmVuLHXbmh3Nw==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ecec12c8-9292-4bd7-a5d6-c4954a5215b6",
+                            SecurityStamp = "9fc45074-1391-4045-a8dd-e72194ddf6f5",
+                            Surname = "Super ",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "03abffc1-db2f-4f1b-bc80-8483f623cdaf",
+                            Email = "afolayan.oluwatosin20@gmail.com",
+                            EmailConfirmed = true,
+                            ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "AFOLAYAN.OLUWATOSIN20@GMAIL.COM",
+                            NormalizedUserName = "EM20200104321",
+                            OtherNames = "Adekunle Adewale",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGOYvihvjzE/Huq63edGt6M8VBXDpYnI33DutVkqvtP2p2E/AfnWZy6r5WYGUGaB8w==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e5fa1b4f-c517-445e-98ac-1e7f5c816d90",
+                            Surname = "Uthman",
+                            TwoFactorEnabled = false,
+                            UserName = "EM20200104321"
                         });
                 });
 
@@ -488,6 +547,11 @@ namespace Infrastructure.Migrations
                         {
                             UserId = 1,
                             RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 2
                         });
                 });
 
@@ -561,9 +625,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Department");
 

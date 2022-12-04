@@ -32,7 +32,7 @@ namespace CPMS.Areas.su.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
-            var supervisor = _context.Supervisors.GetById(CurrentUser.UserName);
+            var supervisor = _context.Supervisors.GetByFileNo(CurrentUser.UserName);
             ViewBag.Departments = _context.Departments.GetAll();
             ViewData["supervisor"] = supervisor;
 
@@ -51,8 +51,7 @@ namespace CPMS.Areas.su.Controllers
                 }
 
                 User user = await _userManager.FindByIdAsync(CurrentUser.Id.ToString());
-                user.Surname = model.Surname;
-                user.OtherNames = model.OtherNames;
+                user.FullName = model.FullName;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
                 user.ImageUrl = model.ImageUrl;

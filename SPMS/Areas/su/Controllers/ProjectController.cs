@@ -29,7 +29,7 @@ namespace CPMS.Areas.su.Controllers
         [HttpGet]
         public IActionResult PStudent()
         {
-            var supervisor = _context.Supervisors.GetById(CurrentUser.UserName);
+            var supervisor = _context.Supervisors.GetByFileNo(CurrentUser.UserName);
             ViewData["supervisor"] = supervisor;
             return View();
         }
@@ -38,7 +38,7 @@ namespace CPMS.Areas.su.Controllers
         [HttpGet]
         public IActionResult Proposal()
         {
-            var supervisor = _context.Supervisors.GetById(CurrentUser.UserName);
+            var supervisor = _context.Supervisors.GetByFileNo(CurrentUser.UserName);
             var lstProposal = _context.Projects.Find(x => x.SupervisorId.Equals(supervisor.SupervisorId), false).Where(s => s.Status.Equals("Pending"));
             ViewData["projectProposal"] = lstProposal;
 

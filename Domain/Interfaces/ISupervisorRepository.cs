@@ -2,7 +2,8 @@
 
 namespace Domain.Interfaces
 {
-    public interface ISupervisorRepository : IGenericRepository<Supervisor>
-    {
-    }
+	public interface ISupervisorRepository : IGenericRepository<Supervisor>
+	{
+		Supervisor GetByFileNo(string id);
+	}
 }

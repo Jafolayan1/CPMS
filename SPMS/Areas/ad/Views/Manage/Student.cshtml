@@ -20,7 +20,7 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-					<h4 class="card-title">Profile Supervisors</h4>
+					<h4 class="card-title">Profile Students</h4>
 					<div>
 						<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add</button>
 					</div>
@@ -31,25 +31,26 @@
 						<table id="example3" class="display" style="min-width: 845px">
 							<thead>
 								<tr>
-									<th></th>
 									<th>Name</th>
 									<th>Department</th>
 									<th>Matric No</th>
-									<th>Ptoject Suprvisor</th>
+									@*<th>Suprvisor</th>*@
 									<th>Mobile</th>
 									<th>Email</th>
-									<th>Action</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach (var item in lstusers)
 								{
 									<tr>
-										<td><img class="rounded-circle" width="35" src="@item.ImageUrl" alt=""></td>
 										<td>@item.FullName</td>
 										<td>@item.Department.Name</td>
 										<td>@item.MatricNo</td>
-										<td>@item.Supervisor.Surname</td>
+										@*@if (@item.Supervisor != null)
+										{
+											<td>@item.Supervisor.FullName.Split(' ')[0]</td>
+										}*@
 										<td><a href="javascript:void(0);"><strong>@item.PhoneNumber</strong></a></td>
 										<td><a href="javascript:void(0);"><strong>@item.Email</strong></a></td>
 										<td>
@@ -69,6 +70,7 @@
 		</div>
 	</div>
 </div>
+
 
 <div class="modal fade" id="basicModal">
 	<div class="modal-dialog" role="document">

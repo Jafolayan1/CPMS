@@ -42,7 +42,7 @@ namespace CPMS.Areas.ad.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(List<Account> accounts = null)
+        public IActionResult Create(List<Account> accounts = null)
         {
             accounts ??= new List<Account>();
 
@@ -51,26 +51,20 @@ namespace CPMS.Areas.ad.Controllers
 
 
         [HttpPost]
-        public IActionResult Index(IFormFile file)
+        public IActionResult Create(IFormFile file)
         {
-            if (file is null)
-            {
-                ViewBag.Error = "Please selcet a file to upload";
-                return RedirectToAction("Index");
-            }
-
             try
             {
                 _file.UploadFile(file);
 
                 var accounts = GetAccountList(file.FileName);
-                return Index(accounts);
+                return View(accounts);
 
             }
             catch (Exception)
             {
                 ViewBag.Error = "File is not valid, please check file type and try again";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
         }
 
@@ -122,18 +116,14 @@ namespace CPMS.Areas.ad.Controllers
 
         private List<Account> GetAccountList(string fileName)
         {
-            List<Account> accounts = new();
 
             try
             {
                 var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
                     MissingFieldFound = null
-                    //BadDataFound = null
                 };
 
-                //I changed "\" to "/" because i was getting file not found exception on linux container.
-                //Read Csv
                 var path = Directory.GetCurrentDirectory() + "/wwwroot/uploads//" + fileName;
                 using (var reader = new StreamReader(path))
                 using (var csv = new CsvReader(reader, config))
@@ -144,22 +134,16 @@ namespace CPMS.Areas.ad.Controllers
                     while (csv.Read())
                     {
                         var account = csv.GetRecord<Account>();
-                        accounts.Add(account);
-
-                        //var SerialNumber = account.SerialNo;
-                        //var fullName = account.FullName;
-                        //var phoneNo = account.PhoneNo;
-                        //var fileNo = account.FileNo;
+                        _accounts.Add(account);
                     }
                 }
 
-                //Create Csv
 
                 path = Directory.GetCurrentDirectory() + "/wwwroot/uploads";
                 using (var write = new StreamWriter(path + "//NewFile.csv"))
                 using (var csv = new CsvWriter(write, CultureInfo.InvariantCulture))
                 {
-                    csv.WriteRecords(accounts);
+                    csv.WriteRecords(_accounts);
                 }
             }
             catch (BadDataException ex)
@@ -169,10 +153,44 @@ namespace CPMS.Areas.ad.Controllers
                 ViewBag.Error = "Something went wrong. Check uploaded file and fields";
 
             }
-
-            return accounts;
+            return _accounts;
         }
 
-    }
+        [Route("manage/add")]
+        public async Task<IActionResult> AddAll(string save)
+        {
+            if (!string.IsNullOrEmpty(save))
+            {
+                try
+                {
+                    List<Supervisor> sups = new();
+                    foreach (var item in _accounts)
+                    {
+                        var dpt = _context.Departments.GetById(item.Department);
+                        var request = _context.Supervisors.Find(x => x.FileNo.Equals(item.FileNo), false);
+                        if (!request.Any())
+                        {
+                            sups.Add(new Supervisor { FullName = item.FullName, DepartmentId = dpt.DepartmentId, PhoneNumber = item.PhoneNo, FileNo = item.FileNo, ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png" });
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Duplicate User found";
+                            return RedirectToAction(nameof(Create));
+                        }
+                    }
+                    _context.Supervisors.AddRange(sups);
+                    await _context.SaveAsync();
+                    return RedirectToAction(nameof(Supervisor));
+                }
+                catch (Exception ex)
+                {
 
+                    ViewBag.Error = ex.Message;
+                    return RedirectToAction(nameof(Create));
+                }
+
+            }
+            return RedirectToAction(nameof(Create));
+        }
+    }
 }

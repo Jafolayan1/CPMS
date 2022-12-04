@@ -35,18 +35,18 @@ namespace CPMS.Areas.su.Controllers
 
         public IEnumerable<Notification> GetNoti()
         {
-            var stud = _context.Supervisors.GetById(CurrentUser.UserName);
+            var stud = _context.Supervisors.GetByFileNo(CurrentUser.UserName);
             return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
         }
 
         public async void SendMail()
         {
-            var stud = _context.Students.GetById(CurrentUser.UserName);
+            var stud = _context.Students.GetByMatric(CurrentUser.UserName);
             var email = new MailRequest()
             {
                 ToEmail = stud.Email,
                 Subject = "Projct Submission",
-                Body = $" Hello , {stud.Surname}. <br> You have a new notification on the file you submitted"
+                Body = $" Hello , {stud.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted"
             };
             await _mail.SendEmailAsync(email, email.Body);
         }
