@@ -167,10 +167,10 @@ namespace CPMS.Areas.ad.Controllers
                     foreach (var item in _accounts)
                     {
                         var dpt = _context.Departments.GetById(item.Department);
-                        var request = _context.Supervisors.Find(x => x.FileNo.Equals(item.FileNo), false);
+                        var request = _context.Supervisors.Find(x => x.FileNo.Equals(item.FileNo.Replace("/", string.Empty)), false);
                         if (!request.Any())
                         {
-                            sups.Add(new Supervisor { FullName = item.FullName, DepartmentId = dpt.DepartmentId, PhoneNumber = item.PhoneNo, FileNo = item.FileNo, ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png" });
+                            sups.Add(new Supervisor { FullName = item.FullName, DepartmentId = dpt.DepartmentId, PhoneNumber = item.PhoneNo, FileNo = item.FileNo.Replace("/", string.Empty), ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", Email = item.Email });
                         }
                         else
                         {

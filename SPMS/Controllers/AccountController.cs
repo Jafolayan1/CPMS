@@ -73,7 +73,6 @@ namespace CPMS.Controllers
 			return View();
 		}
 
-
 		[Route("logout")]
 		[HttpGet]
 		public async Task<IActionResult> Logout()
@@ -88,28 +87,25 @@ namespace CPMS.Controllers
 		{
 			try
 			{
+				var userName = model.UserName.Replace("/", string.Empty);
+
 				User user = model.UserName.Contains('@')
-					? _userManager.FindByEmailAsync(model.UserName).Result
-					: _userManager.FindByNameAsync(model.UserName).Result;
+					? _userManager.FindByEmailAsync(userName).Result
+					: _userManager.FindByNameAsync(userName).Result;
 
 				if (user is null)
 				{
-					var verifyUserType = VerifyUser(model.UserName, model.Password);
-					if (verifyUserType is null)
+					var verifyUserType = VerifyUser(userName, model.Password);
+					if (verifyUserType == null)
 					{
 						ModelState.AddModelError("", "Invalid Username/Password");
 						return View();
 					}
-					var create = await CreateUser(verifyUserType, model.Password);
 
-					if (create == false)
-					{
-						ModelState.AddModelError("", "One or more errors occurred in the server.");
-						return View();
-					}
+					var req = await Register(model.Password);
 				}
 
-				var userLogin = _auth.AuthenticateUser(model.UserName, model.Password);
+				var userLogin = _auth.AuthenticateUser(userName, model.Password);
 				if (userLogin != null)
 				{
 					if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
@@ -191,9 +187,20 @@ namespace CPMS.Controllers
 
 		internal string VerifyUser(string username, string password)
 		{
-			var user = string.Empty;
-			bool isStudent = false;
-			bool isStaff = false;
+			var staff = _context.Supervisors.GetByFileNo(username);
+			if (staff != null)
+			{
+				_role = "Supervisor";
+				_imageUrl = staff.ImageUrl;
+				_fullName = staff.FullName;
+				_username = staff.FileNo;
+				_dpt = staff.Department.Name;
+				_phoneNo = staff.PhoneNumber;
+
+				return _role;
+			}
+
+
 			var baseAddress = new Uri("https://www.federalpolyede.edu.ng");
 			var cookieContainer = new CookieContainer();
 			using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
@@ -208,7 +215,6 @@ namespace CPMS.Controllers
 					new KeyValuePair<string, string>("password", password),
 				});
 
-
 				if (content != null)
 				{
 					var student = client.PostAsync("/admin_student/login_process2.php", content).Result;
@@ -216,7 +222,6 @@ namespace CPMS.Controllers
 
 					if (student.RequestMessage.RequestUri.LocalPath.Equals("/admin_student/admin.php"))
 					{
-						isStudent = true;
 						HtmlDocument htmlDoc = new();
 						htmlDoc.LoadHtml(student.Content.ReadAsStringAsync().Result);
 
@@ -229,35 +234,17 @@ namespace CPMS.Controllers
 							_dpt = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[3]").InnerText);
 							_level = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]").InnerText).Substring(0, 16);
 							_cgpa = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]/div").InnerText);
+							_role = "Student";
 						}
 					}
-					var staff = _context.Supervisors.GetByFileNo(username);
-					if (staff != null)
-					{
-						isStaff = true;
-						_imageUrl = staff.ImageUrl;
-						_fullName = staff.FullName;
-						_username = staff.FileNo;
-						_dpt = staff.DepartmentId.ToString();
-						_phoneNo = staff.PhoneNumber;
-					}
-				}
-
-				if (isStudent == true && isStaff == false)
-				{
-					user = "Student";
-				}
-				else if (isStaff == true && isStudent == false)
-				{
-					user = "Staff";
 				}
 			}
-			return user;
+			return _role;
 		}
 
-		internal async Task<bool> CreateUser(string userType, string password)
+		internal async Task<bool> Register(dynamic password)
 		{
-			if (!string.IsNullOrEmpty(userType))
+			if (password != null)
 			{
 				User newUser = new()
 				{
@@ -277,10 +264,11 @@ namespace CPMS.Controllers
 					await _context.SaveAsync();
 				}
 
+
 				var request = _userManager.CreateAsync(newUser, password).Result;
 				if (request.Succeeded)
 				{
-					string role = userType == "Student" ? "Student" : "Supervisor";
+					string role = _role;
 					var addRole = _userManager.AddToRoleAsync(newUser, role).Result;
 					if (addRole.Succeeded)
 					{
@@ -302,21 +290,10 @@ namespace CPMS.Controllers
 								await _context.SaveAsync();
 								return true;
 							}
-							//else if (role.Equals("Supervisor"))
-							//{
-							//	SupervisorVM supervisor = new()
-							//	{
-							//		UserId = newUser.Id,
-							//		FileNo = _username,
-							//		ImageUrl = _imageUrl,
-							//		DepartmentId = dptname.DepartmentId,
-							//		FullName = _fullName,
-							//	};
-							//	var supervisorEntity = _mapper.Map<Supervisor>(supervisor);
-							//	_context.Supervisors.Add(supervisorEntity);
-							//	await _context.SaveAsync();
-							//	return true;
-							//}
+							else if (role.Equals("Student"))
+							{
+								return true;
+							}
 						}
 						catch (Exception)
 						{

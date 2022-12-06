@@ -12,7 +12,7 @@ namespace Domain.Entities
         public string MatricNo { get; set; }
         public string Level { get; set; }
         public int? SupervisorId { get; set; }
-        public virtual Supervisor Supervisor { get; set; }
+        public virtual Supervisor? Supervisor { get; set; }
         public ICollection<Project> Projects { get; set; }
     }
 }

@@ -26,6 +26,8 @@ namespace CPMS.Controllers
         protected static string _level;
         protected static string _cgpa;
         protected static string _phoneNo;
+        protected static string _role;
+
 
         public BaseController(IUserAccessor userAccessor)
         {
