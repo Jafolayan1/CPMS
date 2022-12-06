@@ -80,7 +80,14 @@ namespace CPMS.Areas.st.Controllers
                 user.FullName = model.FullName;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
-                user.ImageUrl = model.ImageUrl;
+                if (model.ImageUrl != null)
+                {
+                    user.ImageUrl = model.ImageUrl;
+                }
+                else
+                {
+                    model.ImageUrl = user.ImageUrl;
+                }
                 await _userManager.UpdateAsync(user);
 
                 var student = _context.Students.GetByMatric(model.MatricNo);

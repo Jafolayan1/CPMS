@@ -57,7 +57,7 @@ namespace CPMS.Areas.ad.Controllers
             {
                 _file.UploadFile(file);
 
-                var accounts = GetAccountList(file.FileName);
+                var accounts = GetAccountList($"{DateTime.Now.ToUniversalTime():yyyyMMdd}{file.FileName}");
                 return View(accounts);
 
             }

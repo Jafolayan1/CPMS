@@ -52,7 +52,7 @@ namespace CPMS.Helpers
             if (!exist)
                 Directory.CreateDirectory(uploads);
 
-            var fileName = file.FileName;
+            var fileName = GenerateFileName(file.FileName);
             using (var fileStream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
             {
                 file.CopyToAsync(fileStream);

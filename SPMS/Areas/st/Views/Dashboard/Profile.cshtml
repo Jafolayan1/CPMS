@@ -166,18 +166,22 @@
 															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Surname</label>
-															<input asp-for="@student.FullName" name="FullName" type="text"  class="form-control" required>
+																	<input asp-for="@student.FullName" name="FullName" type="text"  class="form-control" required>
 																</div>
-																
-															</div>
-															<div class="row">
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Email</label>
 																	<input asp-for="@student.Email" name="Email" type="email" class="form-control" required>
 																</div>
+															</div>
+															<div class="row">
+																
 																<div class="mb-3 col-md-6">
 																	<label class="form-label">Phone No</label>
 																	<input asp-for ="@student.PhoneNumber" name="PhoneNumber" type="text" class="form-control" required>
+																</div>
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Bio</label>
+																	<textarea asp-for="@student.Bio" row="3" name="Bio" class="form-control" required></textarea>
 																</div>
 															</div>
 															
@@ -201,7 +205,7 @@
 																		<select asp-for="@student.SupervisorId"  name="SupervisorId" class="form-control wide" id="supervisorId" required>
 																			@if (student.Supervisor !=null)
 																			{
-																				<option value="@student.DepartmentId"> @student.Supervisor.FullName </option>
+																				<option value="@student.SupervisorId"> @student.Supervisor.FullName </option>
 																			}
 																		</select>
 																</div>
@@ -220,12 +224,6 @@
 																			<input asp-for="@student.File" name="File" type="file" class="form-file-input form-control">
 																		</div>
 																	</div>
-																</div>
-															</div>
-															<div class="row">
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Bio</label>
-																	<textarea asp-for="@student.Bio" row="3" name="Bio" class="form-control" required></textarea>
 																</div>
 															</div>
 															
