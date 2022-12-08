@@ -2,12 +2,12 @@
 
 namespace Domain.Interfaces
 {
-    public interface IAuthenticationService
-    {
-        Task<bool> Signout();
+	public interface IAuthenticationService
+	{
+		Task<bool> Signout();
 
-        User AuthenticateUser(string UserName, string Password);
+		User AuthenticateUser(string UserName, string Password);
 
-        User GetUser(string UserName);
-    }
+		User GetUser(string UserName);
+	}
 }

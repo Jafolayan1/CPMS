@@ -2,8 +2,10 @@
 
 namespace Domain.Interfaces
 {
-    public interface IUserAccessor
-    {
-        User GetUser();
-    }
+	public interface IUserAccessor
+	{
+		User GetUser();
+
+		Student GetStudent();
+	}
 }

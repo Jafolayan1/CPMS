@@ -6,28 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CPMS.Areas.ad.Controllers
 {
-    public class DashboardController : BaseController
-    {
-        private readonly INotyfService _notyf;
+	public class DashboardController : BaseController
+	{
+		private readonly INotyfService _notyf;
 
-        public DashboardController(IUserAccessor userAccessor, IUnitOfWork context, INotyfService notyf) : base(userAccessor, context)
-        {
-            _notyf = notyf;
-        }
+		public DashboardController(IUserAccessor userAccessor, IUnitOfWork context, INotyfService notyf) : base(userAccessor, context)
+		{
+			_notyf = notyf;
+		}
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
-        [Route("profile")]
-        [HttpGet]
-        public IActionResult Profile()
-        {
-            return View();
-        }
-
-    }
+		[Route("index")]
+		[HttpGet]
+		public IActionResult Index()
+		{
+			return View();
+		}
+	}
 }

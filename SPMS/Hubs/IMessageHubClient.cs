@@ -2,10 +2,10 @@
 
 namespace CPMS.Hubs
 {
-    public interface IMessageHubClient
-    {
-        Task ReceiveMessage(string message);
+	public interface IMessageHubClient
+	{
+		Task ReceiveMessage(string message);
 
-        Task ReceiveMessage(Message message);
-    }
+		Task ReceiveMessage(Message message);
+	}
 }

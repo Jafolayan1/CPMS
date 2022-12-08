@@ -6,20 +6,31 @@ using Microsoft.AspNetCore.Mvc.Razor.Internal;
 
 namespace CPMS.Helpers
 {
-    public abstract class BaseViewPage<TModel> : RazorPage<TModel>
-    {
-        [RazorInject]
-        public IUserAccessor _userAccessor { get; set; }
+	public abstract class BaseViewPage<TModel> : RazorPage<TModel>
+	{
+		[RazorInject]
+		public IUserAccessor _userAccessor { get; set; }
 
-        public User CurrentUser
-        {
-            get
-            {
-                if (User != null)
-                    return _userAccessor.GetUser();
-                else
-                    return null;
-            }
-        }
-    }
+		public User CurrentUser
+		{
+			get
+			{
+				if (User != null)
+					return _userAccessor.GetUser();
+				else
+					return null;
+			}
+		}
+
+		public Student CurrentStudent
+		{
+			get
+			{
+				if (User != null)
+					return _userAccessor.GetStudent();
+				else
+					return null;
+			}
+		}
+	}
 }

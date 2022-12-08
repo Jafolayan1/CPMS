@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces
 {
-    public interface INotificationRepository : IGenericRepository<Notification>
-    {
-    }
+	public interface INotificationRepository : IGenericRepository<Notification>
+	{
+	}
 }

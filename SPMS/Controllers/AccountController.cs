@@ -113,15 +113,15 @@ namespace CPMS.Controllers
 
 					if (userLogin.Role.Contains("Student"))
 					{
-						return RedirectToAction("Index", "dashboard", new { area = "st" });
+						return RedirectToAction("index", "dashboard", new { area = "st" });
 					}
 					else if (userLogin.Role.Contains("Supervisor"))
 					{
-						return RedirectToAction("Index", "dashboard", new { area = "su" });
+						return RedirectToAction("dashboard", "dashboard", new { area = "su" });
 					}
 					else if (userLogin.Role.Contains("Admin"))
 					{
-						return RedirectToAction("Index", "dashboard", new { area = "ad" });
+						return RedirectToAction("index", "dashboard", new { area = "ad" });
 					}
 				}
 				ModelState.AddModelError("", "Invalid Username/Password");
@@ -196,10 +196,10 @@ namespace CPMS.Controllers
 				_username = staff.FileNo;
 				_dpt = staff.Department.Name;
 				_phoneNo = staff.PhoneNumber;
+				_email = staff.Email;
 
 				return _role;
 			}
-
 
 			var baseAddress = new Uri("https://www.federalpolyede.edu.ng");
 			var cookieContainer = new CookieContainer();
@@ -217,15 +217,18 @@ namespace CPMS.Controllers
 
 				if (content != null)
 				{
-					var student = client.PostAsync("/admin_student/login_process2.php", content).Result;
-					student.EnsureSuccessStatusCode();
+					var req = client.PostAsync("/admin_student/login_process2.php", content).Result;
+					req.EnsureSuccessStatusCode();
 
-					if (student.RequestMessage.RequestUri.LocalPath.Equals("/admin_student/admin.php"))
+					if (req.RequestMessage.RequestUri.LocalPath.Equals("/admin_student/admin.php"))
 					{
+						var student = client.GetAsync("/admin_student/biodata.php").Result;
 						HtmlDocument htmlDoc = new();
 						htmlDoc.LoadHtml(student.Content.ReadAsStringAsync().Result);
 
 						var details = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"side-menu\"]/li[8]/a");
+						_phoneNo = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"hiddenField5\"]").GetAttributeValue("value", null);
+						_email = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"email\"]").GetAttributeValue("value", null);
 						foreach (var item in details)
 						{
 							_imageUrl = $"https://www.federalpolyede.edu.ng/{htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/div/img[1]/@src[1]").OuterHtml.Substring(13, 29)}";
@@ -250,7 +253,9 @@ namespace CPMS.Controllers
 				{
 					FullName = _fullName,
 					UserName = _username,
-					ImageUrl = _imageUrl
+					ImageUrl = _imageUrl,
+					Email = _email,
+					PhoneNumber = _phoneNo
 				};
 
 				Department newdpt = new()
@@ -263,7 +268,6 @@ namespace CPMS.Controllers
 					_context.Departments.Add(dptname);
 					await _context.SaveAsync();
 				}
-
 
 				var request = _userManager.CreateAsync(newUser, password).Result;
 				if (request.Succeeded)
@@ -281,6 +285,8 @@ namespace CPMS.Controllers
 									UserId = newUser.Id,
 									MatricNo = _username,
 									ImageUrl = _imageUrl,
+									Email = _email,
+									PhoneNumber = _phoneNo,
 									DepartmentId = dptname.DepartmentId,
 									FullName = _fullName,
 									Level = _level
@@ -290,7 +296,7 @@ namespace CPMS.Controllers
 								await _context.SaveAsync();
 								return true;
 							}
-							else if (role.Equals("Student"))
+							else if (role.Equals("Supervisor"))
 							{
 								return true;
 							}

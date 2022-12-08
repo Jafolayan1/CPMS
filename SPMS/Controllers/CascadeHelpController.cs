@@ -13,27 +13,27 @@ using System.Diagnostics;
 
 namespace CPMS.Controllers
 {
-    public class CascadeHelpController : BaseController
-    {
-        private readonly ApplicationContext _context;
+	public class CascadeHelpController : BaseController
+	{
+		private readonly ApplicationContext _context;
 
-        public CascadeHelpController(IUserAccessor userAccessor, ApplicationContext context) : base(userAccessor)
-        {
-            _context = context;
-        }
+		public CascadeHelpController(IUserAccessor userAccessor, ApplicationContext context) : base(userAccessor)
+		{
+			_context = context;
+		}
 
-        public JsonResult getSupervisors(int Id)
-        {
-            List<Supervisor> list = new();
-            list = _context.Supervisors.Where(x => x.DepartmentId.Equals(Id)).ToList();
-            list.Insert(0, new Supervisor { SupervisorId = 0, FullName = " Please Select Supervisor" });
-            return Json(new SelectList(list, "SupervisorId", "FullName"));
-        }
+		public JsonResult getSupervisors(int Id)
+		{
+			List<Supervisor> list = new();
+			list = _context.Supervisors.Where(x => x.DepartmentId.Equals(Id)).ToList();
+			list.Insert(0, new Supervisor { SupervisorId = 0, FullName = " Please Select Supervisor" });
+			return Json(new SelectList(list, "SupervisorId", "FullName"));
+		}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		public IActionResult Error()
+		{
+			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+	}
 }

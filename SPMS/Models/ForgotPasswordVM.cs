@@ -2,10 +2,10 @@
 
 namespace CPMS.Models
 {
-    public class ForgotPasswordVM
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-    }
+	public class ForgotPasswordVM
+	{
+		[Required]
+		[EmailAddress]
+		public string Email { get; set; }
+	}
 }

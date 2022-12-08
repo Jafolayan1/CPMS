@@ -4,43 +4,46 @@ using Microsoft.Build.Framework;
 
 namespace CPMS.Models
 {
-    public class StudentVM
-    {
-        public int UserId { get; set; }
-        [Required]
-        public string MatricNo { get; set; }
-        [Required]
+	public class StudentVM
+	{
+		public int UserId { get; set; }
 
-        public string ImageUrl { get; set; }
-        [Required]
+		[Required]
+		public string MatricNo { get; set; }
 
-        public string? FullName { get; set; }
-        public string? Email { get; set; }
-        public string? PhoneNumber { get; set; }
-        [Required]
+		[Required]
+		public string ImageUrl { get; set; }
 
-        public string Level { get; set; }
+		[Required]
+		public string? FullName { get; set; }
 
-        public int? DepartmentId { get; set; }
+		public string? Email { get; set; }
+		public string? PhoneNumber { get; set; }
 
-        public virtual Department? Department { get; set; }
-        public IFormFile? File { get; set; }
-    }
+		[Required]
+		public string Level { get; set; }
 
-    public class SupervisorVM
-    {
-        public int UserId { get; set; }
-        [Required]
+		public int? DepartmentId { get; set; }
 
-        public string FileNo { get; set; }
-        [Required]
+		public virtual Department? Department { get; set; }
+		public IFormFile? File { get; set; }
+	}
 
-        public string ImageUrl { get; set; }
-        public string? FullName { get; set; }
-        public string? Email { get; set; }
-        public string? PhoneNumber { get; set; }
-        public int? DepartmentId { get; set; }
+	public class SupervisorVM
+	{
+		public int UserId { get; set; }
 
-        public virtual Department? Department { get; set; }
-    }
+		[Required]
+		public string FileNo { get; set; }
+
+		[Required]
+		public string ImageUrl { get; set; }
+
+		public string? FullName { get; set; }
+		public string? Email { get; set; }
+		public string? PhoneNumber { get; set; }
+		public int? DepartmentId { get; set; }
+
+		public virtual Department? Department { get; set; }
+	}
 }

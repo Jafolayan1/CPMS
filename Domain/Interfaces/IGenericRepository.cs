@@ -2,22 +2,22 @@
 
 namespace Domain.Interfaces
 {
-    public interface IGenericRepository<T> where T : class
-    {
-        T GetById(object id);
+	public interface IGenericRepository<T> where T : class
+	{
+		T GetById(object id);
 
-        IEnumerable<T> GetAll();
+		IEnumerable<T> GetAll();
 
-        IEnumerable<T> Find(Expression<Func<T, bool>> expression, bool trackchanges);
+		IEnumerable<T> Find(Expression<Func<T, bool>> expression, bool trackchanges);
 
-        void Add(T entity);
+		void Add(T entity);
 
-        void Update(T entity);
+		void Update(T entity);
 
-        void AddRange(IEnumerable<T> entities);
+		void AddRange(IEnumerable<T> entities);
 
-        void Remove(T entity);
+		void Remove(T entity);
 
-        void RemoveRange(IEnumerable<T> entities);
-    }
+		void RemoveRange(IEnumerable<T> entities);
+	}
 }

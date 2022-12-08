@@ -4,6 +4,7 @@
 @{
 	ViewData["Title"] = "Supervisors";
 	Supervisor sup = new Supervisor();
+	
 }
 
 <Partial name="_DepartmentHeader" />
@@ -18,9 +19,11 @@
 				<li class="breadcrumb-item"><a href="javascript:void(0)">Datatable</a></li>
 			</ol>
 		</div>
+		<span class="text-danger">@TempData["Error"]</span>
+
 		<form asp-controller="manage" asp-action="create" method="post" enctype="multipart/form-data">
 			<div class="col-lg-6">
-				 @ViewBag.Error
+				
 				<label>Upload Csv file</label>
 				<div class="input-group mb-3">
 					<div class="form-file">
@@ -74,5 +77,3 @@
 		}
 	</div>
 </div>
-
-

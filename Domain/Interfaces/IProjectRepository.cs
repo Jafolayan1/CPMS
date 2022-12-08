@@ -2,8 +2,8 @@
 
 namespace Domain.Interfaces
 {
-    public interface IProjectRepository : IGenericRepository<Project>
-    {
-        Project GetByMatric(object id);
-    }
+	public interface IProjectRepository : IGenericRepository<Project>
+	{
+		Project GetByMatric(object id);
+	}
 }

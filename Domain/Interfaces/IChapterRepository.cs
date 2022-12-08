@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces
 {
-    public interface IChapterRepository : IGenericRepository<Chapter>
-    {
-    }
+	public interface IChapterRepository : IGenericRepository<Chapter>
+	{
+	}
 }

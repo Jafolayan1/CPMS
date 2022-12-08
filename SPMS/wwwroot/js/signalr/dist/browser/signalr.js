@@ -12,7 +12,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -25,7 +25,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -37,12 +37,12 @@ return /******/ (() => { // webpackBootstrap
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -53,7 +53,7 @@ return /******/ (() => { // webpackBootstrap
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // ESM COMPAT FLAG
@@ -306,7 +306,6 @@ NullLogger.instance = new NullLogger();
 ;// CONCATENATED MODULE: ./src/Utils.ts
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
 
 // Version token that will be replaced by the prepack command
 /** The version of the SignalR client. */
@@ -564,9 +563,6 @@ function getGlobalThis() {
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
-
 class FetchHttpClient extends HttpClient {
 	constructor(logger) {
 		super();
@@ -701,8 +697,6 @@ function deserializeContent(response, responseType) {
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
 class XhrHttpClient extends HttpClient {
 	constructor(logger) {
 		super();
@@ -774,10 +768,6 @@ class XhrHttpClient extends HttpClient {
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
-
-
 /** Default implementation of {@link @microsoft/signalr.HttpClient}. */
 class DefaultHttpClient extends HttpClient {
 	/** Creates a new instance of the {@link @microsoft/signalr.DefaultHttpClient}, using the provided {@link @microsoft/signalr.ILogger} to log messages. */
@@ -836,7 +826,6 @@ TextMessageFormat.RecordSeparator = String.fromCharCode(TextMessageFormat.Record
 ;// CONCATENATED MODULE: ./src/HandshakeProtocol.ts
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
 
 /** @private */
 class HandshakeProtocol {
@@ -944,10 +933,6 @@ class Subject {
 ;// CONCATENATED MODULE: ./src/HubConnection.ts
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
-
-
-
 
 const DEFAULT_TIMEOUT_IN_MS = 30 * 1000;
 const DEFAULT_PING_INTERVAL_IN_MS = 15 * 1000;
@@ -1862,11 +1847,6 @@ class AbortController_AbortController {
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
-
-
-
 // Not exported from 'index', this type is internal.
 /** @private */
 class LongPollingTransport {
@@ -2055,8 +2035,6 @@ class LongPollingTransport {
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
 /** @private */
 class ServerSentEventsTransport {
 	constructor(httpClient, accessTokenFactory, logger, options) {
@@ -2161,9 +2139,6 @@ class ServerSentEventsTransport {
 ;// CONCATENATED MODULE: ./src/WebSocketTransport.ts
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
-
-
 
 /** @private */
 class WebSocketTransport {
@@ -2311,14 +2286,6 @@ class WebSocketTransport {
 ;// CONCATENATED MODULE: ./src/HttpConnection.ts
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
-
-
-
-
-
-
-
 
 const MAX_REDIRECTS = 100;
 /** @private */
@@ -2848,10 +2815,6 @@ class PromiseSource {
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
-
-
 const JSON_HUB_PROTOCOL_NAME = "json";
 /** Implements the JSON Hub Protocol. */
 class JsonHubProtocol {
@@ -2951,12 +2914,6 @@ class JsonHubProtocol {
 ;// CONCATENATED MODULE: ./src/HubConnectionBuilder.ts
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
-
-
-
-
-
 
 const LogLevelNameMapping = {
 	trace: LogLevel.Trace,
@@ -3067,18 +3024,6 @@ function isLogger(logger) {
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
-
-
-
-
-
-
-
-
-
-
 ;// CONCATENATED MODULE: ./src/browser-index.ts
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
@@ -3106,7 +3051,6 @@ if (!Uint8Array.prototype.forEach) {
 		writable: true,
 	});
 }
-
 
 /******/ 	return __webpack_exports__;
 /******/ })()
