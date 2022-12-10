@@ -24,6 +24,8 @@ namespace Infrastructure
 		public DbSet<Supervisor> Supervisors { get; set; }
 		public DbSet<Student> Students { get; set; }
 		public DbSet<Project> Projects { get; set; }
+		public DbSet<CompleteProject> ProjectArchive { get; set; }
+
 		public DbSet<Chapter> Chapters { get; set; }
 		public DbSet<Department> Departments { get; set; }
 		public DbSet<Notification> Notifications { get; set; }

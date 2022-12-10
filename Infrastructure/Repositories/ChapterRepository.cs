@@ -18,9 +18,10 @@ namespace Infrastructure.Repositories
 			return _context.Chapters.Include(x => x.Project).Where(expression);
 		}
 
-		public override Chapter GetById(object id)
+		public Chapter GetByMatric(string id)
 		{
-			return _context.Chapters.Include(u => u.Project).FirstOrDefault(x => x.Matric.Equals(id));
+			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Student).ThenInclude(s => s.Supervisor)
+				.ThenInclude(d => d.Department).FirstOrDefault(x => x.Matric.Equals(id));
 		}
 	}
 }

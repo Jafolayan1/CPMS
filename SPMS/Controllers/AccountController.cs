@@ -40,33 +40,36 @@ namespace CPMS.Controllers
 			return View();
 		}
 
-		[Route("forgotpass")]
+		[Route("fpassword")]
 		[HttpGet]
 		public IActionResult ForgotPass()
 		{
 			return View();
 		}
 
+		[Route("fconfirmation")]
 		[HttpGet]
 		public IActionResult ForgotPassConfirm()
 		{
 			return View();
 		}
 
-		[Route("resetpassword")]
+		[Route("rpassword")]
 		[HttpGet]
-		public IActionResult ResetPassword(string token, string email)
+		public IActionResult ResetPass(string token, string email)
 		{
 			var model = new ResetPasswordVM { Token = token, Email = email };
 			return View(model);
 		}
 
+		[Route("rconfirmation")]
 		[HttpGet]
 		public IActionResult ResetPassConfirm()
 		{
 			return View();
 		}
 
+		[Route("unauthorized")]
 		[HttpGet]
 		public IActionResult Unauthorize()
 		{
@@ -113,15 +116,15 @@ namespace CPMS.Controllers
 
 					if (userLogin.Role.Contains("Student"))
 					{
-						return RedirectToAction("index", "dashboard", new { area = "st" });
+						return RedirectToAction("index", "dashboard", new { area = "Graduate" });
 					}
 					else if (userLogin.Role.Contains("Supervisor"))
 					{
-						return RedirectToAction("dashboard", "dashboard", new { area = "su" });
+						return RedirectToAction("dashboard", "dashboard", new { area = "Staff" });
 					}
 					else if (userLogin.Role.Contains("Admin"))
 					{
-						return RedirectToAction("index", "dashboard", new { area = "ad" });
+						return RedirectToAction("index", "dashboard", new { area = "Admin" });
 					}
 				}
 				ModelState.AddModelError("", "Invalid Username/Password");
@@ -146,7 +149,7 @@ namespace CPMS.Controllers
 					return RedirectToAction(nameof(ForgotPassConfirm));
 
 				var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-				var callback = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
+				var callback = Url.Action(nameof(ResetPass), "Account", new { token, email = user.Email }, Request.Scheme);
 
 				request.ToEmail = model.Email;
 				request.Subject = "Reset Password Token";
@@ -157,12 +160,11 @@ namespace CPMS.Controllers
 			catch (Exception)
 			{
 				ModelState.AddModelError("", "One or more errors occurred in the server.");
-				return RedirectToAction("Index");
+				return RedirectToAction("Login");
 			}
 		}
 
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> ResetPassword(ResetPasswordVM model)
 		{
 			if (!ModelState.IsValid)

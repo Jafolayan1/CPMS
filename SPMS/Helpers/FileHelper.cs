@@ -22,7 +22,7 @@ namespace CPMS.Helpers
 
 		private static string GenerateFileName(string fileName)
 		{
-			string strFileName = $"{DateTime.Now.ToUniversalTime():yyyyMMdd}{fileName}";
+			string strFileName = $"{DateTime.Now.ToUniversalTime():yyyyMMdd}{fileName.Replace(",", "").Replace("-", "")}";
 
 			return strFileName;
 		}
@@ -61,14 +61,21 @@ namespace CPMS.Helpers
 
 			if (fileName.EndsWith(".docx") || fileName.EndsWith(".doc"))
 			{
-				var api = new LovePdfApi(_pdf.Key, _pdf.Secret);
-				var task = api.CreateTask<OfficeToPdfTask>();
-				task.AddFile($"{_env.WebRootPath}/uploads/{fileName}");
-				task.Process();
-				task.DownloadFile($"{_env.WebRootPath}/uploads");
-				string[] strName = fileName.Split('.');
-				strFileName = $"{strName[0]}.pdf";
-				return "/uploads/" + strFileName;
+				try
+				{
+					var api = new LovePdfApi(_pdf.Key, _pdf.Secret);
+					var task = api.CreateTask<OfficeToPdfTask>();
+					task.AddFile($"{_env.WebRootPath}/uploads/{fileName}");
+					task.Process();
+					task.DownloadFile($"{_env.WebRootPath}/uploads");
+					string[] strName = fileName.Split('.');
+					strFileName = $"{strName[0]}.pdf";
+					return "/uploads/" + strFileName;
+				}
+				catch (Exception ex)
+				{
+					return ex.Message;
+				}
 			}
 			return "/uploads/" + fileName;
 		}

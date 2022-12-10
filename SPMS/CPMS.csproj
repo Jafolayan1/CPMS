@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<Content Remove="Areas\ad\Views\Dashboard\Profile.cshtml" />
+	<Content Remove="Areas\Admin\Views\Dashboard\Profile.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,10 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-	<None Include="Areas\ad\Views\Dashboard\Profile.cshtml" />
-	<None Include="Areas\ad\Views\Manage\Supervisor.cshtml" />
-	<None Include="Areas\st\Views\Project\Index.cshtml" />
-	<None Include="Areas\su\Views\Project\PStudent.cshtml" />
+	<None Include="Areas\Admin\Views\Dashboard\Profile.cshtml" />
+	<None Include="Areas\Admin\Views\Manage\Supervisor.cshtml" />
+	<None Include="Areas\Graduate\Views\Project\Index.cshtml" />
+	<None Include="Areas\Staff\Views\Project\PStudent.cshtml" />
 	<None Include="Views\Account\Login.cshtml" />
   </ItemGroup>
 
@@ -59,11 +59,11 @@
   </ItemGroup>
 
   <ItemGroup>
-	<UpToDateCheckInput Remove="Areas\ad\Views\Dashboard\Profile.cshtml" />
+	<UpToDateCheckInput Remove="Areas\Admin\Views\Dashboard\Profile.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-	<_ContentIncludedByDefault Remove="Areas\ad\Views\Dashboard\Profile.cshtml" />
+	<_ContentIncludedByDefault Remove="Areas\Admin\Views\Dashboard\Profile.cshtml" />
   </ItemGroup>
 
 	</Project>

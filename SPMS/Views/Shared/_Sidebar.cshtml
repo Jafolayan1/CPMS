@@ -40,7 +40,7 @@
 						<span class="nav-text">Notification</span>
 					</a>
 					<ul aria-expanded="false">
-						@*<li><a asp-controller="project" asp-action="pstudent">Push Notification</a></li>*@
+						<li><a asp-controller="project" asp-action="pstudent">Push Notification</a></li>
 						<li>
 							<ul aria-expanded="false">
 							</ul>
@@ -92,8 +92,8 @@ else if (User.IsInRole("Supervisor"))
 					<ul aria-expanded="false">
 						<li><a asp-controller="project" asp-action="pstudent">Project Students</a></li>
 						<li><a asp-controller="project" asp-action="proposal">Proposals</a></li>
-						<li><a asp-controller="project" asp-action="chapter">Chapters</a></li>
-						<li><a asp-controller="project" asp-action="allprojects">All Projects</a></li>
+						<li><a asp-controller="project" asp-action="milestone">Chapters</a></li>
+						<li><a asp-controller="project" asp-action="projectarchive">All Projects</a></li>
 						<li>
 							<ul aria-expanded="false">
 							</ul>
@@ -103,10 +103,10 @@ else if (User.IsInRole("Supervisor"))
 				<li>
 					<a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="fas fa-info-circle"></i>
-						<span class="nav-text">Others</span>
+						<span class="nav-text">Notification</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a asp-controller="notification" asp-action="notification">Send Notification</a></li>
+						<li><a asp-controller="Notification" asp-action="noti">Send Notification</a></li>
 						<li>
 							<ul aria-expanded="false">
 							</ul>
@@ -145,7 +145,7 @@ else if (User.IsInRole("Student"))
 						<li><a asp-controller="project" asp-action="index">Proposal</a></li>
 						<li><a asp-controller="project" asp-action="milestone">Chapters</a></li>
 						<li><a asp-controller="project" asp-action="details">Project Details</a></li>
-						<li><a asp-controller="project" asp-action="details">Submit Completed Project</a></li>
+						<li><a asp-controller="project" asp-action="cproject">Submit Completed Project</a></li>
 
 						<li>
 							<ul aria-expanded="false">

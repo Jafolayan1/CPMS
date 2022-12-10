@@ -54,11 +54,60 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SupervisorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ChapterId");
 
                     b.HasIndex("ProjectId");
 
+                    b.HasIndex("SupervisorId");
+
                     b.ToTable("Chapters");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CompleteProject", b =>
+                {
+                    b.Property<int>("CompleteProjectId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompleteProjectId"), 1L, 1);
+
+                    b.Property<DateTime>("DateSubmitted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Matric")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SupervisorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CompleteProjectId");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.ToTable("ProjectArchive");
                 });
 
             modelBuilder.Entity("Domain.Entities.Department", b =>
@@ -383,7 +432,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9f1683ff-6eb7-47d7-8436-218a6e60f970",
+                            ConcurrencyStamp = "6f2ad747-8f6c-428c-85a1-41dab54398b7",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = " Super Admin",
@@ -391,10 +440,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL0AE7Rn5pAE9EH8aXMmfntKXt9MSZs0zdneqkO2HUbCatlxhJEfE2ulpeTChSQBzw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF3JdQY1wv7FTLjnLEInhm1cgkdiY5fXiReJANRs/vQNVFwoEW8GUYQ2UFk558dmIw==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "001af05c-e12a-4c44-a23d-4eb56db7742e",
+                            SecurityStamp = "e388ba44-850c-40ee-a242-e1e1556a1b2f",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -518,7 +567,22 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Supervisor", "Supervisor")
+                        .WithMany()
+                        .HasForeignKey("SupervisorId");
+
                     b.Navigation("Project");
+
+                    b.Navigation("Supervisor");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CompleteProject", b =>
+                {
+                    b.HasOne("Domain.Entities.Supervisor", "Supervisor")
+                        .WithMany()
+                        .HasForeignKey("SupervisorId");
+
+                    b.Navigation("Supervisor");
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>

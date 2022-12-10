@@ -40,6 +40,7 @@ namespace Service.Configuration
 			services.AddTransient<IStudentRepository, StudentRepository>();
 			services.AddTransient<IDepartmentRepository, DepartmentRepository>();
 			services.AddTransient<IProjectRepository, ProjectRepository>();
+			services.AddTransient<ICompleteProjectRepository, CompleteProjectRepository>();
 			services.AddTransient<IChapterRepository, ChapterRepository>();
 			services.AddTransient<INotificationRepository, NotificationRepository>();
 

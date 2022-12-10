@@ -1,0 +1,246 @@
+﻿@{
+	ViewData["Title"] = "Profile";
+	var supervisor = ViewData["supervisor"] as Supervisor;
+	ForgotPasswordVM fpass = new ForgotPasswordVM();
+}
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.js"></script>
+</head>
+
+<Partial name="_ProfileHeader" />
+<Partial name="_Sidebar" />
+
+ <div class="content-body">
+			<div class="container-fluid">
+
+
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">App</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Profile</a></li>
+					</ol>
+				</div> 
+				<!-- row -->
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="profile card card-body px-3 pt-3 pb-0">
+							<div class="profile-head">
+								<div class="photo-content">
+									<div class="cover-photo rounded"></div>
+								</div>
+								<div class="profile-info">
+									<div class="profile-photo">
+										 <img src="@supervisor.ImageUrl" class="img-fluid rounded-circle" alt="">
+									</div>
+									<div class="profile-details">
+										<div class="profile-name px-3 pt-2">
+											<h4 class="text-primary mb-0">@supervisor.FullName</h4>
+											@*<p>@supervisor.Department.Name</p>*@
+										</div>
+										<div class="profile-email px-2 pt-2">
+											<h4 class="text-muted mb-0">@supervisor.Email</h4>
+											<p>Email</p>
+										</div>
+										<div class="dropdown ms-auto">
+											<a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
+											<ul class="dropdown-menu dropdown-menu-end">
+												<li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
+												<li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
+												<li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
+												<li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="profile-tab">
+									<div class="custom-tab-1">
+								
+										<span class="text-danger">@TempData["Error"]</span>
+										<ul class="nav nav-tabs">
+											<li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link show">About Me</a>
+											</li>
+											<li class="nav-item"><a href="#update-profile" data-bs-toggle="tab" class="nav-link">Update Profile</a>
+											</li>
+											<li class="nav-item"><a href="#forgot-password" data-bs-toggle="tab" class="nav-link">Forgot password</a>
+											</li>
+										</ul>
+										<div class="tab-content">
+											<div id="about-me" class="tab-pane fade active show">
+												<div class="profile-about-me">
+													<div class="pt-4 border-bottom-1 pb-3">
+														<h4 class="text-primary">About Me</h4>
+														<p class="mb-2">@supervisor.Bio</p>
+
+													</div>
+												</div>
+												
+												<div class="profile-personal-info">
+													<h4 class="text-primary mb-4">Personal Information</h4>
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Name<span class="pull-end">:</span>
+															</h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>@supervisor.FullName</span>
+														</div>
+													</div>
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Matric No <span class="pull-end">:</span></h5>
+														</div>
+														<div class="col-sm-9 col-7">
+															<span>@supervisor.FileNo</span>
+														</div>
+													</div>
+
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Email <span class="pull-end">:</span>
+															</h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>@supervisor.Email</span>
+														</div>
+													</div>
+													<div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Phone Number<span class="pull-end">:</span></h5>
+														</div>
+														<div class="col-sm-9 col-7">
+															<span>@supervisor.PhoneNumber</span>
+														</div>
+													</div>
+													@if (supervisor.Department != null)
+													{
+														<div class="row mb-2">
+															<div class="col-sm-3 col-5">
+																<h5 class="f-w-500">Department <span class="pull-end">:</span>
+																</h5>
+															</div>
+																<div class="col-sm-9 col-7"><span>@supervisor.Department.Name</span>
+															</div>
+														</div>
+													}
+													
+												</div>
+											</div>
+											<div id="update-profile" class="tab-pane fade">
+												<div class="pt-3">
+													<div class="settings-form">
+														<h4 class="text-primary">Update Profile</h4>
+														<form asp-controller="Dashboard" asp-action="ProfileUpdate" method="post" enctype="multipart/form-data">
+															 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+															<input asp-for="@supervisor.UserId" name="UserId" type="hidden" />
+															<input asp-for="@supervisor.SupervisorId" name="SupervisorId" type="hidden" />
+															<input asp-for="@supervisor.FileNo" name="FileNo" value="@supervisor.FileNo" type="hidden" />
+
+															<div class="row">
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Surname</label>
+																	<input asp-for="@supervisor.FullName" name="Surname" type="text" required class="form-control">
+																</div>
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Email</label>
+																	<input asp-for="@supervisor.Email" name="Email" type="email" required class="form-control">
+																</div>
+															</div>
+															
+															<div class="row">
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Phone No</label>
+																	<input asp-for="@supervisor.PhoneNumber" name="PhoneNumber" type="text" class="form-control">
+																</div>
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Department</label>
+																	@if(ViewBag.Departments != null)
+																	{
+																		<select asp-for="@supervisor.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))">
+																		@if (supervisor.Department !=null)
+																		{
+																			<option value="@supervisor.DepartmentId"> @supervisor.Department.Name </option>
+																		}
+																			<option value=""> Please Select </option>
+
+																		</select>
+																	}
+																</div>
+																
+															</div>
+															<div class="row">
+														<div class="mb-3 col-md-6">
+															<label class="form-label">Bio</label>
+															<textarea asp-for="@supervisor.Bio" row="3" name="Bio" class="form-control" ></textarea>
+														</div>
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Image</label>
+																	<div class="input-group mb-3">
+																		<span class="input-group-text">Upload Image</span>
+																		<div class="form-file">
+																			<input asp-for="@supervisor.File" name="File" type="file" class="form-file-input form-control">
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<button class="btn btn-primary" type="submit">Submit</button>
+														</form>
+													</div>
+												</div>
+											</div>
+
+											<div id="forgot-password" class="tab-pane fade">
+												<div class="pt-3">
+													<div class="settings-form">
+														<h4 class="text-primary">Forgot Password</h4>
+														<form asp-area="" asp-controller="Account" asp-action="ForgotPassword" method="post">
+															<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+															<div class="row">
+																<div class="mb-3 col-md-6">
+																	<label class="form-label">Email</label>
+																	<input asp-for="@fpass.Email" name="Email" type="email"  class="form-control">
+																</div>
+																
+															</div>
+													<button class="btn btn-primary" type="submit">Submit</button>
+														</form>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+</div>
+
+<script type="text/javascript">
+		$(function(){
+			$('#departmentId').change(function () {
+				var url = '@Url.Content("~/")' + "CascadeHelp/getSupervisors";
+				var ddlSource = "#departmentId";
+				$.getJSON(url, { Id: $(ddlSource).val() }, function (dat) {
+					var items = "";
+					$("#supervisorId").empty();
+					$.each(dat, function (i, row) {
+						items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+					});
+					$("#supervisorId").html(items);
+				});
+			});
+		});
+</script>
+

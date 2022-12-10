@@ -5,6 +5,7 @@
 		ISupervisorRepository Supervisors { get; }
 		IStudentRepository Students { get; }
 		IProjectRepository Projects { get; }
+		ICompleteProjectRepository ProjectArchive { get; }
 		IDepartmentRepository Departments { get; }
 		INotificationRepository Notifications { get; }
 		IChapterRepository Chapters { get; }

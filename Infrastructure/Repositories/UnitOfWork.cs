@@ -12,6 +12,7 @@ namespace Infrastructure.Repositories
 			Supervisors = new SupervisorRepository(_context);
 			Students = new StudentRepository(_context);
 			Projects = new ProjectRepository(_context);
+			ProjectArchive = new CompleteProjectRepository(_context);
 			Departments = new DepartmentRepository(_context);
 			Notifications = new NotificationRepository(_context);
 			Chapters = new ChapterRepository(_context);
@@ -20,6 +21,7 @@ namespace Infrastructure.Repositories
 		public ISupervisorRepository Supervisors { get; private set; }
 		public IStudentRepository Students { get; private set; }
 		public IProjectRepository Projects { get; private set; }
+		public ICompleteProjectRepository ProjectArchive { get; private set; }
 		public IDepartmentRepository Departments { get; private set; }
 		public INotificationRepository Notifications { get; private set; }
 		public IChapterRepository Chapters { get; private set; }

@@ -42,7 +42,7 @@
 														<img alt="image" width="50" src="~/assets/images/avatar/8.png">
 													</div>
 													<div class="media-body">
-														<h6 class="mb-1">@item.Content.Substring(0,20)...</h6>
+														<h6 class="mb-1">@item.Content.Substring(0,10)...</h6>
 														<small class="d-block">@item.When.ToLongDateString() - @item.When.ToShortTimeString()</small>
 													</div>
 												</div>
@@ -69,7 +69,7 @@
 							<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
 								<img src="@CurrentUser.ImageUrl" width="20" alt="" />
 								<div class="header-info ms-3">
-									<span class="fs-18 font-w500 mb-2">@CurrentUser.FullName.Split(' ')[0]</span>
+									<span class="fs-18 font-w500 mb-2">@CurrentUser.UserName</span>
 									<small class="fs-12 font-w400">@CurrentUser.Email</small>
 								</div>
 							</a>
@@ -153,7 +153,7 @@
 						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
 							<img src="@CurrentUser.ImageUrl" width="20" alt="" />
 							<div class="header-info ms-3">
-									<span class="fs-18 font-w500 mb-2">@CurrentUser.FullName.Split(' ')[0]</span>
+									<span class="fs-18 font-w500 mb-2">@CurrentUser.UserName</span>
 								<small class="fs-12 font-w400">@CurrentUser.Email</small>
 							</div>
 						</a>
@@ -239,7 +239,7 @@
 						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
 							<img src="@CurrentUser.ImageUrl" width="20" alt="" />
 							<div class="header-info ms-3">
-								<span class="fs-18 font-w500 mb-2">@CurrentUser.FullName.Split(' ')[0]</span>
+									<span class="fs-18 font-w500 mb-2">@CurrentUser.UserName</span>
 								<small class="fs-12 font-w400">@CurrentUser.Email</small>
 							</div>
 						</a>
