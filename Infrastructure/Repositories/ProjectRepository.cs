@@ -25,7 +25,7 @@ namespace Infrastructure.Repositories
 
 		public Project GetByMatric(object id)
 		{
-			return _context.Projects.Include(u => u.Student).Include(d => d.Supervisor).Where(s => s.Status.Equals("Approved")).FirstOrDefault(x => x.Matric.Equals(id));
+			return _context.Projects.Include(st => st.Student).Include(su => su.Supervisor).Include(c => c.Chapters).Where(s => s.Status.Equals("Approved")).FirstOrDefault(x => x.Matric.Equals(id));
 		}
 	}
 }

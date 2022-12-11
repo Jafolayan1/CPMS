@@ -72,9 +72,9 @@ namespace CPMS.Helpers
 					strFileName = $"{strName[0]}.pdf";
 					return "/uploads/" + strFileName;
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
-					return ex.Message;
+					return null;
 				}
 			}
 			return "/uploads/" + fileName;

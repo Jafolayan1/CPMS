@@ -15,9 +15,14 @@ namespace Infrastructure.Repositories
 
 		public override IEnumerable<Chapter> Find(Expression<Func<Chapter, bool>> expression, bool trackchanges)
 		{
-			return _context.Chapters.Include(x => x.Project).Where(expression);
+			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Student).ThenInclude(s => s.Supervisor)
+				.ThenInclude(d => d.Department).Where(expression);
 		}
-
+		public override Chapter GetById(object id)
+		{
+			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Student).ThenInclude(s => s.Supervisor)
+				.ThenInclude(d => d.Department).AsNoTracking().FirstOrDefault(x => x.ChapterId.Equals(id));
+		}
 		public Chapter GetByMatric(string id)
 		{
 			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Student).ThenInclude(s => s.Supervisor)

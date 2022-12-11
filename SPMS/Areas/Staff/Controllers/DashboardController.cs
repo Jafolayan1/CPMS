@@ -54,7 +54,6 @@ namespace CPMS.Areas.Staff.Controllers
 				user.FullName = model.FullName;
 				user.Email = model.Email;
 				user.PhoneNumber = model.PhoneNumber;
-				user.ImageUrl = model.ImageUrl;
 				if (model.ImageUrl != null)
 				{
 					user.ImageUrl = model.ImageUrl;

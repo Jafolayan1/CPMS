@@ -50,9 +50,9 @@ namespace CPMS.Areas.Graduate.Controllers
 		[HttpGet]
 		public IActionResult Milestone()
 		{
-			var lstPrjts = _context.Projects.Find(x => x.Matric.Equals(CurrentUser.UserName), false);
+			var prjt = _context.Projects.GetByMatric(CurrentUser.UserName);
 			var lstChapts = _context.Chapters.Find(x => x.Matric.Equals(CurrentUser.UserName), false);
-			ViewData["projects"] = lstPrjts;
+			ViewData["project"] = prjt;
 			ViewData["chapters"] = lstChapts;
 			ViewData["Noti"] = GetNoti();
 			return View();
@@ -63,10 +63,11 @@ namespace CPMS.Areas.Graduate.Controllers
 		public IActionResult CProject()
 		{
 			var lstProjects = _context.ProjectArchive.GetAll();
+			ViewData["Noti"] = GetNoti();
 			return View(lstProjects);
 		}
 
-		[Route("projectarchive")]
+		[Route("project/archive")]
 		[HttpGet]
 		public IActionResult ProjectArchive()
 		{
@@ -87,6 +88,11 @@ namespace CPMS.Areas.Graduate.Controllers
 				{
 					_file.DeleteFile(model.FileUrl);
 					model.FileUrl = _file.UploadFile(model.File);
+					if (model.FileUrl is null)
+					{
+						TempData["Error"] = "Bad file, Chcek file data, rnam and try again.";
+						return RedirectToAction(nameof(Index));
+					}
 				}
 
 				if (model.ProjectId > 0)
@@ -123,6 +129,11 @@ namespace CPMS.Areas.Graduate.Controllers
 				{
 					_file.DeleteFile(model.FileUrl);
 					model.FileUrl = _file.UploadFile(model.File);
+					if (model.FileUrl is null)
+					{
+						TempData["Error"] = "Bad file, Chcek file data, rnam and try again.";
+						return RedirectToAction(nameof(Index));
+					}
 				}
 
 				if (model.ChapterId > 0)
@@ -143,23 +154,15 @@ namespace CPMS.Areas.Graduate.Controllers
 			}
 			catch (Exception)
 			{
-				throw;
+				TempData["Error"] = "One or more errors occured, Failed to add";
+				return RedirectToAction(nameof(Index));
 			}
 		}
 
 		public async Task<IActionResult> Delete(int id)
 		{
-			var prjt = _context.Projects.GetById(id);
 			var chap = _context.Chapters.GetById(id);
-
-			if (prjt != null)
-			{
-				_context.Projects.Remove(prjt);
-			}
-			else
-			{
-				_context.Chapters.Remove(null);
-			}
+			_context.Chapters.Remove(chap);
 			await _context.SaveAsync();
 			return RedirectToAction(nameof(Index));
 		}

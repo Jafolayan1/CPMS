@@ -68,8 +68,18 @@ namespace CPMS.Areas.Staff.Controllers
 		[HttpGet]
 		public IActionResult Details(int projectId)
 		{
-			var prjt = _context.Projects.GetById(projectId);
-			ViewData["project"] = prjt;
+			var project = _context.Projects.GetById(projectId);
+			ViewData["project"] = project;
+			ViewData["Noti"] = GetNoti();
+			return View();
+		}
+
+		[Route("cdetails")]
+		[HttpGet]
+		public IActionResult CDetails(int chapterId)
+		{
+			var chapter = _context.Chapters.GetById(chapterId);
+			ViewData["chapter"] = chapter;
 			ViewData["Noti"] = GetNoti();
 			return View();
 		}
@@ -97,6 +107,29 @@ namespace CPMS.Areas.Staff.Controllers
 			}
 		}
 
+		[HttpPost]
+		public async Task<IActionResult> CRemark(IFormCollection data, int chapterId, string? item)
+		{
+			try
+			{
+				string? remark = data["Remark"].ToString();
+				string? status = data["Stat"].ToString();
+
+				var prjt = _context.Chapters.GetById(chapterId);
+				prjt.Status = status;
+				prjt.Remark = remark;
+				_context.Chapters.Update(prjt);
+				await _context.SaveAsync();
+				SendMail($"<p> Hello , {prjt.Project.Student.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", prjt.Project.Student.Email);
+				return RedirectToAction(nameof(Milestone));
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Error: {ex}");
+				return RedirectToAction(nameof(Milestone));
+			}
+		}
+
 		public async Task<IActionResult> Status(string status, int projectId)
 		{
 			try
@@ -112,6 +145,24 @@ namespace CPMS.Areas.Staff.Controllers
 			{
 				Console.WriteLine($"Error: {ex}");
 				return RedirectToAction(nameof(Proposal));
+			}
+		}
+
+		public async Task<IActionResult> CStatus(string status, int projectId)
+		{
+			try
+			{
+				var project = _context.Projects.GetById(projectId);
+				project.Status = status;
+				_context.Projects.Update(project);
+				await _context.SaveAsync();
+				SendMail($"<p> Hello , {project.Student.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", project.Student.Email);
+				return RedirectToAction(nameof(Milestone));
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Error: {ex}");
+				return RedirectToAction(nameof(Milestone));
 			}
 		}
 	}
