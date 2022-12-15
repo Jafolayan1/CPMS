@@ -4,23 +4,6 @@
 
 }
 
-@*<head>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.js"></script>
-	<script type="text/javascript">
-		$(function () {
-			$('#notyId').click(function () {
-				var url = '@Url.Content("~/")' + "CascadeHelp/notify";
-				var ddlSource = "#notyId";
-				$.getJSON(url, { Id: $(ddlSource).val() }, function (dat) {
-					
-				});
-			});
-		});
-	</script>
-</head>*@
-
 <Partial name="_NotificationHeader" />
 <Partial name="_Sidebar" />
 

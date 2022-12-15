@@ -36,6 +36,14 @@ namespace CPMS.Areas.Graduate.Controllers
 			return View();
 		}
 
+		[Route("chat")]
+		public IActionResult Chat()
+		{
+			ViewData["Noti"] = GetNoti();
+
+			return View();
+		}
+
 		[Route("dashboard/notify")]
 		[HttpGet]
 		public IActionResult Notify()

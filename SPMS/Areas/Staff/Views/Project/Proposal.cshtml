@@ -47,7 +47,10 @@
 											{
 												<tr class="btn-reveal-trigger">
 													<td class="py-2">
-														<strong>@item.Student.MatricNo</strong><br /><a href="">@item.Student.FullName</a></td>
+														@foreach (var i in item.Student)
+														{
+															<strong>@i.MatricNo</strong><br /><a href="">@i.FullName</a>
+														}
 													<td class="py-2">@item.DateSubmitted.ToShortDateString()</td>
 													<td class="py-2">@item.Topic</td>
 													<td>

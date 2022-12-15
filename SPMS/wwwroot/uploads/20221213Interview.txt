@@ -1,0 +1,68 @@
+C# Interview Questions
+
+General
+ 	Tell me about yourself? Experience?
+ 	Describe the architecture of a project you worked on.
+ 	What are your strengths? Expertise?
+
+C#/.NET
+ 	What is the static keyword?
+ 	Give examples of access modifiers.
+ 	What is the var keyword in C#? Is it type-safe?
+ 	What are generics?
+ 	What are the different usages of the using keyword? 
+ 	List 2 examples resources that may need to be cleaned up with IDisposable? 
+ 	Value Types vs Reference Types? Examples? Heap vs stack?
+ 	What are delegates?
+ 	What is the difference between Action<T> and Func<T>?
+ 	Why would you use StringBuilder vs string? 
+ 	If I asked you to find all the telephone numbers in a large text document, what would you use?
+ 	Can you give me 3 different types of serialization?  
+ 	What are extension methods?  How do you create an extension method?
+ 	When do you need to override the Equals and GetHashCode methods?
+ 	How do you sort using LINQ? 
+ 	What are lambda expressions? 
+ 	Explain what is deferred execution when using LINQ?
+ 	Describe how garbage collection works in .NET?
+ 	List some ways to achieve concurrency in .NET (Async/Await, Threads, TPL)
+ 	In a multi-threaded scenario, how do you protect a critical area? 
+o	Lock or Monitor.Enter
+ 	What precautions should you be aware of with multi-threaded applications? 
+o	Deadlocks, Race conditions, modifying shared state
+ 	How do you create custom attributes in C#?
+o	Create a class that inherits from System.Attribute
+o	Use reflection to access attribute
+ 	How do verify a package is installed in a project?  Do you know how to create a Nuget package?
+ 	If I asked you to write a program to give me a list of all the public methods of a specified object, what would you use?
+
+Unit Testing/ Dependency Injection
+ 	How do you test your code?
+ 	What are the three parts of a unit test?  
+ 	What is dependency injection?
+ 	What the benefits of DI?  
+
+ASP.NET 
+ 	Give examples of Action results 
+o	ViewResult, PartialViewResult, RedirectResult, ContentResult, JsonResult, FileResult, EmptyResult
+ 	What are filters? How to register Filters? 
+ 	How do you define routing in ASP.NET?
+ 	Describe what happens when a HTTP request is made through the browser?
+ 	What is the purpose of the various HTTP verbs? (GET, POST, PUT, DELETE, PATCH)
+ 	How do you troubleshoot a client-side problem?
+
+Database
+ 	Have you done data modeling before (ORM or UML)?
+ 	What is the difference between a Left Join vs Inner Join?
+ 	How do you optimize a poor performing query?
+ 	What are isolation levels?
+ 	What is the difference between a clustered index and a non-clustered index?
+ 	Why should you use NoSql databases vs Relational?
+
+Code Challenges
+ 	Implement the Singleton Pattern
+ 	Implement IsPrime method
+ 	Implement int.Parse
+ 	Reverse a string recursively
+ 	Model a Deck of Cards
+o	Shuffle the deck
+o	Deal the deck to players

@@ -29,6 +29,8 @@ namespace Infrastructure
 		public DbSet<Chapter> Chapters { get; set; }
 		public DbSet<Department> Departments { get; set; }
 		public DbSet<Notification> Notifications { get; set; }
+		public DbSet<Message> Messages { get; set; }
+
 
 		private static void SeedUsers(ModelBuilder builder)
 		{

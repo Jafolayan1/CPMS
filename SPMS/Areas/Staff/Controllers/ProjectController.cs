@@ -16,9 +16,9 @@ namespace CPMS.Areas.Staff.Controllers
 	{
 		private readonly IMapper _mapper;
 		private readonly INotyfService _notyf;
-		private readonly IHubContext<MessageHub> _hubContext;
+		private readonly IHubContext<ChatHub> _hubContext;
 
-		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, IMailService mail, INotyfService notyf, IHubContext<MessageHub> hubContext) : base(userAccessor, context, mail)
+		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, IMailService mail, INotyfService notyf, IHubContext<ChatHub> hubContext) : base(userAccessor, context, mail)
 		{
 			_mapper = mapper;
 			_notyf = notyf;
@@ -97,7 +97,10 @@ namespace CPMS.Areas.Staff.Controllers
 				prjt.Remark = remark;
 				_context.Projects.Update(prjt);
 				await _context.SaveAsync();
-				SendMail($"<p> Hello , {prjt.Student.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", prjt.Student.Email);
+				foreach (var i in prjt.Student)
+				{
+					SendMail($"<p> Hello , {i.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", i.Email);
+				}
 				return RedirectToAction(nameof(Proposal));
 			}
 			catch (Exception ex)
@@ -120,7 +123,11 @@ namespace CPMS.Areas.Staff.Controllers
 				prjt.Remark = remark;
 				_context.Chapters.Update(prjt);
 				await _context.SaveAsync();
-				SendMail($"<p> Hello , {prjt.Project.Student.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", prjt.Project.Student.Email);
+				foreach (var i in prjt.Project.Student)
+				{
+					SendMail($"<p> Hello , {i.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", i.Email);
+				}
+
 				return RedirectToAction(nameof(Milestone));
 			}
 			catch (Exception ex)
@@ -138,7 +145,10 @@ namespace CPMS.Areas.Staff.Controllers
 				project.Status = status;
 				_context.Projects.Update(project);
 				await _context.SaveAsync();
-				SendMail($"<p> Hello , {project.Student.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", project.Student.Email);
+				foreach (var item in project.Student)
+				{
+					SendMail($"<p> Hello , {item.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", item.Email);
+				}
 				return RedirectToAction(nameof(Proposal));
 			}
 			catch (Exception ex)
@@ -156,7 +166,10 @@ namespace CPMS.Areas.Staff.Controllers
 				project.Status = status;
 				_context.Projects.Update(project);
 				await _context.SaveAsync();
-				SendMail($"<p> Hello , {project.Student.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", project.Student.Email);
+				foreach (var item in project.Student)
+				{
+					SendMail($"<p> Hello , {item.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", item.Email);
+				}
 				return RedirectToAction(nameof(Milestone));
 			}
 			catch (Exception ex)

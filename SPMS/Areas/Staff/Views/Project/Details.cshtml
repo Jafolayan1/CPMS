@@ -28,7 +28,12 @@
 											@if (prjt != null)
 											{
 												<h4 class="fs-32 font-w700">@prjt.Topic</h4>
-												<span class="mb-2 d-block">Created by @prjt.Student.FullName on</span>
+												<span class="mb-2 d-block">Created by
+													@foreach (var item in @prjt.Student)
+													{
+														@item.MatricNo <i> - </i>  @item.MatricNo
+													}
+												</span> 
 											}
 											<div class="workload-button">
 												<a href="javascript:void(0);" class="btn btn-primary btn-rounded">New<i class="fas fa-caret-down ms-2 scale5"></i></a>

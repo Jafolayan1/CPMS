@@ -10,6 +10,9 @@
 <Partial name="_MilestoneHeader" />
 <Partial name="_Sidebar" />
 
+
+
+
  <div class="content-body">
 			<div class="container-fluid">
 				<div class="row page-titles">
@@ -25,6 +28,7 @@
 						<div class="card">
 							<div class="card-header">
 								<h4 class="card-title">Project Topic</h4>
+								<span class="text-danger">@TempData["Error"]</span>
 								@if(CurrentStudent.Supervisor != null)
 								{
 									<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Topic</button>
@@ -34,7 +38,6 @@
 									<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" disabled data-bs-target="#basicModal">Add Topic</button>
 								}
 							</div>
-								<span class="text-danger">@TempData["Error"]</span>
 							<div class="card-body">
 								<div class="table-responsive">
 									<table class="table table-responsive-md">
@@ -51,93 +54,105 @@
 										<tbody>
 											@foreach (var item in @proposal)
 											{
-												<tr>
-												
-													<td>@item.Matric</td>
-													<td>@item.Topic</td>
-													<td><a href="@item.FileUrl" download>Dowload File</a></td>
-													@if (@item.Status.Equals("Approved"))
-													{
-														<td><div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> @item.Status</div></td>
-													}
-													else if (@item.Status.Equals("Rejected"))
-													{
-														<td><div class="d-flex align-items-center"><i class="fa fa-circle text-danger me-1"></i> @item.Status</div></td>
-													}
-													else 
-													{
-														<td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i>  @item.Status</div></td>
-													}
-													<td>
-														<a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ProjectId"> View Remark </a>
-														<div class="modal fade" id="remarkModal_@item.ProjectId">
-															<div class="modal-dialog modal-dialog-centered" role="document">
-																<div class="modal-content">
-																	<div class="modal-header">
-																		<h5 class="modal-title">Remark</h5>
-																		<button type="button" class="btn-close" data-bs-dismiss="modal">
-																		</button>
-																	</div>
-																	<div class="modal-body">
-																		<p>@item.Remark</p>
-																	</div>
-																	<div class="modal-footer">
-																		<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-																		@*<button type="button" class="btn btn-primary">Save changes</button>*@
+												if (@item.Student.Any(x=>x.MatricNo.Equals(CurrentStudent.MatricNo)))
+												{
+													<tr>
+														<td>@CurrentStudent.MatricNo</td>
+
+														<td>@item.Topic</td>
+														<td><a href="@item.FileUrl" download>Dowload File</a></td>
+														@if (@item.Status.Equals("Approved"))
+														{
+															<td><div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> @item.Status</div></td>
+														}
+														else if (@item.Status.Equals("Rejected"))
+														{
+															<td><div class="d-flex align-items-center"><i class="fa fa-circle text-danger me-1"></i> @item.Status</div></td>
+														}
+														else 
+														{
+															<td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i>  @item.Status</div></td>
+														}
+														<td>
+															<a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ProjectId"> View Remark </a>
+															<div class="modal fade" id="remarkModal_@item.ProjectId">
+																<div class="modal-dialog modal-dialog-centered" role="document">
+																	<div class="modal-content">
+																		<div class="modal-header">
+																			<h5 class="modal-title">Remark</h5>
+																			<button type="button" class="btn-close" data-bs-dismiss="modal">
+																			</button>
+																		</div>
+																		<div class="modal-body">
+																			<p>@item.Remark</p>
+																		</div>
+																		<div class="modal-footer">
+																			<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+																		</div>
 																	</div>
 																</div>
 															</div>
-														</div>
-													</td>
-													<td>
-														<div class="d-flex">
-													<a data-bs-toggle="modal" data-bs-target="#basicModal_@item.ProjectId" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-													<div class="modal fade" id="basicModal_@item.ProjectId">
-														<div class="modal-dialog" role="document">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h5 class="modal-title">Edit Project Topic</h5>
-																	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-																</div>
-																<div class="modal-body">
-																	<form asp-action="addeditproject" method="post" enctype="multipart/form-data">
-																		<input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
-																		<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
-																		<input asp-for="@pjt.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
-
-
-																		<div class="row">
-																			<div class="col-lg-12">
-																				<div class="mb-3">
-																					<label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
-																					<textarea asp-for="@pjt.Topic" name="Topic" placeholder="@item.Topic" class="form-control" rows="4" id="comment" required></textarea>
-																				</div>
+														</td>
+														<td>
+															<div class="d-flex">
+															<a data-bs-toggle="modal" data-bs-target="#basicModal_@item.ProjectId" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+																<div class="modal fade" id="basicModal_@item.ProjectId">
+																	<div class="modal-dialog" role="document">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<h5 class="modal-title">Edit Project Topic</h5>
+																				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 																			</div>
-																			<div class="col-lg-12">
-																				<div class="mb-3">
-																					<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
-																					<input asp-for="@pjt.File" name="File" type="file" accept=".txt, .doc,.docs,.pdf" placeholder="@item.FileUrl" required class="form-file-input form-control">
+																			<div class="modal-body">
+																				<form asp-action="addeditproject" method="post" enctype="multipart/form-data">
+class="form-control">
+																					<input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
+																					<input asp-for="@pjt.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
 
-																				</div>
-																			</div>
-																			<div class="modal-footer">
-																				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-																				<button type="submit" class="btn btn-primary">Save Changes</button>
+
+																					<div class="row">
+																						<div class="col-lg-12">
+																							<div class="mb-3">
+																								<label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
+																								<textarea asp-for="@pjt.Topic" name="Topic" placeholder="@item.Topic" class="form-control" rows="4" id="comment" required></textarea>
+																							</div>
+																						</div>
+																						<div class="col-lg-12">
+																							<div class="mb-4">
+																								<label class="text-black font-w600 form-label">Select Project Student(s) Matric<span class="required">*</span></label>
+																							</div>
+																							<select asp-for="@pjt.Student" class="multi-select" name="student" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
+																								@if (ViewBag.Students != null)
+																								{
+																									<option value="@pjt.Student"> @pjt.Matric </option>
+																								}
+																							</select>
+																						</div>
+																						<div class="col-lg-12">
+																							<div class="mb-3">
+																								<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
+																						<input asp-for="@pjt.File" name="File" type="file" accept=".doc, .docx, .docs, .pdf" placeholder="@item.FileUrl" required class="form-file-input form-control">
+
+																							</div>
+																						</div>
+																						<div class="modal-footer">
+																							<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+																							<button type="submit" class="btn btn-primary">Save Changes</button>
+																						</div>
+																					</div>
+																				</form>
 																			</div>
 																		</div>
-																	</form>
+																	</div>
 																</div>
+															@if (@item.Status != "Approved")
+															{
+																	<a asp-action="delete" asp-route-id="@item.ProjectId" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+															}
 															</div>
-														</div>
-													</div>
-													@if (@item.Status != "Approved")
-													{
-															<a asp-action="delete" asp-route-id="@item.ProjectId" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
-													}
-														</div>
-													</td>
-												
-												</tr>
+														</td>
+													</tr>
+												}
 											}
 										</tbody>
 									</table>
@@ -145,7 +160,7 @@
 							</div>
 						</div>
 					</div>
-					</div>
+				</div>
 
 			</div>
 </div>
@@ -173,9 +188,20 @@
 							</div>
 						</div>
 						<div class="col-lg-12">
+							<div class="mb-4">
+								<label class="text-black font-w600 form-label">Select Project Student(s) Matric<span class="required">*</span></label>
+							</div>
+							<select asp-for="@pjt.Student" class="multi-select" name="student" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
+								@if (ViewBag.Students != null)
+								{
+									<option value="@pjt.Student"> @pjt.Matric </option>
+								}
+							</select>
+						</div>
+						<div class="col-lg-12">
 							<div class="mb-3">
 								<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
-								<input asp-for="@pjt.File" name="File" type="file" accept=".txt, .doc,.docs,.pdf" placeholder="Topic" required class="form-file-input form-control">
+								<input asp-for="@pjt.File" name="File" type="file" accept=".doc,.docx, .docs, .pdf" placeholder="Topic" required class="form-file-input form-control">
 
 							</div>
 						</div>

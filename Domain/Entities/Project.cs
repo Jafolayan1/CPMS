@@ -8,9 +8,8 @@ namespace Domain.Entities
 	{
 		public int ProjectId { get; set; }
 
-		public IEnumerable<Chapter>? Chapters { get; set; }
-		public int StudentId { get; set; }
-		public virtual Student Student { get; set; }
+		public ICollection<Chapter>? Chapters { get; set; }
+		public virtual ICollection<Student> Student { get; set; }
 	}
 
 	public class Chapter : BaseProjectClass
@@ -30,6 +29,7 @@ namespace Domain.Entities
 	public class BaseProjectClass
 	{
 		public string Topic { get; set; }
+		[NotMapped]
 		public string Matric { get; set; }
 		public string Status { get; set; }
 		public string? Remark { get; set; }

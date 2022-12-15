@@ -9,6 +9,8 @@
 		IDepartmentRepository Departments { get; }
 		INotificationRepository Notifications { get; }
 		IChapterRepository Chapters { get; }
+		IMessageRepository Messages { get; }
+
 
 		Task SaveAsync();
 

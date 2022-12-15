@@ -16,6 +16,8 @@ namespace Infrastructure.Repositories
 			Departments = new DepartmentRepository(_context);
 			Notifications = new NotificationRepository(_context);
 			Chapters = new ChapterRepository(_context);
+			Messages = new MessageRepository(_context);
+
 		}
 
 		public ISupervisorRepository Supervisors { get; private set; }
@@ -25,6 +27,8 @@ namespace Infrastructure.Repositories
 		public IDepartmentRepository Departments { get; private set; }
 		public INotificationRepository Notifications { get; private set; }
 		public IChapterRepository Chapters { get; private set; }
+		public IMessageRepository Messages { get; private set; }
+
 
 		public void Dispose() => _context.Dispose();
 

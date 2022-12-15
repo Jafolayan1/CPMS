@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<User> SignInManager;
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -22,6 +20,7 @@
 	<link rel="shortcut icon" type="image/png" href="~/assets/images/favico.png" />
 	<link href="~/assets/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
 	<link href="~/assets/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.min.css">
 
 	<!-- Style css -->
 	<link href="~/assets/css/style.css" rel="stylesheet">
@@ -49,6 +48,8 @@
 	<script src="~/assets/vendor/global/global.min.js"></script>
 	<script src="~/assets/vendor/chart.js/Chart.bundle.min.js"></script>
 	<script src="~/assets/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+	<script src="~/assets/vendor/select2/js/select2.full.min.js"></script>
+	<script src="~/assets/js/plugins-init/select2-init.js"></script>
 
 	<!-- Apex Chart -->
 	<script src="~/assets/vendor/apexchart/apexchart.js"></script>
@@ -65,13 +66,6 @@
 	<script src="~/assets/js/custom.min.js"></script>
 	<script src="~/assets/js/dlabnav-init.js"></script>
 	<script src="~/assets/js/demo.js"></script>
-	@if (SignInManager.IsSignedIn(User))
-	{
-		<script src="~/lib/microsoft/signalr/dist/browser/signalr.js" defer=""></script>
-		<script src="~/js/ConnectSignalR.js" defer=""></script>
-	}
-	
-	@await Component.InvokeAsync("Notyf")
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

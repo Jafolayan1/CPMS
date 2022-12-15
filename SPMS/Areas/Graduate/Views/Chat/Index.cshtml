@@ -1,0 +1,87 @@
+﻿@{
+	ViewData["Title"] = "Chat";
+}
+<Partial name="_MessageHeader" />
+<Partial name="_Sidebar" />
+
+
+
+<div class="content-body">
+	<!-- row -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="card">
+					<div class="card-body p-0">
+						<div class="row">
+							<div class="col-xl-9 col-xxl-8">
+								<div class="d-flex justify-content-between align-items-center border-bottom px-4 pt-4 flex-wrap">
+									<div class="d-flex align-items-center pb-3">
+										<div class="fillow-design">
+											<a href="javascript:void(0);"><i class="fas fa-user-friends"></i></a>
+										</div>
+										<div class="ms-3">
+											<h4 class="fs-20 font-w700">Room</h4>
+											<span>We share about daily life as scientist in the world</span>
+										</div>
+									</div>
+									<div class="activity d-flex align-items-center pb-3">
+										<ul class="d-flex">
+											<li><a href="javascript:void(0);"><i class="fas fa-video"></i></a>
+											<li>
+											<li><a href="javascript:void(0);"><i class="fas fa-search"></i></a>
+											<li>
+											<li><a href="javascript:void(0);"><i class="fas fa-star text-orange"></i></a>
+											<li>
+										</ul>
+										<div class="dropdown ms-2">
+											<div class="btn-link" data-bs-toggle="dropdown">
+												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<circle cx="12.4999" cy="3.5" r="2.5" fill="#A5A5A5" />
+													<circle cx="12.4999" cy="11.5" r="2.5" fill="#A5A5A5" />
+													<circle cx="12.4999" cy="19.5" r="2.5" fill="#A5A5A5" />
+												</svg>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="chat-box-area dlab-scroll chat-box-area" id="chatArea">
+									<div class="chat-box-area dz-scroll" id="chartBox">
+										<div class="media my-4  justify-content-start align-items-start">
+											<div class="image-box me-sm-4 me-2">
+												<img src="@CurrentStudent.ImageUrl" alt="" class="rounded-circle img-1">
+												<span class="active1"></span>
+											</div>
+											<input type="hidden" id="userInput" value="@CurrentStudent.MatricNo" />
+
+											<div class="message-received">
+												<p class="mb-1">
+													<ul id="messagesList"></ul>
+												</p>
+												<span class="fs-12">Sunday, October 24th, 2020  at 4.30 AM</span>
+											</div>
+										</div>
+
+									</div>
+								</div>
+								<div class="card-footer border-0 type-massage">
+									<div class="input-group">
+										<textarea class="form-control" id="messageInput" rows="3" placeholder="Type here..."></textarea>
+									</div>
+									<div class="input-group-append d-flex justify-content-between flex-wrap">
+										<div>
+											<button type="button" id="sendButton" class="btn btn-primary rounded text-white"><i class="far fa-paper-plane me-2"></i>SEND</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>

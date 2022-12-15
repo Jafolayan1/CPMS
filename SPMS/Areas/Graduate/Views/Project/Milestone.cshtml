@@ -1,6 +1,6 @@
 ﻿@{
 	ViewData["Title"] = "Milestone";
-	var prjt = ViewData["project"] as Project;
+	var prjt = ViewData["project"] as IEnumerable<Project>;
 	var chapters = ViewData["chapters"] as IEnumerable<Chapter>;
 	Chapter chap = new Chapter();
 }
@@ -24,7 +24,8 @@
 				<div class="card">
 					<div class="card-header">
 						<h4 class="card-title">Project Topic</h4>
-						@if (prjt != null && prjt.Status.Equals("Approved"))
+						<span class="text-danger">@TempData["Error"]</span>
+						@if (prjt != null)
 						{
 							<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Chapter</button>
 							<div class="modal fade" id="basicModal">
@@ -36,11 +37,14 @@
 										</div>
 										<div class="modal-body">
 											<form asp-action="Addeditchapter" method="post" enctype="multipart/form-data">
-												<input asp-for="@chap.Status" name="Status" value="Pending" type="hidden" class="form-control">
-												<input asp-for="@chap.Matric" name="Matric" value="@prjt.Matric" type="hidden" class="form-control">
-												<input asp-for="@chap.Topic" name="Topic" value="@prjt.Topic" type="hidden" class="form-control">
-												<input asp-for="@chap.ProjectId" name="ProjectId" value="@prjt.ProjectId" type="hidden" class="form-control">
-												<input asp-for="@chap.SupervisorId" name="SupervisorId" value="@prjt.SupervisorId" type="hidden" class="form-control">
+											@foreach (var item in prjt)
+												{
+													<input asp-for="@chap.Status" name="Status" value="Pending" type="hidden" class="form-control">
+													<input asp-for="@chap.Topic" name="Topic" value="@item.Topic" type="hidden" class="form-control">
+													<input asp-for="@chap.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
+													<input asp-for="@chap.SupervisorId" name="SupervisorId" value="@item.SupervisorId" type="hidden" class="form-control">
+												}
+												
 
 												<div class="row">
 													<div class="col-lg-12">
@@ -51,10 +55,11 @@
 															</select>
 														</div>
 													</div>
+
 													<div class="col-lg-12">
 														<div class="mb-3">
 															<label class="text-black font-w600 form-label">Upload File <span class="required">*</span></label>
-															<input asp-for="@chap.File" name="File" type="file" accept=".txt, .docx, .doc, .docs,.pdf" required class="form-file-input form-control">
+															<input asp-for="@chap.File" name="File" type="file" accept=".docx, .doc, .docs,.pdf" required class="form-file-input form-control">
 
 														</div>
 													</div>
@@ -93,8 +98,8 @@
 									{
 										<tr>
 
-											<td>@item.Matric</td>
-											<td>@item.ChapterName.</td>
+											<td>@CurrentStudent.MatricNo</td>
+											<td>@item.ChapterName</td>
 											<td><a href="@item.FileUrl" download>Dowload File</a></td>
 											@if (@item.Status.Equals("Approved"))
 											{
@@ -159,7 +164,7 @@
 																			<div class="col-lg-12">
 																				<div class="mb-3">
 																					<label class="text-black font-w600 form-label">Upload Chaper File <span class="required">*</span></label>
-																					<input asp-for="@chap.File" name="File" type="file" accept=".txt, .doc,.docs,.pdf" placeholder="Upload file for @item.ChapterName" required class="form-file-input form-control">
+																					<input asp-for="@chap.File" name="File" type="file" accept=".doc, .docx, .docs,.pdf" placeholder="Upload file for @item.ChapterName" required class="form-file-input form-control">
 																				</div>
 																			</div>
 																			<div class="modal-footer">
@@ -190,8 +195,6 @@
 
 	</div>
 </div>
-
-
 
 <!-- Modal -->
 

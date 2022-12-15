@@ -21,10 +21,21 @@ namespace CPMS.Areas.Graduate.Controllers
 					return null;
 			}
 		}
-
+		public Student CurrentStudent
+		{
+			get
+			{
+				if (User != null)
+					return _userAccessor.GetStudent();
+				else
+					return null;
+			}
+		}
 		private readonly IUserAccessor _userAccessor;
 		protected IUnitOfWork _context;
 		protected IMailService _mail;
+		protected string _name;
+		protected string _matric;
 
 		public BaseController(IUserAccessor userAccessor, IUnitOfWork context, IMailService mail)
 		{

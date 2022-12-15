@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace CPMS.Areas.Graduate.Controllers
 {
 	public class ProjectController : BaseController
@@ -16,9 +18,9 @@ namespace CPMS.Areas.Graduate.Controllers
 		private readonly UserManager<User> _userManager;
 		private readonly IMapper _mapper;
 		private readonly IFileHelper _file;
-		private readonly IHubContext<MessageHub> _messgaeHub;
+		private readonly IHubContext<ChatHub> _messgaeHub;
 
-		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, IHubContext<MessageHub> messgaeHub, IMailService mail) : base(userAccessor, context, mail)
+		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, IHubContext<ChatHub> messgaeHub, IMailService mail) : base(userAccessor, context, mail)
 		{
 			_mapper = mapper;
 			_userManager = userManager;
@@ -30,7 +32,8 @@ namespace CPMS.Areas.Graduate.Controllers
 		[HttpGet]
 		public IActionResult Index()
 		{
-			var lstProposal = _context.Projects.Find(x => x.Matric.Equals(CurrentUser.UserName), false);
+			var lstProposal = _context.Projects.Find(x => x.SupervisorId.Equals(CurrentStudent.SupervisorId), false);
+			ViewBag.Students = _context.Students.GetAll();
 			ViewData["projectProposal"] = lstProposal;
 			ViewData["Noti"] = GetNoti();
 			return View();
@@ -50,17 +53,17 @@ namespace CPMS.Areas.Graduate.Controllers
 		[HttpGet]
 		public IActionResult Milestone()
 		{
-			var prjt = _context.Projects.GetByMatric(CurrentUser.UserName);
-			var lstChapts = _context.Chapters.Find(x => x.Matric.Equals(CurrentUser.UserName), false);
+			var prjt = _context.Projects.GetAll().Where(x => x.Student.Any(s => s.MatricNo.Equals(CurrentStudent.MatricNo))).Where(st => st.Status == "Approved");
+			var lstChapts = _context.Chapters.Find(x => x.SupervisorId.Equals(CurrentStudent.SupervisorId), false);
 			ViewData["project"] = prjt;
 			ViewData["chapters"] = lstChapts;
 			ViewData["Noti"] = GetNoti();
 			return View();
 		}
 
-		[Route("cproject")]
+		[Route("project/cproject")]
 		[HttpGet]
-		public IActionResult CProject()
+		public IActionResult CompleteProject()
 		{
 			var lstProjects = _context.ProjectArchive.GetAll();
 			ViewData["Noti"] = GetNoti();
@@ -76,13 +79,19 @@ namespace CPMS.Areas.Graduate.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AddEditProject(Project model)
+		public async Task<IActionResult> AddEditProject(Project model, IFormCollection data)
 		{
 			try
 			{
-				var stu = _context.Students.GetByMatric(CurrentUser.UserName);
-				model.StudentId = stu.StudentId;
-				model.SupervisorId = stu.SupervisorId;
+				var id = data["Student"].Select(int.Parse).ToList();
+				var stud = new List<Student> { };
+				foreach (var item in id)
+				{
+					var student = _context.Students.GetById(item);
+					stud.Add(student);
+				}
+				model.SupervisorId = CurrentStudent.SupervisorId;
+				model.Student = stud;
 
 				if (model.File != null)
 				{
@@ -90,7 +99,7 @@ namespace CPMS.Areas.Graduate.Controllers
 					model.FileUrl = _file.UploadFile(model.File);
 					if (model.FileUrl is null)
 					{
-						TempData["Error"] = "Bad file, Chcek file data, rnam and try again.";
+						TempData["Error"] = "Bad file, Chcek file data / rename and try again.";
 						return RedirectToAction(nameof(Index));
 					}
 				}
@@ -105,7 +114,12 @@ namespace CPMS.Areas.Graduate.Controllers
 				{
 					var projectEntity = _mapper.Map<Project>(model);
 					_context.Projects.Add(projectEntity);
-					sendMail($"<p>You have a new file sbmited by {stu.FullName} with Matric No :{stu.MatricNo}</p>", stu.Supervisor.Email);
+					foreach (var item in stud)
+					{
+						_name += $"{item.FullName} : ";
+						_name += $"{item.MatricNo}, ";
+					}
+					sendMail($"<p>You have a new file (PROPOSAL) submited by {_name}</p>", CurrentStudent.Supervisor.Email);
 				}
 
 				await _context.SaveAsync();
@@ -119,11 +133,10 @@ namespace CPMS.Areas.Graduate.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AddEditChapter(Chapter model)
+		public async Task<IActionResult> AddEditChapter(Chapter model, [MaybeNull] string name)
 		{
 			try
 			{
-				var prjtId = _context.Projects.GetByMatric(CurrentUser.UserName);
 
 				if (model.File != null)
 				{
@@ -131,8 +144,8 @@ namespace CPMS.Areas.Graduate.Controllers
 					model.FileUrl = _file.UploadFile(model.File);
 					if (model.FileUrl is null)
 					{
-						TempData["Error"] = "Bad file, Chcek file data, rnam and try again.";
-						return RedirectToAction(nameof(Index));
+						TempData["Error"] = "Bad file, Chcek file data, rename and try again.";
+						return RedirectToAction(nameof(Milestone));
 					}
 				}
 
@@ -144,10 +157,16 @@ namespace CPMS.Areas.Graduate.Controllers
 				}
 				else
 				{
-					model.ProjectId = prjtId.ProjectId;
 					var chaEntity = _mapper.Map<Chapter>(model);
 					_context.Chapters.Add(chaEntity);
-					sendMail($"<p>You have a new file sbmited by {prjtId.Student.FullName} with Matric No :{prjtId.Student.MatricNo}</p>", prjtId.Supervisor.Email);
+					//var chap = _context.Projects.GetAll().Where(x => x.SupervisorId.Equals(CurrentStudent.SupervisorId));
+
+					//foreach (var item in chap))
+					//{
+					//	_name += $"{item.FullName} : ";
+					//	_name += $"{item.MatricNo}, ";
+					//sendMail($"<p>You have a new file{model.ChapterName} submited by {_name}</p>", CurrentStudent.Supervisor.Email);
+					//}
 				}
 				await _context.SaveAsync();
 				return RedirectToAction(nameof(Milestone));
@@ -155,14 +174,20 @@ namespace CPMS.Areas.Graduate.Controllers
 			catch (Exception)
 			{
 				TempData["Error"] = "One or more errors occured, Failed to add";
-				return RedirectToAction(nameof(Index));
+				return RedirectToAction(nameof(Milestone));
 			}
 		}
 
+		[Route("project/delete")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			var chap = _context.Chapters.GetById(id);
-			_context.Chapters.Remove(chap);
+			var proposal = _context.Projects.GetById(id);
+			if (chap != null)
+				_context.Chapters.Remove(chap);
+			else if (proposal != null)
+				_context.Projects.Remove(proposal);
+
 			await _context.SaveAsync();
 			return RedirectToAction(nameof(Index));
 		}
