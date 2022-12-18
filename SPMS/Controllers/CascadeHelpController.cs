@@ -1,6 +1,4 @@
-﻿using CPMS.Models;
-
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
 
 using Infrastructure;
@@ -9,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 
+using SPMS.Models;
+
 using System.Diagnostics;
 
-namespace CPMS.Controllers
+namespace SPMS.Controllers
 {
 	public class CascadeHelpController : BaseController
 	{

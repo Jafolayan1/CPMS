@@ -1,17 +1,20 @@
 ﻿using AutoMapper;
 
-using CPMS.Hubs;
-
 using Domain.Entities;
 using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.CodeAnalysis;
+
+using SPMS.Hubs;
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace CPMS.Areas.Graduate.Controllers
+using Project = Domain.Entities.Project;
+
+namespace SPMS.Areas.Graduate.Controllers
 {
 	public class ProjectController : BaseController
 	{
@@ -53,7 +56,7 @@ namespace CPMS.Areas.Graduate.Controllers
 		[HttpGet]
 		public IActionResult Milestone()
 		{
-			var prjt = _context.Projects.GetAll().Where(x => x.Student.Any(s => s.MatricNo.Equals(CurrentStudent.MatricNo))).Where(st => st.Status == "Approved");
+			var prjt = _context.Projects.GetAll().Where(x => x.Students.Any(s => s.MatricNo.Equals(CurrentStudent.MatricNo))).Where(st => st.Status == "Approved");
 			var lstChapts = _context.Chapters.Find(x => x.SupervisorId.Equals(CurrentStudent.SupervisorId), false);
 			ViewData["project"] = prjt;
 			ViewData["chapters"] = lstChapts;
@@ -65,9 +68,37 @@ namespace CPMS.Areas.Graduate.Controllers
 		[HttpGet]
 		public IActionResult CompleteProject()
 		{
-			var lstProjects = _context.ProjectArchive.GetAll();
+			ViewBag.Departments = _context.Departments.GetAll();
+			ViewBag.Students = _context.Students.GetAll();
+			ViewBag.Supervisors = _context.Supervisors.GetAll();
 			ViewData["Noti"] = GetNoti();
-			return View(lstProjects);
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> projectcomp(ProjectArchive model)
+		{
+			try
+			{
+				if (model.File != null)
+				{
+					_file.DeleteFile(model.FileUrl);
+					model.FileUrl = _file.UploadFile(model.File);
+					if (model.FileUrl is null)
+					{
+						TempData["Error"] = "Bad file, Chcek file data, rename and try again.";
+						return RedirectToAction(nameof(CompleteProject));
+					}
+				}
+
+				_context.ProjectArchive.Add(model);
+				await _context.SaveAsync();
+				return RedirectToAction(nameof(CompleteProject));
+			}
+			catch (Exception)
+			{
+				return RedirectToAction(nameof(CompleteProject));
+			}
 		}
 
 		[Route("project/archive")]
@@ -91,7 +122,7 @@ namespace CPMS.Areas.Graduate.Controllers
 					stud.Add(student);
 				}
 				model.SupervisorId = CurrentStudent.SupervisorId;
-				model.Student = stud;
+				model.Students = stud;
 
 				if (model.File != null)
 				{
@@ -137,7 +168,6 @@ namespace CPMS.Areas.Graduate.Controllers
 		{
 			try
 			{
-
 				if (model.File != null)
 				{
 					_file.DeleteFile(model.FileUrl);

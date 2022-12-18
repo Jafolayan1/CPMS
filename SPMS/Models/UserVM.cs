@@ -2,7 +2,7 @@
 
 using Microsoft.Build.Framework;
 
-namespace CPMS.Models
+namespace SPMS.Models
 {
 	public class StudentVM
 	{

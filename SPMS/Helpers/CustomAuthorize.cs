@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace CPMS.Helpers
+namespace SPMS.Helpers
 {
 	[AttributeUsage(AttributeTargets.All)]
 	public class CustomAuthorize : Attribute, IAuthorizationFilter

@@ -2,7 +2,7 @@
 
 using System.Text.Json;
 
-namespace CPMS.Helpers
+namespace SPMS.Helpers
 {
 	public static class TempDataExtension
 	{

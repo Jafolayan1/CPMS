@@ -1,7 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<User> SignInManager;
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -66,12 +63,16 @@
 	<script src="~/assets/js/custom.min.js"></script>
 	<script src="~/assets/js/dlabnav-init.js"></script>
 	<script src="~/assets/js/demo.js"></script>
-	@if (SignInManager.IsSignedIn(User))
-	{
-		<script src="~/lib/microsoft/signalr/dist/browser/signalr.js" defer=""></script>
-		<script src="~/js/ConnectSignalR.js" defer=""></script>
+	 <script>
+	// Check that service workers are supported
+	if ('serviceWorker' in navigator) {
+		// Use the window load event to keep the page load performant
+		window.addEventListener('load', () => {
+				navigator.serviceWorker.register('/js/sw.js');
+		});
 	}
-	
+	</script>
+
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

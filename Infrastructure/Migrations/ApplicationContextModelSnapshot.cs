@@ -66,42 +66,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Chapters");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CompleteProject", b =>
-                {
-                    b.Property<int>("CompleteProjectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompleteProjectId"), 1L, 1);
-
-                    b.Property<DateTime>("DateSubmitted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FileUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Topic")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CompleteProjectId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("ProjectArchive");
-                });
-
             modelBuilder.Entity("Domain.Entities.Department", b =>
                 {
                     b.Property<int>("DepartmentId")
@@ -123,35 +87,6 @@ namespace Infrastructure.Migrations
                             DepartmentId = 1,
                             Name = "Computer Science"
                         });
-                });
-
-            modelBuilder.Entity("Domain.Entities.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("When")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
@@ -216,6 +151,52 @@ namespace Infrastructure.Migrations
                     b.HasIndex("SupervisorId");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProjectArchive", b =>
+                {
+                    b.Property<int>("ProjectArchiveId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectArchiveId"), 1L, 1);
+
+                    b.Property<string>("CaseStudy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateSubmitted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SupervisorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProjectArchiveId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.ToTable("ProjectArchive");
                 });
 
             modelBuilder.Entity("Domain.Entities.Role", b =>
@@ -306,6 +287,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProjectArchiveId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("SupervisorId")
                         .HasColumnType("int");
 
@@ -315,6 +299,8 @@ namespace Infrastructure.Migrations
                     b.HasKey("StudentId");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("ProjectArchiveId");
 
                     b.HasIndex("SupervisorId");
 
@@ -444,7 +430,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "688691f4-651f-4002-a418-fb66bd981591",
+                            ConcurrencyStamp = "d9685336-4169-48bb-abb7-dc74c07b0785",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = " Super Admin",
@@ -452,10 +438,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN719AUGRoY8IyFX6PQ7mNPBymeVYB3NPH9qyjPO5MESyd3wpG7EJdBUsi3Ky2ikoQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKr6DDTYoQiSMwCMbGEvrvS5gjD+VpmU2Sd2MoiCn/q646eq7iX5ZQhXZoTRgg3YdA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "55517067-1538-47d3-b308-763a9d395848",
+                            SecurityStamp = "ab649980-ca2c-460b-8382-eb42c416955a",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -576,12 +562,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("ProjectsProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int>("StudentsStudentId")
                         .HasColumnType("int");
 
-                    b.HasKey("ProjectsProjectId", "StudentId");
+                    b.HasKey("ProjectsProjectId", "StudentsStudentId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentsStudentId");
 
                     b.ToTable("ProjectStudent");
                 });
@@ -601,26 +587,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Supervisor");
-                });
-
-            modelBuilder.Entity("Domain.Entities.CompleteProject", b =>
-                {
-                    b.HasOne("Domain.Entities.Supervisor", "Supervisor")
-                        .WithMany()
-                        .HasForeignKey("SupervisorId");
-
-                    b.Navigation("Supervisor");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Message", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("Messages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
@@ -643,11 +609,30 @@ namespace Infrastructure.Migrations
                     b.Navigation("Supervisor");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ProjectArchive", b =>
+                {
+                    b.HasOne("Domain.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Domain.Entities.Supervisor", "Supervisor")
+                        .WithMany()
+                        .HasForeignKey("SupervisorId");
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Supervisor");
+                });
+
             modelBuilder.Entity("Domain.Entities.Student", b =>
                 {
                     b.HasOne("Domain.Entities.Department", "Department")
                         .WithMany("Students")
                         .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Domain.Entities.ProjectArchive", null)
+                        .WithMany("Students")
+                        .HasForeignKey("ProjectArchiveId");
 
                     b.HasOne("Domain.Entities.Supervisor", "Supervisor")
                         .WithMany("ProjectStudents")
@@ -742,7 +727,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.Entities.Student", null)
                         .WithMany()
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("StudentsStudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -759,14 +744,14 @@ namespace Infrastructure.Migrations
                     b.Navigation("Chapters");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ProjectArchive", b =>
+                {
+                    b.Navigation("Students");
+                });
+
             modelBuilder.Entity("Domain.Entities.Supervisor", b =>
                 {
                     b.Navigation("ProjectStudents");
-                });
-
-            modelBuilder.Entity("Domain.Entities.User", b =>
-                {
-                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

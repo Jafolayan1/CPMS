@@ -2,15 +2,15 @@
 
 using AutoMapper;
 
-using CPMS.Hubs;
-
 using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.CodeAnalysis;
 
-namespace CPMS.Areas.Staff.Controllers
+using SPMS.Hubs;
+
+namespace SPMS.Areas.Staff.Controllers
 {
 	public class ProjectController : BaseController
 	{
@@ -97,7 +97,7 @@ namespace CPMS.Areas.Staff.Controllers
 				prjt.Remark = remark;
 				_context.Projects.Update(prjt);
 				await _context.SaveAsync();
-				foreach (var i in prjt.Student)
+				foreach (var i in prjt.Students)
 				{
 					SendMail($"<p> Hello , {i.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", i.Email);
 				}
@@ -123,7 +123,7 @@ namespace CPMS.Areas.Staff.Controllers
 				prjt.Remark = remark;
 				_context.Chapters.Update(prjt);
 				await _context.SaveAsync();
-				foreach (var i in prjt.Project.Student)
+				foreach (var i in prjt.Project.Students)
 				{
 					SendMail($"<p> Hello , {i.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", i.Email);
 				}
@@ -145,7 +145,7 @@ namespace CPMS.Areas.Staff.Controllers
 				project.Status = status;
 				_context.Projects.Update(project);
 				await _context.SaveAsync();
-				foreach (var item in project.Student)
+				foreach (var item in project.Students)
 				{
 					SendMail($"<p> Hello , {item.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", item.Email);
 				}
@@ -166,7 +166,7 @@ namespace CPMS.Areas.Staff.Controllers
 				project.Status = status;
 				_context.Projects.Update(project);
 				await _context.SaveAsync();
-				foreach (var item in project.Student)
+				foreach (var item in project.Students)
 				{
 					SendMail($"<p> Hello , {item.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", item.Email);
 				}

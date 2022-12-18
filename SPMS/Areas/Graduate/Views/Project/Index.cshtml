@@ -54,7 +54,7 @@
 										<tbody>
 											@foreach (var item in @proposal)
 											{
-												if (@item.Student.Any(x=>x.MatricNo.Equals(CurrentStudent.MatricNo)))
+												if (@item.Students.Any(x=>x.MatricNo.Equals(CurrentStudent.MatricNo)))
 												{
 													<tr>
 														<td>@CurrentStudent.MatricNo</td>
@@ -121,10 +121,10 @@ class="form-control">
 																							<div class="mb-4">
 																								<label class="text-black font-w600 form-label">Select Project Student(s) Matric<span class="required">*</span></label>
 																							</div>
-																							<select asp-for="@pjt.Student" class="multi-select" name="student" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
+																							<select asp-for="@pjt.Students" class="multi-select" name="student" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
 																								@if (ViewBag.Students != null)
 																								{
-																									<option value="@pjt.Student"> @pjt.Matric </option>
+																									<option value="@pjt.Students"> @pjt.Matric </option>
 																								}
 																							</select>
 																						</div>
@@ -191,10 +191,10 @@ class="form-control">
 							<div class="mb-4">
 								<label class="text-black font-w600 form-label">Select Project Student(s) Matric<span class="required">*</span></label>
 							</div>
-							<select asp-for="@pjt.Student" class="multi-select" name="student" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
+							<select asp-for="@pjt.Students" class="multi-select" name="student" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
 								@if (ViewBag.Students != null)
 								{
-									<option value="@pjt.Student"> @pjt.Matric </option>
+									<option value="@pjt.Students"> @pjt.Matric </option>
 								}
 							</select>
 						</div>

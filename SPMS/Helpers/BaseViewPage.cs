@@ -4,7 +4,7 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Razor.Internal;
 
-namespace CPMS.Helpers
+namespace SPMS.Helpers
 {
 	public abstract class BaseViewPage<TModel> : RazorPage<TModel>
 	{

@@ -12,23 +12,21 @@ namespace Infrastructure.Repositories
 			Supervisors = new SupervisorRepository(_context);
 			Students = new StudentRepository(_context);
 			Projects = new ProjectRepository(_context);
-			ProjectArchive = new CompleteProjectRepository(_context);
+			ProjectArchive = new ProjectArchiveRepository(_context);
 			Departments = new DepartmentRepository(_context);
 			Notifications = new NotificationRepository(_context);
 			Chapters = new ChapterRepository(_context);
 			Messages = new MessageRepository(_context);
-
 		}
 
 		public ISupervisorRepository Supervisors { get; private set; }
 		public IStudentRepository Students { get; private set; }
 		public IProjectRepository Projects { get; private set; }
-		public ICompleteProjectRepository ProjectArchive { get; private set; }
+		public IProjectArchiveRepository ProjectArchive { get; private set; }
 		public IDepartmentRepository Departments { get; private set; }
 		public INotificationRepository Notifications { get; private set; }
 		public IChapterRepository Chapters { get; private set; }
 		public IMessageRepository Messages { get; private set; }
-
 
 		public void Dispose() => _context.Dispose();
 

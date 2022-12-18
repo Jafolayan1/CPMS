@@ -3,7 +3,7 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Controllers
+namespace SPMS.Controllers
 {
 	public class BaseController : Controller
 	{

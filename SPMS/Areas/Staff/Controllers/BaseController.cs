@@ -1,11 +1,11 @@
-﻿using CPMS.Helpers;
-
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Staff.Controllers
+using SPMS.Helpers;
+
+namespace SPMS.Areas.Staff.Controllers
 {
 	[CustomAuthorize(Role = "Supervisor")]
 	[Area("Staff")]
@@ -21,8 +21,6 @@ namespace CPMS.Areas.Staff.Controllers
 					return null;
 			}
 		}
-
-
 
 		private readonly IUserAccessor _userAccessor;
 		protected IUnitOfWork _context;

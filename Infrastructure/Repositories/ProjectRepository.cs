@@ -15,21 +15,22 @@ namespace Infrastructure.Repositories
 
 		public override IEnumerable<Project> GetAll()
 		{
-			return _context.Projects.Include(st => st.Student).Include(su => su.Supervisor).Include(c => c.Chapters).ToList();
+			return _context.Projects.Include(st => st.Students).Include(su => su.Supervisor).Include(c => c.Chapters).ToList();
 		}
+
 		public override IEnumerable<Project> Find(Expression<Func<Project, bool>> expression, bool trackchanges)
 		{
-			return _context.Projects.Include(x => x.Student).Where(expression).ToList();
+			return _context.Projects.Include(x => x.Students).Where(expression).ToList();
 		}
 
 		public override Project GetById(object id)
 		{
-			return _context.Projects.Include(u => u.Student).Include(d => d.Supervisor).AsNoTracking().FirstOrDefault(x => x.ProjectId.Equals(id));
+			return _context.Projects.Include(u => u.Students).Include(d => d.Supervisor).AsNoTracking().FirstOrDefault(x => x.ProjectId.Equals(id));
 		}
 
 		public Project GetByMatric(object id)
 		{
-			return _context.Projects.Include(st => st.Student).Include(su => su.Supervisor).Include(c => c.Chapters).Where(s => s.Status.Equals("Approved")).FirstOrDefault(x => x.Matric.Equals(id));
+			return _context.Projects.Include(st => st.Students).Include(su => su.Supervisor).Include(c => c.Chapters).Where(s => s.Status.Equals("Approved")).FirstOrDefault(x => x.Matric.Equals(id));
 		}
 	}
 }

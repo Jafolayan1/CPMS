@@ -8,7 +8,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Graduate.Controllers
+namespace SPMS.Areas.Graduate.Controllers
 {
 	public class DashboardController : BaseController
 	{
@@ -30,14 +30,6 @@ namespace CPMS.Areas.Graduate.Controllers
 		[Route("dashboard/index")]
 		[HttpGet]
 		public IActionResult Index()
-		{
-			ViewData["Noti"] = GetNoti();
-
-			return View();
-		}
-
-		[Route("chat")]
-		public IActionResult Chat()
 		{
 			ViewData["Noti"] = GetNoti();
 

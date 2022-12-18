@@ -29,6 +29,10 @@
 	<None Include="Areas\Graduate\Views\Project\Index.cshtml" />
 	<None Include="Areas\Staff\Views\Project\PStudent.cshtml" />
 	<None Include="Views\Account\Login.cshtml" />
+	<None Include="wwwroot\js\workbox-050b0310.js" />
+	<None Include="wwwroot\js\workbox-050b0310.js.map" />
+	<None Include="wwwroot\js\sw.js" />
+	<None Include="wwwroot\js\sw.js.map" />
   </ItemGroup>
 
   <ItemGroup>

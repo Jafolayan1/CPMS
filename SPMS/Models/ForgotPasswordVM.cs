@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CPMS.Models
+namespace SPMS.Models
 {
 	public class ForgotPasswordVM
 	{

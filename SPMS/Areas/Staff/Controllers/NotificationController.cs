@@ -3,7 +3,7 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Staff.Controllers
+namespace SPMS.Areas.Staff.Controllers
 {
 	public class NotificationController : BaseController
 	{

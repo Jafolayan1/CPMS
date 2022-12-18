@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Globalization;
 
-namespace CPMS.Areas.Admin.Controllers
+namespace SPMS.Areas.Admin.Controllers
 {
 	public class ManageController : BaseController
 	{

@@ -3,7 +3,7 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Identity;
 
-namespace CPMS.Helpers
+namespace SPMS.Helpers
 {
 	public class UserAccessor : IUserAccessor
 	{

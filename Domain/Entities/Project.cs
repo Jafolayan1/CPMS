@@ -7,32 +7,47 @@ namespace Domain.Entities
 	public class Project : BaseProjectClass
 	{
 		public int ProjectId { get; set; }
+		public string Status { get; set; }
+		public string Topic { get; set; }
+
+		public string? Remark { get; set; }
 
 		public ICollection<Chapter>? Chapters { get; set; }
-		public virtual ICollection<Student> Student { get; set; }
+		public virtual ICollection<Student> Students { get; set; }
 	}
 
 	public class Chapter : BaseProjectClass
 	{
 		public int ChapterId { get; set; }
+		public string Status { get; set; }
+		public string Topic { get; set; }
+		public string? Remark { get; set; }
+
 		public ChapterName ChapterName { get; set; }
 
 		public int ProjectId { get; set; }
 		public virtual Project Project { get; set; }
 	}
 
-	public class CompleteProject : BaseProjectClass
+	public class ProjectArchive : BaseProjectClass
 	{
-		public int CompleteProjectId { get; set; }
+		public int ProjectArchiveId { get; set; }
+		public string Title { get; set; }
+
+		public string ProjectCode { get; set; }
+		public string CaseStudy { get; set; }
+		public string Year { get; set; }
+
+		public int? DepartmentId { get; set; }
+		public virtual Department Department { get; set; }
+		public List<Student> Students { get; set; }
 	}
 
 	public class BaseProjectClass
 	{
-		public string Topic { get; set; }
 		[NotMapped]
 		public string Matric { get; set; }
-		public string Status { get; set; }
-		public string? Remark { get; set; }
+
 		public string FileUrl { get; set; }
 
 		[NotMapped]

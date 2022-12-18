@@ -40,8 +40,8 @@
 											@foreach (var item in prjt)
 												{
 													<input asp-for="@chap.Status" name="Status" value="Pending" type="hidden" class="form-control">
-													<input asp-for="@chap.Topic" name="Topic" value="@item.Topic" type="hidden" class="form-control">
 													<input asp-for="@chap.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
+													<input asp-for="@chap.Topic" name="Topic" value="@item.Topic" type="hidden" class="form-control">
 													<input asp-for="@chap.SupervisorId" name="SupervisorId" value="@item.SupervisorId" type="hidden" class="form-control">
 												}
 												

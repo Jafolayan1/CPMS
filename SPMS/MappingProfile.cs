@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 
-using CPMS.Models;
-
 using Domain.Entities;
+
+using SPMS.Models;
 
 namespace CPMS
 {

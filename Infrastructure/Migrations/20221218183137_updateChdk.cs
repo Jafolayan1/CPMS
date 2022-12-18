@@ -4,7 +4,7 @@
 
 namespace Infrastructure.Migrations
 {
-	public partial class chpTbls : Migration
+	public partial class updateChdk : Migration
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
@@ -171,6 +171,28 @@ namespace Infrastructure.Migrations
 				});
 
 			migrationBuilder.CreateTable(
+				name: "Message",
+				columns: table => new
+				{
+					Id = table.Column<int>(type: "int", nullable: false)
+						.Annotation("SqlServer:Identity", "1, 1"),
+					Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					When = table.Column<DateTime>(type: "datetime2", nullable: false),
+					UserId = table.Column<int>(type: "int", nullable: false)
+				},
+				constraints: table =>
+				{
+					table.PrimaryKey("PK_Message", x => x.Id);
+					table.ForeignKey(
+						name: "FK_Message_AspNetUsers_UserId",
+						column: x => x.UserId,
+						principalTable: "AspNetUsers",
+						principalColumn: "Id",
+						onDelete: ReferentialAction.Cascade);
+				});
+
+			migrationBuilder.CreateTable(
 				name: "Supervisors",
 				columns: table => new
 				{
@@ -226,11 +248,40 @@ namespace Infrastructure.Migrations
 				name: "ProjectArchive",
 				columns: table => new
 				{
-					CompleteProjectId = table.Column<int>(type: "int", nullable: false)
+					ProjectArchiveId = table.Column<int>(type: "int", nullable: false)
 						.Annotation("SqlServer:Identity", "1, 1"),
-					Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					Matric = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					CaseStudy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					Year = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					DepartmentId = table.Column<int>(type: "int", nullable: true),
+					FileUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					DateSubmitted = table.Column<DateTime>(type: "datetime2", nullable: false),
+					SupervisorId = table.Column<int>(type: "int", nullable: true)
+				},
+				constraints: table =>
+				{
+					table.PrimaryKey("PK_ProjectArchive", x => x.ProjectArchiveId);
+					table.ForeignKey(
+						name: "FK_ProjectArchive_Departments_DepartmentId",
+						column: x => x.DepartmentId,
+						principalTable: "Departments",
+						principalColumn: "DepartmentId");
+					table.ForeignKey(
+						name: "FK_ProjectArchive_Supervisors_SupervisorId",
+						column: x => x.SupervisorId,
+						principalTable: "Supervisors",
+						principalColumn: "SupervisorId");
+				});
+
+			migrationBuilder.CreateTable(
+				name: "Projects",
+				columns: table => new
+				{
+					ProjectId = table.Column<int>(type: "int", nullable: false)
+						.Annotation("SqlServer:Identity", "1, 1"),
 					Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
 					Remark = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					FileUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
 					DateSubmitted = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -238,9 +289,9 @@ namespace Infrastructure.Migrations
 				},
 				constraints: table =>
 				{
-					table.PrimaryKey("PK_ProjectArchive", x => x.CompleteProjectId);
+					table.PrimaryKey("PK_Projects", x => x.ProjectId);
 					table.ForeignKey(
-						name: "FK_ProjectArchive_Supervisors_SupervisorId",
+						name: "FK_Projects_Supervisors_SupervisorId",
 						column: x => x.SupervisorId,
 						principalTable: "Supervisors",
 						principalColumn: "SupervisorId");
@@ -256,6 +307,7 @@ namespace Infrastructure.Migrations
 					MatricNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
 					Level = table.Column<string>(type: "nvarchar(max)", nullable: false),
 					SupervisorId = table.Column<int>(type: "int", nullable: true),
+					ProjectArchiveId = table.Column<int>(type: "int", nullable: true),
 					FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
 					Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -278,38 +330,12 @@ namespace Infrastructure.Migrations
 						principalTable: "Departments",
 						principalColumn: "DepartmentId");
 					table.ForeignKey(
+						name: "FK_Students_ProjectArchive_ProjectArchiveId",
+						column: x => x.ProjectArchiveId,
+						principalTable: "ProjectArchive",
+						principalColumn: "ProjectArchiveId");
+					table.ForeignKey(
 						name: "FK_Students_Supervisors_SupervisorId",
-						column: x => x.SupervisorId,
-						principalTable: "Supervisors",
-						principalColumn: "SupervisorId");
-				});
-
-			migrationBuilder.CreateTable(
-				name: "Projects",
-				columns: table => new
-				{
-					ProjectId = table.Column<int>(type: "int", nullable: false)
-						.Annotation("SqlServer:Identity", "1, 1"),
-					StudentId = table.Column<int>(type: "int", nullable: false),
-					Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					Matric = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					Remark = table.Column<string>(type: "nvarchar(max)", nullable: true),
-					FileUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					DateSubmitted = table.Column<DateTime>(type: "datetime2", nullable: false),
-					SupervisorId = table.Column<int>(type: "int", nullable: true)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_Projects", x => x.ProjectId);
-					table.ForeignKey(
-						name: "FK_Projects_Students_StudentId",
-						column: x => x.StudentId,
-						principalTable: "Students",
-						principalColumn: "StudentId",
-						onDelete: ReferentialAction.Cascade);
-					table.ForeignKey(
-						name: "FK_Projects_Supervisors_SupervisorId",
 						column: x => x.SupervisorId,
 						principalTable: "Supervisors",
 						principalColumn: "SupervisorId");
@@ -321,12 +347,11 @@ namespace Infrastructure.Migrations
 				{
 					ChapterId = table.Column<int>(type: "int", nullable: false)
 						.Annotation("SqlServer:Identity", "1, 1"),
+					Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+					Remark = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					ChapterName = table.Column<short>(type: "smallint", nullable: false),
 					ProjectId = table.Column<int>(type: "int", nullable: false),
-					Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					Matric = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					Remark = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					FileUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
 					DateSubmitted = table.Column<DateTime>(type: "datetime2", nullable: false),
 					SupervisorId = table.Column<int>(type: "int", nullable: true)
@@ -347,6 +372,30 @@ namespace Infrastructure.Migrations
 						principalColumn: "SupervisorId");
 				});
 
+			migrationBuilder.CreateTable(
+				name: "ProjectStudent",
+				columns: table => new
+				{
+					ProjectsProjectId = table.Column<int>(type: "int", nullable: false),
+					StudentsStudentId = table.Column<int>(type: "int", nullable: false)
+				},
+				constraints: table =>
+				{
+					table.PrimaryKey("PK_ProjectStudent", x => new { x.ProjectsProjectId, x.StudentsStudentId });
+					table.ForeignKey(
+						name: "FK_ProjectStudent_Projects_ProjectsProjectId",
+						column: x => x.ProjectsProjectId,
+						principalTable: "Projects",
+						principalColumn: "ProjectId",
+						onDelete: ReferentialAction.Cascade);
+					table.ForeignKey(
+						name: "FK_ProjectStudent_Students_StudentsStudentId",
+						column: x => x.StudentsStudentId,
+						principalTable: "Students",
+						principalColumn: "StudentId",
+						onDelete: ReferentialAction.Cascade);
+				});
+
 			migrationBuilder.InsertData(
 				table: "AspNetRoles",
 				columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -360,7 +409,7 @@ namespace Infrastructure.Migrations
 			migrationBuilder.InsertData(
 				table: "AspNetUsers",
 				columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FullName", "ImageUrl", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-				values: new object[] { 1, 0, "6f2ad747-8f6c-428c-85a1-41dab54398b7", "admin@gmail.com", true, " Super Admin", "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEF3JdQY1wv7FTLjnLEInhm1cgkdiY5fXiReJANRs/vQNVFwoEW8GUYQ2UFk558dmIw==", "1234567890", false, "e388ba44-850c-40ee-a242-e1e1556a1b2f", false, "Admin" });
+				values: new object[] { 1, 0, "43e535b8-5e44-4389-bc8e-d2675ae684c9", "admin@gmail.com", true, " Super Admin", "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEBJUxsJkYDsJMssw3Kpviad+HJ6fuYOrTDa4/AoERcyVMn1VR8H2hNjoju3C617CCA==", "1234567890", false, "7a608a3d-ffd5-47f9-8b7a-69771bcb6dcc", false, "Admin" });
 
 			migrationBuilder.InsertData(
 				table: "Departments",
@@ -422,9 +471,19 @@ namespace Infrastructure.Migrations
 				column: "SupervisorId");
 
 			migrationBuilder.CreateIndex(
+				name: "IX_Message_UserId",
+				table: "Message",
+				column: "UserId");
+
+			migrationBuilder.CreateIndex(
 				name: "IX_Notifications_SupervisorId",
 				table: "Notifications",
 				column: "SupervisorId");
+
+			migrationBuilder.CreateIndex(
+				name: "IX_ProjectArchive_DepartmentId",
+				table: "ProjectArchive",
+				column: "DepartmentId");
 
 			migrationBuilder.CreateIndex(
 				name: "IX_ProjectArchive_SupervisorId",
@@ -432,19 +491,24 @@ namespace Infrastructure.Migrations
 				column: "SupervisorId");
 
 			migrationBuilder.CreateIndex(
-				name: "IX_Projects_StudentId",
-				table: "Projects",
-				column: "StudentId");
-
-			migrationBuilder.CreateIndex(
 				name: "IX_Projects_SupervisorId",
 				table: "Projects",
 				column: "SupervisorId");
 
 			migrationBuilder.CreateIndex(
+				name: "IX_ProjectStudent_StudentsStudentId",
+				table: "ProjectStudent",
+				column: "StudentsStudentId");
+
+			migrationBuilder.CreateIndex(
 				name: "IX_Students_DepartmentId",
 				table: "Students",
 				column: "DepartmentId");
+
+			migrationBuilder.CreateIndex(
+				name: "IX_Students_ProjectArchiveId",
+				table: "Students",
+				column: "ProjectArchiveId");
 
 			migrationBuilder.CreateIndex(
 				name: "IX_Students_SupervisorId",
@@ -488,10 +552,13 @@ namespace Infrastructure.Migrations
 				name: "Chapters");
 
 			migrationBuilder.DropTable(
+				name: "Message");
+
+			migrationBuilder.DropTable(
 				name: "Notifications");
 
 			migrationBuilder.DropTable(
-				name: "ProjectArchive");
+				name: "ProjectStudent");
 
 			migrationBuilder.DropTable(
 				name: "AspNetRoles");
@@ -501,6 +568,9 @@ namespace Infrastructure.Migrations
 
 			migrationBuilder.DropTable(
 				name: "Students");
+
+			migrationBuilder.DropTable(
+				name: "ProjectArchive");
 
 			migrationBuilder.DropTable(
 				name: "Supervisors");

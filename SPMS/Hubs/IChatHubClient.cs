@@ -1,7 +1,7 @@
-﻿namespace CPMS.Hubs
+﻿namespace SPMS.Hubs
 {
-    public interface IChatHubClient
-    {
-        Task ReceiveMessage(string message);
-    }
+	public interface IChatHubClient
+	{
+		Task ReceiveMessage(string message);
+	}
 }

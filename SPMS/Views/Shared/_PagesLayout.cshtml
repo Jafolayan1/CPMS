@@ -19,6 +19,7 @@
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="~/assets/images/favico.png" />
     <link href="~/assets/css/style.css" rel="stylesheet">
+    <link rel="manifest" href="~/manifest.json">
 
 </head>
 
@@ -29,5 +30,14 @@
     <script src="~/assets/js/custom.min.js"></script>
     <script src="~/assets/js/dlabnav-init.js"></script>
     <script src="~/assets/js/styleSwitcher.js"></script>
+    <script>
+    // Check that service workers are supported
+    if ('serviceWorker' in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/js/serviceWorker.js');
+        });
+    }
+</script>
 </body>
 </html>

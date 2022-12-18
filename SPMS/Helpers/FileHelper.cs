@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 using Service.Configuration;
 
-namespace CPMS.Helpers
+namespace SPMS.Helpers
 {
 	public class FileHelper : IFileHelper
 	{
@@ -34,6 +34,16 @@ namespace CPMS.Helpers
 				return true;
 			}
 			return false;
+		}
+
+		public int GetNum()
+		{
+			var num = 0000;
+			for (int i = 0; i < num; i++)
+			{
+			}
+			num += 1;
+			return ++num;
 		}
 
 		public void DeleteFile(string fileUrl)

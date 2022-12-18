@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CPMS.Models
+namespace SPMS.Models
 {
 	public class ProjectVM
 	{

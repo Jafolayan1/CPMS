@@ -1,13 +1,13 @@
 ﻿using AspNetCoreHero.ToastNotification;
 
-using CPMS.Helpers;
-
 using Domain.Interfaces;
 
 using Service;
 using Service.Configuration;
 
-namespace CPMS.Extension
+using SPMS.Helpers;
+
+namespace SPMS.Extension
 {
 	public static class ConfigureDependencies
 	{

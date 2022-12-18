@@ -1,11 +1,11 @@
-﻿using CPMS.Helpers;
-
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Admin.Controllers
+using SPMS.Helpers;
+
+namespace SPMS.Areas.Admin.Controllers
 {
 	[CustomAuthorize(Role = "Admin")]
 	[Area("Admin")]

@@ -1,11 +1,11 @@
-﻿using CPMS.Helpers;
-
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CPMS.Areas.Graduate.Controllers
+using SPMS.Helpers;
+
+namespace SPMS.Areas.Graduate.Controllers
 {
 	[CustomAuthorize(Role = "Student")]
 	[Area("Graduate")]
@@ -21,6 +21,7 @@ namespace CPMS.Areas.Graduate.Controllers
 					return null;
 			}
 		}
+
 		public Student CurrentStudent
 		{
 			get
@@ -31,6 +32,7 @@ namespace CPMS.Areas.Graduate.Controllers
 					return null;
 			}
 		}
+
 		private readonly IUserAccessor _userAccessor;
 		protected IUnitOfWork _context;
 		protected IMailService _mail;

@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 
-using CPMS.Models;
-
 using Domain.Entities;
 using Domain.Interfaces;
 
@@ -10,10 +8,12 @@ using HtmlAgilityPack;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
+using SPMS.Models;
+
 using System.Net;
 using System.Web;
 
-namespace CPMS.Controllers
+namespace SPMS.Controllers
 {
 	public class AccountController : BaseController
 	{
