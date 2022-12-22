@@ -17,6 +17,7 @@ if (builder.Environment.IsDevelopment())
 ConfigureRepositories.AddServices(builder.Services, builder.Configuration);
 ConfigureDependencies.AddServices(builder.Services, builder.Configuration);
 builder.Services.AddSignalR();
+builder.Services.AddProgressiveWebApp();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 

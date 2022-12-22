@@ -22,37 +22,29 @@
 										</div>
 										<div class="ms-3">
 											<h4 class="fs-20 font-w700">#Room</h4>
-											<span>@CurrentStudent.Supervisor.FullName Projct Students</span>
-										</div>
-									</div>
-									<div class="activity d-flex align-items-center pb-3">
-										
-										<div class="dropdown ms-2">
-											<div class="btn-link" data-bs-toggle="dropdown">
-												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<circle cx="12.4999" cy="3.5" r="2.5" fill="#A5A5A5" />
-													<circle cx="12.4999" cy="11.5" r="2.5" fill="#A5A5A5" />
-													<circle cx="12.4999" cy="19.5" r="2.5" fill="#A5A5A5" />
-												</svg>
-											</div>
+											@if (CurrentStudent.Supervisor != null)
+											{
+												<span>@CurrentStudent.Supervisor.FullName Projct Students</span>
+											}
 										</div>
 									</div>
 								</div>
 								<div class="chat-box-area dlab-scroll chat-box-area" id="chatArea">
 									<div class="chat-box-area dz-scroll" id="chartBox">
 										<div class="media my-4  justify-content-start align-items-start">
-											<div class="image-box me-sm-4 me-2">
-												<img src="@CurrentStudent.ImageUrl" alt="" class="rounded-circle img-1">
-												<span class="active1"></span>
-											</div>
+											@if (CurrentStudent != null)
+											{
+												<div class="image-box me-sm-4 me-2">
+													<img src="@CurrentStudent.ImageUrl" alt="" class="rounded-circle img-1">
+													<span class="active1"></span>
+												</div>
 											<input type="hidden" id="userInput" value="@CurrentStudent.MatricNo" />
+											}
 
-											<div class="message-received">
 												<p class="mb-1">
 													<ul id="messagesList"></ul>
 												</p>
 												<span class="fs-12">@DateTime.Now.ToUniversalTime()</span>
-											</div>
 										</div>
 
 									</div>
@@ -63,7 +55,7 @@
 									</div>
 									<div class="input-group-append d-flex justify-content-between flex-wrap">
 										<div>
-											<button type="button" id="sendButton" class="btn btn-primary rounded text-white"><i class="far fa-paper-plane me-2"></i>SEND</button>
+										<button type="button" id="sendButton" class="btn btn-primary rounded text-white"><i class="far fa-paper-plane me-2"></i>SEND</button>
 										</div>
 
 									</div>
@@ -78,3 +70,9 @@
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
+<script>
+	function Clear() {
+		const firstNameInput = document.getElementById('messageInput');
+		firstNameInput.value = '';
+	}
+</script>

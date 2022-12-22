@@ -21,6 +21,8 @@
 
   <ItemGroup>
 	<None Remove="Program.cs~RF4743faf.TMP" />
+	<None Remove="Properties\PublishProfiles\jaycodes-001-site1 - FTP.pubxml" />
+	<None Remove="Properties\PublishProfiles\jaycodes-001-site1 - Web Deploy.pubxml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +31,6 @@
 	<None Include="Areas\Graduate\Views\Project\Index.cshtml" />
 	<None Include="Areas\Staff\Views\Project\PStudent.cshtml" />
 	<None Include="Views\Account\Login.cshtml" />
-	<None Include="wwwroot\js\workbox-050b0310.js" />
-	<None Include="wwwroot\js\workbox-050b0310.js.map" />
-	<None Include="wwwroot\js\sw.js" />
-	<None Include="wwwroot\js\sw.js.map" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +50,7 @@
 	</PackageReference>
 	<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.9" />
 	<PackageReference Include="RestSharp" Version="108.0.3" />
+	<PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.65" />
   </ItemGroup>
 
   <ItemGroup>
