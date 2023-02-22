@@ -22,6 +22,7 @@
 				<div class="card-header">
 					<h4 class="card-title">Profile Students</h4>
 					<div>
+						<a asp-controller="manage" asp-action="createstudents" class="btn btn-primary mb-2">Upload Csv</a>
 						<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add</button>
 					</div>
 
@@ -80,20 +81,38 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 			<div class="modal-body">
-				<form asp-action="uploadfile" method="post" enctype="multipart/form-data">
-
+				<form asp-action="" method="" enctype="multipart/form-data">
 					<div class="row">
-
 						<div class="col-lg-12">
 							<div class="mb-3">
-								<label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
-								<input name="File" type="file" accept=".csv,.xlsx" placeholder="Topic" required class="form-file-input form-control">
+								<label class="text-black font-w600 form-label">FullName <span class="required">*</span></label>
+								<input name="FullName" type="text" placeholder="FullName" required class="form-file-input form-control">
+							</div>
+							<div class="mb-3">
+								<label class="text-black font-w600 form-label">Email <span class="required">*</span></label>
+								<input name="Email" type="email" placeholder="Email" required class="form-file-input form-control">
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="mb-3">
+								<label class="text-black font-w600 form-label">FileNo <span class="required">*</span></label>
+								<input name="FileNo" type="text" placeholder="FileNo" required class="form-file-input form-control">
+							</div>
 
+							<div class="mb-3">
+								<label class="text-black font-w600 form-label">PhoneNo <span class="required">*</span></label>
+								<input name="PhoneNumber" type="number" placeholder="PhoneNumber" required class="form-file-input form-control">
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="mb-3">
+								<label class="text-black font-w600 form-label">Department <span class="required">*</span></label>
+								<input name="Department" type="text" placeholder="Department" required class="form-file-input form-control">
 							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary">Upload</button>
+							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>
 					</div>
 				</form>

@@ -1,7 +1,3 @@
-using Infrastructure;
-
-using Microsoft.EntityFrameworkCore;
-
 using Service.Configuration;
 
 using SPMS.Extension;
@@ -19,16 +15,19 @@ ConfigureDependencies.AddServices(builder.Services, builder.Configuration);
 builder.Services.AddSignalR();
 builder.Services.AddProgressiveWebApp();
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession();
+builder.Services.AddSession(options => {
+	options.IdleTimeout = TimeSpan.FromHours(12);
+	options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
-using (IServiceScope svp = app.Services.CreateScope())
-{
-	var context = svp.ServiceProvider.GetRequiredService<ApplicationContext>();
-	if (context.Database.GetPendingMigrations().Any())
-		context.Database.Migrate();
-}
+//using (IServiceScope svp = app.Services.CreateScope())
+//{
+//	var context = svp.ServiceProvider.GetRequiredService<ApplicationContext>();
+//	if (context.Database.GetPendingMigrations().Any())
+//		context.Database.Migrate();
+//}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

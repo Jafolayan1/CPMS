@@ -4,7 +4,8 @@ using Domain.Interfaces;
 
 using Infrastructure;
 using Infrastructure.Repositories;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,13 @@ namespace Service.Configuration
 			   .AddDefaultTokenProviders();
 
 			services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(1));
+
+			services.Configure<CookiePolicyOptions>(options =>
+			{
+				options.CheckConsentNeeded = context => true;
+				options.MinimumSameSitePolicy = SameSiteMode.None;
+			});
+
 
 			services.Configure<IdentityOptions>(options =>
 			{

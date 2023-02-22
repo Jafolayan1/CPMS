@@ -70,7 +70,7 @@
         });
     }
     </script>
-
+    @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -16,7 +16,7 @@ namespace Infrastructure.Repositories
 		public override IEnumerable<Chapter> Find(Expression<Func<Chapter, bool>> expression, bool trackchanges)
 		{
 			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Students).ThenInclude(s => s.Supervisor)
-				.ThenInclude(d => d.Department).Where(expression);
+				.ThenInclude(d => d.Department).Where(expression).AsSplitQuery();
 		}
 
 		public override Chapter GetById(object id)
@@ -28,7 +28,7 @@ namespace Infrastructure.Repositories
 		public Chapter GetByMatric(string id)
 		{
 			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Students).ThenInclude(s => s.Supervisor)
-				.ThenInclude(d => d.Department).FirstOrDefault(x => x.Matric.Equals(id));
+				.ThenInclude(d => d.Department).AsSplitQuery().FirstOrDefault(x => x.Matric.Equals(id));
 		}
 	}
 }

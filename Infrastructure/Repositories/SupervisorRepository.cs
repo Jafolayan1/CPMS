@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
 		public Supervisor GetByFileNo(string id)
 		{
 			return _context.Supervisors.Include(u => u.User).Include(d => d.Department).Include(s => s.ProjectStudents)
-				.ThenInclude(s => s.Projects).AsNoTracking().OrderBy(o => o.FullName).FirstOrDefault(x => x.FileNo.Equals(id));
+				.ThenInclude(s => s.Projects).OrderBy(o => o.FullName).AsSplitQuery().FirstOrDefault(x => x.FileNo.Equals(id));
 		}
 
 		public override IEnumerable<Supervisor> GetAll()

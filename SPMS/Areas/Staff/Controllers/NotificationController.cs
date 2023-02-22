@@ -19,7 +19,7 @@ namespace SPMS.Areas.Staff.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Notify(Notification model)
+		public IActionResult Notify(Notification model)
 		{
 			var sup = _context.Supervisors.Find(x => x.FileNo.Equals(CurrentUser.UserName), false).FirstOrDefault();
 
@@ -30,7 +30,7 @@ namespace SPMS.Areas.Staff.Controllers
 				SupervisorId = sup.SupervisorId,
 			};
 			_context.Notifications.Add(newNotify);
-			await _context.SaveAsync();
+			_context.SaveChanges();
 			return RedirectToAction("Noti");
 		}
 

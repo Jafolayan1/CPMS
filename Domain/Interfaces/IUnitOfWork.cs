@@ -11,7 +11,7 @@
 		IChapterRepository Chapters { get; }
 		IMessageRepository Messages { get; }
 
-		Task SaveAsync();
+		int SaveChanges();
 
 		void Clear();
 	}

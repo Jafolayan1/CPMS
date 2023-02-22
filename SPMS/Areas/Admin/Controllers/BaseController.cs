@@ -25,7 +25,9 @@ namespace SPMS.Areas.Admin.Controllers
 		private readonly IUserAccessor _userAccessor;
 		protected IUnitOfWork _context;
 
-		protected static List<Account> _accounts = new();
+		protected static List<Lecturers> _accounts = new();
+		protected static List<Students> _studentAccounts = new();
+
 
 		public BaseController(IUserAccessor userAccessor, IUnitOfWork context)
 		{

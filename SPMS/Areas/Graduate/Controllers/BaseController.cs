@@ -38,6 +38,12 @@ namespace SPMS.Areas.Graduate.Controllers
 		protected IMailService _mail;
 		protected string _name;
 		protected string _matric;
+		protected string CUserName 
+		{
+			get {
+				return CurrentUser.UserName;
+			}
+		}
 
 		public BaseController(IUserAccessor userAccessor, IUnitOfWork context, IMailService mail)
 		{
@@ -48,11 +54,12 @@ namespace SPMS.Areas.Graduate.Controllers
 
 		public IEnumerable<Notification> GetNoti()
 		{
-			var stud = _context.Students.GetByMatric(CurrentUser.UserName);
+			var currentUser = CurrentUser.UserName;
+			var stud = _context.Students.GetByMatric(currentUser);
 			return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
 		}
 
-		internal async void sendMail(string body, string toMail)
+		internal async void SendMail(string body, string toMail)
 		{
 			var email = new MailRequest()
 			{
@@ -67,6 +74,16 @@ namespace SPMS.Areas.Graduate.Controllers
 		{
 			Random rnd = new();
 			return rnd.Next(n);
+		}
+
+		internal static string ManipulateFileUrl(string fileUrl)
+		{
+			var name = fileUrl;
+			var Rname = name.Remove(0, 9);
+			string[] strName = Rname.Split('.');
+			var fileName = $"{strName[0]}.pdf";
+
+			return fileName;
 		}
 	}
 }

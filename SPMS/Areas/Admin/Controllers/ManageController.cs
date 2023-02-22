@@ -1,4 +1,6 @@
-﻿using CsvHelper;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+
+using CsvHelper;
 using CsvHelper.Configuration;
 
 using Domain.Entities;
@@ -13,10 +15,13 @@ namespace SPMS.Areas.Admin.Controllers
 	public class ManageController : BaseController
 	{
 		private readonly IFileHelper _file;
+		private readonly INotyfService _notyf;
 
-		public ManageController(IUserAccessor userAccessor, IUnitOfWork context, IFileHelper file) : base(userAccessor, context)
+
+		public ManageController(IUserAccessor userAccessor, IUnitOfWork context, IFileHelper file, INotyfService notyf) : base(userAccessor, context)
 		{
 			_file = file;
+			_notyf = notyf;
 		}
 
 		[Route("manage/supervisor")]
@@ -41,28 +46,59 @@ namespace SPMS.Areas.Admin.Controllers
 			return View();
 		}
 
+		[Route("manage/createstudents")]
 		[HttpGet]
-		public IActionResult Create(List<Account> accounts = null)
+		public IActionResult CreateStudents(List<Students> accounts = null)
 		{
-			accounts ??= new List<Account>();
+			accounts ??= new List<Students>();
 
 			return View(accounts);
 		}
 
+		[Route("manage/createstudents")]
 		[HttpPost]
-		public IActionResult Create(IFormFile file)
+		public IActionResult CreateStudents(IFormFile file)
 		{
 			try
 			{
 				_file.UploadFile(file);
 
-				var accounts = GetAccountList($"{DateTime.Now.ToUniversalTime():yyyyMMdd}{file.FileName}");
+				var accounts = GetStudentList(/*$"{DateTime.Now.ToUniversalTime():yyyyMMdd}*/file.FileName);
 				return View(accounts);
 			}
 			catch (Exception)
 			{
-				TempData["Error"] = "File is not valid, please check file type and try again";
-				return RedirectToAction(nameof(Create));
+				_notyf.Error("File is not valid, please check file type and try again");
+				return View(nameof(CreateStudents));
+			}
+		}
+
+
+
+		[Route("manage/createlectures")]
+		[HttpGet]
+		public IActionResult CreateLectures(List<Lecturers> accounts = null)
+		{
+			accounts ??= new List<Lecturers>();
+			return View(accounts);
+		}
+
+
+		[Route("manage/createlectures")]
+		[HttpPost]
+		public IActionResult CreateLectures(IFormFile file)
+		{
+			try
+			{
+				_file.UploadFile(file);
+
+				var accounts = GetLecturerList($"{file.FileName}");
+				return View(accounts);
+			}
+			catch (Exception)
+			{
+				_notyf.Error("File is not valid, please check file type and try again");
+				return View(nameof(CreateLectures));
 			}
 		}
 
@@ -75,43 +111,44 @@ namespace SPMS.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AddDepartment(Department model)
+		public IActionResult AddDepartment(Department model)
 		{
 			var chkdpt = _context.Departments.Find(x => x.Name.Equals(model.Name), true);
 			if (chkdpt is null)
 			{
 				TempData["error"] = "Department already exists";
-				return RedirectToAction(nameof(Department));
+				_notyf.Error("Department already exists");
+				return View(nameof(Department));
 			}
 			var dpt = new Department()
 			{
 				Name = model.Name
 			};
 			_context.Departments.Add(dpt);
-			await _context.SaveAsync();
+			_context.SaveChanges();
 			return RedirectToAction(nameof(Department));
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(Department model)
+		public IActionResult Edit(Department model)
 		{
 			var dpt = _context.Departments.GetById(model.DepartmentId);
 			dpt.DepartmentId = model.DepartmentId;
 			dpt.Name = model.Name;
 			_context.Departments.Update(dpt);
-			await _context.SaveAsync();
+			_context.SaveChanges();
 			return RedirectToAction(nameof(Department));
 		}
 
-		public async Task<IActionResult> Delete(int id)
+		public IActionResult Delete(int id)
 		{
 			var dpt = _context.Departments.GetById(id);
 			_context.Departments.Remove(dpt);
-			await _context.SaveAsync();
+			_context.SaveChanges();
 			return RedirectToAction(nameof(Department));
 		}
 
-		private List<Account> GetAccountList(string fileName)
+		private List<Lecturers> GetLecturerList(string fileName)
 		{
 			try
 			{
@@ -129,8 +166,8 @@ namespace SPMS.Areas.Admin.Controllers
 
 					while (csv.Read())
 					{
-						var account = csv.GetRecord<Account>();
-						_accounts.Add(account);
+						var lectures = csv.GetRecord<Lecturers>();
+						_accounts.Add(lectures);
 					}
 				}
 
@@ -144,45 +181,107 @@ namespace SPMS.Areas.Admin.Controllers
 			catch (BadDataException ex)
 			{
 				ModelState.AddModelError("", ex.Message);
-
-				TempData["Error"] = "Something went wrong. Check uploaded file and fields";
+				_notyf.Error("Something went wrong. Check uploaded file and fields");
 			}
 			return _accounts;
 		}
 
+		private List<Students> GetStudentList(string fileName)
+		{
+			try
+			{
+				var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+				{
+					MissingFieldFound = null
+				};
+
+				var path = Directory.GetCurrentDirectory() + "/wwwroot/uploads//" + fileName;
+				using (var reader = new StreamReader(path))
+				using (var csv = new CsvReader(reader, config))
+				{
+					csv.Read();
+					csv.ReadHeader();
+
+					while (csv.Read())
+					{
+						var students = csv.GetRecord<Students>();
+						_studentAccounts.Add(students);
+					}
+				}
+
+				path = Directory.GetCurrentDirectory() + "/wwwroot/uploads";
+				using (var write = new StreamWriter(path + "//NewFile.csv"))
+				using (var csv = new CsvWriter(write, CultureInfo.InvariantCulture))
+				{
+					csv.WriteRecords(_studentAccounts);
+				}
+			}
+			catch (BadDataException ex)
+			{
+				ModelState.AddModelError("", ex.Message);
+				_notyf.Error("Something went wrong. Check uploaded file and fields");
+			}
+			return _studentAccounts;
+		}
 		[Route("manage/add")]
-		public async Task<IActionResult> AddAll(string save)
+		public ActionResult AddAll(string save)
 		{
 			if (!string.IsNullOrEmpty(save))
 			{
 				try
 				{
 					List<Supervisor> sups = new();
-					foreach (var item in _accounts)
+					List<Student> students = new();
+					if (_accounts.Count > 0)
 					{
-						var dpt = _context.Departments.GetById(item.Department);
-						var request = _context.Supervisors.Find(x => x.FileNo.Equals(item.FileNo.Replace("/", string.Empty)), false);
-						if (!request.Any())
+						foreach (var item in _accounts)
 						{
-							sups.Add(new Supervisor { FullName = item.FullName, DepartmentId = dpt.DepartmentId, PhoneNumber = item.PhoneNo, FileNo = item.FileNo.Replace("/", string.Empty), ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", Email = item.Email });
+							var dpt = _context.Departments.GetById(item.Department);
+							var request = _context.Supervisors.Find(x => x.FileNo.Equals(item.FileNo.Replace("/", string.Empty)), false);
+							if (!request.Any())
+							{
+								sups.Add(new Supervisor { FullName = item.FullName, DepartmentId = dpt.DepartmentId, PhoneNumber = item.PhoneNo, FileNo = item.FileNo.Replace("/", string.Empty), ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", Email = item.Email });
+							}
+							else
+							{
+								_notyf.Warning("Duplicate User Found");
+								return View(nameof(CreateLectures));
+							}
 						}
-						else
-						{
-							TempData["Error"] = "Duplicate User found";
-							return RedirectToAction(nameof(Create));
-						}
+
+						_context.Supervisors.AddRange(sups);
+						_context.SaveChanges();
+						return RedirectToAction(nameof(Supervisor));
 					}
-					_context.Supervisors.AddRange(sups);
-					await _context.SaveAsync();
-					return RedirectToAction(nameof(Supervisor));
+					else
+					{
+						foreach (var item in _studentAccounts)
+						{
+							var dpt = _context.Departments.GetById(item.Department);
+							var request = _context.Students.Find(x => x.MatricNo.Equals(item.MatricNo), false);
+							if (!request.Any())
+							{
+								students.Add(new Student { FullName = item.Names, DepartmentId = dpt.DepartmentId,  Level = item.Level, MatricNo = item.MatricNo, ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png"});
+							}
+							else
+							{
+								_notyf.Warning("Duplicate User Found");
+								return View(nameof(CreateStudents));
+							}
+						}
+
+						_context.Students.AddRange(students);
+						_context.SaveChanges();
+						return RedirectToAction(nameof(Student));
+					}
 				}
 				catch (Exception ex)
 				{
 					ViewBag.Error = ex.Message;
-					return RedirectToAction(nameof(Create));
+					return RedirectToAction(nameof(CreateStudents));
 				}
 			}
-			return RedirectToAction(nameof(Create));
+			return RedirectToAction(nameof(CreateStudents));
 		}
 	}
 }

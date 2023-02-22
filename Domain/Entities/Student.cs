@@ -5,10 +5,10 @@ namespace Domain.Entities
 	public class Student : BaseEntity
 	{
 		public int StudentId { get; set; }
-		public int UserId { get; set; }
+		public int? UserId { get; set; }
 
 		[ForeignKey("UserId")]
-		public virtual User User { get; set; }
+		public virtual User? User { get; set; }
 
 		public string MatricNo { get; set; }
 

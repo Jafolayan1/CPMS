@@ -35,6 +35,12 @@ namespace SPMS.Controllers
 		}
 
 		[HttpGet]
+		public IActionResult Index()
+		{
+			return View();
+		}
+
+		[HttpGet]
 		public IActionResult Login()
 		{
 			return View();
@@ -86,7 +92,7 @@ namespace SPMS.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Login(LoginVM model, string returnUrl)
+		public IActionResult Login(LoginVM model, string returnUrl)
 		{
 			try
 			{
@@ -98,14 +104,13 @@ namespace SPMS.Controllers
 
 				if (user is null)
 				{
-					var verifyUserType = VerifyUser(userName, model.Password);
+					var verifyUserType = VerifyUser(model.UserName, model.Password);
 					if (verifyUserType == null)
 					{
 						ModelState.AddModelError("", "Invalid Username/Password");
 						return View();
 					}
-
-					var req = await Register(model.Password);
+					var req = Register(model.Password);
 				}
 
 				var userLogin = _auth.AuthenticateUser(userName, model.Password);
@@ -199,52 +204,66 @@ namespace SPMS.Controllers
 				_dpt = staff.Department.Name;
 				_phoneNo = staff.PhoneNumber;
 				_email = staff.Email;
-
-				return _role;
 			}
-
-			var baseAddress = new Uri("https://www.federalpolyede.edu.ng");
-			var cookieContainer = new CookieContainer();
-			using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
-			using (var client = new HttpClient(handler) { BaseAddress = baseAddress })
+			else
 			{
-				var homePageResult = client.GetAsync("/");
-				homePageResult.Result.EnsureSuccessStatusCode();
-
-				var content = new FormUrlEncodedContent(new[]
-				{
-					new KeyValuePair<string, string>("userN", username),
-					new KeyValuePair<string, string>("password", password),
-				});
-
-				if (content != null)
-				{
-					var req = client.PostAsync("/admin_student/login_process2.php", content).Result;
-					req.EnsureSuccessStatusCode();
-
-					if (req.RequestMessage.RequestUri.LocalPath.Equals("/admin_student/admin.php"))
-					{
-						var student = client.GetAsync("/admin_student/biodata.php").Result;
-						HtmlDocument htmlDoc = new();
-						htmlDoc.LoadHtml(student.Content.ReadAsStringAsync().Result);
-
-						var details = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"side-menu\"]/li[8]/a");
-						_phoneNo = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"hiddenField5\"]").GetAttributeValue("value", null);
-						_email = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"email\"]").GetAttributeValue("value", null);
-						foreach (var item in details)
-						{
-							_imageUrl = $"https://www.federalpolyede.edu.ng/{htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/div/img[1]/@src[1]").OuterHtml.Substring(13, 29)}";
-							_fullName = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[1]").InnerText);
-							_username = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[2]").InnerText);
-							_dpt = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[3]").InnerText);
-							_level = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]").InnerText).Substring(0, 16);
-							_cgpa = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]/div").InnerText);
-							_role = "Student";
-						}
-					}
-				}
+				var student = _context.Students.GetByMatric(username);
+				_role = "Student";
+				_imageUrl = student.ImageUrl;
+				_fullName = student.FullName;
+				_username = student.MatricNo;
+				_dpt = student.Department.Name;
+				_phoneNo = student.PhoneNumber;
+				_email = student.Email;
 			}
 			return _role;
+
+
+			//var baseAddress = new Uri("https://www.federalpolyede.edu.ng");
+			//var cookieContainer = new CookieContainer();
+			//using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
+			//using (var client = new HttpClient(handler) { BaseAddress = baseAddress })
+			//{
+			//	var homePageResult = client.GetAsync("/");
+			//	homePageResult.Result.EnsureSuccessStatusCode();
+
+			//	var content = new FormUrlEncodedContent(new[]
+			//	{
+			//		new KeyValuePair<string, string>("userN", username),
+			//		new KeyValuePair<string, string>("password", password),
+			//		new KeyValuePair<string, string>("num", "7"),
+			//		new KeyValuePair<string, string>("subM", "Login"),
+			//	});
+
+			//	if (content != null)
+			//	{
+			//		var req = client.PostAsync("/admin_student/login_process2.php", content).Result;
+			//		req.EnsureSuccessStatusCode();
+
+			//		//if (req.RequestMessage.RequestUri.LocalPath.Equals("/admin_student/admin.php"))
+			//		//{
+			//		//var student = client.GetAsync("/admin_student/biodata.php").Result;
+			//		var student = client.GetAsync("/admin_student/admin.php").Result;
+
+			//		HtmlDocument htmlDoc = new();
+			//		htmlDoc.LoadHtml(student.Content.ReadAsStringAsync().Result);
+
+			//		var details = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"side-menu\"]/li[8]/a");
+			//		_phoneNo = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"hiddenField5\"]").GetAttributeValue("value", null);
+			//		_email = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"email\"]").GetAttributeValue("value", null);
+			//		foreach (var item in details)
+			//		{
+			//			_imageUrl = $"https://www.federalpolyede.edu.ng/{htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/div/img[1]/@src[1]").OuterHtml.Substring(13, 29)}";
+			//			_fullName = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[1]").InnerText);
+			//			_username = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[2]").InnerText);
+			//			_dpt = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[3]").InnerText);
+			//			_level = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]").InnerText).Substring(0, 16);
+			//			_cgpa = HttpUtility.HtmlDecode(item.SelectSingleNode("//*[@id=\"side-menu\"]/li[8]/a/strong/div[4]/div").InnerText);
+			//			_role = "Student";
+			//		}
+
+			//	}
+			//}
 		}
 
 		internal async Task<bool> Register(dynamic password)
@@ -260,16 +279,16 @@ namespace SPMS.Controllers
 					PhoneNumber = _phoneNo
 				};
 
-				Department newdpt = new()
-				{
-					Name = _dpt,
-				};
-				var dptname = _context.Departments.GetById(newdpt.Name);
-				if (dptname == null)
-				{
-					_context.Departments.Add(dptname);
-					await _context.SaveAsync();
-				}
+				//Department newdpt = new()
+				//{
+				//	Name = _dpt,
+				//};
+				//var dptname = _context.Departments.GetById(newdpt.Name);
+				//if (dptname == null)
+				//{
+				//	_context.Departments.Add(dptname);
+				//	_context.SaveChanges();
+				//}
 
 				var request = _userManager.CreateAsync(newUser, password).Result;
 				if (request.Succeeded)
@@ -282,31 +301,24 @@ namespace SPMS.Controllers
 						{
 							if (role.Equals("Student"))
 							{
-								StudentVM student = new()
-								{
-									UserId = newUser.Id,
-									MatricNo = _username,
-									ImageUrl = _imageUrl,
-									Email = _email,
-									PhoneNumber = _phoneNo,
-									DepartmentId = dptname.DepartmentId,
-									FullName = _fullName,
-									Level = _level
-								};
-								var studentEntity = _mapper.Map<Student>(student);
-								_context.Students.Add(studentEntity);
-								await _context.SaveAsync();
+								var studentEntity = _context.Students.GetByMatric(_username);
+								studentEntity.UserId = newUser.Id;
+								_context.Students.Update(studentEntity);
+								_context.SaveChanges();
 								return true;
 							}
 							else if (role.Equals("Supervisor"))
 							{
+								var suprvisorEntity = _context.Supervisors.GetByFileNo(_username);
+								suprvisorEntity.UserId = newUser.Id;
+								_context.Supervisors.Update(suprvisorEntity);
+								_context.SaveChanges();
 								return true;
 							}
 						}
 						catch (Exception)
 						{
 							await _userManager.DeleteAsync(newUser);
-							ModelState.AddModelError("", "One or more errors occurred in the server");
 						}
 					}
 				}

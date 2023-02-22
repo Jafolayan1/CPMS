@@ -3,6 +3,9 @@
 using Domain.Entities;
 using Domain.Interfaces;
 
+using GroupDocs.Viewer.Options;
+using GroupDocs.Viewer;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -13,6 +16,8 @@ using SPMS.Hubs;
 using System.Diagnostics.CodeAnalysis;
 
 using Project = Domain.Entities.Project;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.Build.Evaluation;
 
 namespace SPMS.Areas.Graduate.Controllers
 {
@@ -22,13 +27,18 @@ namespace SPMS.Areas.Graduate.Controllers
 		private readonly IMapper _mapper;
 		private readonly IFileHelper _file;
 		private readonly IHubContext<ChatHub> _messgaeHub;
+		private readonly IWebHostEnvironment _env;
+		private readonly INotyfService _notyf;
 
-		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, IHubContext<ChatHub> messgaeHub, IMailService mail) : base(userAccessor, context, mail)
+
+		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, IHubContext<ChatHub> messgaeHub, IMailService mail, IWebHostEnvironment env, INotyfService notyf) : base(userAccessor, context, mail)
 		{
 			_mapper = mapper;
 			_userManager = userManager;
 			_file = file;
 			_messgaeHub = messgaeHub;
+			_env = env;
+			_notyf = notyf;
 		}
 
 		[Route("project/index")]
@@ -46,7 +56,21 @@ namespace SPMS.Areas.Graduate.Controllers
 		[HttpGet]
 		public IActionResult Details()
 		{
-			var prjt = _context.Projects.GetByMatric(CurrentUser.UserName);
+			var matric = CurrentStudent.SupervisorId;
+			var prjt = _context.Projects.GetByMatric(matric);
+			if (prjt is not null)
+			{
+				var fileName = ManipulateFileUrl(prjt.FileUrl);
+				string output = Path.Combine(_env.WebRootPath, "output");
+				string outputFilePth = Path.Combine(output, fileName);
+				using (var viewer = new Viewer(_env.WebRootPath + prjt.FileUrl))
+				{
+					var viewOptions = new PdfViewOptions(outputFilePth);
+					viewer.View(viewOptions);
+				}
+
+				ViewBag.fileName = fileName;
+			}
 			ViewData["project"] = prjt;
 			ViewData["Noti"] = GetNoti();
 			return View();
@@ -76,7 +100,7 @@ namespace SPMS.Areas.Graduate.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> projectcomp(ProjectArchive model)
+		public IActionResult projectcomp(ProjectArchive model)
 		{
 			try
 			{
@@ -92,7 +116,7 @@ namespace SPMS.Areas.Graduate.Controllers
 				}
 
 				_context.ProjectArchive.Add(model);
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				return RedirectToAction(nameof(CompleteProject));
 			}
 			catch (Exception)
@@ -110,8 +134,10 @@ namespace SPMS.Areas.Graduate.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AddEditProject(Project model, IFormCollection data)
+		public IActionResult AddEditProject(Project model, IFormCollection data)
 		{
+			var supervisorEmail = CurrentStudent.Supervisor.Email;
+			var supervisorId = CurrentStudent.SupervisorId;
 			try
 			{
 				var id = data["Student"].Select(int.Parse).ToList();
@@ -121,18 +147,16 @@ namespace SPMS.Areas.Graduate.Controllers
 					var student = _context.Students.GetById(item);
 					stud.Add(student);
 				}
-				model.SupervisorId = CurrentStudent.SupervisorId;
 				model.Students = stud;
+				model.SupervisorId = supervisorId;
 
-				if (model.File != null)
+
+				_file.DeleteFile(model.FileUrl);
+				model.FileUrl = _file.UploadFile(model.File);
+				if (model.FileUrl is null)
 				{
-					_file.DeleteFile(model.FileUrl);
-					model.FileUrl = _file.UploadFile(model.File);
-					if (model.FileUrl is null)
-					{
-						TempData["Error"] = "Bad file, Chcek file data / rename and try again.";
-						return RedirectToAction(nameof(Index));
-					}
+					_notyf.Error("Damaged File, rename and try again.");
+					return RedirectToAction(nameof(Index));
 				}
 
 				if (model.ProjectId > 0)
@@ -150,10 +174,10 @@ namespace SPMS.Areas.Graduate.Controllers
 						_name += $"{item.FullName} : ";
 						_name += $"{item.MatricNo}, ";
 					}
-					sendMail($"<p>You have a new file (PROPOSAL) submited by {_name}</p>", CurrentStudent.Supervisor.Email);
+					SendMail($"<p>You have a new file (PROPOSAL) submited by {_name}</p>", supervisorEmail);
 				}
 
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				return RedirectToAction(nameof(Index));
 			}
 			catch (Exception)
@@ -164,19 +188,15 @@ namespace SPMS.Areas.Graduate.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AddEditChapter(Chapter model, [MaybeNull] string name)
+		public IActionResult AddEditChapter(Chapter model, [MaybeNull] string name)
 		{
 			try
 			{
-				if (model.File != null)
+				model.FileUrl = _file.UploadFile(model.File);
+				if (model.FileUrl is null)
 				{
-					_file.DeleteFile(model.FileUrl);
-					model.FileUrl = _file.UploadFile(model.File);
-					if (model.FileUrl is null)
-					{
-						TempData["Error"] = "Bad file, Chcek file data, rename and try again.";
-						return RedirectToAction(nameof(Milestone));
-					}
+					_notyf.Error("Bad file, Chcek file data, rename and try again.");
+					return RedirectToAction(nameof(Milestone));
 				}
 
 				if (model.ChapterId > 0)
@@ -198,7 +218,7 @@ namespace SPMS.Areas.Graduate.Controllers
 					//sendMail($"<p>You have a new file{model.ChapterName} submited by {_name}</p>", CurrentStudent.Supervisor.Email);
 					//}
 				}
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				return RedirectToAction(nameof(Milestone));
 			}
 			catch (Exception)
@@ -209,7 +229,7 @@ namespace SPMS.Areas.Graduate.Controllers
 		}
 
 		[Route("project/delete")]
-		public async Task<IActionResult> Delete(int id)
+		public IActionResult Delete(int id)
 		{
 			var chap = _context.Chapters.GetById(id);
 			var proposal = _context.Projects.GetById(id);
@@ -218,7 +238,7 @@ namespace SPMS.Areas.Graduate.Controllers
 			else if (proposal != null)
 				_context.Projects.Remove(proposal);
 
-			await _context.SaveAsync();
+			_context.SaveChanges();
 			return RedirectToAction(nameof(Index));
 		}
 	}

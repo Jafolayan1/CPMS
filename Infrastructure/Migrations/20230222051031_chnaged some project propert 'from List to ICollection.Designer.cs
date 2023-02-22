@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221218183644_updateChddd")]
-    partial class updateChddd
+    [Migration("20230222051031_chnaged some project propert 'from List to ICollection")]
+    partial class chnagedsomeprojectpropertfromListtoICollection
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -295,7 +295,7 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("SupervisorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("StudentId");
@@ -432,7 +432,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d9685336-4169-48bb-abb7-dc74c07b0785",
+                            ConcurrencyStamp = "6a73e9b8-fc3f-4cf7-8d2b-fbe87764dd16",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = " Super Admin",
@@ -440,10 +440,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKr6DDTYoQiSMwCMbGEvrvS5gjD+VpmU2Sd2MoiCn/q646eq7iX5ZQhXZoTRgg3YdA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIoEpVe95ysltFDEeW5JlKSAVjYImhNpFv7sl6SS9q9Z7i6iua6h4ShHhXoWzZe2CA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ab649980-ca2c-460b-8382-eb42c416955a",
+                            SecurityStamp = "9a41f349-01ee-4d65-ab1f-5c9a8e176c30",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -642,9 +642,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Department");
 

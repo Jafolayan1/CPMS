@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
 
 		public void Dispose() => _context.Dispose();
 
-		public async Task SaveAsync() => await _context.SaveChangesAsync();
+		public int SaveChanges() => _context.SaveChanges();
 
 		public void Clear() => _context.ChangeTracker.Clear();
 	}

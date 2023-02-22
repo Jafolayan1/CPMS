@@ -12,7 +12,7 @@ namespace Domain.Entities
 
 		public string? Remark { get; set; }
 
-		public ICollection<Chapter>? Chapters { get; set; }
+		public virtual ICollection<Chapter>? Chapters { get; set; }
 		public virtual ICollection<Student> Students { get; set; }
 	}
 
@@ -40,7 +40,7 @@ namespace Domain.Entities
 
 		public int? DepartmentId { get; set; }
 		public virtual Department Department { get; set; }
-		public List<Student> Students { get; set; }
+		public ICollection<Student> Students { get; set; }
 	}
 
 	public class BaseProjectClass

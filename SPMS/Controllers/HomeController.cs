@@ -26,7 +26,7 @@ namespace SPMS.Controllers
 			return View();
 		}
 
-		public async Task<IActionResult> Create(Message model)
+		public IActionResult Create(Message model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -34,7 +34,7 @@ namespace SPMS.Controllers
 				var sender = _userManager.GetUserAsync(User);
 				model.UserId = sender.Id;
 				_context.Messages.Add(model);
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				return Ok();
 			}
 			return Error();

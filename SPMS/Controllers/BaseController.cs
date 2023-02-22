@@ -28,7 +28,6 @@ namespace SPMS.Controllers
 		protected static string _phoneNo;
 		protected static string _email;
 		protected static string _role;
-
 		public BaseController(IUserAccessor userAccessor)
 		{
 			_userAccessor = userAccessor;

@@ -4,6 +4,13 @@ using AutoMapper;
 
 using Domain.Interfaces;
 
+using GroupDocs.Viewer.Options;
+using GroupDocs.Viewer;
+
+using Spire.Doc;
+using Spire.Doc.Documents;
+
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.CodeAnalysis;
@@ -17,19 +24,21 @@ namespace SPMS.Areas.Staff.Controllers
 		private readonly IMapper _mapper;
 		private readonly INotyfService _notyf;
 		private readonly IHubContext<ChatHub> _hubContext;
-
-		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, IMailService mail, INotyfService notyf, IHubContext<ChatHub> hubContext) : base(userAccessor, context, mail)
+		private readonly IWebHostEnvironment _env;
+		public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, IMailService mail, INotyfService notyf, IHubContext<ChatHub> hubContext, IWebHostEnvironment env) : base(userAccessor, context, mail)
 		{
 			_mapper = mapper;
 			_notyf = notyf;
 			_hubContext = hubContext;
+			_env = env;
 		}
 
-		[Route("pstudent")]
+	[Route("pstudent")]
 		[HttpGet]
 		public IActionResult PStudent()
 		{
-			var supervisor = _context.Supervisors.GetByFileNo(CurrentUser.UserName);
+			var currentUser = CurrentUser.UserName;
+			var supervisor = _context.Supervisors.GetByFileNo(currentUser);
 			ViewData["supervisor"] = supervisor;
 			return View();
 		}
@@ -38,7 +47,8 @@ namespace SPMS.Areas.Staff.Controllers
 		[HttpGet]
 		public IActionResult Proposal()
 		{
-			var supervisor = _context.Supervisors.GetByFileNo(CurrentUser.UserName);
+			var fileNo = CurrentUser.UserName;
+			var supervisor = _context.Supervisors.GetByFileNo(fileNo);
 			var lstProposal = _context.Projects.Find(x => x.SupervisorId.Equals(supervisor.SupervisorId), false).Where(s => s.Status.Equals("Pending"));
 			ViewData["projectProposal"] = lstProposal;
 
@@ -49,7 +59,8 @@ namespace SPMS.Areas.Staff.Controllers
 		[HttpGet]
 		public IActionResult Milestone()
 		{
-			var supervisor = _context.Supervisors.GetByFileNo(CurrentUser.UserName);
+			var fileNo = CurrentUser.UserName;
+			var supervisor = _context.Supervisors.GetByFileNo(fileNo);
 			var lstChapters = _context.Chapters.Find(x => x.SupervisorId.Equals(supervisor.SupervisorId), false).Where(s => s.Status.Equals("Pending"));
 			ViewData["chapters"] = lstChapters;
 
@@ -69,6 +80,19 @@ namespace SPMS.Areas.Staff.Controllers
 		public IActionResult Details(int projectId)
 		{
 			var project = _context.Projects.GetById(projectId);
+			if (project is not null)
+			{
+				var fileName = ManipulateFileUrl(project.FileUrl);
+				string output = Path.Combine(_env.WebRootPath, "output");
+				string outputFilePth = Path.Combine(output, fileName);
+				using (var viewer = new Viewer(_env.WebRootPath + project.FileUrl))
+				{
+					var viewOptions = new PdfViewOptions(outputFilePth);
+					viewer.View(viewOptions);
+				}
+
+				ViewBag.fileName = fileName;
+			}
 			ViewData["project"] = project;
 			ViewData["Noti"] = GetNoti();
 			return View();
@@ -85,7 +109,7 @@ namespace SPMS.Areas.Staff.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Remark(IFormCollection data, int projectId, string? item)
+		public IActionResult Remark(IFormCollection data, int projectId, string? item)
 		{
 			try
 			{
@@ -96,7 +120,7 @@ namespace SPMS.Areas.Staff.Controllers
 				prjt.Status = status;
 				prjt.Remark = remark;
 				_context.Projects.Update(prjt);
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				foreach (var i in prjt.Students)
 				{
 					SendMail($"<p> Hello , {i.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", i.Email);
@@ -111,7 +135,7 @@ namespace SPMS.Areas.Staff.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CRemark(IFormCollection data, int chapterId, string? item)
+		public IActionResult CRemark(IFormCollection data, int chapterId, string? item)
 		{
 			try
 			{
@@ -122,7 +146,7 @@ namespace SPMS.Areas.Staff.Controllers
 				prjt.Status = status;
 				prjt.Remark = remark;
 				_context.Chapters.Update(prjt);
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				foreach (var i in prjt.Project.Students)
 				{
 					SendMail($"<p> Hello , {i.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", i.Email);
@@ -137,14 +161,14 @@ namespace SPMS.Areas.Staff.Controllers
 			}
 		}
 
-		public async Task<IActionResult> Status(string status, int projectId)
+		public IActionResult Status(string status, int projectId)
 		{
 			try
 			{
 				var project = _context.Projects.GetById(projectId);
 				project.Status = status;
 				_context.Projects.Update(project);
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				foreach (var item in project.Students)
 				{
 					SendMail($"<p> Hello , {item.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", item.Email);
@@ -158,14 +182,14 @@ namespace SPMS.Areas.Staff.Controllers
 			}
 		}
 
-		public async Task<IActionResult> CStatus(string status, int projectId)
+		public IActionResult CStatus(string status, int projectId)
 		{
 			try
 			{
 				var project = _context.Projects.GetById(projectId);
 				project.Status = status;
 				_context.Projects.Update(project);
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				foreach (var item in project.Students)
 				{
 					SendMail($"<p> Hello , {item.FullName.Split(' ')[0]}. <br> You have a new notification on the file you submitted</p>", item.Email);
@@ -178,5 +202,8 @@ namespace SPMS.Areas.Staff.Controllers
 				return RedirectToAction(nameof(Milestone));
 			}
 		}
+
+		
+
 	}
 }

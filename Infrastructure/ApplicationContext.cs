@@ -11,6 +11,18 @@ namespace Infrastructure
 		public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
 		{
 		}
+		//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		//{
+		//	optionsBuilder
+		//		.UseSqlServer(
+		//			@"Server=SQL5108.site4now.net;Initial Catalog=db_a92f1e_fpespmsdb;MultipleActiveResultSets=true;User Id=db_a92f1e_fpespmsdb_admin;Password=Wertyuiop2",
+		//			o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+
+		//	optionsBuilder
+		//		.UseSqlServer(
+		//			@"Server=.\\SQLEXPRESS; Database = SPMSDB; Integrated Security = true; MultipleActiveResultSets = true",
+		//			o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+		//}
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{

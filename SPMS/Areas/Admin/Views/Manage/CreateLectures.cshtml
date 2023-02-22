@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Account>
+﻿@model IEnumerable<Lecturers>
 
 
 @{
@@ -19,9 +19,7 @@
 				<li class="breadcrumb-item"><a href="javascript:void(0)">Datatable</a></li>
 			</ol>
 		</div>
-		<span class="text-danger">@TempData["Error"]</span>
-
-		<form asp-controller="manage" asp-action="create" method="post" enctype="multipart/form-data">
+		<form asp-controller="manage" asp-action="createlectures" method="post" enctype="multipart/form-data">
 			<div class="col-lg-6">
 				
 				<label>Upload Csv file</label>
@@ -34,7 +32,7 @@
 			</div>
 		</form>
 		<!-- row -->
-		@if (Model.Count() > 0)
+		@if (Model != null && Model.Count() > 0)
 		{
 			<div class="col-12">
 			<div class="card">

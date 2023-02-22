@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+
+using AutoMapper;
 
 using Domain.Entities;
 using Domain.Interfaces;
@@ -17,14 +19,17 @@ namespace SPMS.Areas.Graduate.Controllers
 		private readonly IMapper _mapper;
 		private readonly IFileHelper _file;
 		private readonly ApplicationContext _repo;
+		private readonly INotyfService _notyf;
 
-		public DashboardController(IAuthenticationService auth, UserManager<User> userManager, IMailService mail, IUnitOfWork context, IMapper mapper, IUserAccessor o, IFileHelper file, ApplicationContext repo) : base(o, context, mail)
+
+		public DashboardController(IAuthenticationService auth, UserManager<User> userManager, IMailService mail, IUnitOfWork context, IMapper mapper, IUserAccessor o, IFileHelper file, ApplicationContext repo, INotyfService notyf) : base(o, context, mail)
 		{
 			_auth = auth;
 			_userManager = userManager;
 			_mapper = mapper;
 			_file = file;
 			_repo = repo;
+			_notyf = notyf;
 		}
 
 		[Route("dashboard/index")]
@@ -94,12 +99,12 @@ namespace SPMS.Areas.Graduate.Controllers
 				var student = _context.Students.GetByMatric(model.MatricNo);
 				var studentEntity = _mapper.Map(model, student);
 				_context.Students.Update(studentEntity);
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				return RedirectToAction(nameof(Index));
 			}
 			catch (Exception)
 			{
-				TempData["error"] = "One or more errors occured.";
+				_notyf.Error("One or more errors occured");
 				return View(nameof(Profile));
 			}
 		}

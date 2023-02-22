@@ -25,7 +25,6 @@ namespace SPMS.Areas.Staff.Controllers
 		private readonly IUserAccessor _userAccessor;
 		protected IUnitOfWork _context;
 		protected IMailService _mail;
-
 		public BaseController(IUserAccessor userAccessor, IUnitOfWork context, IMailService mail)
 		{
 			_userAccessor = userAccessor;
@@ -35,7 +34,8 @@ namespace SPMS.Areas.Staff.Controllers
 
 		public IEnumerable<Notification> GetNoti()
 		{
-			var stud = _context.Supervisors.GetByFileNo(CurrentUser.UserName);
+			var currentUser = CurrentUser.UserName;
+			var stud = _context.Supervisors.GetByFileNo(currentUser);
 			return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
 		}
 
@@ -49,5 +49,25 @@ namespace SPMS.Areas.Staff.Controllers
 			};
 			await _mail.SendEmailAsync(email, email.Body);
 		}
+
+		internal static Random _rnd = new();
+
+		internal static string RandomString(int length)
+		{
+			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+			return new string(Enumerable.Repeat(chars, length)
+				.Select(s => s[_rnd.Next(s.Length)]).ToArray());
+		}
+
+		internal static string ManipulateFileUrl(string fileUrl)
+		{
+			var name = fileUrl;
+			var Rname = name.Remove(0, 9);
+			string[] strName = Rname.Split('.');
+			var fileName = $"{strName[0]}.pdf";
+
+			return fileName;
+		}
+
 	}
 }

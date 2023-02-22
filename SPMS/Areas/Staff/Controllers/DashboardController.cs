@@ -67,7 +67,7 @@ namespace SPMS.Areas.Staff.Controllers
 				var supervisor = _context.Supervisors.GetByFileNo(model.FileNo);
 				var supervisorEntity = _mapper.Map(model, supervisor);
 				_context.Supervisors.Update(supervisorEntity);
-				await _context.SaveAsync();
+				_context.SaveChanges();
 				return RedirectToAction(nameof(Account));
 			}
 			catch (Exception)
