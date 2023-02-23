@@ -74,15 +74,14 @@ namespace SPMS.Areas.Graduate.Controllers
 		[HttpPost]
 		public async Task<IActionResult> ProfileUpdate(Student model)
 		{
+			var id = CurrentUser.Id.ToString();
+			User user = await _userManager.FindByIdAsync(id);
 			try
 			{
 				if (model.File != null)
 				{
-					_file.DeleteFile(model.ImageUrl);
-					model.ImageUrl = _file.UploadFile(model.File);
+					model.ImageUrl = await _file.UploadFile(model.File);
 				}
-
-				User user = await _userManager.FindByIdAsync(CurrentUser.Id.ToString());
 				user.FullName = model.FullName;
 				user.Email = model.Email;
 				user.PhoneNumber = model.PhoneNumber;
@@ -104,8 +103,8 @@ namespace SPMS.Areas.Graduate.Controllers
 			}
 			catch (Exception)
 			{
-				_notyf.Error("One or more errors occured");
-				return View(nameof(Profile));
+				TempData["Msg"] = "One or more errors occured";
+				return RedirectToAction(nameof(Profile));
 			}
 		}
 	}

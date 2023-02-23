@@ -1,284 +1,298 @@
 ﻿@{
-	ViewData["Title"] = "Profile";
-	var student = ViewData["student"] as Student;
-	ForgotPasswordVM fpass = new ForgotPasswordVM();
+    ViewData["Title"] = "Profile";
+    var student = ViewData["student"] as Student;
+    ForgotPasswordVM fpass = new ForgotPasswordVM();
 
 }
-	
+
 <head>
-	<script src="~/lib/jquery/dist/jquery.js"></script>
-	<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 </head>
 
 <Partial name="_ProfileHeader" />
 <Partial name="_Sidebar" />
 
- <div class="content-body">
-			<div class="container-fluid">
+<div class="content-body">
+    <div class="container-fluid">
 
 
-				<div class="row page-titles">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item active"><a href="javascript:void(0)">App</a></li>
-						<li class="breadcrumb-item"><a href="javascript:void(0)">Profile</a></li>
-					</ol>
-				</div> 
-				<!-- row -->
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="profile card card-body px-3 pt-3 pb-0">
-							<div class="profile-head">
-								<div class="photo-content">
-									<div class="cover-photo rounded"></div>
-								</div>
-								<div class="profile-info">
-									<div class="profile-photo">
-										 <img src="@student.ImageUrl" class="img-fluid rounded-circle" alt="">
-									</div>
-									<div class="profile-details">
-										<div class="profile-name px-3 pt-2">
-											<h4 class="text-primary mb-0">@student.FullName</h4>
-											<p>@student.Level</p>
-										</div>
-										<div class="profile-email px-2 pt-2">
-											<h4 class="text-muted mb-0">@student.Email</h4>
-											<p>Email</p>
-										</div>
-										<div class="dropdown ms-auto">
-											<a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
-											<ul class="dropdown-menu dropdown-menu-end">
-												<l@*i class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
-												<li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
-												<li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
-												<li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>*@
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xl-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="profile-tab">
-									<div class="custom-tab-1">
-										<ul class="nav nav-tabs">
-											<li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link active show">About Me</a>
-											</li>
-											<li class="nav-item"><a href="#update-profile" data-bs-toggle="tab" class="nav-link">Update Profile</a>
-											</li>
-											<li class="nav-item"><a href="#forgot-password" data-bs-toggle="tab" class="nav-link">Forgot password</a>
-											</li>
-										</ul>
-										<div class="tab-content">
-									<div id="about-me" class="tab-pane fade active show">
-												<div class="profile-about-me">
-													<div class="pt-4 border-bottom-1 pb-3">
-														<h4 class="text-primary">Bio</h4>
-														<p class="mb-2">@student.Bio</p>
-													</div>
-												</div>
-												
-												<div class="profile-personal-info">
-													<h4 class="text-primary mb-4">Personal Information</h4>
-													<div class="row mb-2">
-														<div class="col-sm-3 col-5">
-															<h5 class="f-w-500">Name<span class="pull-end">:</span>
-															</h5>
-														</div>
-														<div class="col-sm-9 col-7"><span>@student.FullName</span>
-														</div>
-													</div>
-													<div class="row mb-2">
-														<div class="col-sm-3 col-5">
-															<h5 class="f-w-500">Matric No <span class="pull-end">:</span></h5>
-														</div>
-														<div class="col-sm-9 col-7">
-															<span>@student.MatricNo</span>
-														</div>
-													</div>
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">App</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Profile</a></li>
+            </ol>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="profile card card-body px-3 pt-3 pb-0">
+                    <div class="profile-head">
+                        <div class="photo-content">
+                            <div class="cover-photo rounded"></div>
+                        </div>
+                        <div class="profile-info">
+                            <div class="profile-photo">
+                                <img src="@student.ImageUrl" class="img-fluid rounded-circle" alt="">
+                            </div>
+                            <div class="profile-details">
+                                <div class="profile-name px-3 pt-2">
+                                    <h4 class="text-primary mb-0">@student.FullName</h4>
+                                    <p>@student.Level</p>
+                                </div>
+                                <div class="profile-email px-2 pt-2">
+                                    <h4 class="text-muted mb-0">@student.Email</h4>
+                                    <p>Email</p>
+                                </div>
+                                <div class="dropdown ms-auto">
+                                    <a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <l@*i class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
+                                              <li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
+                                              <li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
+                                              <li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>*@
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="profile-tab">
+                            <span class="text-danger">@TempData["Msg"]</span>
 
-													<div class="row mb-2">
-														<div class="col-sm-3 col-5">
-															<h5 class="f-w-500">Email <span class="pull-end">:</span>
-															</h5>
-														</div>
-														<div class="col-sm-9 col-7"><span>@student.Email</span>
-														</div>
-													</div>
-													<div class="row mb-2">
-														<div class="col-sm-3 col-5">
-															<h5 class="f-w-500">Phone Number<span class="pull-end">:</span></h5>
-														</div>
-														<div class="col-sm-9 col-7">
-															<span>@student.PhoneNumber</span>
-														</div>
-													</div>
-													<div class="row mb-2">
-														<div class="col-sm-3 col-5">
-															<h5 class="f-w-500">Level <span class="pull-end">:</span></h5>
-														</div>
-														<div class="col-sm-9 col-7"><span>@student.Level</span>
-														</div>
-													</div>
-													@if (student.Department != null)
-													{
-														<div class="row mb-2">
-															<div class="col-sm-3 col-5">
-																<h5 class="f-w-500">Department <span class="pull-end">:</span>
-																</h5>
-															</div>
-																<div class="col-sm-9 col-7"><span>@student.Department.Name</span>
-															</div>
-														</div>
-													}
-													@if (student.Supervisor != null)
-													{
-													
-																<div class="row mb-2">
-																	<div class="col-sm-3 col-5">
-																		<h5 class="f-w-500">Supervisor <span class="pull-end">:</span>
-																		</h5>
-																	</div>
-																	<div class="col-sm-9 col-7"><span>@student.Supervisor.FullName</span>
-																	</div>
-																</div>
-													}
-												</div>
-											</div>
-											<div id="update-profile" class="tab-pane fade">
-												<div class="pt-3">
-													<div class="settings-form">
-														<h4 class="text-primary">Update Profile</h4>
-														<form asp-controller="dashboard" asp-action="profileUpdate" method="post" enctype="multipart/form-data">
-															 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="custom-tab-1">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a href="#about-me" data-bs-toggle="tab" class="nav-link active show">About Me</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#update-profile" data-bs-toggle="tab" class="nav-link">Update Profile</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#forgot-password" data-bs-toggle="tab" class="nav-link">Forgot password</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="about-me" class="tab-pane fade active show">
+                                        <div class="profile-about-me">
+                                            <div class="pt-4 border-bottom-1 pb-3">
+                                                <h4 class="text-primary">Bio</h4>
+                                                <p class="mb-2">@student.Bio</p>
+                                            </div>
+                                        </div>
 
-															<input asp-for="@student.UserId" name="UserId" type="hidden" />
-															<input asp-for="@student.StudentId" name="StudentId" type="hidden" />
-															<input asp-for="@student.MatricNo" name="MatricNo" value="@student.MatricNo" type="hidden" />
-															<input asp-for="@student.ImageUrl" name="ImageUrl" value="@student.ImageUrl" type="hidden" />
+                                        <div class="profile-personal-info">
+                                            <h4 class="text-primary mb-4">Personal Information</h4>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        Name<span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7">
+                                                    <span>@student.FullName</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">Matric No <span class="pull-end">:</span></h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7">
+                                                    <span>@student.MatricNo</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">
+                                                        Email <span class="pull-end">:</span>
+                                                    </h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7">
+                                                    <span>@student.Email</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">Phone Number<span class="pull-end">:</span></h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7">
+                                                    <span>@student.PhoneNumber</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-sm-3 col-5">
+                                                    <h5 class="f-w-500">Level <span class="pull-end">:</span></h5>
+                                                </div>
+                                                <div class="col-sm-9 col-7">
+                                                    <span>@student.Level</span>
+                                                </div>
+                                            </div>
+                                            @if (student.Department != null)
+                                            {
+                                                <div class="row mb-2">
+                                                    <div class="col-sm-3 col-5">
+                                                        <h5 class="f-w-500">
+                                                            Department <span class="pull-end">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-sm-9 col-7">
+                                                        <span>@student.Department.Name</span>
+                                                    </div>
+                                                </div>
+                                            }
+                                            @if (student.Supervisor != null)
+                                            {
+
+                                                <div class="row mb-2">
+                                                    <div class="col-sm-3 col-5">
+                                                        <h5 class="f-w-500">
+                                                            Supervisor <span class="pull-end">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-sm-9 col-7">
+                                                        <span>@student.Supervisor.FullName</span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div id="update-profile" class="tab-pane fade">
+                                        <div class="pt-3">
+                                            <div class="settings-form">
+                                                <h4 class="text-primary">Update Profile</h4>
+                                                <form asp-controller="dashboard" asp-action="profileUpdate" method="post" enctype="multipart/form-data">
+                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                                    <input asp-for="@student.UserId" name="UserId" type="hidden" />
+                                                    <input asp-for="@student.StudentId" name="StudentId" type="hidden" />
+                                                    <input asp-for="@student.MatricNo" name="MatricNo" value="@student.MatricNo" type="hidden" />
+                                                    <input asp-for="@student.ImageUrl" name="ImageUrl" value="@student.ImageUrl" type="hidden" />
 
 
-															<div class="row">
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Surname</label>
-																	<input asp-for="@student.FullName" name="FullName" type="text"  class="form-control" required>
-																</div>
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Email</label>
-																	<input asp-for="@student.Email" name="Email" type="email" class="form-control" required>
-																</div>
-															</div>
-															<div class="row">
-																
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Phone No</label>
-																	<input asp-for ="@student.PhoneNumber" name="PhoneNumber" type="text" class="form-control" required>
-																</div>
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Bio</label>
-																	<textarea asp-for="@student.Bio" row="3" name="Bio" class="form-control"></textarea>
-																</div>
-															</div>
-															
-															<div class="row">
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Department</label>
-																	@if(ViewBag.Departments != null)
-																	{
-																<select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))" required>
-																		@if (student.Department !=null)
-																		{
-																			<option value="@student.DepartmentId"> Please Select </option>
-																		}
-																		else
-																		{
-																			<option value=""> Please Select </option>
-																		}
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Surname</label>
+                                                            <input asp-for="@student.FullName" name="FullName" type="text" class="form-control" required>
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Email</label>
+                                                            <input asp-for="@student.Email" name="Email" type="email" class="form-control" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
 
-																		</select>
-																	}
-																</div>
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Supervisor</label>
-																		<select asp-for="@student.SupervisorId"  name="SupervisorId" class="form-control wide" id="supervisorId" required>
-																			@if (student.Supervisor !=null)
-																			{
-																				<option value="@student.SupervisorId"> @student.Supervisor.FullName </option>
-																			}
-																		</select>
-																</div>
-															</div>
-															<div class="row">
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Level</label>
-																	<input asp-for ="@student.Level" name="Level" type="text" class="form-control" required>
-																</div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Phone No</label>
+                                                            <input asp-for="@student.PhoneNumber" name="PhoneNumber" type="text" class="form-control" required>
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Bio</label>
+                                                            <textarea asp-for="@student.Bio" row="3" name="Bio" class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
 
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Image</label>
-																	<div class="input-group mb-3">
-																		<span class="input-group-text">Upload Image</span>
-																		<div class="form-file">
-																			<input asp-for="@student.File" name="File" type="file" class="form-file-input form-control">
-																		</div>
-																	</div>
-																</div>
-															</div>
-															
-															<button class="btn btn-primary" type="submit">Submit</button>
-														</form>
-													</div>
-												</div>
-											</div>
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Department</label>
+                                                            @if (ViewBag.Departments != null)
+                                                            {
+                                                                <select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))" required>
+                                                                    @if (student.Department != null)
+                                                                    {
+                                                                        <option value="@student.DepartmentId"> Please Select </option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value=""> Please Select </option>
+                                                                    }
 
-											<div id="forgot-password" class="tab-pane fade">
-												<div class="pt-3">
-													<div class="settings-form">
-														<h4 class="text-primary">Forgot Password</h4>
-														<form asp-area="" asp-controller="account" asp-action="forgotpassword" method="post">
-															<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-															<div class="row">
-																<div class="mb-3 col-md-6">
-																	<label class="form-label">Email</label>
-																	<input asp-for="@fpass.Email" name="Email" type="email"  class="form-control">
-																</div>
-																
-															</div>
-													<button class="btn btn-primary" type="submit">Submit</button>
-														</form>
-													</div>
-												</div>
-											</div>
+                                                                </select>
+                                                            }
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Supervisor</label>
+                                                            <select asp-for="@student.SupervisorId" name="SupervisorId" class="form-control wide" id="supervisorId" required>
+                                                                @if (student.Supervisor != null)
+                                                                {
+                                                                    <option value="@student.SupervisorId"> @student.Supervisor.FullName </option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Level</label>
+                                                            <input asp-for="@student.Level" name="Level" type="text" class="form-control" required>
+                                                        </div>
 
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Image</label>
+                                                            <div class="input-group mb-3">
+                                                                <span class="input-group-text">Upload Image</span>
+                                                                <div class="form-file">
+                                                                    <input asp-for="@student.File" name="File" type="file" class="form-file-input form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="forgot-password" class="tab-pane fade">
+                                        <div class="pt-3">
+                                            <div class="settings-form">
+                                                <h4 class="text-primary">Forgot Password</h4>
+                                                <form asp-area="" asp-controller="account" asp-action="forgotpassword" method="post">
+                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Email</label>
+                                                            <input asp-for="@fpass.Email" name="Email" type="email" class="form-control">
+                                                        </div>
+
+                                                    </div>
+                                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
-		$(function(){
-			$('#departmentId').change(function () {
-				var url = '@Url.Content("~/")' + "CascadeHelp/getSupervisors";
-				var ddlSource = "#departmentId";
-				$.getJSON(url, { Id: $(ddlSource).val() }, function (dat) {
-					var items = "";
-					$("#supervisorId").empty();
-					$.each(dat, function (i, row) {
-						items += "<option value= '" + row.value + "'>" + row.text + "</option>";
-					});
-					$("#supervisorId").html(items);
-				});
-			});
-		});
+    $(function () {
+        $('#departmentId').change(function () {
+            var url = '@Url.Content("~/")' + "CascadeHelp/getSupervisors";
+            var ddlSource = "#departmentId";
+            $.getJSON(url, { Id: $(ddlSource).val() }, function (dat) {
+                var items = "";
+                $("#supervisorId").empty();
+                $.each(dat, function (i, row) {
+                    items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                });
+                $("#supervisorId").html(items);
+            });
+        });
+    });
 </script>
 

@@ -59,6 +59,11 @@ namespace SPMS.Areas.Graduate.Controllers
 			return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
 		}
 
+		public void AddNoti(Notification notification) 
+		{
+			//Add Notification
+		}
+
 		internal async void SendMail(string body, string toMail)
 		{
 			var email = new MailRequest()

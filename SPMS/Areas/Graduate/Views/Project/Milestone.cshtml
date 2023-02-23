@@ -24,8 +24,8 @@
 				<div class="card">
 					<div class="card-header">
 						<h4 class="card-title">Project Topic</h4>
-						<span class="text-danger">@TempData["Error"]</span>
-						@if (prjt.Count() > 0)
+						<span class="text-danger">@TempData["Msg"]</span>
+						@if (prjt.Count() == 1)
 						{
 							<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Chapter</button>
 							<div class="modal fade" id="basicModal">

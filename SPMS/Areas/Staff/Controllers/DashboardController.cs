@@ -47,7 +47,7 @@ namespace SPMS.Areas.Staff.Controllers
 				if (model.File != null)
 				{
 					_file.DeleteFile(model.ImageUrl);
-					model.ImageUrl = _file.UploadFile(model.File);
+					model.ImageUrl = await _file.UploadFile(model.File);
 				}
 
 				User user = await _userManager.FindByIdAsync(CurrentUser.Id.ToString());

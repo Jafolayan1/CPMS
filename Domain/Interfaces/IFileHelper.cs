@@ -8,6 +8,6 @@ namespace Domain.Interfaces
 
 		bool FileExist(string imageUrl);
 
-		string UploadFile(IFormFile file);
+		Task<string> UploadFile(IFormFile file);
 	}
 }

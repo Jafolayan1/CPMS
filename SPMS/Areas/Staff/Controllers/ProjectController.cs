@@ -45,7 +45,7 @@ namespace SPMS.Areas.Staff.Controllers
 
 		[Route("proposal")]
 		[HttpGet]
-		public IActionResult Proposal()
+		public IActionResult Proposal(string error)
 		{
 			var fileNo = CurrentUser.UserName;
 			var supervisor = _context.Supervisors.GetByFileNo(fileNo);
@@ -129,7 +129,7 @@ namespace SPMS.Areas.Staff.Controllers
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine($"Error: {ex}");
+				TempData["Msg"] = ex.Message;
 				return RedirectToAction(nameof(Proposal));
 			}
 		}
@@ -156,7 +156,7 @@ namespace SPMS.Areas.Staff.Controllers
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine($"Error: {ex}");
+				TempData["Msg"] = ex.Message;
 				return RedirectToAction(nameof(Milestone));
 			}
 		}
@@ -177,7 +177,7 @@ namespace SPMS.Areas.Staff.Controllers
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine($"Error: {ex}");
+				TempData["Msg"] = ex.Message;
 				return RedirectToAction(nameof(Proposal));
 			}
 		}
@@ -198,12 +198,9 @@ namespace SPMS.Areas.Staff.Controllers
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine($"Error: {ex}");
+				TempData["Msg"] = ex.Message;
 				return RedirectToAction(nameof(Milestone));
 			}
 		}
-
-		
-
 	}
 }
