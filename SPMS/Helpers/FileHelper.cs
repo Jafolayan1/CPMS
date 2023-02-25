@@ -34,10 +34,9 @@ namespace SPMS.Helpers
 
         public bool FileExist(string fileUrl)
         {
-            if ((File.Exists(_env.WebRootPath + fileUrl)))
-            {
+            if ((File.Exists(fileUrl)))
                 return true;
-            }
+
             return false;
         }
 
@@ -64,17 +63,6 @@ namespace SPMS.Helpers
                 File.Delete(_env.WebRootPath + $"/uploads/{fileUrl}");
             }
         }
-        //public IActionResult ViewFile(string file)
-        //{
-        //    var uploads = Path.Combine(_env.WebRootPath, "uploads");
-        //    //using (var viewer = new Viewer(file))
-        //    //{
-        //    //    var viewOptions = new PdfViewOptions($"viewed/{Gen}.pdf");
-        //    //    viewer.View(viewOptions);
-        //    //}
-        //    //var fileStream = new FileStream(Path.Combine(viewed, file), FileMode.Open, FileAccess.Read);
-        //    //var fResult = new FileStreamResult(fileStream, "application/pdf");
-        //    //return fResult;
 
         public async Task<string> UploadFile(IFormFile file)
         {
@@ -121,44 +109,9 @@ namespace SPMS.Helpers
                     fileStream.Flush();
                 }
             }
-
-
-
-            //if (fileName.EndsWith(".docx") || fileName.EndsWith(".doc"))
-            //{
-            //    try
-            //    {
-            //        //var api = new LovePdfApi(_pdf.Key, _pdf.Secret);
-            //        //var task = api.CreateTask<OfficeToPdfTask>();
-            //        //task.AddFile($"{_env.WebRootPath}/output/{fileName}");
-            //        //task.Process();
-            //        //task.DownloadFile($"{_env.WebRootPath}/uploads");
-            //        ////string[] strName = fileName.Split('.');
-            //        ////strFileName = $"{strName[0]}.pdf";
-            //        ////return "/uploads/" + strFileName;
-            //        ///
-            //    }
-            //    catch (Exception)
-            //    {
-            //        return null;
-            //    }
-            //}
-            //else
-            //{
-            //    uploadFunction(file, uploads, fileName);
-            //}
             return "/uploads/" + fileName;
         }
 
-
-        //public async void UploadFunction(IFormFile file, string uploads)
-        //{
-        //    var filePath = uploads + file.FileName;
-        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(stream);
-        //    }
-        //}
 
         static int GetPageCount(string filePath)
         {

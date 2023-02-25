@@ -25,6 +25,7 @@ namespace SPMS.Areas.Staff.Controllers
 		[HttpGet]
 		public IActionResult Dashboard()
 		{
+			ViewData["Noti"] = GetNoti();
 			return View();
 		}
 
@@ -35,7 +36,7 @@ namespace SPMS.Areas.Staff.Controllers
 			var supervisor = _context.Supervisors.GetByFileNo(CurrentUser.UserName);
 			ViewBag.Departments = _context.Departments.GetAll();
 			ViewData["supervisor"] = supervisor;
-
+			ViewData["Noti"] = GetNoti();
 			return View();
 		}
 

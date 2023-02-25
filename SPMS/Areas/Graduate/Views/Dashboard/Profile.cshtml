@@ -171,10 +171,11 @@
                                                 <form asp-controller="dashboard" asp-action="profileUpdate" method="post" enctype="multipart/form-data">
                                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                                                    <input asp-for="@student.UserId" name="UserId" type="hidden" />
-                                                    <input asp-for="@student.StudentId" name="StudentId" type="hidden" />
+                                                    <input asp-for="@student.UserId" name="UserId" value="@student.UserId" type="hidden" />
+                                                    <input asp-for="@student.StudentId" name="StudentId" value="@student.StudentId" type="hidden" />
                                                     <input asp-for="@student.MatricNo" name="MatricNo" value="@student.MatricNo" type="hidden" />
                                                     <input asp-for="@student.ImageUrl" name="ImageUrl" value="@student.ImageUrl" type="hidden" />
+
 
 
                                                     <div class="row">

@@ -36,5 +36,10 @@ namespace SPMS.Helpers
 			else
 				return null;
 		}
+
+		public void Dispose()
+		{
+			_context.Dispose();
+		}
 	}
 }

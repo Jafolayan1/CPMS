@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 
+using GroupDocs.Viewer;
 using GroupDocs.Viewer.Options;
 
 using Infrastructure;
@@ -8,13 +9,11 @@ using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
-using GroupDocs.Viewer;
 //using GroupDocs.Viewer.Options;
 
 using SPMS.Models;
 
 using System.Diagnostics;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace SPMS.Controllers
 {
@@ -33,7 +32,7 @@ namespace SPMS.Controllers
 		public JsonResult getSupervisors(int Id)
 		{
 			List<Supervisor> list = new();
-			list = _context.Supervisors.Where(x => x.DepartmentId.Equals(Id) && x.UserId!=null).ToList();
+			list = _context.Supervisors.Where(x => x.DepartmentId.Equals(Id) && x.UserId != null).ToList();
 			list.Insert(0, new Supervisor { SupervisorId = 0, FullName = " Please Select Supervisor" });
 			return Json(new SelectList(list, "SupervisorId", "FullName"));
 		}
@@ -44,6 +43,13 @@ namespace SPMS.Controllers
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 
+		public void readNotification(int Id)
+		{
+			var noti = _context.Notifications.FirstOrDefault(x => x.NotificationId.Equals(Id));
+			noti.IsRead = true;
+			_context.Update(noti);
+			_context.SaveChanges();
+		}
 
 		public IActionResult viewFile(string file)
 		{

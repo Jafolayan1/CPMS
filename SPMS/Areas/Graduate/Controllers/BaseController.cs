@@ -38,12 +38,6 @@ namespace SPMS.Areas.Graduate.Controllers
 		protected IMailService _mail;
 		protected string _name;
 		protected string _matric;
-		protected string CUserName 
-		{
-			get {
-				return CurrentUser.UserName;
-			}
-		}
 
 		public BaseController(IUserAccessor userAccessor, IUnitOfWork context, IMailService mail)
 		{
@@ -59,9 +53,10 @@ namespace SPMS.Areas.Graduate.Controllers
 			return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
 		}
 
-		public void AddNoti(Notification notification) 
+		public void AddNoti(Notification notification)
 		{
-			//Add Notification
+			_context.Notifications.Add(notification);
+			_context.SaveChanges();
 		}
 
 		internal async void SendMail(string body, string toMail)
@@ -75,11 +70,6 @@ namespace SPMS.Areas.Graduate.Controllers
 			await _mail.SendEmailAsync(email, email.Body);
 		}
 
-		internal static int GenerateToken(int n)
-		{
-			Random rnd = new();
-			return rnd.Next(n);
-		}
 
 		internal static string ManipulateFileUrl(string fileUrl)
 		{

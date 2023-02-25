@@ -15,6 +15,7 @@ namespace SPMS.Areas.Staff.Controllers
 		[HttpGet]
 		public IActionResult Noti()
 		{
+			ViewData["Noti"] = GetNoti();
 			return View();
 		}
 
@@ -39,6 +40,8 @@ namespace SPMS.Areas.Staff.Controllers
 		public IActionResult Notifications()
 		{
 			var noti = _context.Notifications.GetAll();
+			ViewData["Noti"] = GetNoti();
+
 			return View(noti);
 		}
 
@@ -47,6 +50,8 @@ namespace SPMS.Areas.Staff.Controllers
 		public IActionResult Notifications(int id)
 		{
 			var noti = _context.Notifications.GetById(id);
+			ViewData["Noti"] = GetNoti();
+
 			return View(noti);
 		}
 	}

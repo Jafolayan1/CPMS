@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces
 {
-	public interface IUserAccessor
+	public interface IUserAccessor : IDisposable
 	{
 		User GetUser();
 

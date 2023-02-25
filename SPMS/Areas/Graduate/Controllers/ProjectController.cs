@@ -84,7 +84,7 @@ namespace SPMS.Areas.Graduate.Controllers
             var prjt = _context.Projects.GetAll().Where(x => x.Students.Any(s => s.MatricNo.Equals(matric))).Where(st => st.Status == "Approved");
             if (prjt.Count() > 1)
             {
-                _notyf.Warning("You have more than 1 approved project, Kindly select One(1)");
+                TempData["Msg"] = "You have more than 1 approved project, Kindly select One(1)";
             }
             var lstChapts = _context.Chapters.Find(x => x.SupervisorId.Equals(CurrentStudent.SupervisorId), false);
             ViewData["project"] = prjt;
@@ -178,6 +178,13 @@ namespace SPMS.Areas.Graduate.Controllers
                         _name += $"{item.MatricNo}, ";
                     }
                     SendMail($"<p>You have a new file (PROPOSAL) submited by {_name}</p>", supervisorEmail);
+                    var noti = new Domain.Entities.Notification()
+                    {
+                        Content = $"PROPOSAL submitted by {_name}",
+                        IsRead = false,
+                        SupervisorId = (int)supervisorId
+                    };
+                    AddNoti(noti);
                 }
 
                 _context.SaveChanges();

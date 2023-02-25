@@ -39,6 +39,11 @@ namespace SPMS.Areas.Staff.Controllers
 			return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
 		}
 
+		public void AddNoti(Notification notification)
+		{
+			_context.Notifications.Add(notification);
+			_context.SaveChanges();
+		}
 		public async void SendMail(string body, string toMail)
 		{
 			var email = new MailRequest()
