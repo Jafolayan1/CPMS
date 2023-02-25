@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Students>
+
+
+@{
+	ViewData["Title"] = "Supervisors";
+	Student student = new Student();
+
+}
+
+<Partial name="_DepartmentHeader" />
+<Partial name="_Sidebar" />
+
+<div class="content-body">
+	<div class="container-fluid">
+
+		<div class="row page-titles">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active"><a href="javascript:void(0)">Table</a></li>
+				<li class="breadcrumb-item"><a href="javascript:void(0)">Datatable</a></li>
+			</ol>
+		</div>
+		<span class="text-danger">@TempData["Error"]</span>
+
+		<form asp-controller="manage" asp-action="createstudents" method="post" enctype="multipart/form-data">
+			<div class="col-lg-6">
+
+				<label>Upload Csv file</label>
+				<div class="input-group mb-3">
+					<div class="form-file">
+						<input type="file" name="File" accept=".csv" class="form-file-input form-control">
+					</div>
+					<button type="submit" class="btn btn-primary btn-sm">Upload</button>
+				</div>
+			</div>
+		</form>
+		<!-- row -->
+		@if (Model != null && Model.Count() > 0)
+		{
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Profile Datatable</h4>
+						<a asp-action="addall" asp-route-save="save" class="btn btn-primary mb-2">Save All</a>
+
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table id="example3" class="display" style="min-width: 845px">
+								<thead>
+									<tr>
+										<th>S/N</th>
+										<th>MatricNo</th>
+										<th>Names</th>
+										<th>Level</th>
+										<th>Department</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in Model)
+									{
+										<tr>
+											<td>@item.SerialNo</td>
+											<td>@item.MatricNo</td>
+											<td>@item.Names</td>
+											<td>@item.Level</td>
+											<td>@item.Department</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>

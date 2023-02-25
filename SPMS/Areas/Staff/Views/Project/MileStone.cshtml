@@ -1,0 +1,83 @@
+﻿@inject IFileHelper _file;
+
+@{
+	ViewData["Title"] = "Project Chapter";
+	var prjts = ViewData["chapters"] as IEnumerable<Chapter>;
+}
+
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.js"></script>
+</head>
+
+<Partial name="_PChapterHeader" />
+<Partial name="_Sidebar" />
+
+
+
+<div class="content-body">
+	<div class="container-fluid">
+		<div class="row page-titles">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active"><a href="javascript:void(0)">Project</a></li>
+				<li class="breadcrumb-item"><a href="javascript:void(0)">Project Chapters</a></li>
+			</ol>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="table-responsive">
+							<span class="text-danger">@TempData["Msg"]</span>
+							<table class="table table-sm mb-0">
+								<thead>
+									<tr>
+										<th class="align-middle">Student</th>
+										<th class="align-middle pe-7">Date</th>
+										<th class="align-middle" style="min-width: 12.5rem;">Chapter</th>
+										<th class="align-middle text-end">Chapter Material</th>
+										<th class="align-middle text-end">Status</th>
+										<th class="no-sort"></th>
+									</tr>
+								</thead>
+								<tbody id="orders">
+									@if (prjts!=null)
+									{
+										@foreach (var item in prjts.OrderBy(x => x.Matric))
+										{
+											<tr class="btn-reveal-trigger">
+												<td class="py-2">
+													@foreach (var i in item.Project.Students)
+													{
+														<strong>@i.MatricNo</strong><br /><a href="">@i.FullName</a>
+													}
+												</td>
+												<td class="py-2">@item.DateSubmitted.ToShortDateString()</td>
+													<td class="py-2">@item.ChapterName</td>
+													<td>
+														<a asp-action="cdetails" asp-route-chapterId="@item.ChapterId">Read Chapter</a>
+													</td>
+													<td class="py-2 text-end">
+														<span class="badge badge-warning">@item.Status<span class="ms-1 fas fa-stream"></span></span>
+													</td>
+
+													<td>
+														<div class="d-flex">
+														<a asp-action="cstatus" asp-route-projectId="@item.ChapterId" asp-route-status="Approved" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-check"></i></a>
+														<a asp-action="cstatus" asp-route-projectId="@item.ChapterId" asp-route-status="Rejected" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-times"></i></a>
+														</div>
+													</td>
+											</tr>
+										}
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

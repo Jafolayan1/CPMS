@@ -1,0 +1,79 @@
+﻿
+@{
+	ViewData["Title"] = "Milestone";
+	var students = ViewData["supervisor"] as Supervisor;
+
+}
+
+
+<Partial name="_MilestoneHeader" />
+<Partial name="_Sidebar" />
+
+ <div class="content-body">
+			<div class="container-fluid">
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">Project</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">proposal</a></li>
+					</ol>
+				</div>
+				<!-- row -->
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">Project Topic</h4>
+								<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Topic</button>
+							</div>
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-responsive-md">
+										<thead>
+											<tr>
+												<th><strong>Matric</strong></th>
+												<th><strong>Topic</strong></th>
+												<th><strong>Proposal</strong></th>
+												<th><strong>Status</strong></th>
+												<th><strong>Remark</strong></th>
+												<th><strong></strong></th>
+												<th><strong></strong></th>
+
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (var item in @students.ProjectStudents)
+											{
+												<tr>
+												
+													<td>@item.MatricNo</td>
+													<td>@item.FullName</td>
+													<td>@item.Department</td>
+													<td>@item.Email</td>
+													@foreach (var data in @item.Projects)
+													{
+														<td>@data.Topic</td>
+														<td>@data.Matric</td>
+														<td>@data.FileUrl</td>
+													}
+													<td>
+														<div class="d-flex">
+															<a data-bs-toggle="modal" data-bs-target="#basicModal" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+															<a asp-action="Delete" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+														</div>
+													</td>
+												
+												</tr>
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+
+			</div>
+</div>
+
+

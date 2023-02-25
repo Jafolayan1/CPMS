@@ -1,0 +1,69 @@
+﻿@{
+	ViewData["Title"] = "Notification";
+	var notifs = ViewData["notifs"] as IEnumerable<Notification>;
+
+}
+
+<Partial name="_NotificationHeader" />
+<Partial name="_Sidebar" />
+
+<div class="content-body">
+	<!-- row -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="card overflow-hidden">
+					<div class="card-body">
+						<div class="side-border">
+							<h4 class="fs-20 font-w700"><span>All Notifications</span></h4>
+						</div>
+						@foreach (var item in @notifs)
+						{
+							<div class="latest d-flex align-items-center justify-content-between flex-wrap">
+								<div class="d-flex align-items-center flex-wrap mb-3">
+									<span class="me-3">@item.When.ToShortTimeString()</span>
+									<div class="enaergy">
+										<span class="bg-primary"><i class="fas fa-bolt"></i></span>
+									</div>
+									<div class="ms-0 ms-sm-3">
+										<h4 class="fs-18 font-w500">@item.Content.Substring(0,10)...</h4>
+										<p class="mb-0 fs-16">@item.When.ToLongDateString()</p>
+									</div>
+								</div>
+								<div>
+									<a data-bs-toggle="modal" data-bs-target="#basicModal_@item.NotificationId" onclick="myFunction()" class="btn btn-outline-primary">Read</a>
+								@*<a asp-action="Notifs" asp-route-id="@item.NotificationId" class="btn btn-outline-primary">Mark as read</a>*@
+
+								</div>
+								<div class="modal fade" id="basicModal_@item.NotificationId">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title">Notification</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+											</div>
+											<div class="modal-body">
+													<input name="ProjectId" value="@item.NotificationId" type="hidden" class="form-control">
+													<div class="row">
+														<div class="col-lg-12">
+															<div class="mb-3">
+																<p>@item.Content</p>
+															</div>
+														</div>
+
+														<div class="modal-footer">
+														<button type="button" id="notyId_@item.NotificationId" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+														</div>
+													</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

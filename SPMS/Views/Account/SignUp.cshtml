@@ -1,0 +1,65 @@
+﻿@*@{
+	ViewData["Title"] = "SignUp Page";
+	Layout = "_PagesLayout";
+}
+
+
+
+<div class="authincation h-100">
+	<div class="container h-100">
+		<div class="row justify-content-center h-100 align-items-center">
+			<div class="col-md-6">
+				<div class="authincation-content">
+					<div class="row no-gutters">
+						<div class="col-xl-12">
+							<div class="auth-form">
+								<div class="text-center mb-3">
+									<a asp-action="Index"><img src="~/assets/images/logofull.png" alt=""></a>
+								</div>
+								<h4 class="text-center mb-4">Sign up your account</h4>
+								<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+								<form asp-action="signup" method="post">
+									<div class="row">
+										<div class="mb-3 col-md-6">
+											<label class="form-label">Full Name</label>
+											<input asp-for="FullName" name="FullName" type="text" class="form-control" required>
+										</div>
+										<div class="mb-3 col-md-6">
+											<label class="form-label">Staff No</label>
+											<input asp-for="FileNo" name="FileNo" type="text" class="form-control" required>
+										</div>
+										<div class="mb-3 col-md-6">
+											<label class="form-label">Department</label>
+											<select asp-for="Department" name="Department" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Department,"DepartmentId","Name"))" required>
+												@if (ViewBag.Department != null)
+												{
+													<option value="@ViewBag.DepartmentId"> Select Department   </option>
+												}
+												<option value="">  Select Department  </option>
+											</select>
+										</div>
+										<div class="mb-3 col-md-6">
+											<label class="form-label">Email</label>
+											<input asp-for="Email" name="Email" type="email" class="form-control" required>
+										</div>
+										<div class="mb-3 col-md-6">
+											<label class="form-label">Password</label>
+											<input asp-for="Password" name="Password" type="password" class="form-control" required>
+										</div>
+									</div>
+									
+									<div class="text-center">
+										<button type="submit" class="btn btn-primary btn-block">Sign Me Up</button>
+									</div>
+								</form>
+								<div class="new-account mt-3">
+									<p>Already have an account? <a class="text-primary" asp-action="login">Sign in</a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>*@

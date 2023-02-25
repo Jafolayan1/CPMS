@@ -1,0 +1,120 @@
+﻿@inject IFileHelper _file;
+
+@{
+	ViewData["Title"] = "Chapter Details";
+	var prjt = ViewData["chapter"] as Chapter;
+
+	Chapter chapter = new Chapter();
+}
+
+<Partial name="_ProjectDetailsHeader" />
+<Partial name="_Sidebar" />
+
+<div class="content-body">
+	<!-- row -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="card overflow-hidden">
+							<div class="company-profile">
+								<img src="~/assets/images/back1.jpg" alt="">
+							</div>
+							<div class="card-body">
+								<div class="row border-bottom pb-5">
+									<div class="col-xl-8 col-lg-9">
+										<div>
+											@if (prjt != null)
+											{
+												<h4 class="fs-32 font-w700">@prjt.Topic</h4>
+												@foreach (var item in @prjt.Project.Students)
+												{
+														<span class="mb-2 d-block">Created by @item.FullName </span>
+												}
+											}
+											<div class="workload-button">
+												<a href="javascript:void(0);" class="btn btn-primary btn-rounded">New<i class="fas fa-caret-down ms-2 scale5"></i></a>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-3 info">
+										<div class="kanbanimg1">
+											<span><i class="fas fa-info-circle me-3"></i>Project Details</span>
+											<div class="dropdown ms-3">
+												<div class="btn-link" data-bs-toggle="dropdown">
+													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<circle cx="12.4999" cy="3.5" r="2.5" fill="#A5A5A5" />
+														<circle cx="12.4999" cy="11.5" r="2.5" fill="#A5A5A5" />
+														<circle cx="12.4999" cy="19.5" r="2.5" fill="#A5A5A5" />
+													</svg>
+												</div>
+												<div class="dropdown-menu dropdown-menu-right">
+													<a class="dropdown-item" href="javascript:void(0)">Delete</a>
+													<a class="dropdown-item" href="javascript:void(0)">Edit</a>
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-xl-3 mt-4 col-sm-6">
+										<div class="d-flex">
+											<span><i class="far fa-clock scale5 text-primary mt-2 me-3"></i></span>
+											<div>
+												<h4 class="fs-18 font-w500 text-black">Project Started on</h4>
+												@if (prjt != null)
+												{
+													<span> @prjt.DateSubmitted.ToLongDateString()</span>
+												}
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-3 mt-4 col-sm-6">
+										<div class="d-flex">
+											<span><i class="far fa-clock scale5 text-primary mt-2 me-3"></i></span>
+											<div>
+												<h4 class="fs-18 font-w500 text-black">Due date</h4>
+												@if (prjt != null)
+												{
+													<span> @prjt.DateSubmitted.AddMonths(5).ToLongDateString()</span>
+												}
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="project-description">
+									<span class="fs-18 font-w500 mb-3 d-block">@prjt.ChapterName</span>
+									<p class="fs-18 font-w500">
+										@if (prjt != null)
+										{
+											<iframe seamless class="w-100" height="750" src="/output.pdf">
+												<sspan>Unable to display file, Browser does not support iFrame.</sspan>
+											</iframe>
+										}
+									</p>
+
+								</div>
+								@if (prjt != null)
+								{
+									@using (Html.BeginForm("cremark", "project", new { chapterId = @prjt.ChapterId }, FormMethod.Post))
+									{
+										<div class="message1">
+											<textarea class="form-control" id="rTextarea" asp-for="@chapter.Remark" name="Remark" rows="4" placeholder="Type comment here..."></textarea>
+											<div class="msg-button">
+
+												<input type="submit" name="stat" value="Approved" class="btn btn-primary" /> &nbsp;&nbsp;
+												<input type="submit" name="stat" value="Rejected" class="btn btn-primary" />
+											</div>
+										</div>
+									}
+								}
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
