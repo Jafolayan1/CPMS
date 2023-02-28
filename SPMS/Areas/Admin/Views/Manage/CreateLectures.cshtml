@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Lecturers>
+
+
+@{
+	ViewData["Title"] = "Supervisors";
+	Supervisor sup = new Supervisor();
+	
+}
+
+<Partial name="_DepartmentHeader" />
+<Partial name="_Sidebar" />
+
+<div class="content-body">
+	<div class="container-fluid">
+
+		<div class="row page-titles">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active"><a href="javascript:void(0)">Table</a></li>
+				<li class="breadcrumb-item"><a href="javascript:void(0)">Datatable</a></li>
+			</ol>
+		</div>
+		<form asp-controller="manage" asp-action="createlectures" method="post" enctype="multipart/form-data">
+			<div class="col-lg-6">
+				
+				<label>Upload Csv file</label>
+				<div class="input-group mb-3">
+					<div class="form-file">
+						<input type="file" name="File" accept=".csv" class="form-file-input form-control">
+					</div>
+					<button type="submit" class="btn btn-primary btn-sm">Upload</button>
+				</div>
+			</div>
+		</form>
+		<!-- row -->
+		@if (Model != null && Model.Count() > 0)
+		{
+			<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Profile Datatable</h4>
+					<a asp-action="addall" asp-route-save="save" class="btn btn-primary mb-2">Save All</a>
+
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="example3" class="display" style="min-width: 845px">
+							<thead>
+								<tr>
+									<th>S/N</th>
+									<th>FullName</th>
+									<th>FileNo</th>
+									<th>Department</th>
+									<th>PhoneNo</th>
+									<th>Email</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td>@item.SerialNo</td>
+										<td>@item.FullName</td>
+										<td>@item.FileNo</td>
+										<td>@item.Department</td>
+										<td>@item.PhoneNo</td>
+										<td>@item.Email</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		}
+	</div>
+</div>

@@ -1,0 +1,43 @@
+﻿@{
+	TimeSpan time = TimeSpan.FromSeconds(10);
+}
+
+
+<head>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("#myModal").modal('show');
+		});
+	</script>
+</head>
+
+@if (CurrentStudent.Supervisor == null)
+{
+
+	<div id="myModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header text-center"> 
+					<h5 class="modal-title">Notice ! &nbsp;Notice ! &nbsp;</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+				</div>
+				<div class="modal-body">
+					<p> <b> Hello @CurrentUser.FullName.Split(' ')[0], Kindly Compelete below to get started with your project. Goodluck ! 💪💪 </b></p>
+
+					<ol>
+						<li><b>*</b> Go to your profile</li>
+						<li><b>*</b> Select your project Supervisor</li>
+						<li><b>*</b> Ensure all details provided are correct</li>
+						<li><b>*</b> Submit Update</li>
+					</ol>
+					<p>Then proceed to submit your project proposal</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+}

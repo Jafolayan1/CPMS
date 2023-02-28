@@ -1,0 +1,107 @@
+﻿@using Domain.Entities
+@{
+    ViewData["Title"] = "Notification";
+    var noti = ViewData["Noti"] as IEnumerable<Notification>;
+}
+
+<head>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</head>
+
+
+<Partial name="_NotificationHeader" />
+<Partial name="_Sidebar" />
+
+
+<div class="content-body">
+    <!-- row -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card overflow-hidden">
+                    <div class="card-body">
+                        <div class="side-border">
+                            <h4 class="fs-20 font-w700">
+                                <span>Today</span>
+                            </h4>
+                            <a asp-controller="notification" asp-action="markasread" class="btn btn-outline-primary align-end">Mark all as Read</a>
+                        </div>
+
+                        @foreach (var item in @noti.Where(x => x.IsRead.Equals(false)))
+                        {
+                            <div class="latest d-flex align-items-center justify-content-between flex-wrap">
+                                <div class="d-flex align-items-center flex-wrap mb-3">
+                                    <span class="me-3">2m ago</span>
+                                    <div class="enaergy">
+                                        <span class="bg-primary"><i class="fas fa-bolt"></i></span>
+                                    </div>
+                                    <div class="ms-0 ms-sm-3">
+                                        <h4 class="fs-18 font-w500">@item.Content.Substring(0,30)...</h4>
+                                        <p class="mb-0 fs-16">@item.When.ToLongDateString() - @item.When.ToShortTimeString()</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a data-value="@item.NotificationId" data-bs-toggle="modal" data-bs-target="#basicModal_@item.NotificationId" id="notificationId" class="btn btn-outline-primary">Read</a>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="basicModal_@item.NotificationId">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Notification</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input name="ProjectId" value="@item.NotificationId" type="hidden" class="form-control">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <p>@item.Content</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <buttaon data-value="@item.NotificationId" type="button" id="notyId" class="btn btn-danger light" data-bs-dismiss="modal">Close
+                                                            @*<a asp-controller="notification" asp-action="readnotification" asp-route-Id="@item.NotificationId"></a>*@
+                                                        </buttaon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#notyId').click(function (event) {
+            event.preventDefault(); // prevent default behavior of <a> tag
+
+            var value = $(this).data('value'); // get value from data attribute
+            $.ajax({
+                type: 'GET',
+                url: '/notification/readnotification',
+                data: { Id: value },
+                success: function (result) {
+                    console.log('Success Success Success')
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error occured')
+                }
+            });
+        });
+    });
+</script>
+

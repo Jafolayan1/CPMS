@@ -1,0 +1,124 @@
+﻿
+@{
+	ViewData["Title"] = "Complete Project";
+	ProjectArchive cpjt = new ProjectArchive();
+
+}
+
+
+<Partial name="_ProjectDetailsHeader" />
+<Partial name="_Sidebar" />
+
+<div class="content-body">
+	<div class="container-fluid">
+		<div class="row page-titles">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+				<li class="breadcrumb-item"><a href="javascript:void(0)">Complete Project</a></li>
+			</ol>
+		</div>
+		<!-- row -->
+		<div class="row">
+			<div class="col-xl-12 col-xxl-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Submit Completed Project</h4>
+						
+					</div>
+					<div class="card-body">
+						<div id="smartwizard" class="form-wizard order-create">
+							<span class="text-danger">@TempData["Error"]</span>
+							<ul class="nav nav-wizard">
+								<li>
+									<a class="nav-link" href="#wizard_Service">
+										<span>1</span>
+									</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#wizard_Time">
+										<span>2</span>
+									</a>
+								</li>
+							</ul>
+							<form asp-controller="project" asp-action="projectcomp" method="post" enctype="multipart/form-data">
+								<div class="tab-content">
+									<div id="wizard_Service" class="tab-pane" role="tabpanel">
+										<div class="row">
+											<div class="col-lg-6 mb-2">
+												<div class="mb-3">
+													<label class="text-label form-label">Project Code*</label>
+													<input asp-for="@cpjt.ProjectCode" name="ProjectCode" type="text" value="@CurrentStudent.MatricNo.Substring(0,6)" class="form-control" readonly required>
+												</div>
+											</div>
+											<div class="col-lg-6 mb-2">
+												<div class="mb-3">
+													<label class="text-label form-label">Department*</label>
+													<select asp-for="@cpjt.DepartmentId" name="DepartmentId" class="form-control wide" id="departmentId" asp-items="@(new	SelectList(ViewBag.Departments,"DepartmentId","Name"))" required>
+
+														<option value""> Select Department </option>
+
+													</select>
+												</div>
+											</div>
+											<div class="col-lg-6 mb-2">
+												<label class="text-label form-label">Author(s)*</label>
+												<select asp-for="@cpjt.Students" class="multi-select" name="Students" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","NameMatric"))" required>
+													@if (ViewBag.Students != null)
+													{
+														<option value""> Select Author(s) </option>
+													}
+												</select>
+											</div>
+											<div class="col-lg-6 mb-2">
+												<div class="mb-3">
+													<label class="text-label form-label">Supervisors*</label>
+													<select asp-for="@cpjt.SupervisorId" name="SupervisorId" class="form-control wide" id="departmentId" asp-items="@(new	SelectList(ViewBag.Supervisors,"SupervisorId","FullName"))" required>
+
+														<option value""> Select Supervisor </option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="wizard_Time" class="tab-pane" role="tabpanel">
+										<div class="row">
+											<div class="col-lg-6 mb-2">
+												<div class="mb-3">
+													<label class="text-label form-label">Project Title*</label>
+													<input asp-for="@cpjt.Title" name="Title" type="text" class="form-control" required>
+												</div>
+											</div>
+											<div class="col-lg-6 mb-2">
+												<div class="mb-3">
+													<label class="text-label form-label">A Case Study Of*</label>
+													<input asp-for="@cpjt.CaseStudy" name="CaseStudy" type="text" class="form-control" id="emial1" required>
+												</div>
+											</div>
+											<div class="col-lg-6 mb-2">
+												<div class="mb-3">
+													<label class="text-label form-label">Year of Project*</label>
+													<input asp-for="@cpjt.Year" name="Year" class="datepicker-default form-control" id="datepicker">
+												</div>
+											</div>
+											<div class="col-lg-6 mb-2">
+												<div class="mb-3">
+													<label class="text-label form-label">Upload Project Material*</label>
+														<input asp-for="@cpjt.File" name="File" type="file" accept=".doc,.docx, .docs, .pdf" required class="form-file-input form-control">
+
+												</div>
+											</div>
+									
+										</div>
+									</div>
+								</div>
+								<div style="text-align: left;">
+									<button class="btn btn-primary" type="submit">Submit</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

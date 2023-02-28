@@ -1,0 +1,206 @@
+﻿@{
+	ViewData["Title"] = "Milestone";
+	var prjt = ViewData["project"] as IEnumerable<Project>;
+	var chapters = ViewData["chapters"] as IEnumerable<Chapter>;
+	Chapter chap = new Chapter();
+}
+
+
+<Partial name="_MilestoneHeader" />
+<Partial name="_Sidebar" />
+
+<div class="content-body">
+	<div class="container-fluid">
+		<div class="row page-titles">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active"><a href="javascript:void(0)">Project</a></li>
+				<li class="breadcrumb-item"><a href="javascript:void(0)">Milestone</a></li>
+			</ol>
+		</div>
+		<!-- row -->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Project Topic</h4>
+						<span class="text-danger">@TempData["Msg"]</span>
+						@if (prjt.Count() == 1)
+						{
+							<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add Chapter</button>
+							<div class="modal fade" id="basicModal">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Add Project Chapter</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+										</div>
+										<div class="modal-body">
+											<form asp-action="Addeditchapter" method="post" enctype="multipart/form-data">
+											@foreach (var item in prjt)
+												{
+													<input asp-for="@chap.Status" name="Status" value="Pending" type="hidden" class="form-control">
+													<input asp-for="@chap.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
+													<input asp-for="@chap.Topic" name="Topic" value="@item.Topic" type="hidden" class="form-control">
+													<input asp-for="@chap.SupervisorId" name="SupervisorId" value="@item.SupervisorId" type="hidden" class="form-control">
+												}
+												
+
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="mb-3">
+															<label class="text-black font-w600 form-label">Project Chapter <span class="required">*</span></label>
+															<select name="ChapterName" class="form-control default-select wide" required @*asp-items="Html.GetEnumSelectList<ChapterName>()"*@>
+																<option value="" selected>Please select</option>
+																<option value="0">CHAPTER_1</option>
+																<option value="1">CHAPTER_2</option>
+																<option value="2">CHAPTER_3</option>
+																<option value="3">CHAPTER_4</option>
+																<option value="4">CHAPTER_5</option>
+															</select>
+														</div>
+													</div>
+
+													<div class="col-lg-12">
+														<div class="mb-3">
+															<label class="text-black font-w600 form-label">Upload File <span class="required">*</span></label>
+															<input asp-for="@chap.File" name="File" type="file" accept=".docx, .doc," required class="form-file-input form-control">
+
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+														<button type="submit" class="btn btn-primary">Add</button>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						}
+						else
+						{
+							<button type="button" class="btn btn-primary mb-2" disabled data-bs-toggle="modal"  data-bs-target="#basicModal">Chapter</button>
+						}
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-responsive-md">
+								<thead>
+									<tr>
+										<th><strong>Matric</strong></th>
+										<th><strong>Chapter</strong></th>
+										<th><strong>Document</strong></th>
+										<th><strong>Status</strong></th>
+										<th><strong>Remark</strong></th>
+										<th><strong></strong></th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in chapters)
+									{
+										<tr>
+
+											<td>@CurrentStudent.MatricNo</td>
+											<td>@item.ChapterName</td>
+											<td><a href="@item.FileUrl" download>Dowload File</a></td>
+											@if (@item.Status.Equals("Approved"))
+											{
+												<td><div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> @item.Status</div></td>
+											}
+											else if (@item.Status.Equals("Rejected"))
+											{
+												<td><div class="d-flex align-items-center"><i class="fa fa-circle text-danger me-1"></i> @item.Status</div></td>
+											}
+											else
+											{
+												<td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i>  @item.Status</div></td>
+											}
+											<td>
+												<a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ChapterId"> View Remark </a>
+												<div class="modal fade" id="remarkModal_@item.ChapterId">
+													<div class="modal-dialog modal-dialog-centered" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title">Remark</h5>
+																<button type="button" class="btn-close" data-bs-dismiss="modal">
+																</button>
+															</div>
+															<div class="modal-body">
+																<p>@item.Remark</p>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+																<button type="button" class="btn btn-primary">Save changes</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</td>
+											<td>
+												<div class="d-flex">
+													<a data-bs-toggle="modal" data-bs-target="#basicModal_@item.ChapterId" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+													<div class="modal fade" id="basicModal_@item.ChapterId">
+														<div class="modal-dialog" role="document">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h5 class="modal-title">Edit Project Chapter</h5>
+																	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+																</div>
+																<div class="modal-body">
+																	<form asp-action="AddEditProject" method="post" enctype="multipart/form-data">
+																		<input asp-for="@chap.Status" name="Status" value="Pending" type="hidden" class="form-control">
+																		<input asp-for="@chap.ChapterId" name="ChapterId" value="@item.ChapterId" type="hidden" class="form-control">
+																		<input asp-for="@chap.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
+
+
+
+																		<div class="row">
+																			<div class="col-lg-12">
+																				<div class="mb-3">
+																					<label class="text-black font-w600 form-label">Project Chapter <span class="required">*</span></label>
+																					<select asp-for="@chap.ChapterName" name="ChapterName" asp-items="Html.GetEnumSelectList<ChapterName>()" class="form-control default-select wide" required>
+																						<option selected="selected" value="@chap.ChapterName"> @chap.ChapterName  </option>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="col-lg-12">
+																				<div class="mb-3">
+																					<label class="text-black font-w600 form-label">Upload Chaper File <span class="required">*</span></label>
+																					<input asp-for="@chap.File" name="File" type="file" accept=".doc, .docx, .docs,.pdf" placeholder="Upload file for @item.ChapterName" required class="form-file-input form-control">
+																				</div>
+																			</div>
+																			<div class="modal-footer">
+																				<button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+																				<button type="submit" class="btn btn-primary">Submit</button>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<a asp-action="Delete" asp-route-id="@item.ChapterId" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+												</div>
+											</td>
+
+										</tr>
+
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!-- Modal -->
+
+<Partial name="_NoticePartial" />
