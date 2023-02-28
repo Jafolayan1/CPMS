@@ -50,8 +50,13 @@
 													<div class="col-lg-12">
 														<div class="mb-3">
 															<label class="text-black font-w600 form-label">Project Chapter <span class="required">*</span></label>
-															<select asp-for="@chap.ChapterName" name="Chapter" asp-items="Html.GetEnumSelectList<ChapterName>()" class="form-control default-select wide" required>
-																<option selected="selected" value="@chap.ChapterName">  </option>
+															<select name="ChapterName" class="form-control default-select wide" required @*asp-items="Html.GetEnumSelectList<ChapterName>()"*@>
+																<option value="" selected>Please select</option>
+																<option value="0">CHAPTER_1</option>
+																<option value="1">CHAPTER_2</option>
+																<option value="2">CHAPTER_3</option>
+																<option value="3">CHAPTER_4</option>
+																<option value="4">CHAPTER_5</option>
 															</select>
 														</div>
 													</div>
@@ -59,7 +64,7 @@
 													<div class="col-lg-12">
 														<div class="mb-3">
 															<label class="text-black font-w600 form-label">Upload File <span class="required">*</span></label>
-															<input asp-for="@chap.File" name="File" type="file" accept=".docx, .doc, .docs,.pdf" required class="form-file-input form-control">
+															<input asp-for="@chap.File" name="File" type="file" accept=".docx, .doc," required class="form-file-input form-control">
 
 														</div>
 													</div>

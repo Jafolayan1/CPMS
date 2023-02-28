@@ -1,9 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 
-using GroupDocs.Viewer;
-using GroupDocs.Viewer.Options;
-
 using Infrastructure;
 
 using Microsoft.AspNetCore.Mvc;
@@ -43,25 +40,6 @@ namespace SPMS.Controllers
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 
-		public void readNotification(int Id)
-		{
-			var noti = _context.Notifications.FirstOrDefault(x => x.NotificationId.Equals(Id));
-			noti.IsRead = true;
-			_context.Update(noti);
-			_context.SaveChanges();
-		}
 
-		public IActionResult viewFile(string file)
-		{
-			var viewed = Path.Combine(_env.WebRootPath, "viewed");
-			using (var viewer = new Viewer("file"))
-			{
-				var viewOptions = new PdfViewOptions("output.pdf");
-				viewer.View(viewOptions);
-			}
-			var fileStream = new FileStream(Path.Combine(viewed, file), FileMode.Open, FileAccess.Read);
-			var fResult = new FileStreamResult(fileStream, "application/pdf");
-			return fResult;
-		}
 	}
 }

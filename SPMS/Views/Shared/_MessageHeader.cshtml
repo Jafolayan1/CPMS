@@ -34,7 +34,7 @@
 							<div class="dropdown-menu dropdown-menu-end">
 								<div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
 									<ul class="timeline">
-										@foreach (var item in @noti)
+										@foreach (var item in @noti.Where(x => x.IsRead.Equals(false)))
 										{
 											<li>
 												<div class="timeline-panel">

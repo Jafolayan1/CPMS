@@ -36,7 +36,7 @@ namespace SPMS.Areas.Staff.Controllers
 		{
 			var currentUser = CurrentUser.UserName;
 			var stud = _context.Supervisors.GetByFileNo(currentUser);
-			return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).ToList();
+			return _context.Notifications.Find(x => x.SupervisorId.Equals(stud.SupervisorId), false).OrderBy(x => x.NotificationId).ToList();
 		}
 
 		public void AddNoti(Notification notification)

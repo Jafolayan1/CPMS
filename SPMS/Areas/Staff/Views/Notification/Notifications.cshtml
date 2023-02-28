@@ -23,10 +23,13 @@
                 <div class="card overflow-hidden">
                     <div class="card-body">
                         <div class="side-border">
-                            <h4 class="fs-20 font-w700"><span>Today</span></h4>
+                            <h4 class="fs-20 font-w700">
+                                <span>Today</span>
+                            </h4>
+                            <a asp-controller="notification" asp-action="markasread" class="btn btn-outline-primary align-end">Mark all as Read</a>
                         </div>
 
-                        @foreach (var item in @noti)
+                        @foreach (var item in @noti.Where(x => x.IsRead.Equals(false)))
                         {
                             <div class="latest d-flex align-items-center justify-content-between flex-wrap">
                                 <div class="d-flex align-items-center flex-wrap mb-3">
@@ -40,9 +43,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a value="@item.NotificationId" data-bs-toggle="modal" data-bs-target="#basicModal_@item.NotificationId" id="notificationId" class="btn btn-outline-primary">Read</a>
-                                    <a value="@item.NotificationId" id="notificationId" class="btn btn-outline-primary ">Mark as Read</a>
+                                    <a data-value="@item.NotificationId" data-bs-toggle="modal" data-bs-target="#basicModal_@item.NotificationId" id="notificationId" class="btn btn-outline-primary">Read</a>
                                 </div>
+                                <!-- Modal -->
                                 <div class="modal fade" id="basicModal_@item.NotificationId">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -60,7 +63,9 @@
                                                     </div>
 
                                                     <div class="modal-footer">
-                                                        <button type="button" id="notyId_@item.NotificationId" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                                                        <buttaon data-value="@item.NotificationId" type="button" id="notyId" class="btn btn-danger light" data-bs-dismiss="modal">Close
+                                                            @*<a asp-controller="notification" asp-action="readnotification" asp-route-Id="@item.NotificationId"></a>*@
+                                                        </buttaon>
                                                     </div>
                                                 </div>
                                             </div>
@@ -77,14 +82,26 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $(function () {
-        $('#notificationId').click(function () {
-            var url = '@Url.Content("~/")' + "CascadeHelp/readNotification";
-            var a = document.getElementsByTagName("a");
-            var ddlSource = a[0].getAttribute("value");
-            $.getJSON(url, { Id: $(ddlSource) }, function (dat) {
+
+
+<script>
+    $(document).ready(function () {
+        $('#notyId').click(function (event) {
+            event.preventDefault(); // prevent default behavior of <a> tag
+
+            var value = $(this).data('value'); // get value from data attribute
+            $.ajax({
+                type: 'GET',
+                url: '/notification/readnotification',
+                data: { Id: value },
+                success: function (result) {
+                    console.log('Success Success Success')
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error occured')
+                }
             });
         });
     });
 </script>
+

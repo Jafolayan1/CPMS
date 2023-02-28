@@ -28,10 +28,12 @@
 											@if (prjt != null)
 											{
 												<h4 class="fs-32 font-w700">@prjt.Topic</h4>
-												@foreach (var item in @prjt.Project.Students)
-												{
-														<span class="mb-2 d-block">Created by @item.FullName </span>
-												}
+												<span class="mb-2 d-block">Created by
+													@foreach (var item in @prjt.Project.Students)
+													{
+														@item.MatricNo <i> - </i>  @item.MatricNo
+													}
+												</span> 
 											}
 											<div class="workload-button">
 												<a href="javascript:void(0);" class="btn btn-primary btn-rounded">New<i class="fas fa-caret-down ms-2 scale5"></i></a>
@@ -87,7 +89,7 @@
 									<p class="fs-18 font-w500">
 										@if (prjt != null)
 										{
-											<iframe seamless class="w-100" height="750" src="/output.pdf">
+											<iframe seamless class="w-100" height="750" src="/output/@ViewBag.fileName">
 												<sspan>Unable to display file, Browser does not support iFrame.</sspan>
 											</iframe>
 										}
@@ -97,24 +99,24 @@
 								@if (prjt != null)
 								{
 									@using (Html.BeginForm("cremark", "project", new { chapterId = @prjt.ChapterId }, FormMethod.Post))
-									{
-										<div class="message1">
-											<textarea class="form-control" id="rTextarea" asp-for="@chapter.Remark" name="Remark" rows="4" placeholder="Type comment here..."></textarea>
-											<div class="msg-button">
-
-												<input type="submit" name="stat" value="Approved" class="btn btn-primary" /> &nbsp;&nbsp;
-												<input type="submit" name="stat" value="Rejected" class="btn btn-primary" />
+										{
+											<div class="message1">
+												<textarea class="form-control" id="rTextarea" asp-for="@chapter.Remark" name="CRemark" rows="4" placeholder="Type comment here..."></textarea>
+												<div class="msg-button">
+													<input type="submit" name="stat" value="Approved" class="btn btn-primary" /> &nbsp;&nbsp;
+													<input type="submit" name="stat" value="Rejected" class="btn btn-primary" />
+												</div>
 											</div>
-										</div>
-									}
+										}
 								}
 
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>	
 
 			</div>
 		</div>
 	</div>
 </div>
+

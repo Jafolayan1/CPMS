@@ -5,13 +5,18 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 
-using GroupDocs.Viewer;
-using GroupDocs.Viewer.Options;
+using Htmx;
+
+using LovePdf.Core;
+using LovePdf.Model.Task;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Options;
+
+using Service.Configuration;
 
 using SPMS.Hubs;
 
@@ -28,10 +33,11 @@ namespace SPMS.Areas.Graduate.Controllers
         private readonly IFileHelper _file;
         private readonly IHubContext<ChatHub> _messgaeHub;
         private readonly IWebHostEnvironment _env;
+        private readonly ILovePdfSettings _pdf;
         private readonly INotyfService _notyf;
 
 
-        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, IHubContext<ChatHub> messgaeHub, IMailService mail, IWebHostEnvironment env, INotyfService notyf) : base(userAccessor, context, mail)
+        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, IHubContext<ChatHub> messgaeHub, IMailService mail, IWebHostEnvironment env, INotyfService notyf, IOptions<ILovePdfSettings> pdf) : base(userAccessor, context, mail)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -39,6 +45,7 @@ namespace SPMS.Areas.Graduate.Controllers
             _messgaeHub = messgaeHub;
             _env = env;
             _notyf = notyf;
+            _pdf = pdf.Value;
         }
 
         [Route("project/index")]
@@ -46,6 +53,7 @@ namespace SPMS.Areas.Graduate.Controllers
         public IActionResult Index()
         {
             var lstProposal = _context.Projects.Find(x => x.SupervisorId.Equals(CurrentStudent.SupervisorId), false);
+
             ViewBag.Students = _context.Students.GetAll();
             ViewData["projectProposal"] = lstProposal;
             ViewData["Noti"] = GetNoti();
@@ -54,24 +62,58 @@ namespace SPMS.Areas.Graduate.Controllers
 
         [Route("project/details")]
         [HttpGet]
-        public IActionResult Details()
+        public IActionResult Details(int chapterId)
         {
             var matric = CurrentStudent.SupervisorId;
-            var prjt = _context.Projects.GetByMatric(matric);
-            if (prjt is not null)
+            var project = _context.Projects.GetByMatric(matric);
+            var chapter = _context.Chapters.GetById(chapterId);
+            string fileName;
+            dynamic manipulateFile;
+            bool fileExist;
+            var output = Path.Combine(_env.WebRootPath, "output");
+
+
+            if (project is not null)
             {
-                var fileName = ManipulateFileUrl(prjt.FileUrl);
-                string output = Path.Combine(_env.WebRootPath, "output");
-                string outputFilePth = Path.Combine(output, fileName);
-                using (var viewer = new Viewer(_env.WebRootPath + prjt.FileUrl))
+                try
                 {
-                    var viewOptions = new PdfViewOptions(outputFilePth);
-                    viewer.View(viewOptions);
+                    fileName = project.FileUrl;
+                    manipulateFile = ManipulateFileUrl(fileName);
+                    fileExist = _file.FileExist(Path.Combine(output, manipulateFile));
+                    if (fileExist)
+                    {
+                        ViewBag.fileName = manipulateFile;
+                    }
+                    else
+                    {
+                        var api = new LovePdfApi(_pdf.Key, _pdf.Secret);
+                        var task = api.CreateTask<OfficeToPdfTask>();
+                        task.AddFile($"{_env.WebRootPath}{fileName}");
+                        task.Process();
+                        task.DownloadFile(output);
+
+                        string[] strname = fileName.Split('.');
+                        var strfileName = $"{strname[0]}.pdf";
+                        ViewBag.fileName = strfileName;
+                    }
+                }
+                catch (Exception)
+                {
+                    TempData["Msg"] = "One or more errors occured, unable to complete request.";
+                }
+            }
+            else
+            {
+                fileName = chapter.FileUrl;
+                manipulateFile = ManipulateFileUrl(fileName);
+                fileExist = _file.FileExist(Path.Combine(output, manipulateFile));
+                if (fileExist)
+                {
+                    ViewBag.fileName = manipulateFile;
                 }
 
-                ViewBag.fileName = fileName;
             }
-            ViewData["project"] = prjt;
+            ViewData["project"] = project;
             ViewData["Noti"] = GetNoti();
             return View();
         }
@@ -175,7 +217,7 @@ namespace SPMS.Areas.Graduate.Controllers
                     foreach (var item in stud)
                     {
                         _name += $"{item.FullName} : ";
-                        _name += $"{item.MatricNo}, ";
+                        //_matric += $"{item.MatricNo}, ";
                     }
                     SendMail($"<p>You have a new file (PROPOSAL) submited by {_name}</p>", supervisorEmail);
                     var noti = new Domain.Entities.Notification()
@@ -200,12 +242,14 @@ namespace SPMS.Areas.Graduate.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEditChapter(Chapter model, [MaybeNull] string name)
         {
+            var supervisorEmail = CurrentStudent.Supervisor.Email;
+            var supervisorId = CurrentStudent.SupervisorId;
             try
             {
                 model.FileUrl = await _file.UploadFile(model.File);
-                if (model.FileUrl is null)
+                if (model.FileUrl.Contains("null"))
                 {
-                    _notyf.Error("Bad file, Chcek file data, rename and try again.");
+                    TempData["Msg"] = model.FileUrl;
                     return RedirectToAction(nameof(Milestone));
                 }
 
@@ -219,15 +263,22 @@ namespace SPMS.Areas.Graduate.Controllers
                 {
                     var chaEntity = _mapper.Map<Chapter>(model);
                     _context.Chapters.Add(chaEntity);
-                    //var chap = _context.Projects.GetAll().Where(x => x.SupervisorId.Equals(CurrentStudent.SupervisorId));
-
-                    //foreach (var item in chap))
-                    //{
-                    //	_name += $"{item.FullName} : ";
-                    //	_name += $"{item.MatricNo}, ";
-                    //sendMail($"<p>You have a new file{model.ChapterName} submited by {_name}</p>", CurrentStudent.Supervisor.Email);
-                    //}
+                    var chap = _context.Projects.GetByMatric(supervisorId);
+                    foreach (var item in chap.Students)
+                    {
+                        _name += $"{item.FullName} : ";
+                        //_matric += $"{item.MatricNo}, ";
+                        SendMail($"<p>You have a new file ({model.ChapterName}) submited by {_name}</p>", supervisorEmail);
+                    }
+                    var noti = new Domain.Entities.Notification()
+                    {
+                        Content = $"CHAPTER submitted by {_name}",
+                        IsRead = false,
+                        SupervisorId = (int)supervisorId
+                    };
+                    AddNoti(noti);
                 }
+
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Milestone));
             }
@@ -238,8 +289,8 @@ namespace SPMS.Areas.Graduate.Controllers
             }
         }
 
-        [Route("project/delete")]
-        public IActionResult Delete(int id)
+        [HttpDelete]
+        public void Delete(int id)
         {
             var chap = _context.Chapters.GetById(id);
             var proposal = _context.Projects.GetById(id);
@@ -249,7 +300,11 @@ namespace SPMS.Areas.Graduate.Controllers
                 _context.Projects.Remove(proposal);
 
             _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+
+            Response.Htmx(htmx =>
+            {
+                htmx.Refresh();
+            });
         }
     }
 }

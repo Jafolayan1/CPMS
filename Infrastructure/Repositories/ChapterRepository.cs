@@ -16,19 +16,18 @@ namespace Infrastructure.Repositories
 		public override IEnumerable<Chapter> Find(Expression<Func<Chapter, bool>> expression, bool trackchanges)
 		{
 			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Students).ThenInclude(s => s.Supervisor)
-				.ThenInclude(d => d.Department).Where(expression).AsSplitQuery();
+				.ThenInclude(d => d.Department).Where(expression).OrderBy(x => x.ChapterId).AsSplitQuery();
 		}
 
 		public override Chapter GetById(object id)
 		{
 			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Students).ThenInclude(s => s.Supervisor)
-				.ThenInclude(d => d.Department).AsNoTracking().FirstOrDefault(x => x.ChapterId.Equals(id));
+				.ThenInclude(d => d.Department).OrderBy(x => x.ChapterId).AsSplitQuery().FirstOrDefault(x => x.ChapterId.Equals(id));
 		}
 
 		public Chapter GetByMatric(string id)
 		{
-			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Students).ThenInclude(s => s.Supervisor)
-				.ThenInclude(d => d.Department).AsSplitQuery().FirstOrDefault(x => x.Matric.Equals(id));
+			return _context.Chapters.Include(u => u.Project).ThenInclude(st => st.Students).ThenInclude(s => s.Supervisor).ThenInclude(d => d.Department).OrderBy(x => x.ChapterId).AsSplitQuery().FirstOrDefault(x => x.Matric.Equals(id));
 		}
 	}
 }

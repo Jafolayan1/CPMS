@@ -4,6 +4,12 @@
     Project pjt = new Project();
 
 }
+<head>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.5" integrity="sha384-7aHh9lqPYGYZ7sTHvzP1t3BAfLhYSTy9ArHdP3Xsr9/3TlGurYgcPBoFmXX2TX/w" crossorigin="anonymous"></script>
+</head>
 
 
 <Partial name="_MilestoneHeader" />
@@ -109,7 +115,6 @@
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <form asp-action="addeditproject" method="post" enctype="multipart/form-data">
-                                                                            class="form-control">
                                                                             <input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
                                                                             <input asp-for="@pjt.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
 
@@ -135,7 +140,7 @@
                                                                                 <div class="col-lg-12">
                                                                                     <div class="mb-3">
                                                                                         <label class="text-black font-w600 form-label">Upload Proposal <span class="required">*</span></label>
-                                                                                        <input asp-for="@pjt.File" name="File" type="file" accept=".doc, .docx, .docs, .pdf" placeholder="@item.FileUrl" required class="form-file-input form-control">
+                                                                                        <input asp-for="@pjt.File" name="File" type="file" accept=".doc, .docx" placeholder="@item.FileUrl" required class="form-file-input form-control">
 
                                                                                     </div>
                                                                                 </div>
@@ -150,7 +155,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <a asp-action="delete" asp-route-id="@item.ProjectId" class="btn btn-danger shadow btn-xs sharp">
+                                                        <a  hx-delete="/graduate/project/cdetails/@item.ProjectId"  class="btn btn-danger shadow btn-xs sharp">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
 
