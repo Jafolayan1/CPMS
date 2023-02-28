@@ -71,7 +71,9 @@ namespace SPMS.Areas.Graduate.Controllers
             dynamic manipulateFile;
             bool fileExist;
             var output = Path.Combine(_env.WebRootPath, "output");
-
+            bool exist = Directory.Exists(output);
+            if (!exist)
+                Directory.CreateDirectory(output);
 
             if (project is not null)
             {

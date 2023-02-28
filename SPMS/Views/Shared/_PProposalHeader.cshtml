@@ -38,10 +38,12 @@
 													<div class="media me-2">
 														<img alt="image" width="50" src="~/assets/images/avatar/8.png">
 													</div>
+													<a class="all-notification" asp-controller="dashboard" asp-action="notify">
 													<div class="media-body">
 														<h6 class="mb-1">@item.Content.Substring(0,10)...</h6>
 														<small class="d-block">@item.When.ToLongDateString() - @item.When.ToShortTimeString()</small>
 													</div>
+													</a>
 												</div>
 											</li>
 										}
@@ -124,10 +126,12 @@
 													<div class="media me-2">
 														<img alt="image" width="50" src="~/assets/images/avatar/8.png">
 													</div>
+													<a class="all-notification" asp-controller="Notification" asp-action="notifications">
 													<div class="media-body">
 														<h6 class="mb-1">@item.Content.Substring(0,10)...</h6>
 														<small class="d-block">@item.When.ToLongDateString() - @item.When.ToShortTimeString()</small>
 													</div>
+													</a>
 												</div>
 											</li>
 										}

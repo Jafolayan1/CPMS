@@ -206,13 +206,13 @@
                                                             @if (ViewBag.Departments != null)
                                                             {
                                                                 <select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))" required>
-                                                                    @if (student.Department != null)
+                                                                    @if (student.SupervisorId != null)
                                                                     {
-                                                                        <option value="@student.DepartmentId"> Please Select </option>
+                                                                        <option value="@student.DepartmentId">  </option>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <option value=""> Please Select </option>
+                                                                        <option value=""> Please Select Department</option>
                                                                     }
 
                                                                 </select>
