@@ -115,7 +115,7 @@ namespace SPMS.Helpers
 
         static int GetPageCount(string filePath)
         {
-            using (Document document = new Document(filePath))
+            using (Document document = new(filePath))
             {
                 return document.PageCount;
             }
