@@ -47,13 +47,13 @@
 											<div class="col-lg-6 mb-2">
 												<div class="mb-3">
 													<label class="text-label form-label">Project Code*</label>
-													<input asp-for="@cpjt.ProjectCode" name="ProjectCode" type="text" value="@CurrentStudent.MatricNo.Substring(0,6)" class="form-control" readonly required>
+													<input name="ProjectCode" type="text" value="@CurrentStudent.MatricNo.Substring(0,2)" class="form-control" readonly required>
 												</div>
 											</div>
 											<div class="col-lg-6 mb-2">
 												<div class="mb-3">
 													<label class="text-label form-label">Department*</label>
-													<select asp-for="@cpjt.DepartmentId" name="DepartmentId" class="form-control wide" id="departmentId" asp-items="@(new	SelectList(ViewBag.Departments,"DepartmentId","Name"))" required>
+													<select name="DepartmentId" class="form-control wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))" required>
 
 														<option value""> Select Department </option>
 

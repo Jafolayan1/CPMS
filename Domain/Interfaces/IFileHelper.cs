@@ -9,5 +9,6 @@ namespace Domain.Interfaces
 		bool FileExist(string imageUrl);
 
 		Task<string> UploadFile(IFormFile file);
+		Task<string> Upload(IFormFile file);
 	}
 }
