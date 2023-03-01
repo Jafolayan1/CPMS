@@ -79,8 +79,8 @@ namespace SPMS.Areas.Staff.Controllers
         public IActionResult ProjectArchive()
         {
             var lstProjects = _context.ProjectArchive.GetAll();
+            ViewData["projectsarchive"] = lstProjects;
             ViewData["Noti"] = GetNoti();
-
             return View(lstProjects);
         }
 
