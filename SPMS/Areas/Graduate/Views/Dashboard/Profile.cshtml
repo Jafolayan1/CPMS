@@ -203,18 +203,13 @@
                                                     <div class="row">
                                                         <div class="mb-3 col-md-6">
                                                             <label class="form-label">Department</label>
-                                                            @if (ViewBag.Departments != null)
+                                                            @if (ViewBag.myDepartments != null)
                                                             {
-                                                                <select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.Departments,"DepartmentId","Name"))" required>
-                                                                    @if (student.SupervisorId != null)
+                                                                <select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.myDepartments,"DepartmentId","Name"))" required>
+                                                                    @if(student.SupervisorId != null)
                                                                     {
-                                                                        <option value="@student.DepartmentId">  </option>
+                                                                        <option value=""> @student.Department.Name</option>
                                                                     }
-                                                                    else
-                                                                    {
-                                                                        <option value=""> Please Select Department</option>
-                                                                    }
-
                                                                 </select>
                                                             }
                                                         </div>

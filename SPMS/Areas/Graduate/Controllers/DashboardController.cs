@@ -65,7 +65,7 @@ namespace SPMS.Areas.Graduate.Controllers
         public IActionResult Profile()
         {
             var student = _context.Students.GetByMatric(CurrentUser.UserName);
-            ViewBag.Departments = _context.Departments.GetAll();
+            ViewBag.myDepartments = _context.Departments.GetAll();
             ViewData["student"] = student;
             ViewData["Noti"] = GetNoti();
             return View();

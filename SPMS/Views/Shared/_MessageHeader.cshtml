@@ -34,22 +34,8 @@
 							<div class="dropdown-menu dropdown-menu-end">
 								<div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
 									<ul class="timeline">
-										@foreach (var item in @noti.Where(x => x.IsRead.Equals(false)))
-										{
-											<li>
-												<div class="timeline-panel">
-													<div class="media me-2">
-														<img alt="image" width="50" src="~/assets/images/avatar/8.png">
-													</div>
-													<a  asp-controller="dashboard" asp-action="notify">
-													<div class="media-body">
-														<h6 class="mb-1">@item.Content.Substring(0,10)...</h6>
-														<small class="d-block">@item.When.ToLongDateString() - @item.When.ToShortTimeString()</small>
-													</div>
-													</a>
-												</div>
-											</li>
-										}
+										<Partial name="_StudentNotiPartial" />
+
 									</ul>
 								</div>
 								<a class="all-notification" asp-controller="dashboard" asp-action="notify">See all notifications <i class="ti-arrow-end"></i></a>
