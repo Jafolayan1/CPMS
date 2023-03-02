@@ -4,8 +4,8 @@
 
 }
 <head>
-    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css
-    https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css
+    <link href="~/assets/vendor/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+  
 </head>
 
 <Partial name="_ProjectArchiveHeader" />
@@ -28,70 +28,32 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            @*<table id="example4" class="display" style="min-width: 845px">
-                            <thead>
-                            <tr>
-                            <th>Title</th>
-                            <th>Code</th>
-                            <th>Case Study</th>
-                            <th>Department </th>
-                            <th>Year</th>
-                            <th>File </th>
-                            <th>Date Submitted</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach(var item in archive)
-                            {
-                            <tr>
-                            <td>@item.ProjectCode</td>
-                            <td>@item.Title</td>
-                            <td>@item.Department</td>
-                            <td>@item.CaseStudy</td>
-                            <td>@item.Year</td>
-                            <td><span class="badge light badge-success">@item.File</span></td>
-                            <td>@item.DateSubmitted</td>
-                            </tr>
-                            }
-                            </tbody>
-                            </table>*@
-
-                            <table id="example" class="table table-striped" style="width:100%">
+                            <table id="example4" class="display" style="min-width: 845px">
                                 <thead>
                                     <tr>
-                                        <th>Code</th>
-                                        <th>Title</th>
-                                        <th>Department </th>
-                                        <th>Case Study</th>
-                                        <th>Year</th>
-                                        <th>File </th>
-                                        <th>Date Submitted</th>
+                                    <th>Code</th>
+                                    <th>Title</th>
+                                    <th>Department </th>
+                                    <th>Case Study</th>
+                                    <th>Year</th>
+                                    <th>File </th>
+                                    <th>Date Submitted</th>
                                     </tr>
-                                </thead>
+                                 </thead>
                                 <tbody>
-                                    @foreach (var item in archive)
+                                    @foreach (var item in archive.Where(x =>x.Department.Name.Equals(CurrentStudent.Department.Name)))
                                     {
                                         <tr>
-                                            <td>@item.ProjectCode</td>
-                                            <td>@item.Title</td>
-                                            <td>@item.Department.Name</td>
-                                            <td>@item.CaseStudy</td>
-                                            <td>@item.Year</td>
-                                            <td><span class="badge light badge-success"><a href="@item.FileUrl" download>Download</a></span></td>
-                                            <td>@item.DateSubmitted</td>
+                                        <td>@item.ProjectCode</td>
+                                        <td>@item.Title</td>
+                                        <td>@item.Department.Name</td>
+                                        <td>@item.CaseStudy</td>
+                                        <td>@item.Year</td>
+                                        <td><span class="badge light badge-success"><a href="@item.FileUrl" download>Download</a></span></td>
+                                        <td>@item.DateSubmitted</td>
                                         </tr>
                                     }
                                 </tbody>
-                               @* <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>*@
                             </table>
                         </div>
                     </div>
@@ -102,10 +64,3 @@
     </div>
 </div>
 
-$(document).ready(function () {
-    $('#example').DataTable();
-});
-
-<script src="https://code.jquery.com/jquery-3.5.1.js" rel="stylesheet"></script>
-<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-<script src=" https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>

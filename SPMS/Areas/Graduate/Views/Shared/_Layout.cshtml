@@ -27,6 +27,8 @@
 	<!-- Style css -->
 	<link href="~/assets/css/style.css" rel="stylesheet">
 
+
+	
 	<!-- Pick date -->
 	<link rel="stylesheet" href="~/assets/vendor/pickadate/themes/default.css">
 	<link rel="stylesheet" href="~/assets/vendor/pickadate/themes/default.date.css">
@@ -78,11 +80,19 @@
 	<script src="~/assets/vendor/pickadate/picker.date.js"></script>
 	<script src="~/assets/js/plugins-init/pickadate-init.js"></script>
 
+
+	<!-- Data Tables-->
+	<script src="~/assets/vendor/datatables/js/jquery.datatables.min.js"></script>
+	<script src="~/assets/js/plugins-init/datatables.init.js"></script>
+	<script src="~/assets/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+
+
 	<script src="~/assets/js/custom.min.js"></script>
 	<script src="~/assets/js/dlabnav-init.js"></script>
 	<script src="~/assets/js/demo.js"></script>
 	@*<script src="~/assets/js/styleSwitcher.js"></script>*@
-
+	@await Component.InvokeAsync("Notyf")
+	@await RenderSectionAsync("Scripts", required: false)
 	<script>
 		$(document).ready(function () {
 			// SmartWizard initialize
@@ -100,7 +110,6 @@
 	}
 	</script>
 
-	@await Component.InvokeAsync("Notyf")
-	@await RenderSectionAsync("Scripts", required: false)
+	
 </body>
 </html>
