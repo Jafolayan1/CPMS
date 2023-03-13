@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var mvcBuilder = builder.Services.AddControllersWithViews();
-if (builder.Environment.IsDevelopment())
-	mvcBuilder.AddRazorRuntimeCompilation();
+	if (builder.Environment.IsDevelopment())
+		mvcBuilder.AddRazorRuntimeCompilation();
 
 ConfigureRepositories.AddServices(builder.Services, builder.Configuration);
 ConfigureDependencies.AddServices(builder.Services, builder.Configuration);

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230222050151_added virtual to some project property")]
-    partial class addedvirtualtosomeprojectproperty
+    [Migration("20230313004139_textDATA")]
+    partial class textDATA
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,6 +87,11 @@ namespace Infrastructure.Migrations
                         new
                         {
                             DepartmentId = 1,
+                            Name = "Please Select Department"
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
                             Name = "Computer Science"
                         });
                 });
@@ -129,6 +134,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("DateSubmitted")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FileData")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileUrl")
                         .IsRequired()
@@ -432,7 +440,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d9e51f11-2ef8-4deb-a073-d3bd552670c4",
+                            ConcurrencyStamp = "58c5ca80-d1ea-4500-a105-2bef7738b82e",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = " Super Admin",
@@ -440,10 +448,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPlRTx+Yo3lnkd/hcAo14hIbXmNki6iljIzPI/qXfeRBR3GYZ570V3U6oUt2pRA+yQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ4AfI4/Qts9LW1UOCv6+5rJCKKpEO/tONsrP4zCIFE9mEBJmXFNo6vB6Szh61DHoQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ed51289e-32a5-43c3-8e71-a3fa35f49f76",
+                            SecurityStamp = "32befb10-c6c7-48a9-84b8-9d42cb3c6758",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });

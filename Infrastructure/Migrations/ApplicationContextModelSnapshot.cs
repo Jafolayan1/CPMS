@@ -85,6 +85,11 @@ namespace Infrastructure.Migrations
                         new
                         {
                             DepartmentId = 1,
+                            Name = "Please Select Department"
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
                             Name = "Computer Science"
                         });
                 });
@@ -127,6 +132,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("DateSubmitted")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FileData")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileUrl")
                         .IsRequired()
@@ -430,7 +438,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "07353eef-d020-41b8-bc6f-85e5a44ffd95",
+                            ConcurrencyStamp = "58c5ca80-d1ea-4500-a105-2bef7738b82e",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = " Super Admin",
@@ -438,10 +446,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKbIEbR6sz1hRSqWWPUGX6xdNQWFT8Uk/MKaRmqhEkHg2rz4AjYHWDuwevZq38MT/g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ4AfI4/Qts9LW1UOCv6+5rJCKKpEO/tONsrP4zCIFE9mEBJmXFNo6vB6Szh61DHoQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "04fec348-479e-444b-a2b5-4e1ab6a17f88",
+                            SecurityStamp = "32befb10-c6c7-48a9-84b8-9d42cb3c6758",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });

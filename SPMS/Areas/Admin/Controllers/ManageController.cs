@@ -258,14 +258,15 @@ namespace SPMS.Areas.Admin.Controllers
                         foreach (var item in _studentAccounts)
                         {
                             var dpt = _context.Departments.GetById(item.Department);
-                            var request = _context.Students.Find(x => x.MatricNo.Equals(item.MatricNo), false);
-                            if (!request.Any())
+                            var request = _context.Students.GetByMatric(item.MatricNo);
+                            if (request == null)
                             {
                                 students.Add(new Student { FullName = item.Names, DepartmentId = dpt.DepartmentId, Level = item.Level, MatricNo = item.MatricNo, ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png" });
                             }
                             else
                             {
-                                _notyf.Warning("Duplicate User Found");
+                                _notyf.Warning($"Duplicate User Found");
+                                students.Clear();
                                 return View(nameof(CreateStudents));
                             }
                         }

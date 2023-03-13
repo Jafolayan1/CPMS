@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class reAdded : Migration
+    public partial class textDATA : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -261,6 +261,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileData = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Remark = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FileUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateSubmitted = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -387,12 +388,16 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FullName", "ImageUrl", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "551ec069-f312-429c-bae2-ef80e15603e8", "admin@gmail.com", true, " Super Admin", "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEF9ayxTbiiyL9yPKFBE8OlFD8/GzU6PgYrwzQQBf6dFLFP1XkLFTOAYEdpn+Z8zlrg==", "1234567890", false, "88ec7834-0d86-4934-a8d9-26e50918d405", false, "Admin" });
+                values: new object[] { 1, 0, "58c5ca80-d1ea-4500-a105-2bef7738b82e", "admin@gmail.com", true, " Super Admin", "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", false, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEJ4AfI4/Qts9LW1UOCv6+5rJCKKpEO/tONsrP4zCIFE9mEBJmXFNo6vB6Szh61DHoQ==", "1234567890", false, "32befb10-c6c7-48a9-84b8-9d42cb3c6758", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Departments",
                 columns: new[] { "DepartmentId", "Name" },
-                values: new object[] { 1, "Computer Science" });
+                values: new object[,]
+                {
+                    { 1, "Please Select Department" },
+                    { 2, "Computer Science" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
