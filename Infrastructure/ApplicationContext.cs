@@ -87,11 +87,6 @@ namespace Infrastructure
                  new Department
                  {
                      DepartmentId = 1,
-                     Name = "Please Select Department",
-                 },
-                 new Department
-                 {
-                     DepartmentId = 2,
                      Name = "Computer Science",
                  });
         }
