@@ -101,11 +101,11 @@
                                                 <td>
                                                     <div class="d-flex">
                                                         @if (@item.Status != "Approved")
-                                                {
-                                                        <a data-bs-toggle="modal" data-bs-target="#editModal_@item.ProjectId" class="btn btn-primary shadow btn-xs sharp me-1">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                }
+                                                        {
+                                                            <a data-bs-toggle="modal" data-bs-target="#editModal_@item.ProjectId" class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                        }
 
                                                         <!-- Modal -->
                                                         <div class="modal fade" id="editModal_@item.ProjectId">
@@ -125,17 +125,19 @@
                                                                                 <div class="col-lg-12">
                                                                                     <div class="mb-3">
                                                                                         <label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
-                                                                                        <textarea placeholder="@item.Topic"  name="Topic"  class="form-control" rows="4" id="comment" required>@item.Topic</textarea>
+                                                                                        <textarea placeholder="@item.Topic" name="Topic" class="form-control" rows="4" id="comment" required>@item.Topic</textarea>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-lg-12">
                                                                                     <div class="mb-4">
                                                                                         <label class="text-black font-w600 form-label">Select Project Student(s) Matric<span class="required">*</span></label>
                                                                                     </div>
-                                                                                    <select asp-for="@pjt.Students" class="multi-select" name="selectedValues@(item.ProjectId)" id="selectedValues@(item.ProjectId)" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
+                                                                                    <select asp-for="@pjt.Students" class="multi-select" name="Student@(item.ProjectId)" id="selectedValues@(item.ProjectId)" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
                                                                                         @if (ViewBag.Students != null)
                                                                                         {
-                                                                                            <option value="selectedValues(@pjt.Students)"> @pjt.Matric </option>
+                                                                                            @*<option value="selectedValues(@pjt.Students)"> @pjt.Matric </option>*@
+                                                                                            <option value="Student(@pjt.Students)"> @pjt.Matric </option>
+
                                                                                         }
                                                                                     </select>
                                                                                 </div>
@@ -157,7 +159,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <a  hx-delete="/graduate/project/delete/@item.ProjectId"  class="btn btn-danger shadow btn-xs sharp">
+                                                        <a hx-delete="/graduate/project/delete/@item.ProjectId" class="btn btn-danger shadow btn-xs sharp">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
 

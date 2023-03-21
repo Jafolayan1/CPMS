@@ -24,6 +24,12 @@
 	<!-- Style css -->
 	<link href="~/assets/css/style.css" rel="stylesheet">
 
+	<!-- Syncfusion ASP.NET Core controls styles -->
+	<link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/20.4.48/fluent.css" />
+
+	<!-- Syncfusion ASP.NET Core controls scripts -->
+	<script src="https://cdn.syncfusion.com/ej2/20.4.48/dist/ej2.min.js"></script>
+
 </head>
 <body>
 
@@ -36,6 +42,7 @@
 
 	<div id="main-wrapper">
 		<Partial name="_Header" />
+		
 		@RenderBody()
 
 		<Partial name="_Footer" />
@@ -101,5 +108,6 @@
 			});
 		}
 	</script>
+	<ejs-scripts></ejs-scripts>
 </body>
 </html>

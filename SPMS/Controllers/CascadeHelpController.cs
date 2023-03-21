@@ -17,13 +17,11 @@ namespace SPMS.Controllers
     public class CascadeHelpController : BaseController
     {
         private readonly ApplicationContext _context;
-        private readonly IWebHostEnvironment _env;
 
 
-        public CascadeHelpController(IUserAccessor userAccessor, ApplicationContext context, IWebHostEnvironment env) : base(userAccessor)
+        public CascadeHelpController(IUserAccessor userAccessor, ApplicationContext context) : base(userAccessor)
         {
             _context = context;
-            _env = env;
         }
 
         public JsonResult getSupervisors(int Id)

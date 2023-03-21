@@ -11,6 +11,11 @@ namespace Infrastructure
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }
+
+        public ApplicationContext()
+        {
+        }
+
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //	optionsBuilder

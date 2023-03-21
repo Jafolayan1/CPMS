@@ -1,0 +1,10 @@
+﻿@page "{handler?}"
+@model ViewerModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <ejs-pdfviewer id="pdfviewer" style="height:600px" serviceUrl="/Viewer" enableDownload="true" documentPath="Files/Test.pdf">
+    </ejs-pdfviewer>
+</div>

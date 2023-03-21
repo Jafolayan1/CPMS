@@ -7,24 +7,23 @@ using Domain.Interfaces;
 
 using Htmx;
 
+using Infrastructure;
+
 using LovePdf.Core;
 using LovePdf.Model.Task;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.CodeAnalysis;
+//using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Options;
-using Microsoft.Office.Interop.Word;
 
 using Service.Configuration;
 
 using SPMS.Hubs;
 
 using System.Diagnostics.CodeAnalysis;
-using System.Web;
 
-using Document = Microsoft.Office.Interop.Word.Document;
 using Project = Domain.Entities.Project;
 
 namespace SPMS.Areas.Graduate.Controllers
@@ -38,9 +37,12 @@ namespace SPMS.Areas.Graduate.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly ILovePdfSettings _pdf;
         private readonly INotyfService _notyf;
+        private readonly ApplicationContext _applicationContext;
 
 
-        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, IHubContext<ChatHub> messgaeHub, IMailService mail, IWebHostEnvironment env, INotyfService notyf, IOptions<ILovePdfSettings> pdf) : base(userAccessor, context, mail)
+
+
+        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, UserManager<User> userManager, IFileHelper file, IHubContext<ChatHub> messgaeHub, IMailService mail, IWebHostEnvironment env, INotyfService notyf, IOptions<ILovePdfSettings> pdf, ApplicationContext applicationContext) : base(userAccessor, context, mail)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -49,13 +51,14 @@ namespace SPMS.Areas.Graduate.Controllers
             _env = env;
             _notyf = notyf;
             _pdf = pdf.Value;
+            _applicationContext = applicationContext;
         }
 
         [Route("project/index")]
         [HttpGet]
         public IActionResult Index()
         {
-            var lstProposal = _context.Projects.Find(x => x.SupervisorId.Equals(CurrentStudent.SupervisorId), false);
+            dynamic lstProposal = _context.Projects.Find(x => x.SupervisorId.Equals(CurrentStudent.SupervisorId), false);
 
             ViewBag.Students = _context.Students.GetAll();
             ViewData["projectProposal"] = lstProposal;
@@ -202,6 +205,11 @@ namespace SPMS.Areas.Graduate.Controllers
             try
             {
                 var id = data["Student"].Select(int.Parse).ToList();
+                if (id.Count <= 0)
+                {
+                    id = data["Student1"].Select(int.Parse).ToList();
+                }
+
                 var stud = new List<Student> { };
                 foreach (var item in id)
                 {
@@ -220,20 +228,34 @@ namespace SPMS.Areas.Graduate.Controllers
 
                 if (model.ProjectId > 0)
                 {
-                    var p = _context.Projects.GetById(model.ProjectId);
-                    var pEntity = _mapper.Map(model, p);
-                    _context.Projects.Update(pEntity);
+                    var project = _context.Projects.GetById(model.ProjectId);
+                    project.Topic = model.Topic;
+                    project.Status = model.Status;
+                    project.Students = model.Students;
+                    project.FileUrl = model.FileUrl;
+
+                    //var person = new Project { ProjectId = project.ProjectId, Topic = model.Topic, Status = model.Status, Students = model.Students, FileUrl = model.FileUrl };
+                    _context.Projects.Update(project);
+                    //_context.SaveChanges();
+
+                    //using (var context = new ApplicationContext())
+                    //{
+                    //    var students = context.Projects.ExecuteSqlRaw("UPDATE Projects SET Topic = {0}, Status = {1},Students = {2}, FileUrl = {3} WHERE ProjectId = {4}", model.Topic, model.Status, model.Students, model.FileUrl, project.ProjectId);
+                    //}
+                    //var paidStudents = _A.Students.FromSqlRaw("UPDATE Projects SET Topic = {0}, Status = {1},Students = {2}, FileUrl = {3}", model.Topic, model.Status, model.Students, model.FileUrl);
                 }
                 else
                 {
-                    Application word = new();
-                    Document doc = word.Documents.Open(model.FileUrl);
-                    //string text = doc.Content.Text;
-                    string html = HttpUtility.HtmlEncode(doc.Content.Text);
-                    doc.Close();
-                    word.Quit();
+                    //Application word = new();
+                    //Document doc = word.Documents.Open(model.FileUrl);
+                    ////string text = doc.Content.Text;
+                    //string html = HttpUtility.HtmlEncode(doc.Content.Text);
+                    //doc.Close();
+                    ////word.Quit();S
+                    //var docs = Path.Combine(_env.WebRootPath, model.FileUrl);
+                    //byte[] fileData = System.IO.File.ReadAllBytes(@"D:\src\repos\CPMS\SPMS\wwwroot/uploads/TEST.docx");
 
-                    model.FileData = html;
+                    //model.FileData = fileData;
                     var projectEntity = _mapper.Map<Project>(model);
                     _context.Projects.Add(projectEntity);
                     foreach (var item in stud)
