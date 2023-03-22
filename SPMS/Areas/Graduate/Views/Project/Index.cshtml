@@ -1,4 +1,9 @@
-﻿@{
+﻿@using SPMS.Helpers;
+@using Domain.Interfaces;
+
+@inject FileHelper _file;
+
+@{
     ViewData["Title"] = "Milestone";
     var proposal = ViewData["projectproposal"] as IEnumerable<Project>;
     Project pjt = new Project();
@@ -79,7 +84,14 @@
                                                     <td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i>  @item.Status</div></td>
                                                 }
                                                 <td>
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ProjectId"> View Remark </a>
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ProjectId">
+                                                        <i class="fa fa-eye text-info" aria-hidden="true"></i>
+                                                        View Remark
+                                                    </a> <br />
+                                                    <a href="@_file.ManipulateFile(@item.FileUrl,"Pdf")" download>
+                                                        <i class="fa fa-cloud-download text-primary me-1" aria-hidden="true"></i>
+                                                    </a>
+
                                                     <div class="modal fade" id="remarkModal_@item.ProjectId">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">

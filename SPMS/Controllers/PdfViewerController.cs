@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 using Syncfusion.EJ2.PdfViewer;
@@ -14,15 +16,17 @@ namespace SPMS.Controllers
     public class PdfViewerController : Controller
     {
         #region Private Variables
-        private readonly IWebHostEnvironment webHost;
-        private readonly IMemoryCache cache;
+        private readonly IWebHostEnvironment _webHost;
+        private readonly IMemoryCache _cache;
+        private readonly INotyfService _notyf;
         #endregion
 
         #region Constructors
-        public PdfViewerController(IWebHostEnvironment webHost, IMemoryCache cache)
+        public PdfViewerController(IWebHostEnvironment webHost, IMemoryCache cache, INotyfService notyf)
         {
-            this.webHost = webHost;
-            this.cache = cache;
+            this._webHost = webHost;
+            this._cache = cache;
+            _notyf = notyf;
         }
         #endregion
 
@@ -33,7 +37,7 @@ namespace SPMS.Controllers
 
             if (!System.IO.File.Exists(document))
             {
-                var dataPath = Path.Combine(webHost.WebRootPath, "Output");
+                var dataPath = Path.Combine(_webHost.WebRootPath, "Output");
 
                 if (System.IO.File.Exists(Path.Combine(dataPath, document)))
                     documentPath = Path.Combine(dataPath, document);
@@ -92,34 +96,34 @@ namespace SPMS.Controllers
                 }
             }
 
-            return json(new PdfRenderer(cache).Load(stream, jsonObject));
+            return json(new PdfRenderer(_cache).Load(stream, jsonObject));
         }
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("RenderPdfPages")]
-        public IActionResult RenderPdfPages([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(cache).GetPage(jsonObject));
+        public IActionResult RenderPdfPages([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(_cache).GetPage(jsonObject));
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("RenderAnnotationComments")]
-        public IActionResult RenderAnnotationComments([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(cache).GetAnnotationComments(jsonObject));
+        public IActionResult RenderAnnotationComments([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(_cache).GetAnnotationComments(jsonObject));
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("RenderThumbnailImages")]
-        public IActionResult RenderThumbnailImages([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(cache).GetThumbnailImages(jsonObject));
+        public IActionResult RenderThumbnailImages([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(_cache).GetThumbnailImages(jsonObject));
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("Bookmarks")]
-        public IActionResult Bookmarks([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(cache).GetBookmarks(jsonObject));
+        public IActionResult Bookmarks([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(_cache).GetBookmarks(jsonObject));
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("ExportAnnotations")]
-        public IActionResult ExportAnnotations([FromBody] Dictionary<string, string> jsonObject) => Content(new PdfRenderer(cache).ExportAnnotation(jsonObject));
+        public IActionResult ExportAnnotations([FromBody] Dictionary<string, string> jsonObject) => Content(new PdfRenderer(_cache).ExportAnnotation(jsonObject));
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("ImportAnnotations")]
         public IActionResult ImportAnnotations([FromBody] Dictionary<string, string> jsonObject)
         {
-            var pdfviewer = new PdfRenderer(cache);
+            var pdfviewer = new PdfRenderer(_cache);
 
             if (jsonObject != null && jsonObject.ContainsKey("fileName"))
             {
@@ -157,18 +161,18 @@ namespace SPMS.Controllers
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("ImportFormFields")]
-        public IActionResult ImportFormFields([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(cache).ImportFormFields(jsonObject));
+        public IActionResult ImportFormFields([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(_cache).ImportFormFields(jsonObject));
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("ExportFormFields")]
-        public IActionResult ExportFormFields([FromBody] Dictionary<string, string> jsonObject) => Content(new PdfRenderer(cache).ExportFormFields(jsonObject));
+        public IActionResult ExportFormFields([FromBody] Dictionary<string, string> jsonObject) => Content(new PdfRenderer(_cache).ExportFormFields(jsonObject));
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("Download")]
         public IActionResult Download([FromBody] Dictionary<string, string> jsonObject)
         {
             string fileName = jsonObject["documentId"].ToString();
-            var base64String = new PdfRenderer(cache).GetDocumentAsBase64(jsonObject).Split(new string[] { "data:application/pdf;base64," }, StringSplitOptions.None)[1];
+            var base64String = new PdfRenderer(_cache).GetDocumentAsBase64(jsonObject).Split(new string[] { "data:application/pdf;base64," }, StringSplitOptions.None)[1];
 
             if (base64String != null || base64String != string.Empty)
             {
@@ -207,9 +211,9 @@ namespace SPMS.Controllers
 
                 ldoc.Save(ms);
                 var path = $"\\output\\{fileName}";
-                System.IO.File.WriteAllBytes(webHost.WebRootPath + path, ms.ToArray());
+                System.IO.File.WriteAllBytes(_webHost.WebRootPath + path, ms.ToArray());
             }
-
+            //_notyf.Success("Changes Saved Succesfully");
             return Ok();
         }
 
@@ -222,7 +226,7 @@ namespace SPMS.Controllers
         [Route("SaveDocument")]
         public ActionResult SaveDocument([FromBody] Dictionary<string, string> jsonObject)
         {
-            var base64String = new PdfRenderer(cache).GetDocumentAsBase64(jsonObject).Split(new string[] { "data:application/pdf;base64," }, StringSplitOptions.None)[1];
+            var base64String = new PdfRenderer(_cache).GetDocumentAsBase64(jsonObject).Split(new string[] { "data:application/pdf;base64," }, StringSplitOptions.None)[1];
 
             if (base64String != null || base64String != string.Empty)
             {
@@ -260,7 +264,7 @@ namespace SPMS.Controllers
                 }
 
                 ldoc.Save(ms);
-                System.IO.File.WriteAllBytes(webHost.WebRootPath + "\\Data\\output.pdf", ms.ToArray());
+                System.IO.File.WriteAllBytes(_webHost.WebRootPath + "\\Data\\output.pdf", ms.ToArray());
             }
 
             return Ok();
@@ -268,17 +272,17 @@ namespace SPMS.Controllers
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("PrintImages")]
-        public IActionResult PrintImages([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(cache).GetPrintImage(jsonObject));
+        public IActionResult PrintImages([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(_cache).GetPrintImage(jsonObject));
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("RenderPdfTexts")]
-        public IActionResult RenderPdfTexts([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(cache).GetDocumentText(jsonObject));
+        public IActionResult RenderPdfTexts([FromBody] Dictionary<string, string> jsonObject) => json(new PdfRenderer(_cache).GetDocumentText(jsonObject));
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("Unload")]
         public IActionResult Unload([FromBody] Dictionary<string, string> jsonObject)
         {
-            new PdfRenderer(cache).ClearCache(jsonObject);
+            new PdfRenderer(_cache).ClearCache(jsonObject);
             return Content("Document cache is cleared");
         }
         #endregion

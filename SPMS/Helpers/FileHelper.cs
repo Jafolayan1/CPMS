@@ -167,5 +167,17 @@ namespace SPMS.Helpers
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[_rnd.Next(s.Length)]).ToArray());
         }
+
+
+        public string ManipulateFile(string fileUrl, string outputExtension)
+        {
+            string outputDirectory = $"{_env.WebRootPath}/output";
+
+            string fileName = Path.GetFileNameWithoutExtension(fileUrl);
+            string outputFileName = $"{fileName}.{outputExtension}";
+            //string outputUrl = Path.Combine(outputDirectory, outputFileName);
+            return "/output/" + outputFileName;
+        }
+
     }
 }
