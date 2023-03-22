@@ -22,7 +22,7 @@
 				<div class="card-header">
 					<h4 class="card-title">Profile Students</h4>
 					<div>
-						<a asp-controller="manage" asp-action="createstudents" class="btn btn-primary mb-2">Upload Csv</a>
+						<a asp-controller="manage" asp-action="createstudents" onclick="showPreloader()" class="btn btn-primary mb-2">Upload Csv</a>
 						<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#basicModal">Add</button>
 					</div>
 
@@ -57,7 +57,7 @@
 										<td>
 											<div class="d-flex">
 												<a href="#" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-												<a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+												<a href="#" class="btn btn-danger shadow btn-xs sharp" onclick="showPreloader()"><i class="fa fa-trash"></i></a>
 											</div>
 										</td>
 									</tr>
@@ -120,3 +120,5 @@
 		</div>
 	</div>
 </div>
+
+<script src="~/js\loading.js"></script>

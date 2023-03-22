@@ -77,3 +77,16 @@ function saveCRemark() {
         }
     });
 }
+
+function readNoti(notificationId) {
+    $.ajax({
+        url: "/notifications/" + notificationId,
+        type: "GET",
+        success: function (response) {
+            // Handle success response
+        },
+        error: function (xhr) {
+            // Handle error response
+        }
+    });
+}

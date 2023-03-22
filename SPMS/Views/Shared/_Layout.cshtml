@@ -66,14 +66,14 @@
     <script src="~/assets/js/custom.min.js"></script>
     <script src="~/assets/js/dlabnav-init.js"></script>
     <script src="~/assets/js/demo.js"></script>
-     <script>
-    // Check that service workers are supported
-    if ('serviceWorker' in navigator) {
-        // Use the window load event to keep the page load performant
-        window.addEventListener('load', () => {
+    <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/js/sw.js');
-        });
-    }
+            });
+        }
     </script>
     <!-- Syncfusion ASP.NET Core Script Manager -->
     <ejs-scripts></ejs-scripts>

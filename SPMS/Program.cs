@@ -1,10 +1,9 @@
 using Domain.Entities;
 
-using Newtonsoft.Json.Serialization;
-
 using Service.Configuration;
 
 using SPMS.Extension;
+using SPMS.Helpers;
 using SPMS.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,20 +21,22 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddRazorPages();
+//builder.Services.AddRazorPages();
 
 
-var mvcBuilder = builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
-{
-    // Use the default property (Pascal) casing
-    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-}); ;
+var mvcBuilder = builder.Services.AddControllersWithViews(); //.AddNewtonsoftJson(options =>
+//{
+//    // Use the default property (Pascal) casing
+//    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+//}); 
 if (builder.Environment.IsDevelopment())
     mvcBuilder.AddRazorRuntimeCompilation();
 
 
 var settings = builder.Configuration.GetSection("Syncfussion").Get<Syncfussion>();
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(settings.Key);
+
+builder.Services.AddScoped<FileHelper>();
 
 var app = builder.Build();
 
@@ -74,6 +75,6 @@ app.MapControllerRoute(
     pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.MapHub<ChatHub>($"/{nameof(ChatHub)}");
-app.MapRazorPages();
+//app.MapRazorPages();
 
 app.Run();
