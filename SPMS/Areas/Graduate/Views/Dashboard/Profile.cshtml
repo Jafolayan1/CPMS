@@ -6,7 +6,7 @@
 }
 
 <head>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 </head>
@@ -20,7 +20,7 @@
 
         <div class="row page-titles">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">App</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Profile</a></li>
             </ol>
         </div>
@@ -214,6 +214,10 @@
                                                                 {
                                                                     <option value="@student.SupervisorId"> @student.Supervisor.FullName </option>
                                                                 }
+                                                                else
+                                                                {
+                                                                    <option></option>
+                                                                }
                                                             </select>
                                                         </div>
                                                     </div>
@@ -276,14 +280,14 @@
             var ddlSource = "#departmentId";
             $.getJSON(url, { Id: $(ddlSource).val() }, function (dat) {
                 var items = "";
-                $("#supervisorId").empty();
                 $.each(dat, function (i, row) {
-                    items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                    items += "<option value= '" + row.Value + "'>" + row.Text + "</option>";
                 });
+                // append the items to the existing supervisor dropdown list
                 $("#supervisorId").html(items);
+                
+
             });
         });
     });
-</script>
-
-<script src="~/js\loading.js"></script>
+</script>   

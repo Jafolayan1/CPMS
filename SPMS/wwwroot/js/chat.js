@@ -18,6 +18,6 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     connection.invoke("SendMessage", user, message).catch(function (err) {
         return console.error(err.toString());
     });
-    document.getElementById("userInput").value = "";
+    document.getElementById("messageInput").value = "";
     event.preventDefault();
 });

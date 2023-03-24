@@ -35,9 +35,10 @@
 					<p>Then proceed to submit your project proposal</p>
 				</div>
 				<div class="modal-footer">
-					<a asp-controller="dashboard"  asp-action="profile" class="btn btn-danger light">Ok,Thanks</a>
+					<a asp-controller="dashboard" asp-action="profile" onclick="showPreloader()" class="btn btn-danger light">Ok,Thanks</a>
 				</div>
 			</div>
 		</div>
 	</div>
 }
+<script src="~/js/loading.js"></script>

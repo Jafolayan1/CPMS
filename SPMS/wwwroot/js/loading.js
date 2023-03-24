@@ -1,10 +1,4 @@
 function showPreloader() {
-    //const buttonToShow = document.getElementById("button-to-show");
-    //buttonToShow.removeAttribute("hidden");
-
-    //const hideButton = document.getElementById("hide-button");
-    //hideButton.style.display = "none";
-
     const overlay = document.createElement("div");
     overlay.style.position = "fixed";
     overlay.style.top = "0";
@@ -31,22 +25,22 @@ function showPreloader() {
     spinner.style.transform = "translate(-50%, -50%)";
 }
 
-// add a click event listener to all buttons and links
-const buttons = document.queryselectorall('button:not([data-bs-toggle="modal"][data-bs-dismiss][data-dismiss]):not(#noloader)');
-const links = document.queryselectorall('a:not([data-bs-toggle="modal"][data-bs-dismiss]):not(#noloader)');
+// Add a click event listener to all buttons and links
+const buttons = document.querySelectorAll('button:not([data-bs-toggle="modal"]):not([data-bs-dismiss]):not(#noloader)');
+const links = document.querySelectorAll('a:not([data-bs-toggle="modal"]):not([data-bs-dismiss]):not([href="javascript:void()"]):not(.nav-text):not(i):not(#noloader)');
 
-buttons.foreach((button) => {
-    button.addeventlistener('click', function (event) {
-        if (!event.target.hasattribute('data-bs-toggle') && !event.target.hasattribute('data-bs-dismiss') && !event.target.hasattribute('data-dismiss') && !event.target.classlist.contains('nav-text') && event.target.tagname !== 'i') {
-            showpreloader();
+buttons.forEach((button) => {
+    button.addEventListener('click', function (event) {
+        if (event.target.getAttribute('data-bs-dismiss') === null && event.target.id !== 'noloader') {
+            showPreloader();
         }
     });
 });
 
-links.foreach((link) => {
-    link.addeventlistener('click', function (event) {
-        if (!event.target.hasattribute('data-bs-toggle') && !event.target.hasattribute('data-bs-dismiss') && !event.target.classlist.contains('nav-text') && event.target.tagname !== 'i' && event.target.getattribute('href') !== 'javascript:void()' && event.target.id !== 'noloader') {
-            showpreloader();
+links.forEach((link) => {
+    link.addEventListener('click', function (event) {
+        if (event.target.getAttribute('data-bs-dismiss') === null && event.target.id !== 'noloader') {
+            showPreloader();
         }
     });
 });

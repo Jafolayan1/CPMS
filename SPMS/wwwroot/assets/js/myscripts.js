@@ -68,7 +68,7 @@ function saveCRemark() {
         },
         success: function (data) {
             // check if data indicates success
-            window.location.href = "/staff/project/milestone";
+            window.location.href = "/milestone";
 
             //if (data === "success") {
             //    // redirect to home/good page

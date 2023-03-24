@@ -135,6 +135,7 @@
                                                                         <form asp-action="addeditproject" method="post" enctype="multipart/form-data">
                                                                             <input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
                                                                             <input asp-for="@pjt.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
+                                                                            <input asp-for="@pjt.ProjectStudentId" name="projectstudentid" value="@CurrentStudent.StudentId" type="hidden" class="form-control">
 
 
                                                                             <div class="row">
@@ -209,6 +210,8 @@
                 <form asp-action="addeditproject" method="post" enctype="multipart/form-data">
                     <input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
                     <input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
+                    <input asp-for="@pjt.ProjectStudentId" name="projectstudentid" value="@CurrentStudent.StudentId" type="hidden" class="form-control">
+
 
                     <div class="row">
                         <div class="col-lg-12">

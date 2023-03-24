@@ -23,47 +23,51 @@
 
             <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
                 <div class="widget-stat card bg-primary">
-                    <div class="card-body  p-4">
-                        <div class="media">
-                            <span class="me-3">
-                                <i class="la la-users"></i>
-                            </span>
-                            <div class="media-body text-white">
-                                <p class="mb-1">Project Students</p>
-                                @if (students != null)
-                                {
-                                    <h3 class="text-white">@students.ProjectStudents.Count</h3>
-                                }
-                                else
-                                {
-                                    <h3 class="text-white">0</h3>
-                                }
-                                @*<div class="progress mb-2 bg-secondary">
-                                <div class="progress-bar progress-animated bg-light" style="width: 80%"></div>
+                    <a asp-controller="project" asp-action="pstudent">
+                        <div class="card-body  p-4">
+                            <div class="media">
+                                <span class="me-3">
+                                    <i class="la la-users"></i>
+                                </span>
+                                <div class="media-body text-white">
+                                    <p class="mb-1">Project Students</p>
+                                    @if (students != null)
+                                    {
+                                        <h3 class="text-white">@students.ProjectStudents.Count</h3>
+                                    }
+                                    else
+                                    {
+                                        <h3 class="text-white">0</h3>
+                                    }
+                                    @*<div class="progress mb-2 bg-secondary">
+                                    <div class="progress-bar progress-animated bg-light" style="width: 80%"></div>
+                                    </div>
+                                    <small>8</small>*@
                                 </div>
-                                <small>8</small>*@
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
                 <div class="widget-stat card bg-primary">
-                    <div class="card-body  p-4">
-                        <div class="media">
-                            <span class="me-3">
-                                <i class="fa fa-file-archive-o" aria-hidden="true"></i>
-                            </span>
-                            <div class="media-body text-white">
-                                <p class="mb-1">Project Archive</p>
-                                <h3 class="text-white">@projectarchive.Count()</h3>
-                                @*<div class="progress mb-2 bg-secondary">
-                                <div class="progress-bar progress-animated bg-light" style="width: 80%"></div>
+                    <a asp-controller="project" asp-action="projectarchive">
+                        <div class="card-body  p-4">
+                            <div class="media">
+                                <span class="me-3">
+                                    <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+                                </span>
+                                <div class="media-body text-white">
+                                    <p class="mb-1">Project Archive</p>
+                                    <h3 class="text-white">@projectarchive.Count()</h3>
+                                    @*<div class="progress mb-2 bg-secondary">
+                                    <div class="progress-bar progress-animated bg-light" style="width: 80%"></div>
+                                    </div>
+                                    <small>8</small>*@
                                 </div>
-                                <small>8</small>*@
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -71,44 +75,50 @@
 
             <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
                 <div class="widget-stat card">
-                    <div class="card-body p-4">
-                        <div class="media ai-icon">
-                            <span class="me-3 bgl-warning text-secondary">
-                                <!-- <i class="ti-user"></i> -->
-                                <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </span>
-                            <div class="media-body">
-                                <p class="mb-1">Submitted Proposals</p>
-                                <h4 class="mb-0">@projects.Count()</h4>
-                                @*<span class="badge badge-primary">+3.5%</span>*@
+                    <a asp-controller="project" asp-action="proposal">
+
+                        <div class="card-body p-4">
+                            <div class="media ai-icon">
+                                <span class="me-3 bgl-warning text-secondary">
+                                    <!-- <i class="ti-user"></i> -->
+                                    <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </span>
+                                <div class="media-body">
+                                    <p class="mb-1">Submitted Proposals</p>
+                                    <h4 class="mb-0">@projects.Count()</h4>
+                                    @*<span class="badge badge-primary">+3.5%</span>*@
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
 
             <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
                 <div class="widget-stat card">
-                    <div class="card-body p-4">
-                        <div class="media ai-icon">
-                            <span class="me-3 bgl-info text-info">
-                                <!-- <i class="ti-user"></i> -->
-                                <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </span>
-                            <div class="media-body">
-                                <p class="mb-1">Submitted Chapters</p>
-                                <h4 class="mb-0">@chapters.Count()</h4>
-                                @*<span class="badge badge-primary">+3.5%</span>*@
+                    <a asp-controller="project" asp-action="milestone">
+
+                        <div class="card-body p-4">
+                            <div class="media ai-icon">
+                                <span class="me-3 bgl-info text-info">
+                                    <!-- <i class="ti-user"></i> -->
+                                    <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </span>
+                                <div class="media-body">
+                                    <p class="mb-1">Submitted Chapters</p>
+                                    <h4 class="mb-0">@chapters.Count()</h4>
+                                    @*<span class="badge badge-primary">+3.5%</span>*@
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
