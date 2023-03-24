@@ -31,23 +31,22 @@ function showPreloader() {
     spinner.style.transform = "translate(-50%, -50%)";
 }
 
-// Add a click event listener to all buttons and links
-const buttons = document.querySelectorAll('button:not([data-bs-toggle="modal"][data-bs-dismiss]):not(#noloader)');
-const links = document.querySelectorAll('a:not([data-bs-toggle="modal"][data-bs-dismiss]):not(#noloader)');
+// add a click event listener to all buttons and links
+const buttons = document.queryselectorall('button:not([data-bs-toggle="modal"][data-bs-dismiss][data-dismiss]):not(#noloader)');
+const links = document.queryselectorall('a:not([data-bs-toggle="modal"][data-bs-dismiss]):not(#noloader)');
 
-buttons.forEach((button) => {
-    button.addEventListener('click', function (event) {
-        if (!event.target.hasAttribute('data-bs-toggle') && !event.target.hasAttribute('data-bs-dismiss') && !event.target.classList.contains('nav-text') && event.target.tagName !== 'I') {
-            showPreloader();
+buttons.foreach((button) => {
+    button.addeventlistener('click', function (event) {
+        if (!event.target.hasattribute('data-bs-toggle') && !event.target.hasattribute('data-bs-dismiss') && !event.target.hasattribute('data-dismiss') && !event.target.classlist.contains('nav-text') && event.target.tagname !== 'i') {
+            showpreloader();
         }
     });
 });
 
-links.forEach((link) => {
-    link.addEventListener('click', function (event) {
-        if (!event.target.hasAttribute('data-bs-toggle') && !event.target.hasAttribute('data-bs-dismiss') && !event.target.classList.contains('nav-text') && event.target.tagName !== 'I' && event.target.getAttribute('href') !== 'javascript:void()' && event.target.id !== 'noloader') {
-            showPreloader();
+links.foreach((link) => {
+    link.addeventlistener('click', function (event) {
+        if (!event.target.hasattribute('data-bs-toggle') && !event.target.hasattribute('data-bs-dismiss') && !event.target.classlist.contains('nav-text') && event.target.tagname !== 'i' && event.target.getattribute('href') !== 'javascript:void()' && event.target.id !== 'noloader') {
+            showpreloader();
         }
     });
 });
-
