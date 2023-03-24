@@ -32,12 +32,12 @@ function showPreloader() {
 }
 
 // Add a click event listener to all buttons and links
-const buttons = document.querySelectorAll('button:not([data-bs-toggle="modal"][data-bs-dismiss])');
-const links = document.querySelectorAll('a:not([data-bs-toggle="modal"][data-bs-dismiss])');
+const buttons = document.querySelectorAll('button:not([data-bs-toggle="modal"][data-bs-dismiss]):not(#noloader)');
+const links = document.querySelectorAll('a:not([data-bs-toggle="modal"][data-bs-dismiss]):not(#noloader)');
 
 buttons.forEach((button) => {
     button.addEventListener('click', function (event) {
-        if (!event.target.hasAttribute('data-bs-toggle') && !event.target.hasAttribute('data-bs-dismiss') && !event.target.classList.contains('nav-text')) {
+        if (!event.target.hasAttribute('data-bs-toggle') && !event.target.hasAttribute('data-bs-dismiss') && !event.target.classList.contains('nav-text') && event.target.tagName !== 'I') {
             showPreloader();
         }
     });
@@ -45,7 +45,7 @@ buttons.forEach((button) => {
 
 links.forEach((link) => {
     link.addEventListener('click', function (event) {
-        if (!event.target.hasAttribute('data-bs-toggle') && !event.target.hasAttribute('data-bs-dismiss') && !event.target.classList.contains('nav-text') && event.target.getAttribute('href') !== 'javascript:void()') {
+        if (!event.target.hasAttribute('data-bs-toggle') && !event.target.hasAttribute('data-bs-dismiss') && !event.target.classList.contains('nav-text') && event.target.tagName !== 'I' && event.target.getAttribute('href') !== 'javascript:void()' && event.target.id !== 'noloader') {
             showPreloader();
         }
     });

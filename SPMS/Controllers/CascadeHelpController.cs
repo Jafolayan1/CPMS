@@ -32,6 +32,15 @@ namespace SPMS.Controllers
             return Json(new SelectList(list, "SupervisorId", "FullName"));
         }
 
+        [HttpGet]
+        public JsonResult notification(int notificationId)
+        {
+            var noti = _context.Notifications.FirstOrDefault(x => x.NotificationId == notificationId);
+            noti.IsRead = true;
+            _context.Update(noti);
+            return Json(noti);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

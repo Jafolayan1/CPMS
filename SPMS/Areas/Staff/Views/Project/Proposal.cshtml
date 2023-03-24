@@ -58,7 +58,9 @@
                                             <td class="py-2">@item.DateSubmitted.ToShortDateString()</td>
                                             <td class="py-2">@item.Topic</td>
                                             <td>
-                                                <a asp-action="details" asp-route-projectId="@item.ProjectId">Read Proposal</a>
+                                                <a asp-action="details" asp-route-projectId="@item.ProjectId" class="btn light btn-info shadow btn-xs sharp me-1" data-toggle="tooltip" data-placement="top" title="Click to read file">
+                                                    <i class="fa fa-book" aria-hidden="true"></i>
+                                                </a>
                                             </td>
                                             <td class="py-2 text-end">
                                                 <span class="badge badge-warning">@item.Status<span class="ms-1 fas fa-stream"></span></span>
@@ -82,4 +84,4 @@
         </div>
     </div>
 </div>
-    <script src="~/js\loading.js"></script>
+<script src="~/js\loading.js"></script>

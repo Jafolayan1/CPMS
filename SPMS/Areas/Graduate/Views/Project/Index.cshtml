@@ -70,7 +70,11 @@
                                                 <td>@CurrentStudent.MatricNo</td>
 
                                                 <td>@item.Topic</td>
-                                                <td><a href="@item.FileUrl" download>Dowload File</a></td>
+                                                <td>
+                                                    <a href="@item.FileUrl" download class="btn light btn-info shadow btn-xs sharp me-1" data-toggle="tooltip" data-placement="top" title="Click to download original doc">
+                                                        <i class="fa fa-download"></i>
+                                                    </a>
+                                                </td>
                                                 @if (@item.Status.Equals("Approved"))
                                                 {
                                                     <td><div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> @item.Status</div></td>
@@ -84,12 +88,12 @@
                                                     <td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i>  @item.Status</div></td>
                                                 }
                                                 <td>
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ProjectId" data-toggle="tooltip" data-placement="top" title="Click to view supervisor's comment">
-                                                        <i class="fa fa-eye text-info fa-2x" aria-hidden="true"></i>
-                                                        
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ProjectId" class="btn light btn-info shadow btn-xs sharp me-1" data-toggle="tooltip" data-placement="top" title="Click to view supervisor's comment">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+
                                                     </a>&nbsp;
-                                                    <a href="@_file.ManipulateFile(@item.FileUrl,"Pdf")" download data-toggle="tooltip" data-placement="top" title="Click to download supervisor's changes">
-                                                        <i class="fa fa-cloud-download text-primary me-1 fa-2x" aria-hidden="true"></i>
+                                                    <a href="@_file.ManipulateFile(@item.FileUrl,"Pdf")" download class="btn light btn-info shadow btn-xs sharp me-1" data-toggle="tooltip" data-placement="top" title="Click to download supervisor's changes">
+                                                        <i class="fa fa-download" aria-hidden="true"></i>
                                                     </a>
 
                                                     <div class="modal fade" id="remarkModal_@item.ProjectId">

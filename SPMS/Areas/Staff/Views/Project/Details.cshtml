@@ -92,19 +92,18 @@
                                     </div>
                                 </div>
                                 <div class="project-description">
-                                    <span class="fs-18 font-w500 mb-3 d-block">PROJECT ABSTRACT</span>
-                                    <p class="fs-18 font-w500">
-                                        @if (prjt != null)
-                                        {
-                                            <button class="btn btn-primary btn-sl-sm me-2" type="button" onclick="location.reload()">Click me if you cant see file</button>
+                                    <span class="fs-18 font-w500 mb-3 d-block">PROJECT ABSTRACT<span style="float:right; margin-bottom:12px;"><button class="btn light btn-primary btn-sl-sm me-2" type="button" onclick="location.reload()">Click me if you cant see file</button></span></span>
 
+                                    @if (prjt != null)
+                                    {
+
+                                        <p class="fs-18 font-w500">
                                             <div>
                                                 <ejs-pdfviewer id="pdfviewer" serviceUrl="/api/PdfViewer" isAnnotationToolbarOpen="true" enableThumbnail="false" enablePrint="false" documentPath="@ViewBag.fileName"></ejs-pdfviewer>
 
                                             </div>
-
-                                        }
-                                    </p>
+                                        </p>
+                                    }
 
                                 </div>
                                 @if (prjt != null)
@@ -114,8 +113,9 @@
                                         <input type="hidden" id="status" value="Pending" />
                                         <input type="hidden" id="projectId" value="@prjt.ProjectId" />
                                     </div>
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-primary btn-sl-sm me-2" type="button" onclick="downloadDocument()">Save Changes</button>
+
+                                    <div class="d-flex justify-content-end mt-4">
+                                        <button class="btn btn-primary btn-sl-sm me-2" type="button" id="noloader" onclick="downloadDocument()">Save Changes</button>
                                         <button class="btn btn-secondary btn-sl-sm me-2" type="button" onclick="saveRemark()"><span class="me-2"><i class="fa fa-paper-plane"></i></span>Send</button>
                                     </div>
                                 }

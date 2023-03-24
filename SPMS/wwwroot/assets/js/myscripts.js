@@ -39,13 +39,14 @@ function saveRemark() {
         },
         success: function (data) {
             // check if data indicates success
-            if (data === "success") {
-                // redirect to home/good page
                 window.location.href = "/staff/project/proposal";
-            } else {
-                // handle failure case
-                console.log("Remark save failed");
-            }
+            //if (data === "success") {
+            //    // redirect to home/good page
+            //    console.log(data);
+            //} else {
+            //    // handle failure case
+            //    console.log("Remark save failed");
+            //}
         }
     });
 }
@@ -67,20 +68,22 @@ function saveCRemark() {
         },
         success: function (data) {
             // check if data indicates success
-            if (data === "success") {
-                // redirect to home/good page
-                window.location.href = "/staff/project/proposal";
-            } else {
-                // handle failure case
-                console.log("CRemark save failed");
-            }
+            window.location.href = "/staff/project/milestone";
+
+            //if (data === "success") {
+            //    // redirect to home/good page
+            //    window.location.href = "/staff/project/proposal";
+            //} else {
+            //    // handle failure case
+            //    console.log("CRemark save failed");
+            //}
         }
     });
 }
 
 function readNoti(notificationId) {
     $.ajax({
-        url: "/notifications/" + notificationId,
+        url: "/cascadehelp/notification?notificationId=" + notificationId,
         type: "GET",
         success: function (response) {
             // Handle success response

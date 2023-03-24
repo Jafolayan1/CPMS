@@ -1,5 +1,7 @@
 using Domain.Entities;
 
+using Newtonsoft.Json.Serialization;
+
 using Service.Configuration;
 
 using SPMS.Extension;
@@ -17,20 +19,21 @@ builder.Services.AddProgressiveWebApp();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromHours(12);
-    options.Cookie.IsEssential = true;
+	options.IdleTimeout = TimeSpan.FromHours(12);
+	options.Cookie.IsEssential = true;
 });
 
 //builder.Services.AddRazorPages();
 
 
-var mvcBuilder = builder.Services.AddControllersWithViews(); //.AddNewtonsoftJson(options =>
-//{
-//    // Use the default property (Pascal) casing
-//    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-//}); 
+var mvcBuilder = builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
+{
+	// Use the default property (Pascal) casing
+	options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+});
+
 if (builder.Environment.IsDevelopment())
-    mvcBuilder.AddRazorRuntimeCompilation();
+	mvcBuilder.AddRazorRuntimeCompilation();
 
 
 var settings = builder.Configuration.GetSection("Syncfussion").Get<Syncfussion>();
@@ -50,9 +53,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	app.UseExceptionHandler("/Home/Error");
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
 }
 
 app.UseCookiePolicy();
@@ -67,12 +70,12 @@ app.UseAuthorization();
 app.UseSession();
 
 app.MapControllerRoute(
-     name: "areas",
-     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+	 name: "areas",
+	 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+	name: "default",
+	pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.MapHub<ChatHub>($"/{nameof(ChatHub)}");
 //app.MapRazorPages();

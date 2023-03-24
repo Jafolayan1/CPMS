@@ -36,7 +36,14 @@ namespace SPMS.Areas.Graduate.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
             ViewData["Noti"] = GetNoti();
+            var matric = CurrentUser.UserName;
+            //var id = CurrentSupervisor.SupervisorId;
+
+            ViewData["projects"] = _context.Students.GetByMatric(matric);
+            //ViewData["chapters"] = _context.Chapters.GetAll();
+            //ViewData["proposals"] = _context.Projects.GetAll().Where(x => x.SupervisorId == id);
 
             return View();
         }
