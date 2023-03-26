@@ -1,6 +1,4 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 using Syncfusion.EJ2.PdfViewer;
@@ -18,15 +16,13 @@ namespace SPMS.Controllers
         #region Private Variables
         private readonly IWebHostEnvironment _webHost;
         private readonly IMemoryCache _cache;
-        private readonly INotyfService _notyf;
         #endregion
 
         #region Constructors
-        public PdfViewerController(IWebHostEnvironment webHost, IMemoryCache cache, INotyfService notyf)
+        public PdfViewerController(IWebHostEnvironment webHost, IMemoryCache cache)
         {
             this._webHost = webHost;
             this._cache = cache;
-            _notyf = notyf;
         }
         #endregion
 

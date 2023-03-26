@@ -4,8 +4,6 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-using Newtonsoft.Json.Linq;
-
 using SPMS.Models;
 
 using System.Diagnostics;
@@ -33,43 +31,20 @@ namespace SPMS.Controllers
             return View();
         }
 
-        public IActionResult Create(Message model)
-        {
-            if (ModelState.IsValid)
-            {
-                model.Username = CurrentUser.UserName;
-                var sender = _userManager.GetUserAsync(User);
-                model.UserId = sender.Id;
-                _context.Messages.Add(model);
-                _context.SaveChanges();
-                return Ok();
-            }
-            return Error();
-        }
+        //public IActionResult Create(Message model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        model.Username = CurrentUser.UserName;
+        //        var sender = _userManager.GetUserAsync(User);
+        //        model.UserId = sender.Id;
+        //        _context.Messages.Add(model);
+        //        _context.SaveChanges();
+        //        return Ok();
+        //    }
+        //    return Error();
+        //}
 
-
-        [HttpPost]
-        public IActionResult SaveEdits([FromBody] JObject data)
-        {
-            try
-            {
-                // Get PDF data from request body
-                string pdfData = (string)data["pdfData"];
-
-                // Convert base64 string to byte array
-                byte[] pdfBytes = Convert.FromBase64String(pdfData);
-
-                // Save PDF to server
-                string filePath = Path.Combine(_env.WebRootPath, "sample_edited.pdf");
-                System.IO.File.WriteAllBytes(filePath, pdfBytes);
-
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
 
         public IActionResult Privacy()
         {

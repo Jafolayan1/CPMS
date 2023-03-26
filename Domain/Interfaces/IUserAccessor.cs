@@ -2,12 +2,12 @@
 
 namespace Domain.Interfaces
 {
-	public interface IUserAccessor
-	{
-		User GetUser();
+    public interface IUserAccessor
+    {
+        User GetUser();
 
-		Student GetStudent();
+        Student GetStudent();
 
-		Supervisor GetSupervisor();
-	}
+        Supervisor GetSupervisor();
+    }
 }
