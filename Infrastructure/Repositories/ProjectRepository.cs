@@ -13,14 +13,14 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public override IEnumerable<Project> GetAll()
+        public override IQueryable<Project> GetAll()
         {
-            return _context.Projects.Include(st => st.Students).Include(su => su.Supervisor).Include(c => c.Chapters).AsSplitQuery().ToList();
+            return _context.Projects.Include(st => st.Students).Include(su => su.Supervisor).Include(c => c.Chapters).AsSplitQuery();
         }
 
-        public override IEnumerable<Project> Find(Expression<Func<Project, bool>> expression, bool trackchanges)
+        public override IQueryable<Project> Find(Expression<Func<Project, bool>> expression, bool trackchanges)
         {
-            return _context.Projects.Include(x => x.Students).Where(expression).OrderBy(x => x.ProjectId).AsSplitQuery().ToList();
+            return _context.Projects.Include(x => x.Students).Include(c => c.Chapters).Where(expression).OrderBy(x => x.ProjectId).AsSplitQuery();
         }
 
         public override Project GetById(object id)

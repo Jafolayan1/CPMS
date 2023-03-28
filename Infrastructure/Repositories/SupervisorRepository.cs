@@ -23,9 +23,9 @@ namespace Infrastructure.Repositories
                 .ThenInclude(s => s.Projects).OrderBy(o => o.FullName).AsNoTracking().FirstOrDefault(x => x.FileNo.Equals(id));
         }
 
-        public override IEnumerable<Supervisor> GetAll()
+        public override IQueryable<Supervisor> GetAll()
         {
-            return _context.Supervisors.Include(u => u.User).Include(d => d.Department).Include(s => s.ProjectStudents).ThenInclude(s => s.Projects).AsNoTracking().OrderBy(o => o.FullName).ToList();
+            return _context.Supervisors.Include(u => u.User).Include(d => d.Department).Include(s => s.ProjectStudents).ThenInclude(s => s.Projects).AsNoTracking().OrderBy(o => o.FullName);
         }
     }
 }

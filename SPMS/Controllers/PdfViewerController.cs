@@ -209,7 +209,6 @@ namespace SPMS.Controllers
                 var path = $"\\output\\{fileName}";
                 System.IO.File.WriteAllBytes(_webHost.WebRootPath + path, ms.ToArray());
             }
-            //_notyf.Success("Changes Saved Succesfully");
             return Ok();
         }
 
@@ -288,47 +287,3 @@ namespace SPMS.Controllers
 
 
 
-//public IActionResult Download([FromBody] Dictionary<string, string> jsonObject)
-//{
-//    var ms = new MemoryStream();
-//    var base64String = new PdfRenderer(cache).GetDocumentAsBase64(jsonObject).Split(new string[] { "data:application/pdf;base64," }, StringSplitOptions.None)[1];
-
-//    if (base64String != null || base64String != string.Empty)
-//    {
-//        var ldoc = new PdfLoadedDocument(Convert.FromBase64String(base64String));
-
-//        if (ldoc.Form == null)
-//            ldoc.CreateForm();
-
-//        for (int i = 0; i < ldoc.PageCount; i++)
-//        {
-//            var annotations = (ldoc.Pages[i] as PdfLoadedPage).Annotations;
-
-//            if (annotations != null)
-//            {
-//                for (int j = 0; j < annotations.Count; j++)
-//                {
-//                    if (annotations[j] is PdfLoadedRubberStampAnnotation)
-//                    {
-//                        var stamp = annotations[j] as PdfLoadedRubberStampAnnotation;
-
-//                        if (stamp.Subject == "Sign Here")
-//                        {
-//                            annotations.RemoveAt(j);
-//                            ldoc.Form.Fields.Add(new PdfSignatureField((ldoc.Pages[i] as PdfLoadedPage), "Signature")
-//                            {
-//                                Bounds = stamp.Bounds,
-//                                ToolTip = "Signature"
-//                            });
-//                            ldoc.Save(ms);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
-//        ldoc.Save(ms);
-//    }
-
-//    return Content($"data:application/pdf;base64,{Convert.ToBase64String(ms.ToArray())}");
-//}

@@ -90,13 +90,13 @@
 
                                     @if (prjt != null)
                                     {
+
                                         <p class="fs-18 font-w500">
                                             <div>
-                                                <ejs-pdfviewer id="pdfviewer" serviceUrl="/api/PdfViewer" isAnnotationToolbarOpen="true" enableThumbnail="false" enablePrint="false" documentPath="@ViewBag.fileName"></ejs-pdfviewer>
+                                                <ejs-pdfviewer id="pdfviewer" serviceUrl="/api/PdfViewer" isAnnotationToolbarOpen="true" enableThumbnail="false" enableAnnotation="true" enablePrint="false" documentPath="@ViewBag.fileName"></ejs-pdfviewer>
 
                                             </div>
                                         </p>
-
                                     }
 
                                 </div>
@@ -123,4 +123,3 @@
 </div>
 
 <script src="~/assets/js/myscripts.js"></script>
-<script src="~/js\loading.js"></script>

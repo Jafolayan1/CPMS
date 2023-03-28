@@ -6,9 +6,9 @@
 }
 
 <head>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js" integrity="sha512-tb1Ro9mw6+HBl4AzCtyFn4G9B/TJFDfGpil98I4zDUrACJ1e1XCD6o06i3jxTVaiP0PsYGkEkLbDkCkz3p77+Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <Partial name="_ProfileHeader" />
@@ -20,8 +20,8 @@
 
         <div class="row page-titles">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Profile</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)" id="noloader">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)" id="noloader">Profile</a></li>
             </ol>
         </div>
         <!-- row -->
@@ -70,13 +70,13 @@
                             <div class="custom-tab-1">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">
-                                        <a href="#about-me" data-bs-toggle="tab" class="nav-link active show">About Me</a>
+                                        <a href="#about-me" data-bs-toggle="tab" class="nav-link active show" id="noloader">About Me</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#update-profile" data-bs-toggle="tab" class="nav-link">Update Profile</a>
+                                        <a href="#update-profile" data-bs-toggle="tab" class="nav-link" id="noloader">Update Profile</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#forgot-password" data-bs-toggle="tab" class="nav-link">Forgot password</a>
+                                        <a href="#forgot-password" data-bs-toggle="tab" class="nav-link" id="noloader">Forgot password</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
