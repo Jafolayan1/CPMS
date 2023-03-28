@@ -16,6 +16,7 @@
 					<div class="card-body">
 						<div class="side-border">
 							<h4 class="fs-20 font-w700"><span>All Notifications</span></h4>
+							@*<a asp-action="Notifs" asp-route-id="@item.NotificationId" class="btn btn-outline-primary">Mark as read</a>*@
 						</div>
 						@foreach (var item in @notifs)
 						{
@@ -31,8 +32,8 @@
 									</div>
 								</div>
 								<div>
-									<a data-bs-toggle="modal" data-bs-target="#basicModal_@item.NotificationId" onclick="myFunction()" class="btn btn-outline-primary">Read</a>
-								@*<a asp-action="Notifs" asp-route-id="@item.NotificationId" class="btn btn-outline-primary">Mark as read</a>*@
+									@*<a data-bs-toggle="modal" data-bs-target="#basicModal_@item.NotificationId" onclose="readNoti()" class="btn btn-outline-primary">Read</a>*@
+									<a data-bs-toggle="modal" data-bs-target="#basicModal_@item.NotificationId" onclick="readNoti(@item.NotificationId)" class="btn btn-outline-primary">Read</a>
 
 								</div>
 								<div class="modal fade" id="basicModal_@item.NotificationId">
@@ -67,3 +68,5 @@
 		</div>
 	</div>
 </div>
+@*<script src="~/js\loading.js"></script>*@
+<script src="~/assets/js/myscripts.js"></script>

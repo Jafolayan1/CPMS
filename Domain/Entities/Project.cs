@@ -9,8 +9,8 @@ namespace Domain.Entities
 		public int ProjectId { get; set; }
 		public string Status { get; set; }
 		public string Topic { get; set; }
-
 		public string? Remark { get; set; }
+		public string? ProjectStudentId { get; set; }
 
 		public virtual ICollection<Chapter>? Chapters { get; set; }
 		public virtual ICollection<Student> Students { get; set; }
@@ -22,6 +22,7 @@ namespace Domain.Entities
 		public string Status { get; set; }
 		public string Topic { get; set; }
 		public string? Remark { get; set; }
+		public string? ProjectStudentId { get; set; }
 
 		public ChapterName ChapterName { get; set; }
 

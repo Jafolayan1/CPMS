@@ -48,9 +48,9 @@ namespace SPMS.Helpers
                 return null;
         }
 
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+        //public void Dispose()
+        //{
+        //    _context.Dispose();
+        //}
     }
 }

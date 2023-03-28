@@ -1,115 +1,120 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="keywords" content="" />
-	<meta name="author" content="" />
-	<meta name="robots" content="" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="SPMS :Student Project Management System" />
-	<meta property="og:title" content="SPMS : Student Project Management System" />
-	<meta property="og:description" content="SPMS : Student Project Management System" />
-	<meta property="og:image" content="" />
-	<meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SPMS :Student Project Management System" />
+    <meta property="og:title" content="SPMS : Student Project Management System" />
+    <meta property="og:description" content="SPMS : Student Project Management System" />
+    <meta property="og:image" content="" />
+    <meta name="format-detection" content="telephone=no">
 
-	<!-- PAGE TITLE HERE -->
-	<title>Student Project Management System</title>
+    <!-- PAGE TITLE HERE -->
+    <title>Student Project Management System</title>
 
-	<!-- FAVICONS ICON -->
-	<link rel="shortcut icon" type="image/png" href="~/assets/images/favico.png" />
-	<link href="~/assets/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
-	<link href="~/assets/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
-	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.min.css">
+    <!-- FAVICONS ICON -->
+    <link rel="shortcut icon" type="image/png" href="~/assets/images/favico.png" />
+    <link href="~/assets/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+    <link href="~/assets/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.min.css">
 
-	<!-- Form step -->
-	<link href="~/assets/vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
-	<!-- Style css -->
-	<link href="~/assets/css/style.css" rel="stylesheet">
+    <!-- Form step -->
+    <link href="~/assets/vendor/jquery-smartwizard/dist/css/smart_wizard.min.css" rel="stylesheet">
+    <!-- Style css -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
 
+    <!-- Syncfusion ASP.NET Core controls styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/20.4.48/fluent.css" />
+    <!-- Syncfusion ASP.NET Core controls scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/20.4.48/dist/ej2.min.js"></script>
 
-	
-	<!-- Pick date -->
-	<link rel="stylesheet" href="~/assets/vendor/pickadate/themes/default.css">
-	<link rel="stylesheet" href="~/assets/vendor/pickadate/themes/default.date.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Pick date -->
+    <link rel="stylesheet" href="~/assets/vendor/pickadate/themes/default.css">
+    <link rel="stylesheet" href="~/assets/vendor/pickadate/themes/default.date.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
-	<div id="preloader">
-		<div class="lds-ripple">
-			<div></div>
-			<div></div>
-		</div>
-	</div>
+    <div id="preloader">
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 
-	<div id="main-wrapper">
-		<Partial name="_Header" />
-		@RenderBody()
+    <div id="main-wrapper">
+        <Partial name="_Header" />
 
-		<Partial name="_Footer" />
-	</div>
+        @RenderBody()
 
-
-
-	<!-- Required vendors -->
-	<script src="~/assets/vendor/global/global.min.js"></script>
-	<script src="~/assets/vendor/chart.js/Chart.bundle.min.js"></script>
-	<script src="~/assets/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
-	<script src="~/assets/vendor/jquery-steps/build/jquery.steps.min.js"></script>
-	<script src="~/assets/vendor/select2/js/select2.full.min.js"></script>
-	<script src="~/assets/js/plugins-init/select2-init.js"></script>
-	<script src="~/assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-
-@*	<!-- Apex Chart -->
-	<script src="~/assets/vendor/apexchart/apexchart.js"></script>*@
-
-	<script src="~/assets/vendor/chart.js/Chart.bundle.min.js"></script>
-
-	<!-- Chart piety plugin files -->
-	<script src="~/assets/vendor/peity/jquery.peity.min.js"></script>
-	<!-- Form Steps -->
-	<script src="~/assets/vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js"></script>
-	@*<script src="~/assets/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>*@
-
-	<!-- Dashboard 1 -->
-	<script src="~/assets/js/dashboard/dashboard-1.js"></script>
-	<script src="~/assets/vendor/owl-carousel/owl.carousel.js"></script>
-	<script src="~/assets/vendor/pickadate/picker.js"></script>
-	<script src="~/assets/vendor/pickadate/picker.time.js"></script>
-	<script src="~/assets/vendor/pickadate/picker.date.js"></script>
-	<script src="~/assets/js/plugins-init/pickadate-init.js"></script>
+        <Partial name="_Footer" />
+    </div>
 
 
-	<!-- Data Tables-->
-	<script src="~/assets/vendor/datatables/js/jquery.datatables.min.js"></script>
-	<script src="~/assets/js/plugins-init/datatables.init.js"></script>
-	<script src="~/assets/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+
+    <!-- Required vendors -->
+    <script src="~/assets/vendor/global/global.min.js"></script>
+    @*<script src="~/assets/vendor/chart.js/Chart.bundle.min.js"></script>*@
+    <script src="~/assets/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/assets/vendor/jquery-steps/build/jquery.steps.min.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.full.min.js"></script>
+    <script src="~/assets/js/plugins-init/select2-init.js"></script>
+    <script src="~/assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+    @*	<!-- Apex Chart -->
+    <script src="~/assets/vendor/apexchart/apexchart.js"></script>*@
+
+    @*<script src="~/assets/vendor/chart.js/Chart.bundle.min.js"></script>*@
+
+    <!-- Chart piety plugin files -->
+    <script src="~/assets/vendor/peity/jquery.peity.min.js"></script>
+    <!-- Form Steps -->
+    <script src="~/assets/vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js"></script>
+    @*<script src="~/assets/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>*@
+
+    <!-- Dashboard 1 -->
+    <script src="~/assets/js/dashboard/dashboard-1.js"></script>
+    <script src="~/assets/vendor/owl-carousel/owl.carousel.js"></script>
+    <script src="~/assets/vendor/pickadate/picker.js"></script>
+    <script src="~/assets/vendor/pickadate/picker.time.js"></script>
+    <script src="~/assets/vendor/pickadate/picker.date.js"></script>
+    <script src="~/assets/js/plugins-init/pickadate-init.js"></script>
 
 
-	<script src="~/assets/js/custom.min.js"></script>
-	<script src="~/assets/js/dlabnav-init.js"></script>
-	<script src="~/assets/js/demo.js"></script>
-	@*<script src="~/assets/js/styleSwitcher.js"></script>*@
-	@await Component.InvokeAsync("Notyf")
-	@await RenderSectionAsync("Scripts", required: false)
-	<script>
-		$(document).ready(function () {
-			// SmartWizard initialize
-			$('#smartwizard').smartWizard();
-		});
-	</script>
+    <!-- Data Tables-->
+    <script src="~/assets/vendor/datatables/js/jquery.datatables.min.js"></script>
+    <script src="~/assets/js/plugins-init/datatables.init.js"></script>
+    <script src="~/assets/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 
-	 <script>
-	// Check that service workers are supported
-	if ('serviceWorker' in navigator) {
-		// Use the window load event to keep the page load performant
-		window.addEventListener('load', () => {
-				navigator.serviceWorker.register('/js/sw.js');
-		});
-	}
-	</script>
 
-	
+    <script src="~/assets/js/custom.min.js"></script>
+    <script src="~/assets/js/dlabnav-init.js"></script>
+    <script src="~/assets/js/demo.js"></script>
+    @*<script src="~/assets/js/styleSwitcher.js"></script>*@
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            // SmartWizard initialize
+            $('#smartwizard').smartWizard();
+        });
+    </script>
+
+    <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/js/sw.js');
+            });
+        }
+    </script>
+    <!-- Syncfusion ASP.NET Core Script Manager -->
+    <ejs-scripts></ejs-scripts>
+
 </body>
 </html>

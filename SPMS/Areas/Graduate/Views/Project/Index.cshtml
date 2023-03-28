@@ -1,4 +1,9 @@
-﻿@{
+﻿@using SPMS.Helpers;
+@using Domain.Interfaces;
+
+@inject FileHelper _file;
+
+@{
     ViewData["Title"] = "Milestone";
     var proposal = ViewData["projectproposal"] as IEnumerable<Project>;
     Project pjt = new Project();
@@ -65,7 +70,11 @@
                                                 <td>@CurrentStudent.MatricNo</td>
 
                                                 <td>@item.Topic</td>
-                                                <td><a href="@item.FileUrl" download>Dowload File</a></td>
+                                                <td>
+                                                    <a href="@item.FileUrl" download class="btn light btn-info shadow btn-xs sharp me-1" data-toggle="tooltip" data-placement="top" title="Click to download original doc">
+                                                        <i class="fa fa-download"></i>
+                                                    </a>
+                                                </td>
                                                 @if (@item.Status.Equals("Approved"))
                                                 {
                                                     <td><div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> @item.Status</div></td>
@@ -79,7 +88,14 @@
                                                     <td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i>  @item.Status</div></td>
                                                 }
                                                 <td>
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ProjectId"> View Remark </a>
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#remarkModal_@item.ProjectId" class="btn light btn-info shadow btn-xs sharp me-1" data-toggle="tooltip" data-placement="top" title="Click to view supervisor's comment">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+
+                                                    </a>&nbsp;
+                                                    <a href="@_file.ManipulateFile(@item.FileUrl,"Pdf")" download class="btn light btn-info shadow btn-xs sharp me-1" data-toggle="tooltip" data-placement="top" title="Click to download supervisor's changes">
+                                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                                    </a>
+
                                                     <div class="modal fade" id="remarkModal_@item.ProjectId">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
@@ -101,11 +117,11 @@
                                                 <td>
                                                     <div class="d-flex">
                                                         @if (@item.Status != "Approved")
-                                                {
-                                                        <a data-bs-toggle="modal" data-bs-target="#editModal_@item.ProjectId" class="btn btn-primary shadow btn-xs sharp me-1">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </a>
-                                                }
+                                                        {
+                                                            <a data-bs-toggle="modal" data-bs-target="#editModal_@item.ProjectId" class="btn btn-primary shadow btn-xs sharp me-1">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                        }
 
                                                         <!-- Modal -->
                                                         <div class="modal fade" id="editModal_@item.ProjectId">
@@ -119,23 +135,26 @@
                                                                         <form asp-action="addeditproject" method="post" enctype="multipart/form-data">
                                                                             <input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
                                                                             <input asp-for="@pjt.ProjectId" name="ProjectId" value="@item.ProjectId" type="hidden" class="form-control">
+                                                                            <input asp-for="@pjt.ProjectStudentId" name="projectstudentid" value="@CurrentStudent.StudentId" type="hidden" class="form-control">
 
 
                                                                             <div class="row">
                                                                                 <div class="col-lg-12">
                                                                                     <div class="mb-3">
                                                                                         <label class="text-black font-w600 form-label">Project Topic <span class="required">*</span></label>
-                                                                                        <textarea placeholder="@item.Topic"  name="Topic"  class="form-control" rows="4" id="comment" required>@item.Topic</textarea>
+                                                                                        <textarea placeholder="@item.Topic" name="Topic" class="form-control" rows="4" id="comment" required>@item.Topic</textarea>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-lg-12">
                                                                                     <div class="mb-4">
                                                                                         <label class="text-black font-w600 form-label">Select Project Student(s) Matric<span class="required">*</span></label>
                                                                                     </div>
-                                                                                    <select asp-for="@pjt.Students" class="multi-select" name="selectedValues@(item.ProjectId)" id="selectedValues@(item.ProjectId)" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
+                                                                                    <select asp-for="@pjt.Students" class="multi-select" name="Student@(item.ProjectId)" id="selectedValues@(item.ProjectId)" multiple="multiple" id="studentId" asp-items="@(new SelectList(ViewBag.Students,"StudentId","MatricNo"))" required>
                                                                                         @if (ViewBag.Students != null)
                                                                                         {
-                                                                                            <option value="selectedValues(@pjt.Students)"> @pjt.Matric </option>
+                                                                                            @*<option value="selectedValues(@pjt.Students)"> @pjt.Matric </option>*@
+                                                                                            <option value="Student(@pjt.Students)"> @pjt.Matric </option>
+
                                                                                         }
                                                                                     </select>
                                                                                 </div>
@@ -157,7 +176,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <a  hx-delete="/graduate/project/delete/@item.ProjectId"  class="btn btn-danger shadow btn-xs sharp">
+                                                        <a hx-delete="/graduate/project/delete/@item.ProjectId" onclick="showPreloader()" class="btn btn-danger shadow btn-xs sharp">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
 
@@ -191,6 +210,8 @@
                 <form asp-action="addeditproject" method="post" enctype="multipart/form-data">
                     <input asp-for="@pjt.Matric" name="Matric" value="@CurrentUser.UserName" type="hidden" class="form-control">
                     <input asp-for="@pjt.Status" name="Status" value="Pending" type="hidden" class="form-control">
+                    <input asp-for="@pjt.ProjectStudentId" name="projectstudentid" value="@CurrentStudent.StudentId" type="hidden" class="form-control">
+
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -229,3 +250,5 @@
 </div>
 
 <Partial name="_NoticePartial" />
+
+<script src="~/js\loading.js"></script>

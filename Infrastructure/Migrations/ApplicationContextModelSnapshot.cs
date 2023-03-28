@@ -43,6 +43,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProjectStudentId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
 
@@ -130,6 +133,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("FileUrl")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectStudentId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Remark")
@@ -430,7 +436,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "07353eef-d020-41b8-bc6f-85e5a44ffd95",
+                            ConcurrencyStamp = "b1ae3942-1958-4777-8fc2-05a692ea43c8",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = " Super Admin",
@@ -438,10 +444,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKbIEbR6sz1hRSqWWPUGX6xdNQWFT8Uk/MKaRmqhEkHg2rz4AjYHWDuwevZq38MT/g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH9vuqjxSMfAueYxriNbDL1/CZMdyqW3GWl78rcbs6RZCNUhGZvvQcEZKUmjKiyBdQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "04fec348-479e-444b-a2b5-4e1ab6a17f88",
+                            SecurityStamp = "6dca5204-dcbe-4939-9dbc-5c934ed35d33",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });

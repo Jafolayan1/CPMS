@@ -11,21 +11,20 @@ namespace Infrastructure
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //	optionsBuilder
-        //		.UseSqlServer(
-        //			@"Server=SQL5108.site4now.net;Initial Catalog=db_a92f1e_fpespmsdb;MultipleActiveResultSets=true;User Id=db_a92f1e_fpespmsdb_admin;Password=Wertyuiop2",
-        //			o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
 
-        //	optionsBuilder
-        //		.UseSqlServer(
-        //			@"Server=.\\SQLEXPRESS; Database = SPMSDB; Integrated Security = true; MultipleActiveResultSets = true",
-        //			o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
-        //}
+        public ApplicationContext()
+        {
+        }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Student>().HasKey(s => s.StudentId);
+            builder.Entity<Supervisor>().HasKey(s => s.SupervisorId);
+            builder.Entity<Department>().HasKey(s => s.DepartmentId);
+            builder.Entity<Project>().HasKey(s => s.ProjectId);
+            builder.Entity<ProjectArchive>().HasKey(s => s.ProjectArchiveId);
+
             base.OnModelCreating(builder);
             SeedUsers(builder);
             SeedRoles(builder);
@@ -87,11 +86,6 @@ namespace Infrastructure
                  new Department
                  {
                      DepartmentId = 1,
-                     Name = "Please Select Department",
-                 },
-                 new Department
-                 {
-                     DepartmentId = 2,
                      Name = "Computer Science",
                  });
         }

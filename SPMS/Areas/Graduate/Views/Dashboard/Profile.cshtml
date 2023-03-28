@@ -6,7 +6,7 @@
 }
 
 <head>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 </head>
@@ -20,7 +20,7 @@
 
         <div class="row page-titles">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">App</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Profile</a></li>
             </ol>
         </div>
@@ -203,15 +203,9 @@
                                                     <div class="row">
                                                         <div class="mb-3 col-md-6">
                                                             <label class="form-label">Department</label>
-                                                            @if (ViewBag.myDepartments != null)
-                                                            {
-                                                                <select asp-for="@student.DepartmentId" name="DepartmentId" class="form-control  default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.myDepartments,"DepartmentId","Name"))" required>
-                                                                    @if(student.SupervisorId != null)
-                                                                    {
-                                                                        <option value=""> @student.Department.Name</option>
-                                                                    }
-                                                                </select>
-                                                            }
+
+                                                            <select name="DepartmentId" class="form-control default-select wide" id="departmentId" asp-items="@(new SelectList(ViewBag.myDepartments,"DepartmentId","Name",0))" required>
+                                                            </select>
                                                         </div>
                                                         <div class="mb-3 col-md-6">
                                                             <label class="form-label">Supervisor</label>
@@ -219,6 +213,10 @@
                                                                 @if (student.Supervisor != null)
                                                                 {
                                                                     <option value="@student.SupervisorId"> @student.Supervisor.FullName </option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option></option>
                                                                 }
                                                             </select>
                                                         </div>
@@ -282,13 +280,14 @@
             var ddlSource = "#departmentId";
             $.getJSON(url, { Id: $(ddlSource).val() }, function (dat) {
                 var items = "";
-                $("#supervisorId").empty();
                 $.each(dat, function (i, row) {
-                    items += "<option value= '" + row.value + "'>" + row.text + "</option>";
+                    items += "<option value= '" + row.Value + "'>" + row.Text + "</option>";
                 });
+                // append the items to the existing supervisor dropdown list
                 $("#supervisorId").html(items);
+                
+
             });
         });
     });
-</script>
-
+</script>   

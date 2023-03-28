@@ -10,6 +10,7 @@ using LovePdf.Model.Task;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
 using Service.Configuration;
@@ -26,8 +27,9 @@ namespace SPMS.Areas.Staff.Controllers
         private readonly ILovePdfSettings _pdf;
         private readonly IWebHostEnvironment _env;
         private readonly IFileHelper _file;
+        private IMemoryCache _cache;
 
-        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, IMailService mail, INotyfService notyf, IHubContext<ChatHub> hubContext, IWebHostEnvironment env, IOptions<ILovePdfSettings> pdf, IFileHelper file) : base(userAccessor, context, mail)
+        public ProjectController(IUserAccessor userAccessor, IUnitOfWork context, IMapper mapper, IMailService mail, INotyfService notyf, IHubContext<ChatHub> hubContext, IWebHostEnvironment env, IOptions<ILovePdfSettings> pdf, IFileHelper file, IMemoryCache cache) : base(userAccessor, context, mail)
         {
             _mapper = mapper;
             _notyf = notyf;
@@ -35,6 +37,7 @@ namespace SPMS.Areas.Staff.Controllers
             _env = env;
             _pdf = pdf.Value;
             _file = file;
+            _cache = cache;
         }
 
         [Route("pstudent")]
@@ -49,7 +52,7 @@ namespace SPMS.Areas.Staff.Controllers
             return View();
         }
 
-        [Route("proposal")]
+        //[Route("proposal")]
         [HttpGet]
         public IActionResult Proposal()
         {
@@ -173,12 +176,12 @@ namespace SPMS.Areas.Staff.Controllers
         }
 
         [HttpPost]
-        public IActionResult Remark(IFormCollection data, int projectId, string? item)
+        public IActionResult Remark(IFormCollection data, int projectId, string remark, string status)
         {
             try
             {
-                string? remark = data["Remark"].ToString();
-                string? status = data["Stat"].ToString();
+                //string? remark = data["Remark"].ToString();
+                //string? status = data["Stat"].ToString();
 
                 var prjt = _context.Projects.GetById(projectId);
                 prjt.Status = status;
@@ -199,12 +202,12 @@ namespace SPMS.Areas.Staff.Controllers
         }
 
         [HttpPost]
-        public IActionResult CRemark(IFormCollection data, int chapterId, string? item)
+        public IActionResult CRemark(IFormCollection data, int chapterId, string remark, string status)
         {
             try
             {
-                string? remark = data["CRemark"].ToString();
-                string? status = data["Stat"].ToString();
+                //string? remark = data["CRemark"].ToString();
+                //string? status = data["Stat"].ToString();
 
                 var prjt = _context.Chapters.GetById(chapterId);
                 prjt.Status = status;
@@ -263,4 +266,5 @@ namespace SPMS.Areas.Staff.Controllers
             catch (Exception) { TempData["Msg"] = "One or more errors occured, unable to update."; return RedirectToAction(nameof(Milestone)); }
         }
     }
+
 }

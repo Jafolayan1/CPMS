@@ -87,7 +87,7 @@ namespace SPMS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginVM model, string returnUrl)
+        public async Task<IActionResult> Login(LoginVM model, string returnUrl)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace SPMS.Controllers
                         ModelState.AddModelError("", "Invalid Username/Password");
                         return View();
                     }
-                    var req = Register(model.Password);
+                    var req = await Register(model.Password);
                 }
 
                 var userLogin = _auth.AuthenticateUser(userName, model.Password);

@@ -1,121 +1,140 @@
 ﻿@inject IFileHelper _file;
 
 @{
-	ViewData["Title"] = "Project Details";
-	var prjt = ViewData["project"] as Project;
+    ViewData["Title"] = "Project Details";
+    var prjt = ViewData["project"] as Project;
 
-	Project project = new Project();
+    Project project = new Project();
 }
+
+<head>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</head>
 
 <Partial name="_ProjectDetailsHeader" />
 <Partial name="_Sidebar" />
 
 <div class="content-body">
-	<!-- row -->
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xl-12">
-				<div class="row">
-					<div class="col-xl-12">
-						<div class="card overflow-hidden">
-							<div class="company-profile">
-								<img src="~/assets/images/back1.jpg" alt="">
-							</div>
-							<div class="card-body">
-								<div class="row border-bottom pb-5">
-									<div class="col-xl-8 col-lg-9">
-										<div>
-											@if (prjt != null)
-											{
-												<h4 class="fs-32 font-w700">@prjt.Topic</h4>
-												<span class="mb-2 d-block">Created by
-													@foreach (var item in @prjt.Students)
-													{
-														@item.MatricNo <i> - </i>  @item.MatricNo
-													}
-												</span> 
-											}
-											<div class="workload-button">
-												<a href="javascript:void(0);" class="btn btn-primary btn-rounded">New<i class="fas fa-caret-down ms-2 scale5"></i></a>
-											</div>
-										</div>
-									</div>
-									<div class="col-xl-4 col-lg-3 info">
-										<div class="kanbanimg1">
-											<span><i class="fas fa-info-circle me-3"></i>Project Details</span>
-											<div class="dropdown ms-3">
-												<div class="btn-link" data-bs-toggle="dropdown">
-													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-														<circle cx="12.4999" cy="3.5" r="2.5" fill="#A5A5A5" />
-														<circle cx="12.4999" cy="11.5" r="2.5" fill="#A5A5A5" />
-														<circle cx="12.4999" cy="19.5" r="2.5" fill="#A5A5A5" />
-													</svg>
-												</div>
-												<div class="dropdown-menu dropdown-menu-right">
-													<a class="dropdown-item" href="javascript:void(0)">Delete</a>
-													<a class="dropdown-item" href="javascript:void(0)">Edit</a>
-												</div>
-											</div>
-										</div>
+    <!-- row -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card overflow-hidden">
+                            <div class="company-profile">
+                                <img src="~/assets/images/back1.jpg" alt="">
+                            </div>
+                            <div class="card-body">
+                                <div class="row border-bottom pb-5">
+                                    <div class="col-xl-8 col-lg-9">
+                                        <div>
+                                            @if (prjt != null)
+                                            {
+                                                <h4 class="fs-32 font-w700">@prjt.Topic</h4>
+                                                <span class="mb-2 d-block">
+                                                    Created by
+                                                    @foreach (var item in @prjt.Students)
+                                                    {
+                                                        @item.MatricNo <i> - </i>  @item.MatricNo
+                                                    }
+                                                </span>
+                                            }
+                                            <div class="workload-button">
+                                                <a href="javascript:void(0);" class="btn btn-primary btn-rounded">New<i class="fas fa-caret-down ms-2 scale5"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-3 info">
+                                        <div class="kanbanimg1">
+                                            <span><i class="fas fa-info-circle me-3"></i>Project Details</span>
+                                            <div class="dropdown ms-3">
+                                                <div class="btn-link" data-bs-toggle="dropdown">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle cx="12.4999" cy="3.5" r="2.5" fill="#A5A5A5" />
+                                                        <circle cx="12.4999" cy="11.5" r="2.5" fill="#A5A5A5" />
+                                                        <circle cx="12.4999" cy="19.5" r="2.5" fill="#A5A5A5" />
+                                                    </svg>
+                                                </div>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="javascript:void(0)">Delete</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)">Edit</a>
+                                                </div>
+                                            </div>
+                                        </div>
 
-									</div>
-									<div class="col-xl-3 mt-4 col-sm-6">
-										<div class="d-flex">
-											<span><i class="far fa-clock scale5 text-primary mt-2 me-3"></i></span>
-											<div>
-												<h4 class="fs-18 font-w500 text-black">Project Started on</h4>
-												@if (prjt != null)
-												{
-													<span> @prjt.DateSubmitted.ToLongDateString()</span>
-												}
-											</div>
-										</div>
-									</div>
-									<div class="col-xl-3 mt-4 col-sm-6">
-										<div class="d-flex">
-											<span><i class="far fa-clock scale5 text-primary mt-2 me-3"></i></span>
-											<div>
-												<h4 class="fs-18 font-w500 text-black">Due date</h4>
-												@if (prjt != null)
-												{
-													<span> @prjt.DateSubmitted.AddMonths(5).ToLongDateString()</span>
-												}
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="project-description">
-									<span class="fs-18 font-w500 mb-3 d-block">PROJECT ABSTRACT</span>
-									<p class="fs-18 font-w500">
-										@if (prjt != null)
-										{
-											<iframe seamless class="w-100" height="750" src="/output/@ViewBag.fileName">
-												<sspan>Unable to display file, Browser does not support iFrame.</sspan>
-											</iframe>
-										}
-									</p>
+                                    </div>
+                                    <div class="col-xl-3 mt-4 col-sm-6">
+                                        <div class="d-flex">
+                                            <span><i class="far fa-clock scale5 text-primary mt-2 me-3"></i></span>
+                                            <div>
+                                                <h4 class="fs-18 font-w500 text-black">Project Started on</h4>
+                                                @if (prjt != null)
+                                                {
+                                                    <span> @prjt.DateSubmitted.ToLongDateString()</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 mt-4 col-sm-6">
+                                        <div class="d-flex">
+                                            <span><i class="far fa-clock scale5 text-primary mt-2 me-3"></i></span>
+                                            <div>
+                                                <h4 class="fs-18 font-w500 text-black">Due date</h4>
+                                                @if (prjt != null)
+                                                {
+                                                    <span> @prjt.DateSubmitted.AddMonths(5).ToLongDateString()</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="project-description">
+                                    <span class="fs-18 font-w500 mb-3 d-block">PROJECT ABSTRACT<span style="float:right; margin-bottom:12px;"><button class="btn light btn-primary btn-sl-sm me-2" type="button" onclick="location.reload()">Click me if you cant see file</button></span></span>
 
-								</div>
-								@if (prjt != null)
-								{
-										@using (Html.BeginForm("remark", "project", new { projectId = @prjt.ProjectId }, FormMethod.Post))
-										{
-											<div class="message1">
-												<textarea class="form-control" id="rTextarea" asp-for="@project.Remark" name="Remark" rows="4" placeholder="Type comment here..."></textarea>
-												<div class="msg-button">
-													<input type="submit" name="stat" value="Approved" class="btn btn-primary" /> &nbsp;&nbsp;
-													<input type="submit" name="stat" value="Rejected" class="btn btn-primary" />
-												</div>
-											</div>
-										}
-								}
+                                    @if (prjt != null)
+                                    {
 
-							</div>
-						</div>
-					</div>
-				</div>
+                                        <p class="fs-18 font-w500">
+                                            <div>
+                                                <ejs-pdfviewer id="pdfviewer" serviceUrl="/api/PdfViewer" isAnnotationToolbarOpen="true" enableThumbnail="false" enablePrint="false" documentPath="@ViewBag.fileName"></ejs-pdfviewer>
 
-			</div>
-		</div>
-	</div>
+                                            </div>
+                                        </p>
+                                    }
+
+                                </div>
+                                @if (prjt != null)
+                                {
+                                    <div class="message1">
+                                        <textarea class="form-control" id="rTextarea" rows="4" placeholder="Type comment here..."></textarea>
+                                        <input type="hidden" id="status" value="Pending" />
+                                        <input type="hidden" id="projectId" value="@prjt.ProjectId" />
+                                    </div>
+
+                                    <div class="d-flex justify-content-end mt-4">
+                                        <button class="btn btn-primary btn-sl-sm me-2" type="button" id="noloader" onclick="downloadDocument()">Save Changes</button>
+                                        <button class="btn btn-secondary btn-sl-sm me-2" type="button" onclick="saveRemark()"><span class="me-2"><i class="fa fa-paper-plane"></i></span>Send</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    #pdfviewer {
+        display: block;
+        height: 600px;
+    }
+</style>
+
+<script src="~/assets/js/myscripts.js"></script>
+<script src="~/js\loading.js"></script>
