@@ -6,6 +6,8 @@ using CsvHelper.Configuration;
 using Domain.Entities;
 using Domain.Interfaces;
 
+using Infrastructure;
+
 using Microsoft.AspNetCore.Mvc;
 
 using System.Globalization;
@@ -16,12 +18,14 @@ namespace SPMS.Areas.Admin.Controllers
     {
         private readonly IFileHelper _file;
         private readonly INotyfService _notyf;
+        private readonly ApplicationContext _dbContext;
 
 
-        public ManageController(IUserAccessor userAccessor, IUnitOfWork context, IFileHelper file, INotyfService notyf) : base(userAccessor, context)
+        public ManageController(IUserAccessor userAccessor, IUnitOfWork context, IFileHelper file, INotyfService notyf, ApplicationContext dbContext) : base(userAccessor, context)
         {
             _file = file;
             _notyf = notyf;
+            _dbContext = dbContext;
         }
 
         [Route("manage/supervisor")]
@@ -106,7 +110,7 @@ namespace SPMS.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Department()
         {
-            ViewData["Departments"] = _context.Departments.GetAll();
+            ViewData["Departments"] = _context.Departments.GetDepartments();
             return View();
         }
 
@@ -223,6 +227,68 @@ namespace SPMS.Areas.Admin.Controllers
             }
             return _studentAccounts;
         }
+        //public ActionResult AddAll(string save)
+        //{
+        //    if (!string.IsNullOrEmpty(save))
+        //    {
+        //        try
+        //        {
+        //            List<Supervisor> sups = new();
+        //            List<Student> students = new();
+        //            if (_accounts.Count > 0)
+        //            {
+        //                foreach (var item in _accounts)
+        //                {
+        //                    var dpt = _context.Departments.GetById(item.Department);
+        //                    var request = _context.Supervisors.Find(x => x.FileNo.Equals(item.FileNo.Replace("/", string.Empty)), false);
+        //                    if (!request.Any())
+        //                    {
+        //                        sups.Add(new Supervisor { FullName = item.FullName, DepartmentId = dpt.DepartmentId, PhoneNumber = item.PhoneNo, FileNo = item.FileNo.Replace("/", string.Empty), ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", Email = item.Email });
+        //                    }
+        //                    else
+        //                    {
+        //                        _notyf.Warning("Duplicate User Found");
+        //                        return View(nameof(CreateLectures));
+        //                    }
+        //                }
+
+        //                _context.Supervisors.AddRange(sups);
+        //                _context.SaveChanges();
+        //                return RedirectToAction(nameof(Supervisor));
+        //            }
+        //            else
+        //            {
+        //                foreach (var item in _studentAccounts)
+        //                {
+        //                    var dpt = _context.Departments.GetById(item.Department);
+        //                    var request = _context.Students.GetByMatric(item.MatricNo);
+        //                    if (request == null)
+        //                    {
+        //                        students.Add(new Student { FullName = item.Names, DepartmentId = dpt.DepartmentId, Level = item.Level, MatricNo = item.MatricNo, ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png" });
+        //                    }
+        //                    else
+        //                    {
+        //                        _notyf.Warning($"Duplicate User Found");
+        //                        students.Clear();
+        //                        return View(nameof(CreateStudents));
+        //                    }
+        //                }
+
+        //                _context.Students.AddRange(students);
+        //                _context.SaveChanges();
+        //                return RedirectToAction(nameof(Student));
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ViewBag.Error = ex.Message;
+        //            return RedirectToAction(nameof(CreateStudents));
+        //        }
+        //    }
+        //    return RedirectToAction(nameof(CreateStudents));
+        //}
+
+
         [Route("manage/add")]
         public ActionResult AddAll(string save)
         {
@@ -230,46 +296,51 @@ namespace SPMS.Areas.Admin.Controllers
             {
                 try
                 {
-                    List<Supervisor> sups = new();
-                    List<Student> students = new();
-                    if (_accounts.Count > 0)
+                    var sups = new List<Supervisor>(_accounts.Count);
+                    var students = new List<Student>(_studentAccounts.Count);
+
+                    if (_accounts.Any())
                     {
-                        foreach (var item in _accounts)
+                        sups = _accounts.Select(item =>
                         {
                             var dpt = _context.Departments.GetById(item.Department);
-                            var request = _context.Supervisors.Find(x => x.FileNo.Equals(item.FileNo.Replace("/", string.Empty)), false);
-                            if (!request.Any())
+                            var request = _context.Supervisors.GetByFileNo(item.FileNo.Replace("/", string.Empty));
+                            if (request == null)
                             {
-                                sups.Add(new Supervisor { FullName = item.FullName, DepartmentId = dpt.DepartmentId, PhoneNumber = item.PhoneNo, FileNo = item.FileNo.Replace("/", string.Empty), ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", Email = item.Email });
+                                return new Supervisor { FullName = item.FullName, DepartmentId = dpt.DepartmentId, PhoneNumber = item.PhoneNo, FileNo = item.FileNo.Replace("/", string.Empty), ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png", Email = item.Email };
                             }
                             else
                             {
                                 _notyf.Warning("Duplicate User Found");
-                                return View(nameof(CreateLectures));
+                                return null;
                             }
-                        }
+                        })
+                        .Where(s => s != null)
+                        .ToList();
 
                         _context.Supervisors.AddRange(sups);
                         _context.SaveChanges();
                         return RedirectToAction(nameof(Supervisor));
                     }
-                    else
+
+                    if (_studentAccounts.Any())
                     {
-                        foreach (var item in _studentAccounts)
+                        students = _studentAccounts.Select(item =>
                         {
                             var dpt = _context.Departments.GetById(item.Department);
                             var request = _context.Students.GetByMatric(item.MatricNo);
                             if (request == null)
                             {
-                                students.Add(new Student { FullName = item.Names, DepartmentId = dpt.DepartmentId, Level = item.Level, MatricNo = item.MatricNo, ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png" });
+                                return new Student { FullName = item.Names, DepartmentId = dpt.DepartmentId, Level = item.Level, MatricNo = item.MatricNo, ImageUrl = "https://cdn-icons-png.flaticon.com/512/3135/3135755.png" };
                             }
                             else
                             {
-                                _notyf.Warning($"Duplicate User Found");
-                                students.Clear();
-                                return View(nameof(CreateStudents));
+                                _notyf.Warning("Duplicate User Found");
+                                return null;
                             }
-                        }
+                        })
+                        .Where(s => s != null)
+                        .ToList();
 
                         _context.Students.AddRange(students);
                         _context.SaveChanges();
@@ -279,10 +350,10 @@ namespace SPMS.Areas.Admin.Controllers
                 catch (Exception ex)
                 {
                     ViewBag.Error = ex.Message;
-                    return RedirectToAction(nameof(CreateStudents));
                 }
             }
             return RedirectToAction(nameof(CreateStudents));
         }
+
     }
 }

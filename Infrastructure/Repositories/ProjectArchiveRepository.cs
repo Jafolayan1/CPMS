@@ -11,9 +11,9 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public override IEnumerable<ProjectArchive> GetAll()
+        public override IQueryable<ProjectArchive> GetAll()
         {
-            return _context.ProjectArchive.Include(u => u.Students).Include(d => d.Department).Include(s => s.Supervisor).AsSplitQuery().OrderBy(o => o.Title).ToList();
+            return _context.ProjectArchive.Include(u => u.Students).Include(d => d.Department).Include(s => s.Supervisor).AsSplitQuery().OrderBy(o => o.Title);
         }
     }
 }

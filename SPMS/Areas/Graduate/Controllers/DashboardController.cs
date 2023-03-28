@@ -38,13 +38,9 @@ namespace SPMS.Areas.Graduate.Controllers
         {
 
             ViewData["Noti"] = GetNoti();
-            var matric = CurrentUser.UserName;
-            //var id = CurrentSupervisor.SupervisorId;
-
-            ViewData["projects"] = _context.Students.GetByMatric(matric);
-            //ViewData["chapters"] = _context.Chapters.GetAll();
+            ViewData["projects"] = _context.Students.GetByMatric(CurrentUser.UserName);
+            ViewData["chapters"] = _context.Chapters.GetAll();
             //ViewData["proposals"] = _context.Projects.GetAll().Where(x => x.SupervisorId == id);
-
             return View();
         }
 
@@ -72,7 +68,7 @@ namespace SPMS.Areas.Graduate.Controllers
         public IActionResult Profile()
         {
             var student = _context.Students.GetByMatric(CurrentUser.UserName);
-            ViewBag.myDepartments = _context.Departments.GetAll();
+            ViewBag.myDepartments = _context.Departments.GetDepartments().ToList();
             ViewData["student"] = student;
             ViewData["Noti"] = GetNoti();
             return View();

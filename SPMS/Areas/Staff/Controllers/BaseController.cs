@@ -9,6 +9,7 @@ namespace SPMS.Areas.Staff.Controllers
 {
     [CustomAuthorize(Role = "Supervisor")]
     [Area("Staff")]
+    [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client)]
     public class BaseController : Controller
     {
         public User CurrentUser
@@ -22,6 +23,16 @@ namespace SPMS.Areas.Staff.Controllers
             }
         }
 
+        public Student CurrentStudent
+        {
+            get
+            {
+                if (User != null)
+                    return _userAccessor.GetStudent();
+                else
+                    return null;
+            }
+        }
         public Supervisor CurrentSupervisor
         {
             get
@@ -77,13 +88,17 @@ namespace SPMS.Areas.Staff.Controllers
 
         internal static string ManipulateFileUrl(string fileUrl)
         {
-            var name = fileUrl;
-            var Rname = name.Remove(0, 9);
-            string[] strName = Rname.Split('.');
-            var fileName = $"{strName[0]}.pdf";
-
-            return fileName;
+            string fileName = Path.GetFileNameWithoutExtension(fileUrl);
+            return $"{fileName}.pdf";
         }
 
+
+        //internal static string ManipulateFileUrl(string fileUrl)
+        //{
+        //    var name = fileUrl;
+        //    var Rname = name.Remove(0, 9);
+        //    string[] strName = Rname.Split('.');
+        //    var fileName = $"{strName[0]}.pdf";
+        //    return fileName;
     }
 }

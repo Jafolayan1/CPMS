@@ -5,6 +5,7 @@ using Domain.Interfaces;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using SPMS.Models;
 
@@ -89,52 +90,52 @@ namespace SPMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginVM model, string returnUrl)
         {
-            try
+            var userName = model.UserName.Replace("/", string.Empty);
+
+            User user = model.UserName.Contains('@')
+                ? await _userManager.FindByEmailAsync(userName)
+                : await _userManager.FindByNameAsync(userName);
+
+
+            if (user is null)
             {
-                var userName = model.UserName.Replace("/", string.Empty);
-
-                User user = model.UserName.Contains('@')
-                    ? _userManager.FindByEmailAsync(userName).Result
-                    : _userManager.FindByNameAsync(userName).Result;
-
-                if (user is null)
+                var verifyUserType = VerifyUser(model.UserName, model.Password);
+                if (verifyUserType == null)
                 {
-                    var verifyUserType = VerifyUser(model.UserName, model.Password);
-                    if (verifyUserType == null)
-                    {
-                        ModelState.AddModelError("", "Invalid Username/Password");
-                        return View();
-                    }
+                    ViewData["ErrorMessage"] = "Invalid Username/Password";
+                }
+                else
+                {
                     var req = await Register(model.Password);
+                    ViewData["InfoMessage"] = "User registered successfully. Please log in.";
                 }
-
-                var userLogin = _auth.AuthenticateUser(userName, model.Password);
-                if (userLogin != null)
-                {
-                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                        return Redirect(returnUrl);
-
-                    if (userLogin.Role.Contains("Student"))
-                    {
-                        return RedirectToAction("index", "dashboard", new { area = "Graduate" });
-                    }
-                    else if (userLogin.Role.Contains("Supervisor"))
-                    {
-                        return RedirectToAction("dashboard", "dashboard", new { area = "Staff" });
-                    }
-                    else if (userLogin.Role.Contains("Admin"))
-                    {
-                        return RedirectToAction("index", "dashboard", new { area = "Admin" });
-                    }
-                }
-                ModelState.AddModelError("", "Invalid Username/Password");
                 return View();
             }
-            catch (Exception)
+            var userLogin = _auth.AuthenticateUser(userName, model.Password);
+            if (userLogin != null)
             {
-                ModelState.AddModelError("", "One or more errors occurred in the server.");
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+
+                switch (userLogin.Role)
+                {
+                    case string[] role when role.Contains("Student"):
+                        return RedirectToAction("index", "dashboard", new { area = "Graduate" });
+                    case string[] role when role.Contains("Supervisor"):
+                        return RedirectToAction("dashboard", "dashboard", new { area = "Staff" });
+                    case string[] role when role.Contains("Admin"):
+                        return RedirectToAction("index", "dashboard", new { area = "Admin" });
+                    default:
+                        ViewData["ErrorMessage"] = "Invalid Username/Password";
+                        return View();
+                }
+            }
+            else
+            {
+                ViewData["ErrorMessage"] = "Invalid Username/Password";
                 return View();
             }
+
         }
 
         [HttpPost]
@@ -190,6 +191,7 @@ namespace SPMS.Controllers
         internal string VerifyUser(string username, string password)
         {
             var staff = _context.Supervisors.GetByFileNo(username);
+
             if (staff != null)
             {
                 _role = "Supervisor";
@@ -261,64 +263,68 @@ namespace SPMS.Controllers
             //}
         }
 
+
         internal async Task<bool> Register(dynamic password)
         {
-            if (password != null)
+            if (password == null)
             {
-                User newUser = new()
-                {
-                    FullName = _fullName,
-                    UserName = _username,
-                    ImageUrl = _imageUrl,
-                    Email = _email,
-                    PhoneNumber = _phoneNo
-                };
+                return false;
+            }
 
-                //Department newdpt = new()
-                //{
-                //	Name = _dpt,
-                //};
-                //var dptname = _context.Departments.GetById(newdpt.Name);
-                //if (dptname == null)
-                //{
-                //	_context.Departments.Add(dptname);
-                //	_context.SaveChanges();
-                //}
+            var newUser = new User
+            {
+                FullName = _fullName,
+                UserName = _username,
+                ImageUrl = _imageUrl,
+                Email = _email,
+                PhoneNumber = _phoneNo
+            };
 
-                var request = _userManager.CreateAsync(newUser, password).Result;
-                if (request.Succeeded)
+            var request = await _userManager.CreateAsync(newUser, password);
+            if (!request.Succeeded)
+            {
+                return false;
+            }
+
+            var role = _role;
+            var addRole = await _userManager.AddToRoleAsync(newUser, role);
+            if (!addRole.Succeeded)
+            {
+                await _userManager.DeleteAsync(newUser);
+                return false;
+            }
+
+            try
+            {
+                switch (role)
                 {
-                    string role = _role;
-                    var addRole = _userManager.AddToRoleAsync(newUser, role).Result;
-                    if (addRole.Succeeded)
-                    {
-                        try
-                        {
-                            if (role.Equals("Student"))
-                            {
-                                var studentEntity = _context.Students.GetByMatric(_username);
-                                studentEntity.UserId = newUser.Id;
-                                _context.Students.Update(studentEntity);
-                                _context.SaveChanges();
-                                return true;
-                            }
-                            else if (role.Equals("Supervisor"))
-                            {
-                                var suprvisorEntity = _context.Supervisors.GetByFileNo(_username);
-                                suprvisorEntity.UserId = newUser.Id;
-                                _context.Supervisors.Update(suprvisorEntity);
-                                _context.SaveChanges();
-                                return true;
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            await _userManager.DeleteAsync(newUser);
-                        }
-                    }
+                    case "Student":
+                        var studentEntity = _context.Students.GetByMatric(_username);
+                        studentEntity.UserId = newUser.Id;
+                        _context.Students.Update(studentEntity);
+                        _context.SaveChanges();
+                        break;
+                    case "Supervisor":
+                        var supervisorEntity = _context.Supervisors.GetByFileNo(_username);
+                        supervisorEntity.UserId = newUser.Id;
+                        _context.Supervisors.Update(supervisorEntity);
+                        _context.SaveChanges();
+                        break;
+                    default:
+                        break;
                 }
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                await _userManager.DeleteAsync(newUser);
+            }
+            catch (Exception)
+            {
+                await _userManager.DeleteAsync(newUser);
             }
             return false;
         }
+
     }
 }

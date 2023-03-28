@@ -6,9 +6,9 @@ namespace Domain.Interfaces
     {
         T GetById(object id);
 
-        IEnumerable<T> GetAll();
+        IQueryable<T> GetAll();
 
-        IEnumerable<T> Find(Expression<Func<T, bool>> expression, bool trackchanges);
+        IQueryable<T> Find(Expression<Func<T, bool>> expression, bool trackchanges);
 
         void Add(T entity);
 

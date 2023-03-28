@@ -57,7 +57,9 @@
 												<td class="py-2">@item.DateSubmitted.ToShortDateString()</td>
 													<td class="py-2">@item.ChapterName</td>
 													<td>
-														<a asp-action="cdetails" asp-route-chapterId="@item.ChapterId">Read Chapter</a>
+													<a asp-action="cdetails" asp-route-chapterId="@item.ChapterId" class="btn light btn-info shadow btn-xs sharp me-1" data-toggle="tooltip" data-placement="top" title="Click to read file">
+														<i class="fa fa-book" aria-hidden="true"></i>
+													</a>
 													</td>
 													<td class="py-2 text-end">
 														<span class="badge badge-warning">@item.Status<span class="ms-1 fas fa-stream"></span></span>
@@ -65,8 +67,8 @@
 
 													<td>
 														<div class="d-flex">
-														<a asp-action="cstatus" asp-route-projectId="@item.ChapterId" asp-route-status="Approved" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-check"></i></a>
-														<a asp-action="cstatus" asp-route-projectId="@item.ChapterId" asp-route-status="Rejected" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-times"></i></a>
+														<a asp-action="cstatus" asp-route-chapterId="@item.ChapterId" asp-route-status="Approved" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-check"></i></a>
+														<a asp-action="cstatus" asp-route-chapterId="@item.ChapterId" asp-route-status="Rejected" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-times"></i></a>
 														</div>
 													</td>
 											</tr>

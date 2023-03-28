@@ -25,14 +25,17 @@ namespace Infrastructure.Repositories
             _context.Set<T>().AddRange(entities);
         }
 
-        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> expression, bool trackchanges)
+        public virtual IQueryable<T> Find(Expression<Func<T, bool>> expression, bool trackchanges)
         {
-            return !trackchanges ? _context.Set<T>().AsNoTracking().Where(expression).ToList() : _context.Set<T>().Where(expression).ToList();
+            return !trackchanges
+                ? _context.Set<T>().AsNoTracking().Where(expression)
+                : _context.Set<T>().Where(expression);
         }
 
-        public virtual IEnumerable<T> GetAll()
+
+        public virtual IQueryable<T> GetAll()
         {
-            return _context.Set<T>().ToList();
+            return _context.Set<T>();
         }
 
         public virtual T GetById(object id)

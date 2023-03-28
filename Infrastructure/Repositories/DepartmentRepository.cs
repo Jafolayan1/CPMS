@@ -14,11 +14,12 @@ namespace Infrastructure.Repositories
             return _context.Departments.FirstOrDefault(x => x.Name.Equals(id));
         }
 
-        public override IEnumerable<Department> GetAll()
+        public IEnumerable<Department> GetDepartments()
         {
-            var departments = _context.Departments.OrderBy(o => o.Name).ToList();
+            var departments = _context.Departments.ToList();
             departments.Insert(0, new Department { DepartmentId = 0, Name = " --Select Department-- " });
             return departments;
         }
+
     }
 }
