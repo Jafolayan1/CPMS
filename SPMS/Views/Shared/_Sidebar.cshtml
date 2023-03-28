@@ -20,6 +20,7 @@
                         <span class="nav-text">Manage</span>
                     </a>
                     <ul aria-expanded="false">
+                        <li><a asp-controller="dashboard" asp-action="index">Dashboard</a></li>
                         <li><a asp-controller="manage" asp-action="department">Department</a></li>
                         <li><a asp-controller="manage" asp-action="supervisor">Supervisors</a></li>
                         <li><a asp-controller="manage" asp-action="student">Students</a></li>
@@ -37,7 +38,6 @@
                         <span class="nav-text">Notification</span>
                     </a>
                     <ul aria-expanded="false">
-                        @*<li><a asp-controller="project" asp-action="pstudent">Push Notification</a></li>*@
                         <li>
                             <ul aria-expanded="false">
                             </ul>
@@ -60,8 +60,8 @@ else if (User.IsInRole("Supervisor"))
                         <span class="nav-text">Dashboard</span>
                     </a>
                     <ul aria-expanded="false">
+                        <li><a asp-controller="dashboard" asp-action="index">Dashboard</a></li>
                         <li><a asp-controller="dashboard" asp-action="account">Profile</a></li>
-                        @*<li><a asp-controller="notification" asp-action="notification">Send Notification</a></li>*@
 
                     </ul>
 
@@ -91,7 +91,6 @@ else if (User.IsInRole("Supervisor"))
                         <li>
                             <a asp-controller="project" asp-action="proposal">
                                 Proposals
-                                @*<span class="badge light text-white bg-blue rounded-circle">1</span>*@
                             </a>
                         </li>
                         <li><a asp-controller="project" asp-action="milestone">Chapters</a></li>
@@ -132,6 +131,7 @@ else if (User.IsInRole("Student"))
                         <span class="nav-text">Dashboard</span>
                     </a>
                     <ul aria-expanded="false">
+                        <li><a asp-controller="dashboard" asp-action="index">Dashboard</a></li>
                         <li><a asp-controller="dashboard" asp-action="profile">Profile</a></li>
                         <li><a asp-controller="dashboard" asp-action="notify">Notifications</a></li>
                         <li><a asp-controller="chat" asp-action="index">Chat</a></li>
