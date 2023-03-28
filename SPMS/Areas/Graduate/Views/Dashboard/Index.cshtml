@@ -24,7 +24,7 @@
                     <div class="widget-stat card">
                         <div class="card-body p-4">
                             <div class="media ai-icon">
-                                <span class="me-3 bgl-info text-info">
+                                <span class="me-3 bgl-warn text-secondary">
                                     <!-- <i class="ti-user"></i> -->
                                     <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
                                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -81,7 +81,84 @@
                 </a>
             </div>
 
+            <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                <div class="widget-stat card bg-primary">
+                    <a asp-controller="project" asp-action="projectarchive">
+                        <div class="card-body  p-4">
+                            <div class="media">
+                                <span class="me-3">
+                                    <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+                                </span>
+                                <div class="media-body text-white">
+                                    <p class="mb-1">Department's Projects Archive</p>
+                                    <h3 class="text-white"></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <a asp-controller="dashboard" asp-action="profile">
+            <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                <div class="widget-stat card">
+                    <div class="card-body p-4">
+                        <div class="media ai-icon">
+                            <span class="me-3 bgl-primary text-primary">
+                                <!-- <i class="ti-user"></i> -->
+                                <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </span>
+                            <div class="media-body">
+                                <p class="mb-1">Profile</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
 
+            <a asp-controller="dashboard" asp-action="complaint">
+                <div class="col-xl-3 col-xxl-3 col-sm-6">
+                    <div class="card overflow-hidden">
+                        <div class="social-graph-wrapper widget-twitter">
+                            <span class="s-icon">
+                                <i class="fa fa-frown-o" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 border-end">
+                                <div class="pt-3 pb-3 ps-0 pe-0 text-center">
+                                    @*<h4 class="m-1"><span class="counter">89</span> k</h4>*@
+                                    <p class="m-0">Complaints / Observations ?</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="https://twitter.com/JayAfolayan/" target="_blank">
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="card overflow-hidden">
+                    <div class="social-graph-wrapper widget-twitter">
+                        <span class="s-icon"><i class="fab fa-twitter"></i></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 border-end">
+                            <div class="pt-3 pb-3 ps-0 pe-0 text-center">
+                                @*<h4 class="m-1"><span class="counter">89</span> k</h4>*@
+                                <p class="m-0">Follow Dev</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            </a>
         </div>
     </div>
 </div>
