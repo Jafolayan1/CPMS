@@ -39,7 +39,7 @@ namespace SPMS.Areas.Graduate.Controllers
 
 			ViewData["Noti"] = GetNoti();
 			ViewData["projects"] = _context.Students.GetByMatric(CurrentUser.UserName);
-			ViewData["chapters"] = _context.Chapters.GetAll();
+			ViewData["chapters"] = _context.Chapters.GetAll().Where(x => x.ProjectStudentId == CurrentStudent.StudentId.ToString());
 			//ViewData["proposals"] = _context.Projects.GetAll().Where(x => x.SupervisorId == id);
 			return View();
 		}
@@ -118,19 +118,21 @@ namespace SPMS.Areas.Graduate.Controllers
 		}
 
 		[HttpGet]
+		[Route("dashboard/complain")]
 		public IActionResult Complain()
 		{
+			ViewData["Noti"] = GetNoti();
 			return View();
 		}
 
 
 		[HttpPost]
-		[Route("dashboard/complaint")]
+		[Route("dashboard/complain")]
 
 		public IActionResult Complain(Complaint model)
 		{
 			_repo.Complaints.Add(model);
-			_context.SaveChanges();
+			_repo.SaveChanges();
 			return RedirectToAction(nameof(Index));
 		}
 	}

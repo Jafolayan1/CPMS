@@ -25,30 +25,17 @@
 					</div>
 					<div class="card-body">
 						<div class="basic-form">
-							<form asp-action="Notify" method="post">
+							<form asp-controller="dashboard" asp-action="complain" method="post">
 								<div class="mb-3">
 									<textarea rows="4" asp-for="Message" id="messageId" class="form-control" required></textarea>
 								</div>
-								<button type="submit" onclick="sendComplaint()" class="btn btn-primary">Send</button>
+								<button type="submit" class="btn btn-primary">Send</button>
 							</form>
 						</div>
 					</div>
 				</div>
-			</div>S
+			</div>
 		</div>
 
 	</div>
 </div>
-
-
-<script>
-	function sendComplaint() {
-		$.ajax({
-			type: "POST",
-			url: "graduate/dashboard/complain",
-			success: function () {
-				window.location.href = "/dashboard/complaint";
-			}
-		});
-
-</script>

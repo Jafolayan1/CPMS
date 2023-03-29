@@ -7,6 +7,10 @@ connection.on("ReceiveMessage", function (user, message) {
 
     li.textContent = `${user} says ${message}`;
 
+    // Add a line break before appending another message
+    var br = document.createElement("br");
+    li.appendChild(br);
+
     // Save the message to localStorage
     var messages = JSON.parse(localStorage.getItem('messages')) || [];
     messages.push(li.textContent);
