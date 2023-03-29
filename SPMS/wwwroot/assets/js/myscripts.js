@@ -123,7 +123,7 @@ function showPreloader() {
 }
 
 // Add a click event listener to all buttons and links
-const buttons = document.querySelectorAll('button:not([data-bs-toggle="modal"]):not([data-bs-dismiss]):not(#noloader)');
+const buttons = document.querySelectorAll('button:not([data-bs-toggle="modal"]):not([data-bs-dismiss]):not(#noloader):not(#sendButton)');
 const links = document.querySelectorAll('a:not([data-bs-toggle="modal"]):not([data-bs-dismiss]):not([href="javascript:void()"]):not(.nav-text):not(i):not(#noloader)');
 
 buttons.forEach((button) => {

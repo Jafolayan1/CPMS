@@ -21,25 +21,25 @@
 
             <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
                 <a asp-controller="project" asp-action="index">
-                    <div class="widget-stat card">
+                    <div class="widget-stat card bg-primary">
                         <div class="card-body p-4">
                             <div class="media ai-icon">
-                                <span class="me-3 bgl-warn text-secondary">
+                                <span class="me-3 bgl-white text-white">
                                     <!-- <i class="ti-user"></i> -->
                                     <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
                                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                         <circle cx="12" cy="7" r="4"></circle>
                                     </svg>
                                 </span>
-                                <div class="media-body">
+                                <div class="media-body text-white">
                                     <p class="mb-1">Project Proposals</p>
                                     @if (students != null)
                                     {
-                                        <h4 class="mb-0">@students.Projects.Count</h4>
+                                        <h4 class="mb-0 text-white">@students.Projects.Count</h4>
                                     }
                                     else
                                     {
-                                        <h4 class="mb-0">0</h4>
+                                        <h4 class="mb-0 text-white">0</h4>
 
                                     }
                                 </div>
@@ -53,36 +53,36 @@
             <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
                 <a asp-controller="project" asp-action="milestone">
 
-                <div class="widget-stat card">
-                    <div class="card-body p-4">
-                        <div class="media ai-icon">
-                            <span class="me-3 bgl-info text-info">
-                                <!-- <i class="ti-user"></i> -->
-                                <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </span>
-                            <div class="media-body">
-                                <p class="mb-1">Project Chapters</p>
-                                @if (students != null)
-                                {
-                                    <h4 class="mb-0">@chapters.Count()</h4>
-                                }
-                                else
-                                {
-                                    <h4 class="mb-0">0</h4>
+                    <div class="widget-stat card bg-info">
+                        <div class="card-body p-4">
+                            <div class="media ai-icon">
+                                <span class="me-3 bgl-info text-white">
+                                    <!-- <i class="ti-user"></i> -->
+                                    <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </span>
+                                <div class="media-body text-white">
+                                    <p class="mb-1">Project Chapters</p>
+                                    @if (students != null)
+                                    {
+                                        <h4 class="mb-0 text-white">@chapters.Count()</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="mb-0 text-white">0</h4>
 
-                                }
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </a>
             </div>
 
             <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
-                <div class="widget-stat card bg-primary">
+                <div class="widget-stat card bg-secondary">
                     <a asp-controller="project" asp-action="projectarchive">
                         <div class="card-body  p-4">
                             <div class="media">
@@ -98,67 +98,85 @@
                     </a>
                 </div>
             </div>
-            <a asp-controller="dashboard" asp-action="profile">
             <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
-                <div class="widget-stat card">
-                    <div class="card-body p-4">
-                        <div class="media ai-icon">
-                            <span class="me-3 bgl-primary text-primary">
-                                <!-- <i class="ti-user"></i> -->
-                                <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </span>
-                            <div class="media-body">
-                                <p class="mb-1">Profile</p>
+                <div class="widget-stat card bg-warning">
+                    <a asp-controller="dashboard" asp-action="profile">
+                        <div class="card-body p-4">
+                            <div class="media ai-icon">
+                                <span class="me-3 bgl-white text-primary">
+                                    <!-- <i class="ti-user"></i> -->
+                                    <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </span>
+                                <div class="media-body text-white">
+                                    <p class="mb-1 text-white">Profile</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
-            </a>
 
-            <a asp-controller="dashboard" asp-action="complaint">
-                <div class="col-xl-3 col-xxl-3 col-sm-6">
-                    <div class="card overflow-hidden">
-                        <div class="social-graph-wrapper widget-twitter">
+            <br />
+            <br />
+
+          
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="card overflow-hidden">
+                    <a asp-controller="dashboard" asp-action="complaint">
+
+                    <div class="social-graph-wrapper widget-linkedin">
                             <span class="s-icon">
                                 <i class="fa fa-frown-o" aria-hidden="true"></i>
                             </span>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 border-end">
-                                <div class="pt-3 pb-3 ps-0 pe-0 text-center">
-                                    @*<h4 class="m-1"><span class="counter">89</span> k</h4>*@
-                                    <p class="m-0">Complaints / Observations ?</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-
-            <a href="https://twitter.com/JayAfolayan/" target="_blank">
-            <div class="col-xl-3 col-xxl-3 col-sm-6">
-                <div class="card overflow-hidden">
-                    <div class="social-graph-wrapper widget-twitter">
-                        <span class="s-icon"><i class="fab fa-twitter"></i></span>
                     </div>
                     <div class="row">
                         <div class="col-6 border-end">
                             <div class="pt-3 pb-3 ps-0 pe-0 text-center">
-                                @*<h4 class="m-1"><span class="counter">89</span> k</h4>*@
-                                <p class="m-0">Follow Dev</p>
+                                <h4 class="m-1"><span class="counter"></span> </h4>
+                                <p class="m-0">Complaints?</p>
                             </div>
                         </div>
-                        
+                        <div class="col-6">
+                            <div class="pt-3 pb-3 ps-0 pe-0 text-center">
+                                <h4 class="m-1"><span class="counter"></span> </h4>
+                                <p class="m-0">Observation?</p>
+                            </div>
+                        </div>
                     </div>
+                    </a>
                 </div>
             </div>
-            </a>
+
+
+            <div class="col-xl-3 col-xxl-3 col-sm-6">
+                <div class="card overflow-hidden">
+                    <a href="https://twitter.com/JayAfolayan/" target="_blank">
+                        <div class="social-graph-wrapper widget-twitter">
+                            <span class="s-icon"><i class="fab fa-twitter"></i></span>
+                        </div>
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-6 border-end">
+                                    <div class="pt-3 pb-3 ps-0 pe-0 text-center">
+                                        <h4 class="m-1"><span class="counter"></span> </h4>
+                                        <p class="m-0">Follow</p>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="pt-3 pb-3 ps-0 pe-0 text-center">
+                                        <h4 class="m-1"><span class="counter"></span> </h4>
+                                        <p class="m-0">Dev</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
