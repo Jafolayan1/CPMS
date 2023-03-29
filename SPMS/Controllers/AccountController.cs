@@ -107,9 +107,7 @@ namespace SPMS.Controllers
                 else
                 {
                     var req = await Register(model.Password);
-                    ViewData["InfoMessage"] = "User registered successfully. Please log in.";
                 }
-                return View();
             }
             var userLogin = _auth.AuthenticateUser(userName, model.Password);
             if (userLogin != null)

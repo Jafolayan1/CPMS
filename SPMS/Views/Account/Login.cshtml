@@ -18,6 +18,7 @@
                                 </div>
                                 <h4 class="text-center mb-4">Sign in your account</h4>
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <span class="text-danger">@ViewData["ErrorMessage"]</span>
                                 <form asp-action="Login" method="post" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]">
                                     <div class="mb-3">
                                         <label class="mb-1"><strong>Username</strong></label>
